@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "938057332518",
+    "firebase_url": "https://cyberdojo-a2a3e.firebaseio.com",
+    "project_id": "cyberdojo-a2a3e",
+    "storage_bucket": "cyberdojo-a2a3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938057332518:android:ab27f6275f0f978e8533e7",
+        "android_client_info": {
+          "package_name": "com.example.CyberDojo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_c5uQJqL5WQWcofa3_kPmCPpbTg2dPiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "938057332518-sp0umnrs7is0l2kf2p74am973iqu3om9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hollandpleskac.cyberDojoApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938057332518:android:efa139da72c4bc568533e7",
+        "android_client_info": {
+          "package_name": "com.teamXeonHollandPleskac.cyber_dojo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_c5uQJqL5WQWcofa3_kPmCPpbTg2dPiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "938057332518-sp0umnrs7is0l2kf2p74am973iqu3om9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hollandpleskac.cyberDojoApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938057332518:android:734ed2d38d08a2a98533e7",
+        "android_client_info": {
+          "package_name": "com.xeondevelopers.class_vibes_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_c5uQJqL5WQWcofa3_kPmCPpbTg2dPiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "938057332518-sp0umnrs7is0l2kf2p74am973iqu3om9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hollandpleskac.cyberDojoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
