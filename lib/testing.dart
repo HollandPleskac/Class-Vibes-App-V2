@@ -26,6 +26,14 @@ class _TestingState extends State<Testing> {
 ///      PIE CHART BIG USE FOR TEACHER CLASSVIEW SCREEN
 ///
 
+///
+///       IMPORTANT TERMS
+///          - value(integer) is the percent of the pie chart it takes 
+///          - radius(integer) how big the colored sections are 
+///          - centerSpaceRadius(integer) how much white space is in the center of pie chart 
+///          - sectionsSpace(integer) how much white space in between the colored sections
+///
+
 class PieChartSample2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => PieChart2State();
