@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-
 class Testing extends StatefulWidget {
   @override
   _TestingState createState() => _TestingState();
@@ -12,7 +11,7 @@ class _TestingState extends State<Testing> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("TESTING"),
+        child: PieChartSample2(),
       ),
     );
   }
@@ -42,7 +41,8 @@ class PieChart2State extends State {
                 aspectRatio: 1,
                 child: PieChart(
                   PieChartData(
-                      pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                      pieTouchData:
+                          PieTouchData(touchCallback: (pieTouchResponse) {
                         setState(() {
                           if (pieTouchResponse.touchInput is FlLongPressEnd ||
                               pieTouchResponse.touchInput is FlPanEnd) {
@@ -122,7 +122,9 @@ class PieChart2State extends State {
             title: '40%',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
           );
         case 1:
           return PieChartSectionData(
@@ -131,7 +133,9 @@ class PieChart2State extends State {
             title: '30%',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
           );
         case 2:
           return PieChartSectionData(
@@ -140,7 +144,9 @@ class PieChart2State extends State {
             title: '15%',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
           );
         case 3:
           return PieChartSectionData(
@@ -149,7 +155,9 @@ class PieChart2State extends State {
             title: '15%',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
           );
         default:
           return null;
@@ -157,6 +165,7 @@ class PieChart2State extends State {
     });
   }
 }
+
 class Indicator extends StatelessWidget {
   final Color color;
   final String text;
@@ -190,7 +199,8 @@ class Indicator extends StatelessWidget {
         ),
         Text(
           text,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
         )
       ],
     );
