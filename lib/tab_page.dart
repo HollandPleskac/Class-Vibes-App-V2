@@ -55,8 +55,9 @@ class _TabPageState extends State<TabPage> {
         },
         controller: controller,
         itemBuilder: (context, index) {
+          //not using the index - we are using selectedIndex var defined above
           return Container(
-            child: screens[index],
+            child: screens[selectedIndex],
           );
         },
       ),
