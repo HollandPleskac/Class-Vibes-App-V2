@@ -60,6 +60,7 @@ class _TabPageState extends State<TabPage> {
             child: screens[selectedIndex],
           );
         },
+        itemCount: screens.length, //Can be null - prevents overflow w/ page view
       ),
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
