@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constant.dart';
 import '../widgets/pie_charts.dart';
@@ -15,6 +16,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
       appBar: AppBar(
         backgroundColor: kWetAsphaltColor,
         title: Text(
@@ -48,33 +50,67 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     child: GridView.count(
                       primary: false,
                       padding: const EdgeInsets.all(40),
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 10,
                       crossAxisCount: 2,
                       children: snapshot.data.documents
                           .map((DocumentSnapshot document) {
-                        return Card(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              PieChartSampleSmall(),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 25),
-                                child: Text(
-                                  'Ap Biology',
-                                  style: kSubTextStyle.copyWith(fontSize: 16),
+                        return Stack(
+                          children: [
+                            Container(
+                              // color: Colors.red,
+                              width: double.infinity,
+                              child: Padding(
+                                padding: EdgeInsets.all(4),
+                                child: Card(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      PieChartSampleSmall(),
+                                      Padding(
+                                        padding: EdgeInsets.only(bottom: 25),
+                                        child: Text(
+                                          'Ap Biology',
+                                          style: kSubTextStyle.copyWith(
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(14),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(14),
                             ),
-                          ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  height: 38,
+                                  width: 38,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: kPrimaryColor,
+                                  ),
+                                  child: Center(
+                                    child: FaIcon(
+                                      FontAwesomeIcons.cog,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         );
                       }).toList(),
                     ),
