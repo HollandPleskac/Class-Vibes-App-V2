@@ -16,7 +16,6 @@ class _TabPageState extends State<TabPage> {
   int selectedIndex = 1;
 
   PageController controller = PageController(initialPage: 1);
-  
 
   var screens = [
     Screen1(),
@@ -24,28 +23,39 @@ class _TabPageState extends State<TabPage> {
     Screen3(),
   ];
 
-  List items = [
-    Icon(
-      Icons.verified_user,
-      size: 25,
-      color: Colors.black,
+  List<FaIcon> items = [
+    // Icon(
+    //   Icons.verified_user,
+    //   size: 25,
+    //   color: Colors.black,
+    // ),
+    FaIcon(
+      FontAwesomeIcons.graduationCap,
+      size: 22.5,
     ),
     // Icon(
     //   Icons.verified_user,
     //   size: 25,
     //   color: Colors.black,
     // ),
-    FaIcon(FontAwesomeIcons.gamepad),
-    Icon(
-      Icons.verified_user,
-      size: 25,
-      color: Colors.black,
+    FaIcon(
+      FontAwesomeIcons.stream,
+      size: 22.5,
+     
+    ),
+    // Icon(
+    //   Icons.verified_user,
+    //   size: 25,
+    //   color: Colors.black,
+    // ),
+    FaIcon(
+      FontAwesomeIcons.userAlt,
+      size: 22.5,
     ),
   ];
 
   @override
   void initState() {
-
     super.initState();
   }
 
