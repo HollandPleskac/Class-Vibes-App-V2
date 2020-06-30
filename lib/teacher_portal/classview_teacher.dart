@@ -61,7 +61,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               // color: Colors.red,
                               width: double.infinity,
                               child: Padding(
-                                padding: EdgeInsets.all(4),
+                                padding: EdgeInsets.all(8),
                                 child: Card(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
