@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constant.dart';
 
 class Screen3 extends StatelessWidget {
   @override
@@ -11,7 +12,7 @@ class Screen3 extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
       ),
-      backgroundColor: Colors.deepOrange,
+      backgroundColor: kPrimaryColor,
       body: Center(child: Text('screen 3')),
     );
   }

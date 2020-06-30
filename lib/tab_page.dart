@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'screen1.dart';
 import 'screen2.dart';
 import 'screen3.dart';
+import 'constant.dart';
 
 class TabPage extends StatefulWidget {
   @override
@@ -65,7 +66,7 @@ class _TabPageState extends State<TabPage> {
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
           color: Colors.white,
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: kPrimaryColor,
           buttonBackgroundColor: Colors.white,
           height: 50,
           items: items, // list of items above
