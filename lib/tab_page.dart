@@ -31,7 +31,7 @@ class _TabPageState extends State<TabPage> {
     // ),
     FaIcon(
       FontAwesomeIcons.graduationCap,
-      size: 22.5,
+      size: 20,
     ),
     // Icon(
     //   Icons.verified_user,
@@ -40,7 +40,7 @@ class _TabPageState extends State<TabPage> {
     // ),
     FaIcon(
       FontAwesomeIcons.stream,
-      size: 22.5,
+      size: 20,
      
     ),
     // Icon(
@@ -50,7 +50,7 @@ class _TabPageState extends State<TabPage> {
     // ),
     FaIcon(
       FontAwesomeIcons.userAlt,
-      size: 22.5,
+      size: 20,
     ),
   ];
 
@@ -86,7 +86,7 @@ class _TabPageState extends State<TabPage> {
           backgroundColor: kPrimaryColor,
           buttonBackgroundColor: Colors.white,
 
-          // height: 50,
+          height: 60,
           items: items, // list of items above
           index:
               selectedIndex, //Do not need to specify index - only if using page controller
