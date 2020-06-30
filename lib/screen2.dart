@@ -6,10 +6,10 @@ class Screen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kPrimaryColor,
         title: Text('Screen 2',style: TextStyle(color: Colors.black),),
       ),
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.white,
       body: Center(child: Text('screen 2')),
     );
   }

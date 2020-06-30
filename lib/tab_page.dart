@@ -82,9 +82,9 @@ class _TabPageState extends State<TabPage> {
       ),
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
-          color: Colors.white,
-          backgroundColor: kPrimaryColor,
-          buttonBackgroundColor: Colors.white,
+          color: kPrimaryColor,
+          backgroundColor: Colors.white,
+          buttonBackgroundColor: kPrimaryColor,
 
           height: 60,
           items: items, // list of items above
