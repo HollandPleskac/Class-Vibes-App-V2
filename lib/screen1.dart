@@ -6,11 +6,13 @@ class Screen1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kWetAsphaltColor,
         title: Text(
           'Screen 1',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white,),
         ),
+                centerTitle: true,
+
       ),
       backgroundColor: Colors.white,
       body: Center(child: Text('screen 1')),

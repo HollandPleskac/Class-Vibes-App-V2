@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,6 +33,7 @@ class _TabPageState extends State<TabPage> {
     FaIcon(
       FontAwesomeIcons.graduationCap,
       size: 20,
+      color: Colors.white,
     ),
     // Icon(
     //   Icons.verified_user,
@@ -41,6 +43,7 @@ class _TabPageState extends State<TabPage> {
     FaIcon(
       FontAwesomeIcons.stream,
       size: 20,
+      color: Colors.white,
      
     ),
     // Icon(
@@ -51,6 +54,7 @@ class _TabPageState extends State<TabPage> {
     FaIcon(
       FontAwesomeIcons.userAlt,
       size: 20,
+      color: Colors.white,
     ),
   ];
 
@@ -82,7 +86,7 @@ class _TabPageState extends State<TabPage> {
       ),
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
-          color: kPrimaryColor,
+          color: kWetAsphaltColor,
           backgroundColor: Colors.white,
           buttonBackgroundColor: kPrimaryColor,
 
