@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 class DashBoard extends StatefulWidget {
   @override
   _DashBoardState createState() => _DashBoardState();
@@ -9,10 +11,8 @@ class _DashBoardState extends State<DashBoard> {
     showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-              child: Container(
+          return 
+              Container(
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.3),
                     borderRadius: BorderRadius.only(
@@ -179,8 +179,7 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                   ],
                 ),
-              ),
-            ),
+             
           );
         });
   }
@@ -239,15 +238,15 @@ class _DashBoardState extends State<DashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.smile_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.meh_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.frown_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                             ],
@@ -291,15 +290,15 @@ class _DashBoardState extends State<DashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.smile_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.meh_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.frown_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                             ],
@@ -339,15 +338,15 @@ class _DashBoardState extends State<DashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.smile_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.meh_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.frown_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                             ],
@@ -383,15 +382,15 @@ class _DashBoardState extends State<DashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.smile_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.meh_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.frown_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                             ],
@@ -435,15 +434,15 @@ class _DashBoardState extends State<DashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.smile_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.meh_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.frown_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                             ],
@@ -483,15 +482,15 @@ class _DashBoardState extends State<DashBoard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.smile_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.meh_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                               GestureDetector(
-                                child: Icon(LineAwesomeIcons.frown_o,
+                                child: Icon(Icons.sim_card,
                                     size: 47.0, color: Colors.grey[400]),
                               ),
                             ],
