@@ -13,7 +13,8 @@ class TabPage extends StatefulWidget {
 class _TabPageState extends State<TabPage> {
   int selectedIndex = 1;
 
-  PageController controller = PageController();
+  PageController controller = PageController(initialPage: 1);
+  
 
   var screens = [
     Screen1(),
@@ -24,23 +25,24 @@ class _TabPageState extends State<TabPage> {
   List<Icon> items = [
     Icon(
       Icons.verified_user,
-      size: 20,
+      size: 25,
       color: Colors.black,
     ),
     Icon(
       Icons.verified_user,
-      size: 20,
+      size: 25,
       color: Colors.black,
     ),
     Icon(
       Icons.verified_user,
-      size: 20,
+      size: 25,
       color: Colors.black,
     ),
   ];
 
   @override
   void initState() {
+
     super.initState();
   }
 
@@ -61,14 +63,17 @@ class _TabPageState extends State<TabPage> {
             child: screens[selectedIndex],
           );
         },
-        itemCount: screens.length, //Can be null - prevents overflow w/ page view
+        physics: BouncingScrollPhysics(),
+        itemCount:
+            screens.length, //Can be null - prevents overflow w/ page view
       ),
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
           color: Colors.white,
           backgroundColor: kPrimaryColor,
           buttonBackgroundColor: Colors.white,
-          height: 50,
+
+          // height: 50,
           items: items, // list of items above
           index:
               selectedIndex, //Do not need to specify index - only if using page controller
