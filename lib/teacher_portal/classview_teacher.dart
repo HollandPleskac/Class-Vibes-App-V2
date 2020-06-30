@@ -25,7 +25,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        // child: PieChartSampleSmall(),
         child: StreamBuilder(
           stream: _firestore
               .collection('UserData')
@@ -58,16 +57,23 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: 10,),
+                              SizedBox(
+                                height: 10,
+                              ),
                               PieChartSampleSmall(),
                               Padding(
                                 padding: EdgeInsets.only(bottom: 25),
                                 child: Text(
                                   'Ap Biology',
-                                  style: kSubTextStyle,
+                                  style: kSubTextStyle.copyWith(fontSize: 16),
                                 ),
                               ),
                             ],
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(14),
+                            ),
                           ),
                         );
                       }).toList(),
