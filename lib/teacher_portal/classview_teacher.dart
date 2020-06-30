@@ -73,7 +73,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       Padding(
                                         padding: EdgeInsets.only(bottom: 25),
                                         child: Text(
-                                          'Ap Biology',
+                                          document['ClassName'],
                                           style: kSubTextStyle.copyWith(
                                               fontSize: 16),
                                         ),
@@ -92,7 +92,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               top: 0,
                               right: 0,
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  print('tap');
+                                },
+                                borderRadius: BorderRadius.circular(3000),
                                 child: Container(
                                   height: 38,
                                   width: 38,
