@@ -24,17 +24,18 @@ class _TabPageState extends State<TabPage> {
     Screen3(),
   ];
 
-  List<Icon> items = [
+  List items = [
     Icon(
       Icons.verified_user,
       size: 25,
       color: Colors.black,
     ),
-    Icon(
-      Icons.verified_user,
-      size: 25,
-      color: Colors.black,
-    ),
+    // Icon(
+    //   Icons.verified_user,
+    //   size: 25,
+    //   color: Colors.black,
+    // ),
+    FaIcon(FontAwesomeIcons.gamepad),
     Icon(
       Icons.verified_user,
       size: 25,
