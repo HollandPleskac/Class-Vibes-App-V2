@@ -12,7 +12,11 @@ const kWetAsphaltColor = Color.fromRGBO(52, 73, 94,1.0);
 // Text Style
 const kHeadingTextStyle = TextStyle();
 
-const kSubTextStyle = TextStyle();
+const kSubTextStyle = TextStyle(
+  color: kWetAsphaltColor,
+  fontSize: 15.5,
+  fontWeight: FontWeight.w500,
+);
 
 const kTitleTextstyle = TextStyle();
 
