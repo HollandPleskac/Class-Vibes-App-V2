@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/StudentDashv2.dart';
 import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
