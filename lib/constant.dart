@@ -10,7 +10,11 @@ const kPrimaryColor = Color.fromRGBO(9, 132, 227,1.0); //Electron Blue
 const kWetAsphaltColor = Color.fromRGBO(52, 73, 94,1.0);
 
 // Text Style
-const kHeadingTextStyle = TextStyle();
+const kHeadingTextStyle = TextStyle(
+  color: kWetAsphaltColor,
+  fontSize: 23.2,
+  fontWeight: FontWeight.w400,
+);
 
 const kSubTextStyle = TextStyle(
   color: kWetAsphaltColor,
