@@ -48,8 +48,8 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                           Padding(
                             padding: EdgeInsets.only(bottom: 25),
                             child: Text(
-                              'Ap Calc',
-                              style: TextStyle(fontSize: 22),
+                              'AP Calculus',
+                              style: TextStyle(fontSize: MediaQuery.of(context).size.width*0.055),
                             ),
                           ),
                           Container(
@@ -80,7 +80,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                                                  child: Column(
+                                  child: Column(
                                     children: [
                                       FaIcon(
                                         FontAwesomeIcons.meh,
@@ -91,7 +91,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                         height: 5,
                                       ),
                                       Text(
-                                        'Need Help',
+                                        ' Need Help',
                                         style: TextStyle(fontSize: 11),
                                       )
                                     ],
