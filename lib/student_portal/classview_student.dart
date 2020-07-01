@@ -26,59 +26,138 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
         child: GridView.count(
           shrinkWrap: true,
           primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
+          padding: const EdgeInsets.all(0),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      "Ap Calc",
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      height: 60,
-                      width: MediaQuery.of(context).size.width - 20,
-                      child: Row(
+            Stack(
+              children: [
+                Container(
+                  color: Colors.red,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(7.5),
+                    child: Card(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FaIcon(
-                            FontAwesomeIcons.solidSmile,
-                            color: Colors.grey,
+                          SizedBox(
+                            height: 45,
                           ),
-                          GestureDetector(
-                            child: Icon(Icons.sim_card,
-                                size: 47.0, color: Colors.grey[400]),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 25),
+                            child: Text(
+                              'Ap Calc',
+                              style: TextStyle(fontSize: 22),
+                            ),
                           ),
-                          GestureDetector(
-                            child: Icon(Icons.sim_card,
-                                size: 47.0, color: Colors.grey[400]),
+                          Container(
+                            height: 60,
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                // to understand what is going on add containers with colors
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.solidSmile,
+                                        color: Colors.green,
+                                        size: 30,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        ' Doing Great',
+                                        style: TextStyle(fontSize: 11),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                                                  child: Column(
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.meh,
+                                        color: Colors.grey,
+                                        size: 30,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        'Need Help',
+                                        style: TextStyle(fontSize: 11),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.frown,
+                                        color: Colors.grey,
+                                        size: 30,
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        'Frustrated',
+                                        style: TextStyle(fontSize: 11),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: InkWell(
+                    onTap: () {
+                      print('tap');
+                    },
+                    borderRadius: BorderRadius.circular(3000),
+                    child: Container(
+                      height: 38,
+                      width: 38,
                       decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10)),
-                    )
-                  ],
+                        shape: BoxShape.circle,
+                        color: kPrimaryColor,
+                      ),
+                      child: Center(
+                        child: FaIcon(
+                          FontAwesomeIcons.gem,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.grey[100],
-                ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),
