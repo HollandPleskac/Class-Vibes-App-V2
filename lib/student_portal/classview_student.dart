@@ -281,6 +281,7 @@ void showStudentInfoPopUp(BuildContext context) {
                                   size: 43.0,
                                   color: Colors.green,
                                 ),
+                                SizedBox(height: 2,),
                                 Text(
                                   "Doing Great",
                                   style: TextStyle(
@@ -298,6 +299,7 @@ void showStudentInfoPopUp(BuildContext context) {
                                   size: 43.0,
                                   color: Colors.orange[600],
                                 ),
+                                SizedBox(height: 2,),
                                 Text(
                                   " Need Help ",
                                   style: TextStyle(
@@ -315,6 +317,7 @@ void showStudentInfoPopUp(BuildContext context) {
                                   size: 43.0,
                                   color: Colors.red[700],
                                 ),
+                                SizedBox(height: 2,),
                                 Text(
                                   "Frustrated",
                                   style: TextStyle(
