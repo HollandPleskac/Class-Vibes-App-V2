@@ -4,13 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../widgets/pie_charts.dart';
 import '../constant.dart';
 
-class IndividualClassTeacher extends StatefulWidget {
-  static final routeName = 'individual-class-teacher';
+class ViewClass extends StatefulWidget {
+  static const routeName = 'individual-class-teacher';
   @override
-  _IndividualClassTeacherState createState() => _IndividualClassTeacherState();
+  _ViewClassState createState() => _ViewClassState();
 }
 
-class _IndividualClassTeacherState extends State<IndividualClassTeacher> {
+class _ViewClassState extends State<ViewClass> {
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;

@@ -4,7 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constant.dart';
 import '../widgets/pie_charts.dart';
-import 'individual_class_teacher.dart';
+import 'view_class.dart';
+import 'class_settings.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -60,7 +61,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           onTap: () {
                             Navigator.pushNamed(
                               context,
-                              IndividualClassTeacher.routeName,
+                              ViewClass.routeName,
                               arguments: {
                                 'class name': document['ClassName'],
                               },
@@ -116,10 +117,20 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       color: kPrimaryColor,
                                     ),
                                     child: Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.cog,
-                                        color: Colors.white,
-                                        size: 20,
+                                      child: GestureDetector(
+                                        onTap: () => Navigator.pushNamed(
+                                          context,
+                                          ClassSettings
+                                              .routeName,
+                                          arguments: {
+                                            'class name': document['ClassName']
+                                          },
+                                        ),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.cog,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
                                       ),
                                     ),
                                   ),
