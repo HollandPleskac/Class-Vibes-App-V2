@@ -17,6 +17,8 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> {
+
+
   int selectedIndex = 1;
 
   PageController controller = PageController(initialPage: 1);
@@ -47,7 +49,6 @@ class _TabPageState extends State<TabPage> {
       FontAwesomeIcons.stream,
       size: 20,
       color: Colors.white,
-     
     ),
     // Icon(
     //   Icons.verified_user,
@@ -78,7 +79,6 @@ class _TabPageState extends State<TabPage> {
         },
         controller: controller,
         itemBuilder: (context, index) {
- 
           return Container(
             child: screens[index],
           );
@@ -87,6 +87,15 @@ class _TabPageState extends State<TabPage> {
         itemCount:
             screens.length, //Can be null - prevents overflow w/ page view
       ),
+      // floatingActionButton: selectedIndex == 1 ? FloatingActionButton(
+        
+      //   child: Icon(Icons.add,size: 25,color: Colors.white,),
+      //   backgroundColor: kPrimaryColor,
+      //   splashColor: Colors.blue[900],
+      //   onPressed: () {
+      //     print('pressed the add class button');
+      //   },
+      // ) : Container(),
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
           color: kWetAsphaltColor,
@@ -94,6 +103,7 @@ class _TabPageState extends State<TabPage> {
           buttonBackgroundColor: kPrimaryColor,
 
           height: 60,
+
           items: items, // list of items above
           index:
               selectedIndex, //Do not need to specify index - only if using page controller

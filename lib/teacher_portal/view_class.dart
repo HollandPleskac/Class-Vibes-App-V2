@@ -85,6 +85,8 @@ class _ViewClassState extends State<ViewClass> {
           ),
         ],
       ),
+    
+      
     );
   }
 }
@@ -173,7 +175,9 @@ class Student extends StatelessWidget {
             color: kPrimaryColor,
             size: 35,
           ),
-          SizedBox(width: 20,)
+          SizedBox(
+            width: 20,
+          )
         ],
       ),
     );
