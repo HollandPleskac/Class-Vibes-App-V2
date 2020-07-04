@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constant.dart';
 import '../widgets/pie_charts.dart';
+import 'individual_class_teacher.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -55,65 +56,77 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                       crossAxisCount: 2,
                       children: snapshot.data.documents
                           .map((DocumentSnapshot document) {
-                        return Stack(
-                          children: [
-                            Container(
-                              // color: Colors.red,
-                              width: double.infinity,
-                              child: Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Card(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      PieChartSampleSmall(),
-                                      Padding(
-                                        padding: EdgeInsets.only(bottom: 25),
-                                        child: Text(
-                                          document['ClassName'],
-                                          style: kSubTextStyle.copyWith(
-                                              fontSize: 16),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              IndividualClassTeacher.routeName,
+                              arguments: {
+                                'class name': document['ClassName'],
+                              },
+                            );
+                          },
+                          child: Stack(
+                            children: [
+                              Container(
+                                // color: Colors.red,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Card(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
                                         ),
+                                        PieChartSampleSmall(),
+                                        Padding(
+                                          padding: EdgeInsets.only(bottom: 25),
+                                          child: Text(
+                                            document['ClassName'],
+                                            style: kSubTextStyle.copyWith(
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(14),
                                       ),
-                                    ],
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(14),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: InkWell(
-                                onTap: () {
-                                  print('tap');
-                                },
-                                borderRadius: BorderRadius.circular(3000),
-                                child: Container(
-                                  height: 38,
-                                  width: 38,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: kPrimaryColor,
-                                  ),
-                                  child: Center(
-                                    child: FaIcon(
-                                      FontAwesomeIcons.cog,
-                                      color: Colors.white,
-                                      size: 20,
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: InkWell(
+                                  onTap: () {
+                                    print('tap');
+                                  },
+                                  borderRadius: BorderRadius.circular(3000),
+                                  child: Container(
+                                    height: 38,
+                                    width: 38,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: kPrimaryColor,
+                                    ),
+                                    child: Center(
+                                      child: FaIcon(
+                                        FontAwesomeIcons.cog,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),

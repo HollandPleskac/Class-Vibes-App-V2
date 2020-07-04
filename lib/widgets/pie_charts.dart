@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+import '../constant.dart';
+
 class PieChartSampleBig extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => PieChart2State();
@@ -37,7 +39,7 @@ class PieChart2State extends State {
                         });
                       }),
                       borderData: FlBorderData(
-                        show: false,
+                        show: true,
                       ),
                       sectionsSpace: 0,
                       centerSpaceRadius: 40,
@@ -45,51 +47,52 @@ class PieChart2State extends State {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(right: 0, left: 20),
+            Container(
+              color: Colors.brown,
+              padding: EdgeInsets.only(right: 38, left: 30),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const <Widget>[
                   Indicator(
-                    color: Color(0xff0293ee),
-                    text: 'First',
-                    isSquare: true,
+                    color: kPieChartDoingGreatColor,
+                    text: 'Doing Great',
+                    isSquare: false,
                   ),
                   SizedBox(
-                    height: 4,
+                    height: 10,
                   ),
                   Indicator(
-                    color: Color(0xfff8b250),
-                    text: 'Second',
-                    isSquare: true,
+                    color: kPieChartNeedHelpColor,
+                    text: 'Need Help',
+                    isSquare: false,
                   ),
                   SizedBox(
-                    height: 4,
+                    height: 10,
                   ),
                   Indicator(
-                    color: Color(0xff845bef),
-                    text: 'Third',
-                    isSquare: true,
+                    color: kPieChartFrustratedColor,
+                    text: 'Frustrated',
+                    isSquare: false,
                   ),
                   SizedBox(
-                    height: 4,
+                    height: 10,
                   ),
                   Indicator(
-                    color: Color(0xff13d38e),
-                    text: 'Fourth',
-                    isSquare: true,
+                    color: kPieChartInactiveColor,
+                    text: 'Inactive',
+                    isSquare: false,
                   ),
                   SizedBox(
-                    height: 18,
+                    height: 0,
                   ),
                 ],
               ),
             ),
-            const SizedBox(
-              width: 28,
-            ),
+            // const SizedBox(
+            //   width: 38,
+            // ),
           ],
         ),
       ),
@@ -104,18 +107,7 @@ class PieChart2State extends State {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: const Color(0xfff8b250),
+            color: kPieChartDoingGreatColor,
             value: 30,
             title: '30%',
             radius: radius,
@@ -124,11 +116,22 @@ class PieChart2State extends State {
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
           );
+        case 1:
+          return PieChartSectionData(
+            color: kPieChartNeedHelpColor,
+            value: 20,
+            title: '20%',
+            radius: radius,
+            titleStyle: TextStyle(
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
+          );
         case 2:
           return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
+            color: kPieChartFrustratedColor,
+            value: 25,
+            title: '25%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -137,9 +140,9 @@ class PieChart2State extends State {
           );
         case 3:
           return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
-            title: '15%',
+            color: kPieChartInactiveColor,
+            value: 25,
+            title: '25%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,

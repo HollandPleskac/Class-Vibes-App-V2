@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 // Colors
 
 
-// const kPrimaryColor = Color.fromRGBO(41, 128, 185,1.0); //Peter River
-// const kPrimaryColor = Color.fromRGBO(52, 73, 94,1.0); //Wet Asphalt
 const kPrimaryColor = Color.fromRGBO(9, 132, 227,1.0); //Electron Blue
 
 const kWetAsphaltColor = Color.fromRGBO(52, 73, 94,1.0);
-// const kWetAsphaltColor = Color.fromRGBO(9, 132, 227,1.0);
+const kPieChartDoingGreatColor = Color(0xff13d38e);
+const kPieChartNeedHelpColor = Color(0xfff8b250);
+const kPieChartFrustratedColor = Colors.red;
+const kPieChartInactiveColor = Colors.grey;
 
 // Text Style
 const kHeadingTextStyle = TextStyle(

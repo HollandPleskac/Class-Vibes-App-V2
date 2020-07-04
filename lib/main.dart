@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './testing.dart';
 import './tab_page.dart';
+import './teacher_portal/individual_class_teacher.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: TabPage(),
-      
+      routes: {
+        IndividualClassTeacher.routeName: (context) => IndividualClassTeacher(),
+      },
     );
   }
 }
