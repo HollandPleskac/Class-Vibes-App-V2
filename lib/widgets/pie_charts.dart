@@ -15,9 +15,7 @@ class PieChart2State extends State {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.3,
-      child: Card(
-        color: Colors.white,
-        child: Row(
+      child: Row(
           children: <Widget>[
             const SizedBox(
               height: 18,
@@ -39,7 +37,7 @@ class PieChart2State extends State {
                         });
                       }),
                       borderData: FlBorderData(
-                        show: true,
+                        show: false,
                       ),
                       sectionsSpace: 0,
                       centerSpaceRadius: 40,
@@ -47,8 +45,7 @@ class PieChart2State extends State {
                 ),
               ),
             ),
-            Container(
-              color: Colors.brown,
+            Padding(
               padding: EdgeInsets.only(right: 38, left: 30),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -95,7 +92,7 @@ class PieChart2State extends State {
             // ),
           ],
         ),
-      ),
+      
     );
   }
 
