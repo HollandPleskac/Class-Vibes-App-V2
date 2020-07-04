@@ -14,7 +14,7 @@ class PieChart2State extends State {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.3,
+      aspectRatio: 1.4,
       child: Row(
           children: <Widget>[
             const SizedBox(
