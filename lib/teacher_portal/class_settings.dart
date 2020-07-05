@@ -1,7 +1,6 @@
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../constant.dart';
 
@@ -35,7 +34,24 @@ class _ClassSettingsState extends State<ClassSettings> {
             EditClassName(
               controller: _classNameController,
             ),
+            SizedBox(
+              height: 20,
+            ),
             IsAcceptingJoin(isSwitched),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GenerateNewClassCode(),
+                SizedBox(
+                  width: 20,
+                ),
+                DeleteClass(),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
@@ -55,13 +71,15 @@ class EditClassName extends StatelessWidget {
           width: 20,
         ),
         Container(
-          width: MediaQuery.of(context).size.width * 0.75,
+          width: MediaQuery.of(context).size.width * 0.725,
           child: TextField(
             controller: controller,
             decoration: InputDecoration(
               labelText: 'Class Name',
 
-              labelStyle: TextStyle(fontSize: 16),
+              labelStyle: TextStyle(
+                fontSize: 16,
+              ),
               // border: OutlineInputBorder(
               //   borderSide: BorderSide(width: 80),
               //   borderRadius: BorderRadius.circular(5),
@@ -69,20 +87,21 @@ class EditClassName extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          width: 25,
-        ),
+        Spacer(),
         ClipOval(
           child: Material(
-            color: Colors.white, // button color
+            color: Colors.transparent, // button color
+
             child: InkWell(
-              splashColor: kPrimaryColor, // inkwell color
+              splashColor: Colors.blue,
               child: SizedBox(
                 width: 50,
                 height: 50,
                 child: Center(
                   child: FaIcon(
                     FontAwesomeIcons.check,
+                    color: kPrimaryColor,
+                    
                   ),
                 ),
               ),
@@ -92,25 +111,105 @@ class EditClassName extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(
+          width: 25,
+        ),
       ],
     );
   }
 }
 
 class IsAcceptingJoin extends StatefulWidget {
-  bool isSwitched;
+  final bool isSwitched;
 
-  IsAcceptingJoin(this.isSwitched);
+  IsAcceptingJoin(
+    this.isSwitched,
+  );
 
   @override
-  _IsAcceptingJoinState createState() => _IsAcceptingJoinState();
+  _IsAcceptingJoinState createState() => _IsAcceptingJoinState(isSwitched);
 }
 
 class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
+  bool isSwitched;
+
+  _IsAcceptingJoinState(this.isSwitched);
   @override
   Widget build(BuildContext context) {
-    return Switch(
-      value: false,
+    return Row(
+      children: [
+        SizedBox(
+          width: 20,
+        ),
+        Text(
+          'Allow students to join',
+          style: TextStyle(
+            color: kWetAsphaltColor,
+            fontSize: 18,
+          ),
+        ),
+        Spacer(),
+        CupertinoSwitch(
+          value: isSwitched,
+          onChanged: (value) {
+            setState(() {
+              isSwitched = value;
+            });
+          },
+          activeColor: kPrimaryColor,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+      ],
+    );
+  }
+}
+
+class DeleteClass extends StatefulWidget {
+  @override
+  _DeleteClassState createState() => _DeleteClassState();
+}
+
+class _DeleteClassState extends State<DeleteClass> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FlatButton(
+        child: Text(
+          'Delete Class',
+          style: TextStyle(color: Colors.red, fontSize: 16),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        color: Colors.grey[300],
+        onPressed: () {
+          print('deleting class');
+        },
+      ),
+    );
+  }
+}
+
+class GenerateNewClassCode extends StatefulWidget {
+  @override
+  _GenerateNewClassCodeState createState() => _GenerateNewClassCodeState();
+}
+
+class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FlatButton(
+        child: Text(
+          'New Class Code',
+          style: TextStyle(color: kPrimaryColor, fontSize: 16),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        color: Colors.grey[300],
+        onPressed: () {
+          print('new class code');
+        },
+      ),
     );
   }
 }
