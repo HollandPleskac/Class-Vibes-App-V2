@@ -59,6 +59,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           .map((DocumentSnapshot document) {
                         return GestureDetector(
                           onTap: () {
+                          
                             Navigator.pushNamed(
                               context,
                               ViewClass.routeName,
@@ -104,11 +105,14 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               Positioned(
                                 top: 0,
                                 right: 0,
-                                child: InkWell(
-                                  onTap: () {
-                                    print('tap');
-                                  },
-                                  borderRadius: BorderRadius.circular(3000),
+                                child: GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    ClassSettings.routeName,
+                                    arguments: {
+                                      'class name': document['ClassName']
+                                    },
+                                  ),
                                   child: Container(
                                     height: 38,
                                     width: 38,
@@ -117,20 +121,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       color: kPrimaryColor,
                                     ),
                                     child: Center(
-                                      child: GestureDetector(
-                                        onTap: () => Navigator.pushNamed(
-                                          context,
-                                          ClassSettings
-                                              .routeName,
-                                          arguments: {
-                                            'class name': document['ClassName']
-                                          },
-                                        ),
-                                        child: FaIcon(
-                                          FontAwesomeIcons.cog,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.cog,
+                                        color: Colors.white,
+                                        size: 20,
                                       ),
                                     ),
                                   ),

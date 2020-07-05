@@ -1,5 +1,5 @@
+import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ClassSettings extends StatefulWidget {
@@ -14,7 +14,12 @@ class _ClassSettingsState extends State<ClassSettings> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String className = routeArguments['class name'];
     return Scaffold(
-      
+      appBar: AppBar(
+        title: Text(className),
+        centerTitle: true,
+        backgroundColor: kWetAsphaltColor,
+      ),
+      body: Container(),
     );
   }
 }
