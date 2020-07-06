@@ -11,6 +11,11 @@ class ViewClass extends StatefulWidget {
 }
 
 class _ViewClassState extends State<ViewClass> {
+  bool isTouchedAll = true;
+  bool isTouchedDoingGreat = false;
+  bool isTouchedNeedHelp = false;
+  bool isTouchedFrustrated = false;
+  bool isTouchedInactive = false;
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
@@ -34,7 +39,7 @@ class _ViewClassState extends State<ViewClass> {
                   padding: const EdgeInsets.only(left: 10),
                   child: Button(
                     name: 'All',
-                    isTouched: false,
+                    isTouched: true,
                   ),
                 ),
                 Padding(
@@ -59,7 +64,7 @@ class _ViewClassState extends State<ViewClass> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.only(left: 8, right: 10),
                   child: Button(
                     name: 'Inactive',
                     isTouched: false,
@@ -114,27 +119,34 @@ class _ViewClassState extends State<ViewClass> {
   }
 }
 
-class Button extends StatelessWidget {
+class Button extends StatefulWidget {
   final String name;
-  final bool isTouched;
+  bool isTouched;
 
   Button({this.name, this.isTouched});
+
+  @override
+  _ButtonState createState() => _ButtonState();
+}
+
+class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: isTouched == true
-            ? Color.fromRGBO(225, 225, 225, 1)
-            : Colors.grey[300],
-        borderRadius: BorderRadius.circular(20),
-      ),
-      // height: 35, height is determined by the listview
-      width: 92.5,
-      child: Center(
+      width: 92,
+      child: FlatButton(
+        padding: EdgeInsets.all(2),
+        color: widget.isTouched == true ? Colors.grey[300] : Colors.grey[200],
+        onPressed: () {
+          setState(() {
+            widget.isTouched = true;
+          });
+        },
         child: Text(
-          name,
+          widget.name,
           style: TextStyle(
-              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
+              color:
+                  widget.isTouched == true ? kPrimaryColor : Colors.grey[700],
               fontWeight: FontWeight.w600,
               fontSize: 13.5),
         ),
