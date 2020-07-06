@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 import '../constant.dart';
 
@@ -14,7 +15,6 @@ class AllTab extends StatelessWidget {
           .collection('Classes')
           .document('test class app ui')
           .collection('Students')
-          
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -59,6 +59,12 @@ class DoingGreatTab extends StatelessWidget {
           .document('test class app ui')
           .collection('Students')
           .where("status", isEqualTo: 'doing great')
+          .where(
+            "date",
+            isGreaterThan: DateTime.now().subtract(
+              Duration(days: 5),
+            ),
+          )
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -103,6 +109,12 @@ class NeedHelpTab extends StatelessWidget {
           .document('test class app ui')
           .collection('Students')
           .where("status", isEqualTo: 'need help')
+          .where(
+            "date",
+            isGreaterThan: DateTime.now().subtract(
+              Duration(days: 5),
+            ),
+          )
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -147,6 +159,12 @@ class FrustratedTab extends StatelessWidget {
           .document('test class app ui')
           .collection('Students')
           .where("status", isEqualTo: 'frustrated')
+          .where(
+            "date",
+            isGreaterThan: DateTime.now().subtract(
+              Duration(days: 5),
+            ),
+          )
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -190,7 +208,12 @@ class InactiveTab extends StatelessWidget {
           .collection('Classes')
           .document('test class app ui')
           .collection('Students')
-          .where("status", isEqualTo: 'grey')
+          .where(
+            "date",
+            isLessThan: DateTime.now().subtract(
+              Duration(days: 5),
+            ),
+          )
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {

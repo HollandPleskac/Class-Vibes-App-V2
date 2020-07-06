@@ -36,6 +36,7 @@ dependencies:
   curved_navigation_bar: ^0.3.3
   numberpicker: ^1.2.0
   pin_entry_text_field: ^0.1.4
+  intl: ^0.16.1
 
 
 
