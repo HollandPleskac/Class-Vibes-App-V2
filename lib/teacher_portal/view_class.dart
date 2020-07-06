@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/pie_charts.dart';
+import '../widgets/filtered_tabs.dart';
 import '../constant.dart';
 
 class ViewClass extends StatefulWidget {
@@ -31,7 +32,6 @@ class _ViewClassState extends State<ViewClass> {
       body: Column(
         children: [
           PieChartSampleBig(),
-          
           Container(
             height: 32.5,
             child: ListView(
@@ -66,40 +66,50 @@ class _ViewClassState extends State<ViewClass> {
           ),
           Container(
             height: 360,
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              children: [
-                Student(
-                  name: 'Holland Pleskac',
-                  status: 'Doing Great',
-                  profilePictureLink:
-                      'https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70',
-                ),
-                Student(
-                  name: 'Shabd Veyyakula',
-                  status: 'Need Help',
-                  profilePictureLink:
-                      'https://img-cdn.tid.al/o/4858a4b2723b7d0c7d05584ff57701f7b0c54ce3.jpg',
-                ),
-                Student(
-                  name: 'Kushagra Singh',
-                  status: 'Inactive',
-                  profilePictureLink:
-                      'https://lh3.googleusercontent.com/proxy/s4loFI-1bt-dxkFqW8EnFXewl1hnBisUyUiQ_Mo6ucc8tSOSMvud02ylLQpj03vF8I_I9Qrb5qHCRyB20xrz0uy5_rE-1NuKdCWvEcHSo4jCB4guthqJqNnDIe-9K-5-zNamW3efFyfHuD-SQ6D_O8LFICvL9Lyi-g',
-                ),
-                Student(
-                  name: 'Pranav Krishna',
-                  status: 'Frustrated',
-                  profilePictureLink: null,
-                ),
-                Student(
-                  name: 'Advithi Kethidi',
-                  status: 'Inactive',
-                  profilePictureLink:
-                      'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                ),
-              ],
-            ),
+            child: _isTouchedAll == true
+                ? ListView(
+                    physics: BouncingScrollPhysics(),
+                    children: [
+                      Student(
+                        name: 'Holland Pleskac',
+                        status: 'Doing Great',
+                        profilePictureLink:
+                            'https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70',
+                      ),
+                      Student(
+                        name: 'Shabd Veyyakula',
+                        status: 'Need Help',
+                        profilePictureLink:
+                            'https://img-cdn.tid.al/o/4858a4b2723b7d0c7d05584ff57701f7b0c54ce3.jpg',
+                      ),
+                      Student(
+                        name: 'Kushagra Singh',
+                        status: 'Inactive',
+                        profilePictureLink:
+                            'https://lh3.googleusercontent.com/proxy/s4loFI-1bt-dxkFqW8EnFXewl1hnBisUyUiQ_Mo6ucc8tSOSMvud02ylLQpj03vF8I_I9Qrb5qHCRyB20xrz0uy5_rE-1NuKdCWvEcHSo4jCB4guthqJqNnDIe-9K-5-zNamW3efFyfHuD-SQ6D_O8LFICvL9Lyi-g',
+                      ),
+                      Student(
+                        name: 'Pranav Krishna',
+                        status: 'Frustrated',
+                        profilePictureLink: null,
+                      ),
+                      Student(
+                        name: 'Advithi Kethidi',
+                        status: 'Inactive',
+                        profilePictureLink:
+                            'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                      ),
+                    ],
+                  )
+                : _isTouchedDoingGreat
+                    ? DoingGreatTab()
+                    : _isTouchedNeedHelp
+                        ? Text('need help')
+                        : _isTouchedFrustrated
+                            ? Text('frustrated')
+                            : _isTouchedInactive
+                                ? Text('inactive')
+                                : Text('IMPORTANT - this text will never show since the first values will always be true'),
           ),
         ],
       ),
@@ -186,7 +196,6 @@ class Student extends StatelessWidget {
   }
 }
 
-
 ///
 ///                                            Filter Buttons
 ///
@@ -205,8 +214,9 @@ class FilterAll extends StatelessWidget {
       width: 92,
       child: FlatButton(
         padding: EdgeInsets.all(2),
-        color:
-        this.parent._isTouchedAll == true ? Colors.grey[300] : Colors.grey[200],
+        color: this.parent._isTouchedAll == true
+            ? Colors.grey[300]
+            : Colors.grey[200],
         onPressed: () {
           this.parent.setState(() {
             this.parent._isTouchedAll = true;
@@ -240,8 +250,9 @@ class FilterDoingGreat extends StatelessWidget {
       width: 92,
       child: FlatButton(
         padding: EdgeInsets.all(2),
-        color:
-        this.parent._isTouchedDoingGreat == true ? Colors.grey[300] : Colors.grey[200],
+        color: this.parent._isTouchedDoingGreat == true
+            ? Colors.grey[300]
+            : Colors.grey[200],
         onPressed: () {
           this.parent.setState(() {
             this.parent._isTouchedAll = false;
@@ -275,8 +286,9 @@ class FilterNeedHelp extends StatelessWidget {
       width: 92,
       child: FlatButton(
         padding: EdgeInsets.all(2),
-        color:
-        this.parent._isTouchedNeedHelp == true ? Colors.grey[300] : Colors.grey[200],
+        color: this.parent._isTouchedNeedHelp == true
+            ? Colors.grey[300]
+            : Colors.grey[200],
         onPressed: () {
           this.parent.setState(() {
             this.parent._isTouchedAll = false;
@@ -310,8 +322,9 @@ class FilterFrustrated extends StatelessWidget {
       width: 92,
       child: FlatButton(
         padding: EdgeInsets.all(2),
-        color:
-        this.parent._isTouchedFrustrated == true ? Colors.grey[300] : Colors.grey[200],
+        color: this.parent._isTouchedFrustrated == true
+            ? Colors.grey[300]
+            : Colors.grey[200],
         onPressed: () {
           this.parent.setState(() {
             this.parent._isTouchedAll = false;
@@ -345,8 +358,9 @@ class FilterInactive extends StatelessWidget {
       width: 92,
       child: FlatButton(
         padding: EdgeInsets.all(2),
-        color:
-        this.parent._isTouchedInactive == true ? Colors.grey[300] : Colors.grey[200],
+        color: this.parent._isTouchedInactive == true
+            ? Colors.grey[300]
+            : Colors.grey[200],
         onPressed: () {
           this.parent.setState(() {
             this.parent._isTouchedAll = false;
