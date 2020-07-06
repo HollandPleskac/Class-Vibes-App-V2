@@ -32,22 +32,22 @@ class _ClassSettingsState extends State<ClassSettings> {
         child: Column(
           children: [
             SizedBox(
-              height: 25,
+              height: 50,
             ),
             EditClassName(
               controller: _classNameController,
             ),
             SizedBox(
-              height: 25,
+              height: 50,
             ),
             IsAcceptingJoin(isSwitched),
             SizedBox(
-              height: 25,
+              height: 50,
             ),
             ClassCode(),
-            SizedBox(
-              height: 25,
-            ),
+            // SizedBox(
+            //   height: 25,
+            // ),
             InactiveDaysPicker(daysInactive),
             Spacer(),
             Row(
@@ -87,14 +87,7 @@ class EditClassName extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(
               labelText: 'Class Name',
-
-              labelStyle: TextStyle(
-                fontSize: 16,
-              ),
-              // border: OutlineInputBorder(
-              //   borderSide: BorderSide(width: 80),
-              //   borderRadius: BorderRadius.circular(5),
-              // ),
+              labelStyle: TextStyle(fontSize: 16,color: kWetAsphaltColor),
             ),
           ),
         ),
@@ -237,11 +230,20 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
   _InactiveDaysPickerState(this.daysInactive);
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
+        SizedBox(
+          width: 20,
+        ),
+        Text(
+          'Student Inactive Days',
+          style: TextStyle(fontSize: 18, color: kWetAsphaltColor),
+        ),
+        Spacer(),
         NumberPicker.integer(
+          scrollDirection: Axis.horizontal,
           initialValue: daysInactive,
-          minValue: 3,
+          minValue: 1,
           maxValue: 7,
           onChanged: (newValue) {
             setState(() {
@@ -249,9 +251,8 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
             });
           },
         ),
-        Text(
-          'Student Inactive Days : ' + daysInactive.toString(),
-          style: TextStyle(fontSize: 16, color: kWetAsphaltColor),
+        SizedBox(
+          width: 20,
         ),
       ],
     );
@@ -285,16 +286,16 @@ class _ClassCodeState extends State<ClassCode> {
             Text(
               'L',
               style: TextStyle(
-                color: kWetAsphaltColor,
-                fontSize: 16,
-              ),
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 6,
             ),
             Container(
-              color: kWetAsphaltColor,
-              height: 1,
+              color: kPrimaryColor,
+              height: 2,
               width: 25,
             ),
           ],
@@ -308,16 +309,16 @@ class _ClassCodeState extends State<ClassCode> {
             Text(
               'K',
               style: TextStyle(
-                color: kWetAsphaltColor,
-                fontSize: 16,
-              ),
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 6,
             ),
             Container(
-              color: kWetAsphaltColor,
-              height: 1,
+              color: kPrimaryColor,
+              height: 2,
               width: 25,
             ),
           ],
@@ -331,16 +332,16 @@ class _ClassCodeState extends State<ClassCode> {
             Text(
               '1',
               style: TextStyle(
-                color: kWetAsphaltColor,
-                fontSize: 16,
-              ),
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 6,
             ),
             Container(
-              color: kWetAsphaltColor,
-              height: 1,
+              color: kPrimaryColor,
+              height: 2,
               width: 25,
             ),
           ],
@@ -354,16 +355,16 @@ class _ClassCodeState extends State<ClassCode> {
             Text(
               'D',
               style: TextStyle(
-                color: kWetAsphaltColor,
-                fontSize: 16,
-              ),
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 6,
             ),
             Container(
-              color: kWetAsphaltColor,
-              height: 1,
+              color: kPrimaryColor,
+              height: 2,
               width: 25,
             ),
           ],
@@ -377,16 +378,16 @@ class _ClassCodeState extends State<ClassCode> {
             Text(
               '9',
               style: TextStyle(
-                color: kWetAsphaltColor,
-                fontSize: 16,
-              ),
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 6,
             ),
             Container(
-              color: kWetAsphaltColor,
-              height: 1,
+              color: kPrimaryColor,
+              height: 2,
               width: 25,
             ),
           ],
@@ -400,16 +401,16 @@ class _ClassCodeState extends State<ClassCode> {
             Text(
               'A',
               style: TextStyle(
-                color: kWetAsphaltColor,
-                fontSize: 16,
-              ),
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 6,
             ),
             Container(
-              color: kWetAsphaltColor,
-              height: 1,
+              color: kPrimaryColor,
+              height: 2,
               width: 25,
             ),
           ],
