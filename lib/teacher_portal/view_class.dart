@@ -28,6 +28,7 @@ class _ViewClassState extends State<ViewClass> {
             height: 32.5,
             child: ListView(
               scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
@@ -75,18 +76,40 @@ class _ViewClassState extends State<ViewClass> {
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [
-                Student(name: 'Holland Pleskac', status: 'Doing Great'),
-                Student(name: 'Shabd Veyyakula', status: 'Need Help'),
-                Student(name: 'Kushagra Singh', status: 'Inactive'),
-                Student(name: 'Pranav Krishna', status: 'Frustrated'),
-                Student(name: 'Advithi Kethidi', status: 'Inactive'),
+                Student(
+                  name: 'Holland Pleskac',
+                  status: 'Doing Great',
+                  profilePictureLink:
+                      'https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70',
+                ),
+                Student(
+                  name: 'Shabd Veyyakula',
+                  status: 'Need Help',
+                  profilePictureLink:
+                      'https://img-cdn.tid.al/o/4858a4b2723b7d0c7d05584ff57701f7b0c54ce3.jpg',
+                ),
+                Student(
+                  name: 'Kushagra Singh',
+                  status: 'Inactive',
+                  profilePictureLink:
+                      'https://lh3.googleusercontent.com/proxy/s4loFI-1bt-dxkFqW8EnFXewl1hnBisUyUiQ_Mo6ucc8tSOSMvud02ylLQpj03vF8I_I9Qrb5qHCRyB20xrz0uy5_rE-1NuKdCWvEcHSo4jCB4guthqJqNnDIe-9K-5-zNamW3efFyfHuD-SQ6D_O8LFICvL9Lyi-g',
+                ),
+                Student(
+                  name: 'Pranav Krishna',
+                  status: 'Frustrated',
+                  profilePictureLink: null,
+                ),
+                Student(
+                  name: 'Advithi Kethidi',
+                  status: 'Inactive',
+                  profilePictureLink:
+                      'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                ),
               ],
             ),
           ),
         ],
       ),
-    
-      
     );
   }
 }
@@ -100,17 +123,18 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: isTouched == true
-              ? Color.fromRGBO(225, 225, 225, 1)
-              : Colors.grey[300],
-          borderRadius: BorderRadius.circular(20)),
-      // height: 35,
+        color: isTouched == true
+            ? Color.fromRGBO(225, 225, 225, 1)
+            : Colors.grey[300],
+        borderRadius: BorderRadius.circular(20),
+      ),
+      // height: 35, height is determined by the listview
       width: 92.5,
       child: Center(
         child: Text(
           name,
           style: TextStyle(
-              color: isTouched == true ? Colors.blue[600] : Colors.grey[700],
+              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
               fontWeight: FontWeight.w600,
               fontSize: 13.5),
         ),
@@ -122,8 +146,9 @@ class Button extends StatelessWidget {
 class Student extends StatelessWidget {
   final String name;
   final String status;
+  final String profilePictureLink;
 
-  Student({this.name, this.status});
+  Student({this.name, this.status, this.profilePictureLink});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -138,12 +163,25 @@ class Student extends StatelessWidget {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(13),
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(9999),
             ),
-            child: Center(
-              child: FaIcon(FontAwesomeIcons.userAlt),
-            ),
+            child: profilePictureLink == null
+                ? Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.userAlt,
+                      color: kPrimaryColor,
+                    ),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(9999),
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: Image.network(
+                        profilePictureLink,
+                      ),
+                    ),
+                  ),
           ),
           SizedBox(
             width: 20,
