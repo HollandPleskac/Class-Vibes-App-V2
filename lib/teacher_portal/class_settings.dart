@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 import '../constant.dart';
 
@@ -14,12 +15,14 @@ class _ClassSettingsState extends State<ClassSettings> {
   final TextEditingController _classNameController = TextEditingController();
 
   var isSwitched = false;
+  int daysInactive = 3;
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String className = routeArguments['class name'];
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(className),
         centerTitle: true,
@@ -29,15 +32,23 @@ class _ClassSettingsState extends State<ClassSettings> {
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: 25,
             ),
             EditClassName(
               controller: _classNameController,
             ),
             SizedBox(
-              height: 20,
+              height: 25,
             ),
             IsAcceptingJoin(isSwitched),
+            SizedBox(
+              height: 25,
+            ),
+            ClassCode(),
+            SizedBox(
+              height: 25,
+            ),
+            InactiveDaysPicker(daysInactive),
             Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +112,6 @@ class EditClassName extends StatelessWidget {
                   child: FaIcon(
                     FontAwesomeIcons.check,
                     color: kPrimaryColor,
-                    
                   ),
                 ),
               ),
@@ -210,6 +220,204 @@ class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
           print('new class code');
         },
       ),
+    );
+  }
+}
+
+class InactiveDaysPicker extends StatefulWidget {
+  final int daysInactive;
+  InactiveDaysPicker(this.daysInactive);
+  @override
+  _InactiveDaysPickerState createState() =>
+      _InactiveDaysPickerState(daysInactive);
+}
+
+class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
+  int daysInactive;
+  _InactiveDaysPickerState(this.daysInactive);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        NumberPicker.integer(
+          initialValue: daysInactive,
+          minValue: 3,
+          maxValue: 7,
+          onChanged: (newValue) {
+            setState(() {
+              daysInactive = newValue;
+            });
+          },
+        ),
+        Text(
+          'Student Inactive Days : ' + daysInactive.toString(),
+          style: TextStyle(fontSize: 16, color: kWetAsphaltColor),
+        ),
+      ],
+    );
+  }
+}
+
+class ClassCode extends StatefulWidget {
+  @override
+  _ClassCodeState createState() => _ClassCodeState();
+}
+
+class _ClassCodeState extends State<ClassCode> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 20,
+        ),
+        Text(
+          'Class Code',
+          style: TextStyle(
+            color: kWetAsphaltColor,
+            fontSize: 18,
+          ),
+        ),
+        Spacer(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'L',
+              style: TextStyle(
+                color: kWetAsphaltColor,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Container(
+              color: kWetAsphaltColor,
+              height: 1,
+              width: 25,
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'K',
+              style: TextStyle(
+                color: kWetAsphaltColor,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Container(
+              color: kWetAsphaltColor,
+              height: 1,
+              width: 25,
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '1',
+              style: TextStyle(
+                color: kWetAsphaltColor,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Container(
+              color: kWetAsphaltColor,
+              height: 1,
+              width: 25,
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'D',
+              style: TextStyle(
+                color: kWetAsphaltColor,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Container(
+              color: kWetAsphaltColor,
+              height: 1,
+              width: 25,
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '9',
+              style: TextStyle(
+                color: kWetAsphaltColor,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Container(
+              color: kWetAsphaltColor,
+              height: 1,
+              width: 25,
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'A',
+              style: TextStyle(
+                color: kWetAsphaltColor,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Container(
+              color: kWetAsphaltColor,
+              height: 1,
+              width: 25,
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 20,
+        ),
+      ],
     );
   }
 }
