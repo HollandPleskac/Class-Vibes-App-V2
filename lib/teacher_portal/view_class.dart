@@ -133,12 +133,8 @@ class _ViewClassState extends State<ViewClass> {
   }
 }
 
-class DynamicPieChart extends StatefulWidget {
-  @override
-  _DynamicPieChartState createState() => _DynamicPieChartState();
-}
+class DynamicPieChart extends StatelessWidget {
 
-class _DynamicPieChartState extends State<DynamicPieChart> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -225,14 +221,17 @@ class _DynamicPieChartState extends State<DynamicPieChart> {
             if (snapshot.data != null &&
                 snapshot.data.documents.isEmpty == false) {
               return PieChartSampleBig(
+                //graph percentage
                 doingGreatStudents: doingGreatStudents,
                 needHelpStudents: needHelpStudents,
                 frustratedStudents: frustratedStudents,
                 inactiveStudents: inactiveStudents,
+                //graph titles
                 doingGreatPercentage: doingGreatPercentage,
                 needHelpPercentage: needHelpPercentage,
                 frustratedPercentage: frustratedPercentage,
                 inactivePercentage: inactivePercentage,
+                
               );
             } else {
               return Center(

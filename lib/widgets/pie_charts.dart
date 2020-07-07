@@ -4,24 +4,30 @@ import 'package:fl_chart/fl_chart.dart';
 import '../constant.dart';
 
 class PieChartSampleBig extends StatefulWidget {
+  // chart values
   double doingGreatStudents;
   double needHelpStudents;
   double frustratedStudents;
   double inactiveStudents;
+  // chart titles
   String doingGreatPercentage;
   String needHelpPercentage;
   String frustratedPercentage;
   String inactivePercentage;
 
+
   PieChartSampleBig({
+    // values
     this.doingGreatStudents,
     this.needHelpStudents,
     this.frustratedStudents,
     this.inactiveStudents,
+    // graph title
     this.doingGreatPercentage,
     this.needHelpPercentage,
     this.frustratedPercentage,
     this.inactivePercentage,
+
   });
   @override
   _PieChartSampleBigState createState() => _PieChartSampleBigState();
@@ -50,8 +56,10 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                         if (pieTouchResponse.touchInput is FlLongPressEnd ||
                             pieTouchResponse.touchInput is FlPanEnd) {
                           touchedIndex = -1;
+                          
                         } else {
                           touchedIndex = pieTouchResponse.touchedSectionIndex;
+                        
                         }
                       });
                     }),
@@ -121,10 +129,13 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
       final double radius = isTouched ? 60 : 50;
       switch (i) {
         case 0:
+        
           return PieChartSectionData(
             color: kPieChartDoingGreatColor,
             value: widget.doingGreatStudents,
-            title: widget.doingGreatStudents != 0 ? widget.doingGreatPercentage : '',
+            title: widget.doingGreatStudents != 0
+                ? widget.doingGreatPercentage
+                : '',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -160,7 +171,8 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartInactiveColor,
             value: widget.inactiveStudents,
-            title: widget.inactiveStudents != 0 ? widget.inactivePercentage : '',
+            title:
+                widget.inactiveStudents != 0 ? widget.inactivePercentage : '',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
