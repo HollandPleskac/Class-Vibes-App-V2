@@ -17,8 +17,6 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> {
-
-
   int selectedIndex = 1;
 
   PageController controller = PageController(initialPage: 1);
@@ -30,31 +28,16 @@ class _TabPageState extends State<TabPage> {
   ];
 
   List<FaIcon> items = [
-    // Icon(
-    //   Icons.verified_user,
-    //   size: 25,
-    //   color: Colors.black,
-    // ),
     FaIcon(
       FontAwesomeIcons.graduationCap,
       size: 20,
       color: Colors.white,
     ),
-    // Icon(
-    //   Icons.verified_user,
-    //   size: 25,
-    //   color: Colors.black,
-    // ),
     FaIcon(
       FontAwesomeIcons.stream,
       size: 20,
       color: Colors.white,
     ),
-    // Icon(
-    //   Icons.verified_user,
-    //   size: 25,
-    //   color: Colors.black,
-    // ),
     FaIcon(
       FontAwesomeIcons.userAlt,
       size: 20,
@@ -84,18 +67,9 @@ class _TabPageState extends State<TabPage> {
           );
         },
         physics: BouncingScrollPhysics(),
-        itemCount:
-            screens.length, //Can be null - prevents overflow w/ page view
+        itemCount: screens.length,
+        //Can be null - prevents overflow w/ page view
       ),
-      // floatingActionButton: selectedIndex == 1 ? FloatingActionButton(
-        
-      //   child: Icon(Icons.add,size: 25,color: Colors.white,),
-      //   backgroundColor: kPrimaryColor,
-      //   splashColor: Colors.blue[900],
-      //   onPressed: () {
-      //     print('pressed the add class button');
-      //   },
-      // ) : Container(),
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
           color: kWetAsphaltColor,
@@ -105,8 +79,8 @@ class _TabPageState extends State<TabPage> {
           height: 60,
 
           items: items, // list of items above
-          index:
-              selectedIndex, //Do not need to specify index - only if using page controller
+          index: selectedIndex,
+          //Do not need to specify index - only if using page controller
           onTap: (index) {
             setState(() {
               selectedIndex = index;

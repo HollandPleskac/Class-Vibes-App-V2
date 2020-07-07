@@ -158,58 +158,11 @@ class DynamicPieChart extends StatelessWidget {
           .collection('Students')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        final double doingGreatStudents = snapshot.data.documents
-            .where((document) => document["status"] == "doing great")
-            .where((documentSnapshot) =>
-                DateTime.now()
-                    .difference(
-                      DateTime.parse(
-                          documentSnapshot.data['date'].toDate().toString()),
-                    )
-                    .inDays <
-                5)
-            .length
-            .toDouble();
-        var needHelpStudents = snapshot.data.documents
-            .where((documentSnapshot) =>
-                documentSnapshot.data['status'] == 'need help')
-            .where((documentSnapshot) =>
-                DateTime.now()
-                    .difference(
-                      DateTime.parse(
-                          documentSnapshot.data['date'].toDate().toString()),
-                    )
-                    .inDays <
-                5)
-            .length
-            .toDouble();
-        var frustratedStudents = snapshot.data.documents
-            .where((documentSnapshot) =>
-                documentSnapshot.data['status'] == 'frustrated')
-            .where((documentSnapshot) =>
-                DateTime.now()
-                    .difference(
-                      DateTime.parse(
-                          documentSnapshot.data['date'].toDate().toString()),
-                    )
-                    .inDays <
-                5)
-            .length
-            .toDouble();
-        var inactiveStudents = snapshot.data.documents
-            .where((documentSnapshot) =>
-                DateTime.now()
-                    .difference(
-                      DateTime.parse(
-                          documentSnapshot.data['date'].toDate().toString()),
-                    )
-                    .inDays >
-                5)
-            .length
-            .toDouble();
-
         if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Text('Error');
+        }
+        if (!snapshot.hasData) {
+          return Container();
         }
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -221,6 +174,59 @@ class DynamicPieChart extends StatelessWidget {
           default:
             if (snapshot.data != null &&
                 snapshot.data.documents.isEmpty == false) {
+              final double doingGreatStudents = snapshot.data.documents
+                  .where((document) => document["status"] == "doing great")
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays <
+                      5)
+                  .length
+                  .toDouble();
+              var needHelpStudents = snapshot.data.documents
+                  .where((documentSnapshot) =>
+                      documentSnapshot.data['status'] == 'need help')
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays <
+                      5)
+                  .length
+                  .toDouble();
+              var frustratedStudents = snapshot.data.documents
+                  .where((documentSnapshot) =>
+                      documentSnapshot.data['status'] == 'frustrated')
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays <
+                      5)
+                  .length
+                  .toDouble();
+              var inactiveStudents = snapshot.data.documents
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays >
+                      5)
+                  .length
+                  .toDouble();
               return PieChartSampleSmall(
                 //graph percentage
                 doingGreatStudents: doingGreatStudents,
@@ -230,7 +236,11 @@ class DynamicPieChart extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no data'),
+                child: Container(
+                  padding: EdgeInsets.only(top: 30),
+                  height: 70,
+                  child: Text('no data'),
+                ),
               );
             }
         }
