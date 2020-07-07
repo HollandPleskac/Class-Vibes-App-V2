@@ -63,7 +63,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               context,
                               ViewClass.routeName,
                               arguments: {
-                                'class name': document['ClassName'],
+                                'class name': document['class name'],
                               },
                             );
                           },
@@ -86,7 +86,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                         Padding(
                                           padding: EdgeInsets.only(bottom: 25),
                                           child: Text(
-                                            document['ClassName'],
+                                            document['class name'],
                                             style: kSubTextStyle.copyWith(
                                                 fontSize: 16),
                                           ),
@@ -109,7 +109,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                     context,
                                     ClassSettings.routeName,
                                     arguments: {
-                                      'class name': document['ClassName']
+                                      'class name': document['class name']
                                     },
                                   ),
                                   child: Container(

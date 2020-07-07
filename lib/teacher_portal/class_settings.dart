@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 import '../constant.dart';
+import '../logic/fire.dart';
+
+final _fire = Fire();
 
 class ClassSettings extends StatefulWidget {
   static const routeName = 'individual-class-settings-teacher';
@@ -109,6 +112,7 @@ class EditClassName extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                _fire.updateClassName('test class app ui',controller.text);
                 print('updated the class name');
               },
             ),
