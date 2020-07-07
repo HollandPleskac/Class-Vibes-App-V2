@@ -78,7 +78,8 @@ class _TabPageState extends State<TabPage> {
 
           height: 60,
 
-          items: items, // list of items above
+          items: items,
+          // list of items above
           index: selectedIndex,
           //Do not need to specify index - only if using page controller
           onTap: (index) {
