@@ -87,7 +87,7 @@ class EditClassName extends StatelessWidget {
             controller: controller,
             decoration: InputDecoration(
               labelText: 'Class Name',
-              labelStyle: TextStyle(fontSize: 16,color: kWetAsphaltColor),
+              labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
             ),
           ),
         ),
