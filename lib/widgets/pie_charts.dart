@@ -341,6 +341,23 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
 ///
 
 class PieChartSampleSmall extends StatefulWidget {
+    // chart values
+  double doingGreatStudents;
+  double needHelpStudents;
+  double frustratedStudents;
+  double inactiveStudents;
+
+
+
+  PieChartSampleSmall({
+    // values
+    this.doingGreatStudents,
+    this.needHelpStudents,
+    this.frustratedStudents,
+    this.inactiveStudents,
+
+
+  });
   @override
   _PieChartSampleSmallState createState() => _PieChartSampleSmallState();
 }
@@ -370,29 +387,29 @@ class _PieChartSampleSmallState extends State<PieChartSampleSmall> {
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
+            color: kPieChartDoingGreatColor,
+            value: widget.doingGreatStudents,
             title: '',
             radius: radius,
           );
         case 1:
           return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
+            color: kPieChartNeedHelpColor,
+            value: widget.needHelpStudents,
             title: '',
             radius: radius,
           );
         case 2:
           return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
+            color: kPieChartFrustratedColor,
+            value: widget.frustratedStudents,
             title: '',
             radius: radius,
           );
         case 3:
           return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
+            color: kPieChartInactiveColor,
+            value: widget.inactiveStudents,
             title: '',
             radius: radius,
           );

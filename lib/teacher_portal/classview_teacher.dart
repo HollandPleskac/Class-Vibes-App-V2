@@ -59,7 +59,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           .map((DocumentSnapshot document) {
                         return GestureDetector(
                           onTap: () {
-                          
                             Navigator.pushNamed(
                               context,
                               ViewClass.routeName,
@@ -83,7 +82,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                         SizedBox(
                                           height: 10,
                                         ),
-                                        PieChartSampleSmall(),
+                                        DynamicPieChart(),
                                         Padding(
                                           padding: EdgeInsets.only(bottom: 25),
                                           child: Text(
@@ -145,6 +144,97 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
           },
         ),
       ),
+    );
+  }
+}
+
+class DynamicPieChart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Classes')
+          .document('test class app ui')
+          .collection('Students')
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        final double doingGreatStudents = snapshot.data.documents
+            .where((document) => document["status"] == "doing great")
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays <
+                5)
+            .length
+            .toDouble();
+        var needHelpStudents = snapshot.data.documents
+            .where((documentSnapshot) =>
+                documentSnapshot.data['status'] == 'need help')
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays <
+                5)
+            .length
+            .toDouble();
+        var frustratedStudents = snapshot.data.documents
+            .where((documentSnapshot) =>
+                documentSnapshot.data['status'] == 'frustrated')
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays <
+                5)
+            .length
+            .toDouble();
+        var inactiveStudents = snapshot.data.documents
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays >
+                5)
+            .length
+            .toDouble();
+
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.35,
+              ),
+            );
+          default:
+            if (snapshot.data != null &&
+                snapshot.data.documents.isEmpty == false) {
+              return PieChartSampleSmall(
+                //graph percentage
+                doingGreatStudents: doingGreatStudents,
+                needHelpStudents: needHelpStudents,
+                frustratedStudents: frustratedStudents,
+                inactiveStudents: inactiveStudents,
+              );
+            } else {
+              return Center(
+                child: Text('no data'),
+              );
+            }
+        }
+      },
     );
   }
 }

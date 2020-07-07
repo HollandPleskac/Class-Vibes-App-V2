@@ -134,7 +134,6 @@ class _ViewClassState extends State<ViewClass> {
 }
 
 class DynamicPieChart extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -231,7 +230,6 @@ class DynamicPieChart extends StatelessWidget {
                 needHelpPercentage: needHelpPercentage,
                 frustratedPercentage: frustratedPercentage,
                 inactivePercentage: inactivePercentage,
-                
               );
             } else {
               return Center(
