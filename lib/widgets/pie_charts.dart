@@ -4,12 +4,32 @@ import 'package:fl_chart/fl_chart.dart';
 import '../constant.dart';
 
 class PieChartSampleBig extends StatefulWidget {
+  double doingGreatStudents;
+  double needHelpStudents;
+  double frustratedStudents;
+  double inactiveStudents;
+  String doingGreatPercentage;
+  String needHelpPercentage;
+  String frustratedPercentage;
+  String inactivePercentage;
+
+  PieChartSampleBig({
+    this.doingGreatStudents,
+    this.needHelpStudents,
+    this.frustratedStudents,
+    this.inactiveStudents,
+    this.doingGreatPercentage,
+    this.needHelpPercentage,
+    this.frustratedPercentage,
+    this.inactivePercentage,
+  });
   @override
   _PieChartSampleBigState createState() => _PieChartSampleBigState();
 }
 
 class _PieChartSampleBigState extends State<PieChartSampleBig> {
   int touchedIndex;
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -103,8 +123,8 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
         case 0:
           return PieChartSectionData(
             color: kPieChartDoingGreatColor,
-            value: 25,
-            title: '25%',
+            value: widget.doingGreatStudents,
+            title: widget.doingGreatStudents != 0 ? widget.doingGreatPercentage : '',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -114,8 +134,9 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
         case 1:
           return PieChartSectionData(
             color: kPieChartNeedHelpColor,
-            value: 25,
-            title: '25%',
+            value: widget.needHelpStudents,
+            title:
+                widget.needHelpStudents != 0 ? widget.needHelpPercentage : '',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -125,8 +146,10 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
         case 2:
           return PieChartSectionData(
             color: kPieChartFrustratedColor,
-            value: 25,
-            title: '25%',
+            value: widget.frustratedStudents,
+            title: widget.frustratedStudents != 0
+                ? widget.frustratedPercentage
+                : '',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -136,8 +159,8 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
         case 3:
           return PieChartSectionData(
             color: kPieChartInactiveColor,
-            value: 25,
-            title: '25%',
+            value: widget.inactiveStudents,
+            title: widget.inactiveStudents != 0 ? widget.inactivePercentage : '',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,

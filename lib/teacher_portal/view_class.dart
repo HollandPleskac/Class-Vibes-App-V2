@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
 import '../widgets/filter_btns.dart';
 import '../constant.dart';
+
+final Firestore _firestore = Firestore.instance;
 
 class ViewClass extends StatefulWidget {
   static const routeName = 'individual-class-teacher';
@@ -31,7 +34,7 @@ class _ViewClassState extends State<ViewClass> {
       ),
       body: Column(
         children: [
-          PieChartSampleBig(),
+          DynamicPieChart(),
           Container(
             height: 32.5,
             child: ListView(
@@ -130,3 +133,114 @@ class _ViewClassState extends State<ViewClass> {
   }
 }
 
+class DynamicPieChart extends StatefulWidget {
+  @override
+  _DynamicPieChartState createState() => _DynamicPieChartState();
+}
+
+class _DynamicPieChartState extends State<DynamicPieChart> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Classes')
+          .document('test class app ui')
+          .collection('Students')
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        final double doingGreatStudents = snapshot.data.documents
+            .where((document) => document["status"] == "doing great")
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays <
+                5)
+            .length
+            .toDouble();
+        var needHelpStudents = snapshot.data.documents
+            .where((documentSnapshot) =>
+                documentSnapshot.data['status'] == 'need help')
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays <
+                5)
+            .length
+            .toDouble();
+        var frustratedStudents = snapshot.data.documents
+            .where((documentSnapshot) =>
+                documentSnapshot.data['status'] == 'frustrated')
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays <
+                5)
+            .length
+            .toDouble();
+        var inactiveStudents = snapshot.data.documents
+            .where((documentSnapshot) =>
+                DateTime.now()
+                    .difference(
+                      DateTime.parse(
+                          documentSnapshot.data['date'].toDate().toString()),
+                    )
+                    .inDays >
+                5)
+            .length
+            .toDouble();
+        var totalStudents = doingGreatStudents +
+            needHelpStudents +
+            frustratedStudents +
+            inactiveStudents.toDouble();
+
+        var doingGreatPercentage =
+            (doingGreatStudents / totalStudents * 100).toStringAsFixed(0) + '%';
+        var needHelpPercentage =
+            (needHelpStudents / totalStudents * 100).toStringAsFixed(0) + '%';
+        var frustratedPercentage =
+            (frustratedStudents / totalStudents * 100).toStringAsFixed(0) + '%';
+        var inactivePercentage =
+            (inactiveStudents / totalStudents * 100).toStringAsFixed(0) + '%';
+
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.35,
+              ),
+            );
+          default:
+            if (snapshot.data != null &&
+                snapshot.data.documents.isEmpty == false) {
+              return PieChartSampleBig(
+                doingGreatStudents: doingGreatStudents,
+                needHelpStudents: needHelpStudents,
+                frustratedStudents: frustratedStudents,
+                inactiveStudents: inactiveStudents,
+                doingGreatPercentage: doingGreatPercentage,
+                needHelpPercentage: needHelpPercentage,
+                frustratedPercentage: frustratedPercentage,
+                inactivePercentage: inactivePercentage,
+              );
+            } else {
+              return Center(
+                child: Text('no data'),
+              );
+            }
+        }
+      },
+    );
+  }
+}
