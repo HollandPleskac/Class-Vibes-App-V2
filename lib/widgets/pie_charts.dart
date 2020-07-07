@@ -5,94 +5,92 @@ import '../constant.dart';
 
 class PieChartSampleBig extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => PieChart2State();
+  _PieChartSampleBigState createState() => _PieChartSampleBigState();
 }
 
-class PieChart2State extends State {
+class _PieChartSampleBigState extends State<PieChartSampleBig> {
   int touchedIndex;
-
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.4,
+      aspectRatio: 1.5,
       child: Row(
-          children: <Widget>[
-            const SizedBox(
-              height: 18,
+        children: <Widget>[
+          const SizedBox(
+            height: 18,
+          ),
+          Expanded(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: PieChart(
+                PieChartData(
+                    pieTouchData:
+                        PieTouchData(touchCallback: (pieTouchResponse) {
+                      setState(() {
+                        if (pieTouchResponse.touchInput is FlLongPressEnd ||
+                            pieTouchResponse.touchInput is FlPanEnd) {
+                          touchedIndex = -1;
+                        } else {
+                          touchedIndex = pieTouchResponse.touchedSectionIndex;
+                        }
+                      });
+                    }),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    sectionsSpace: 0,
+                    centerSpaceRadius: 40,
+                    sections: showingSections()),
+              ),
             ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: PieChart(
-                  PieChartData(
-                      pieTouchData:
-                          PieTouchData(touchCallback: (pieTouchResponse) {
-                        setState(() {
-                          if (pieTouchResponse.touchInput is FlLongPressEnd ||
-                              pieTouchResponse.touchInput is FlPanEnd) {
-                            touchedIndex = -1;
-                          } else {
-                            touchedIndex = pieTouchResponse.touchedSectionIndex;
-                          }
-                        });
-                      }),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 40,
-                      sections: showingSections()),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 38, left: 30),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const <Widget>[
+                Indicator(
+                  color: kPieChartDoingGreatColor,
+                  text: 'Doing Great',
+                  isSquare: false,
                 ),
-              ),
+                SizedBox(
+                  height: 10,
+                ),
+                Indicator(
+                  color: kPieChartNeedHelpColor,
+                  text: 'Need Help',
+                  isSquare: false,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Indicator(
+                  color: kPieChartFrustratedColor,
+                  text: 'Frustrated',
+                  isSquare: false,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Indicator(
+                  color: kPieChartInactiveColor,
+                  text: 'Inactive',
+                  isSquare: false,
+                ),
+                SizedBox(
+                  height: 0,
+                ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.only(right: 38, left: 30),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Indicator(
-                    color: kPieChartDoingGreatColor,
-                    text: 'Doing Great',
-                    isSquare: false,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Indicator(
-                    color: kPieChartNeedHelpColor,
-                    text: 'Need Help',
-                    isSquare: false,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Indicator(
-                    color: kPieChartFrustratedColor,
-                    text: 'Frustrated',
-                    isSquare: false,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Indicator(
-                    color: kPieChartInactiveColor,
-                    text: 'Inactive',
-                    isSquare: false,
-                  ),
-                  SizedBox(
-                    height: 0,
-                  ),
-                ],
-              ),
-            ),
-            // const SizedBox(
-            //   width: 38,
-            // ),
-          ],
-        ),
-      
+          ),
+          // const SizedBox(
+          //   width: 38,
+          // ),
+        ],
+      ),
     );
   }
 
@@ -105,8 +103,8 @@ class PieChart2State extends State {
         case 0:
           return PieChartSectionData(
             color: kPieChartDoingGreatColor,
-            value: 30,
-            title: '30%',
+            value: 25,
+            title: '25%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -116,8 +114,8 @@ class PieChart2State extends State {
         case 1:
           return PieChartSectionData(
             color: kPieChartNeedHelpColor,
-            value: 20,
-            title: '20%',
+            value: 25,
+            title: '25%',
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -152,6 +150,156 @@ class PieChart2State extends State {
     });
   }
 }
+
+// class PieChartSampleBig extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() => PieChart2State();
+// }
+
+// class PieChart2State extends State {
+//   int touchedIndex;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AspectRatio(
+//       aspectRatio: 1.5,
+//       child: Row(
+//           children: <Widget>[
+//             const SizedBox(
+//               height: 18,
+//             ),
+//             Expanded(
+//               child: AspectRatio(
+//                 aspectRatio: 1,
+//                 child: PieChart(
+//                   PieChartData(
+//                       pieTouchData:
+//                           PieTouchData(touchCallback: (pieTouchResponse) {
+//                         setState(() {
+//                           if (pieTouchResponse.touchInput is FlLongPressEnd ||
+//                               pieTouchResponse.touchInput is FlPanEnd) {
+//                             touchedIndex = -1;
+//                           } else {
+//                             touchedIndex = pieTouchResponse.touchedSectionIndex;
+//                           }
+//                         });
+//                       }),
+//                       borderData: FlBorderData(
+//                         show: false,
+//                       ),
+//                       sectionsSpace: 0,
+//                       centerSpaceRadius: 40,
+//                       sections: showingSections()),
+//                 ),
+//               ),
+//             ),
+//             Padding(
+//               padding: EdgeInsets.only(right: 38, left: 30),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.max,
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: const <Widget>[
+//                   Indicator(
+//                     color: kPieChartDoingGreatColor,
+//                     text: 'Doing Great',
+//                     isSquare: false,
+//                   ),
+//                   SizedBox(
+//                     height: 10,
+//                   ),
+//                   Indicator(
+//                     color: kPieChartNeedHelpColor,
+//                     text: 'Need Help',
+//                     isSquare: false,
+//                   ),
+//                   SizedBox(
+//                     height: 10,
+//                   ),
+//                   Indicator(
+//                     color: kPieChartFrustratedColor,
+//                     text: 'Frustrated',
+//                     isSquare: false,
+//                   ),
+//                   SizedBox(
+//                     height: 10,
+//                   ),
+//                   Indicator(
+//                     color: kPieChartInactiveColor,
+//                     text: 'Inactive',
+//                     isSquare: false,
+//                   ),
+//                   SizedBox(
+//                     height: 0,
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             // const SizedBox(
+//             //   width: 38,
+//             // ),
+//           ],
+//         ),
+
+//     );
+//   }
+
+//   List<PieChartSectionData> showingSections() {
+//     return List.generate(4, (i) {
+//       final isTouched = i == touchedIndex;
+//       final double fontSize = isTouched ? 25 : 16;
+//       final double radius = isTouched ? 60 : 50;
+//       switch (i) {
+//         case 0:
+//           return PieChartSectionData(
+//             color: kPieChartDoingGreatColor,
+//             value: 25,
+//             title: '25%',
+//             radius: radius,
+//             titleStyle: TextStyle(
+//                 fontSize: fontSize,
+//                 fontWeight: FontWeight.bold,
+//                 color: const Color(0xffffffff)),
+//           );
+//         case 1:
+//           return PieChartSectionData(
+//             color: kPieChartNeedHelpColor,
+//             value: 25,
+//             title: '25%',
+//             radius: radius,
+//             titleStyle: TextStyle(
+//                 fontSize: fontSize,
+//                 fontWeight: FontWeight.bold,
+//                 color: const Color(0xffffffff)),
+//           );
+//         case 2:
+//           return PieChartSectionData(
+//             color: kPieChartFrustratedColor,
+//             value: 25,
+//             title: '25%',
+//             radius: radius,
+//             titleStyle: TextStyle(
+//                 fontSize: fontSize,
+//                 fontWeight: FontWeight.bold,
+//                 color: const Color(0xffffffff)),
+//           );
+//         case 3:
+//           return PieChartSectionData(
+//             color: kPieChartInactiveColor,
+//             value: 25,
+//             title: '25%',
+//             radius: radius,
+//             titleStyle: TextStyle(
+//                 fontSize: fontSize,
+//                 fontWeight: FontWeight.bold,
+//                 color: const Color(0xffffffff)),
+//           );
+//         default:
+//           return null;
+//       }
+//     });
+//   }
+// }
 
 ///
 ///    SMALL PIE CHART - USE FOR TEACHER CLASSES SCREEN (VIEWING ALL THE CLASSES)
