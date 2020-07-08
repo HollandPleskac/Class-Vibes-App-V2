@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import './testing.dart';
-import './tab_page.dart';
+import './auth/welcome.dart';
+import 'tab_page_teacher.dart';
 import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
 
@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TabPage(),
+      home: WelcomeScreen(),
       routes: {
         ViewClass.routeName: (context) => ViewClass(),
         ClassSettings.routeName: (context) => ClassSettings(),

@@ -6,8 +6,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'screen1.dart';
-import './teacher_portal/classview_teacher.dart';
-import './teacher_portal/classview_teacher.dart';
+import 'teacher_portal/classview_teacher.dart';
+import 'teacher_portal/classview_teacher.dart';
 import 'screen3.dart';
 import 'constant.dart';
 
