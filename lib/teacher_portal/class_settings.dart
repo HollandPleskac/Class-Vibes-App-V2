@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
 
 final _fire = Fire();
+final Firestore _firestore = Firestore.instance;
 
 class ClassSettings extends StatefulWidget {
   static const routeName = 'individual-class-settings-teacher';
@@ -16,18 +18,48 @@ class ClassSettings extends StatefulWidget {
 
 class _ClassSettingsState extends State<ClassSettings> {
   final TextEditingController _classNameController = TextEditingController();
-
-  var isSwitched = false;
+  bool isSwitched;
   int daysInactive = 3;
+
+  Future getInitialSwitchValue() async {
+    bool initialSwitchVal = await _firestore
+        .collection("Classes")
+        .document("test class app ui")
+        .get()
+        .then((docSnap) => docSnap.data['allow join']);
+        print('initial val of switch ' +initialSwitchVal.toString());
+        isSwitched = initialSwitchVal;
+  }
+
+  @override
+  void initState() {
+    getInitialSwitchValue().then((_) {
+      print(isSwitched);
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
-    final String className = routeArguments['class name'];
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(className),
+        title: StreamBuilder(
+            stream: _firestore
+                .collection('Classes')
+                .document('test class app ui')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                return Text(snapshot.data['class name']);
+              }
+            }),
         centerTitle: true,
         backgroundColor: kWetAsphaltColor,
       ),
@@ -43,7 +75,12 @@ class _ClassSettingsState extends State<ClassSettings> {
             SizedBox(
               height: 50,
             ),
-            IsAcceptingJoin(isSwitched),
+            IsAcceptingJoin(isSwitched, () {
+              setState(() {
+                isSwitched == false ? isSwitched =true : isSwitched = false;
+              });
+              
+            }),
             SizedBox(
               height: 50,
             ),
@@ -112,8 +149,8 @@ class EditClassName extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                _fire.updateClassName('test class app ui',controller.text);
-                print('updated the class name');
+                _fire.updateClassName(
+                    'new1@gmail.com', 'test class app ui', controller.text);
               },
             ),
           ),
@@ -127,20 +164,14 @@ class EditClassName extends StatelessWidget {
 }
 
 class IsAcceptingJoin extends StatefulWidget {
-  final bool isSwitched;
-
-  IsAcceptingJoin(
-    this.isSwitched,
-  );
-
+  bool isSwitched;
+  Function updateSwitch;
+  IsAcceptingJoin(this.isSwitched, this.updateSwitch);
   @override
-  _IsAcceptingJoinState createState() => _IsAcceptingJoinState(isSwitched);
+  _IsAcceptingJoinState createState() => _IsAcceptingJoinState();
 }
 
 class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
-  bool isSwitched;
-
-  _IsAcceptingJoinState(this.isSwitched);
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -157,11 +188,10 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
         ),
         Spacer(),
         CupertinoSwitch(
-          value: isSwitched,
+          value: widget.isSwitched,
           onChanged: (value) {
-            setState(() {
-              isSwitched = value;
-            });
+            widget.updateSwitch();
+            _fire.updateAllowJoin('new1@gmail.com', 'test class app ui', value);
           },
           activeColor: kPrimaryColor,
         ),
