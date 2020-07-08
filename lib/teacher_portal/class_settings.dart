@@ -17,6 +17,7 @@ class ClassSettings extends StatefulWidget {
 }
 
 class _ClassSettingsState extends State<ClassSettings> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _classNameController = TextEditingController();
   bool isSwitched;
   int maxDaysInactive;
@@ -58,6 +59,7 @@ class _ClassSettingsState extends State<ClassSettings> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
 
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: StreamBuilder(
@@ -104,7 +106,7 @@ class _ClassSettingsState extends State<ClassSettings> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GenerateNewClassCode(),
+                GenerateNewClassCode(_scaffoldKey),
                 SizedBox(
                   width: 20,
                 ),
@@ -239,6 +241,9 @@ class _DeleteClassState extends State<DeleteClass> {
 }
 
 class GenerateNewClassCode extends StatefulWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  GenerateNewClassCode(this.scaffoldKey);
+
   @override
   _GenerateNewClassCodeState createState() => _GenerateNewClassCodeState();
 }
@@ -259,6 +264,17 @@ class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
           print(result);
           if (result != 'success') {
             print('failed');
+             final snackBar = SnackBar(
+                      content: Text('Code Already Taken. Try Again!'),
+                      action: SnackBarAction(
+                        label: 'Hide',
+                        onPressed: () {
+                          widget.scaffoldKey.currentState.hideCurrentSnackBar();
+                        },
+                      ),
+                    );
+
+                    widget.scaffoldKey.currentState.showSnackBar(snackBar);
           }
         },
       ),

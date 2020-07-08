@@ -50,6 +50,7 @@ class Fire {
 
   Future<String> generateNewClassCode(String uid, String classId) async {
     String newCode = randomAlphaNumeric(6);
+    // String newCode = '8RDS1y';
     int isCodeUnique = await _firestore
         .collection("Classes")
         .where("class code", isEqualTo: newCode)
