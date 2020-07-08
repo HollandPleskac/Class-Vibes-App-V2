@@ -254,8 +254,12 @@ class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
-        onPressed: () {
-          print('new class code');
+        onPressed: () async {
+          var result = await _fire.generateNewClassCode('new1@gmail.com', 'test class app ui');
+          print(result);
+          if (result != 'success') {
+            print('failed');
+          }
         },
       ),
     );
@@ -283,7 +287,6 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
         ),
         Spacer(),
         NumberPicker.integer(
-          
           initialValue: widget.maxDaysInactive,
           minValue: 1,
           maxValue: 7,

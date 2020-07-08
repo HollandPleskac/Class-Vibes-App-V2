@@ -38,7 +38,9 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
-                return Text('no data');
+                return Center(
+                  child: Container(),
+                );
               }
 
               return Center(
@@ -144,9 +146,10 @@ class DynamicPieChart extends StatelessWidget {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Text('no data');
+            return Center(
+              child: Container(),
+            );
           }
-          
 
           final double doingGreatStudents = snapshot.data.documents
               .where((document) => document["status"] == "doing great")
