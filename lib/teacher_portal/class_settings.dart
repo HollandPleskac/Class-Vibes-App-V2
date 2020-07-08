@@ -19,7 +19,7 @@ class ClassSettings extends StatefulWidget {
 class _ClassSettingsState extends State<ClassSettings> {
   final TextEditingController _classNameController = TextEditingController();
   bool isSwitched;
-  int daysInactive = 3;
+  int maxDaysInactive;
 
   Future getInitialSwitchValue() async {
     bool initialSwitchVal = await _firestore
@@ -27,15 +27,27 @@ class _ClassSettingsState extends State<ClassSettings> {
         .document("test class app ui")
         .get()
         .then((docSnap) => docSnap.data['allow join']);
-        print('initial val of switch ' +initialSwitchVal.toString());
-        isSwitched = initialSwitchVal;
+    print('initial val of switch ' + initialSwitchVal.toString());
+    isSwitched = initialSwitchVal;
+  }
+
+  Future getDaysInactive() async {
+    int daysInactive = await _firestore
+        .collection("Classes")
+        .document("test class app ui")
+        .get()
+        .then((docSnap) => docSnap.data['inactive days']);
+    maxDaysInactive = daysInactive;
   }
 
   @override
   void initState() {
     getInitialSwitchValue().then((_) {
       print(isSwitched);
-      setState(() {});
+      getDaysInactive().then((_) {
+        print(maxDaysInactive);
+        setState(() {});
+      });
     });
 
     super.initState();
@@ -77,9 +89,8 @@ class _ClassSettingsState extends State<ClassSettings> {
             ),
             IsAcceptingJoin(isSwitched, () {
               setState(() {
-                isSwitched == false ? isSwitched =true : isSwitched = false;
+                isSwitched == false ? isSwitched = true : isSwitched = false;
               });
-              
             }),
             SizedBox(
               height: 50,
@@ -88,7 +99,7 @@ class _ClassSettingsState extends State<ClassSettings> {
             // SizedBox(
             //   height: 25,
             // ),
-            InactiveDaysPicker(daysInactive),
+            InactiveDaysPicker(maxDaysInactive),
             Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -314,144 +325,47 @@ class _ClassCodeState extends State<ClassCode> {
           ),
         ),
         Spacer(),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'L',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Container(
-              color: kPrimaryColor,
-              height: 2,
-              width: 25,
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'K',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Container(
-              color: kPrimaryColor,
-              height: 2,
-              width: 25,
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '1',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Container(
-              color: kPrimaryColor,
-              height: 2,
-              width: 25,
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'D',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Container(
-              color: kPrimaryColor,
-              height: 2,
-              width: 25,
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '9',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Container(
-              color: kPrimaryColor,
-              height: 2,
-              width: 25,
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'A',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Container(
-              color: kPrimaryColor,
-              height: 2,
-              width: 25,
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 20,
-        ),
+        StreamBuilder(
+            stream: _firestore
+                .collection('Classes')
+                .document('test class app ui')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                String code = snapshot.data['class code'];
+                List codeLetters = code.split("");
+                print(codeLetters.toString());
+                return Row(
+                  children: codeLetters.map((letter) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            letter,
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 6,
+                          ),
+                          Container(
+                            color: kPrimaryColor,
+                            height: 2,
+                            width: 25,
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                );
+              }
+            }),
       ],
     );
   }
