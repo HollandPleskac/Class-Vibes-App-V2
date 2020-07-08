@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../teacher_portal/classview_teacher.dart';
 import '../student_portal/classview_student.dart';
 
+import '../tab_page_student.dart';
+import '../tab_page_teacher.dart';
+
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ClassViewStudent(),
+                    builder: (context) => TabPageTeacher(),
                   ),
                 );
               },
@@ -27,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ClassViewTeacher(),
+                    builder: (context) => TabPageStudent(),
                   ),
                 );
               },
