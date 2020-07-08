@@ -11,12 +11,12 @@ import 'teacher_portal/classview_teacher.dart';
 import 'screen3.dart';
 import 'constant.dart';
 
-class TabPageStudent extends StatefulWidget {
+class NavStudent extends StatefulWidget {
   @override
-  _TabPageStudentState createState() => _TabPageStudentState();
+  _NavStudentState createState() => _NavStudentState();
 }
 
-class _TabPageStudentState extends State<TabPageStudent> {
+class _NavStudentState extends State<NavStudent> {
   int selectedIndex = 1;
 
   PageController controller = PageController(initialPage: 1);

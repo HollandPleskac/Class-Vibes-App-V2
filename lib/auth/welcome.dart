@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../teacher_portal/classview_teacher.dart';
 import '../student_portal/classview_student.dart';
 
-import '../tab_page_student.dart';
-import '../tab_page_teacher.dart';
+import '../nav_student.dart';
+import '../nav_teacher.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TabPageTeacher(),
+                    builder: (context) => NavTeacher(),
                   ),
                 );
               },
@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => TabPageStudent(),
+                    builder: (context) => NavStudent(),
                   ),
                 );
               },
