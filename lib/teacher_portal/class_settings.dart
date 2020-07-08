@@ -36,7 +36,7 @@ class _ClassSettingsState extends State<ClassSettings> {
         .collection("Classes")
         .document("test class app ui")
         .get()
-        .then((docSnap) => docSnap.data['inactive days']);
+        .then((docSnap) => docSnap.data['max days inactive']);
     maxDaysInactive = daysInactive;
   }
 
@@ -96,9 +96,9 @@ class _ClassSettingsState extends State<ClassSettings> {
               height: 50,
             ),
             ClassCode(),
-            // SizedBox(
-            //   height: 25,
-            // ),
+            SizedBox(
+              height: 25,
+            ),
             InactiveDaysPicker(maxDaysInactive),
             Spacer(),
             Row(
@@ -263,16 +263,13 @@ class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
 }
 
 class InactiveDaysPicker extends StatefulWidget {
-  final int daysInactive;
-  InactiveDaysPicker(this.daysInactive);
+  int maxDaysInactive;
+  InactiveDaysPicker(this.maxDaysInactive);
   @override
-  _InactiveDaysPickerState createState() =>
-      _InactiveDaysPickerState(daysInactive);
+  _InactiveDaysPickerState createState() => _InactiveDaysPickerState();
 }
 
 class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
-  int daysInactive;
-  _InactiveDaysPickerState(this.daysInactive);
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -281,20 +278,44 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
           width: 20,
         ),
         Text(
-          'Student Inactive Days',
+          'Max Student Inactive Days',
           style: TextStyle(fontSize: 18, color: kWetAsphaltColor),
         ),
         Spacer(),
         NumberPicker.integer(
-          scrollDirection: Axis.horizontal,
-          initialValue: daysInactive,
+          
+          initialValue: widget.maxDaysInactive,
           minValue: 1,
           maxValue: 7,
-          onChanged: (newValue) {
+          onChanged: (value) {
             setState(() {
-              daysInactive = newValue;
+              widget.maxDaysInactive = value;
             });
           },
+        ),
+        Spacer(),
+        ClipOval(
+          child: Material(
+            color: Colors.transparent, // button color
+
+            child: InkWell(
+              splashColor: Colors.blue,
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: Center(
+                  child: FaIcon(
+                    FontAwesomeIcons.check,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              onTap: () {
+                _fire.updateMaxDaysInactive('new1@gmail.com',
+                    'test class app ui', widget.maxDaysInactive);
+              },
+            ),
+          ),
         ),
         SizedBox(
           width: 20,
@@ -336,7 +357,7 @@ class _ClassCodeState extends State<ClassCode> {
               } else {
                 String code = snapshot.data['class code'];
                 List codeLetters = code.split("");
-                print(codeLetters.toString());
+
                 return Row(
                   children: codeLetters.map((letter) {
                     return Padding(

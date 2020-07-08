@@ -30,119 +30,104 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: StreamBuilder(
-          stream: _firestore
-              .collection('UserData')
-              .document('new1@gmail.com')
-              .collection('Classes')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                  child: Container(),
-                );
-              default:
-                if (snapshot.data != null &&
-                    snapshot.data.documents.isEmpty == false) {
-                  return Center(
-                    child: GridView.count(
-                      primary: false,
-                      padding: const EdgeInsets.all(40),
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 10,
-                      crossAxisCount: 2,
-                      children: snapshot.data.documents
-                          .map((DocumentSnapshot document) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              ViewClass.routeName,
-                              arguments: {
-                                'class name': document['class name'],
-                              },
-                            );
+            stream: _firestore
+                .collection('UserData')
+                .document('new1@gmail.com')
+                .collection('Classes')
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) {
+                return Text('no data');
+              }
+
+              return Center(
+                child: GridView.count(
+                  primary: false,
+                  padding: const EdgeInsets.all(40),
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children:
+                      snapshot.data.documents.map((DocumentSnapshot document) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          ViewClass.routeName,
+                          arguments: {
+                            'class name': document['class name'],
                           },
-                          child: Stack(
-                            children: [
-                              Container(
-                                // color: Colors.red,
-                                width: double.infinity,
-                                child: Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Card(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        DynamicPieChart(),
-                                        Padding(
-                                          padding: EdgeInsets.only(bottom: 25),
-                                          child: Text(
-                                            document['class name'],
-                                            style: kSubTextStyle.copyWith(
-                                                fontSize: 16),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(14),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                  onTap: () => Navigator.pushNamed(
-                                    context,
-                                    ClassSettings.routeName,
-                                    arguments: {
-                                      'class name': document['class name']
-                                    },
-                                  ),
-                                  child: Container(
-                                    height: 38,
-                                    width: 38,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: kPrimaryColor,
-                                    ),
-                                    child: Center(
-                                      child: FaIcon(
-                                        FontAwesomeIcons.cog,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                         );
-                      }).toList(),
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: Text('no data'),
-                  );
-                }
-            }
-          },
-        ),
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            // color: Colors.red,
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Card(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    DynamicPieChart(),
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 25),
+                                      child: Text(
+                                        document['class name'],
+                                        style: kSubTextStyle.copyWith(
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(14),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                ClassSettings.routeName,
+                                arguments: {
+                                  'class name': document['class name']
+                                },
+                              ),
+                              child: Container(
+                                height: 38,
+                                width: 38,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: kPrimaryColor,
+                                ),
+                                child: Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.cog,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            }),
       ),
     );
   }
@@ -152,99 +137,73 @@ class DynamicPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _firestore
-          .collection('Classes')
-          .document('test class app ui')
-          .collection('Students')
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error');
-        }
-        if (!snapshot.hasData) {
-          return Container();
-        }
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Center(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.35,
-              ),
-            );
-          default:
-            if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
-              final double doingGreatStudents = snapshot.data.documents
-                  .where((document) => document["status"] == "doing great")
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays <
-                      5)
-                  .length
-                  .toDouble();
-              var needHelpStudents = snapshot.data.documents
-                  .where((documentSnapshot) =>
-                      documentSnapshot.data['status'] == 'need help')
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays <
-                      5)
-                  .length
-                  .toDouble();
-              var frustratedStudents = snapshot.data.documents
-                  .where((documentSnapshot) =>
-                      documentSnapshot.data['status'] == 'frustrated')
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays <
-                      5)
-                  .length
-                  .toDouble();
-              var inactiveStudents = snapshot.data.documents
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays >
-                      5)
-                  .length
-                  .toDouble();
-              return PieChartSampleSmall(
-                //graph percentage
-                doingGreatStudents: doingGreatStudents,
-                needHelpStudents: needHelpStudents,
-                frustratedStudents: frustratedStudents,
-                inactiveStudents: inactiveStudents,
-              );
-            } else {
-              return Center(
-                child: Container(
-                  padding: EdgeInsets.only(top: 30),
-                  height: 70,
-                  child: Text('no data'),
-                ),
-              );
-            }
-        }
-      },
-    );
+        stream: _firestore
+            .collection('Classes')
+            .document('test class app ui')
+            .collection('Students')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Text('no data');
+          }
+          
+
+          final double doingGreatStudents = snapshot.data.documents
+              .where((document) => document["status"] == "doing great")
+              .where((documentSnapshot) =>
+                  DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            documentSnapshot.data['date'].toDate().toString()),
+                      )
+                      .inDays <
+                  5)
+              .length
+              .toDouble();
+          var needHelpStudents = snapshot.data.documents
+              .where((documentSnapshot) =>
+                  documentSnapshot.data['status'] == 'need help')
+              .where((documentSnapshot) =>
+                  DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            documentSnapshot.data['date'].toDate().toString()),
+                      )
+                      .inDays <
+                  5)
+              .length
+              .toDouble();
+          var frustratedStudents = snapshot.data.documents
+              .where((documentSnapshot) =>
+                  documentSnapshot.data['status'] == 'frustrated')
+              .where((documentSnapshot) =>
+                  DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            documentSnapshot.data['date'].toDate().toString()),
+                      )
+                      .inDays <
+                  5)
+              .length
+              .toDouble();
+          var inactiveStudents = snapshot.data.documents
+              .where((documentSnapshot) =>
+                  DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            documentSnapshot.data['date'].toDate().toString()),
+                      )
+                      .inDays >
+                  5)
+              .length
+              .toDouble();
+          return PieChartSampleSmall(
+            //graph percentage
+            doingGreatStudents: doingGreatStudents,
+            needHelpStudents: needHelpStudents,
+            frustratedStudents: frustratedStudents,
+            inactiveStudents: inactiveStudents,
+          );
+        });
   }
 }

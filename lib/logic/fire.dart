@@ -21,4 +21,13 @@ class Fire {
       "allow join": newStatusOnJoin,
     });
   }
+
+  void updateMaxDaysInactive(String uid,String classId, int newMaxDaysInactive) {
+    _firestore.collection("Classes").document(classId).updateData({
+      "max days inactive": newMaxDaysInactive,
+    });
+    _firestore.collection("UserData").document(uid).collection("Classes").document(classId).updateData({
+      "max days inactive": newMaxDaysInactive,
+    });
+  }
 }
