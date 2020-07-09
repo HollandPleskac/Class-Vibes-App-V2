@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
+import './chat_student.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
@@ -81,6 +82,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   return StudentClass(
                     className: document['class name'],
                     status: document['status'],
+                    lastChangedStatus: document['date'],
                   );
                 }).toList(),
               ),
@@ -93,9 +95,11 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 class StudentClass extends StatefulWidget {
   final String className;
   final String status;
+  final Timestamp lastChangedStatus;
   StudentClass({
     this.className,
     this.status,
+    this.lastChangedStatus,
   });
   @override
   _StudentClassState createState() => _StudentClassState();
@@ -139,11 +143,26 @@ class _StudentClassState extends State<StudentClass> {
                               newMood: 'doing great');
                           print('touched happy face');
                         },
-                        child: FaIcon(
-                          widget.status == 'doing great' ? FontAwesomeIcons.solidSmile : FontAwesomeIcons.smile,
-                          color: Colors.green,
-                          size: 35,
-                        ),
+                        child: DateTime.now()
+                                    .difference(
+                                      DateTime.parse(widget.lastChangedStatus
+                                          .toDate()
+                                          .toString()),
+                                    )
+                                    .inDays >
+                                5
+                            ? FaIcon(
+                                FontAwesomeIcons.smile,
+                                color: Colors.grey,
+                                size: 35,
+                              )
+                            : FaIcon(
+                                widget.status == 'doing great'
+                                    ? FontAwesomeIcons.solidSmile
+                                    : FontAwesomeIcons.smile,
+                                color: Colors.green,
+                                size: 35,
+                              ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -153,11 +172,26 @@ class _StudentClassState extends State<StudentClass> {
                               newMood: 'need help');
                           print('tapped meh');
                         },
-                        child: FaIcon(
-                          widget.status == 'need help' ? FontAwesomeIcons.solidMeh : FontAwesomeIcons.meh,
-                          color: Colors.yellow[800],
-                          size: 35,
-                        ),
+                        child: DateTime.now()
+                                    .difference(
+                                      DateTime.parse(widget.lastChangedStatus
+                                          .toDate()
+                                          .toString()),
+                                    )
+                                    .inDays >
+                                5
+                            ? FaIcon(
+                                FontAwesomeIcons.meh,
+                                color: Colors.grey,
+                                size: 35,
+                              )
+                            : FaIcon(
+                                widget.status == 'need help'
+                                    ? FontAwesomeIcons.solidMeh
+                                    : FontAwesomeIcons.meh,
+                                color: Colors.yellow[800],
+                                size: 35,
+                              ),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -167,11 +201,26 @@ class _StudentClassState extends State<StudentClass> {
                               newMood: 'frustrated');
                           print('tapped frown');
                         },
-                        child: FaIcon(
-                          widget.status == 'frustrated' ? FontAwesomeIcons.solidFrown : FontAwesomeIcons.frown,
-                          color: Colors.red,
-                          size: 35,
-                        ),
+                        child: DateTime.now()
+                                    .difference(
+                                      DateTime.parse(widget.lastChangedStatus
+                                          .toDate()
+                                          .toString()),
+                                    )
+                                    .inDays >
+                                5
+                            ? FaIcon(
+                                FontAwesomeIcons.meh,
+                                color: Colors.grey,
+                                size: 35,
+                              )
+                            : FaIcon(
+                                widget.status == 'frustrated'
+                                    ? FontAwesomeIcons.solidFrown
+                                    : FontAwesomeIcons.frown,
+                                color: Colors.red,
+                                size: 35,
+                              ),
                       ),
                     ],
                   ),
@@ -190,7 +239,16 @@ class _StudentClassState extends State<StudentClass> {
           right: 0,
           child: InkWell(
             onTap: () {
+              //           final String classId = routeArguments['class id'];
+              // final String teacherName = routeArguments['teacher name'];
+              // final String studentUid = routeArguments['student uid'];
               print('tap');
+              Navigator.pushNamed(context, ChatStudent.routeName,arguments: {
+                'class id': 'test class app ui',
+                'teacher name': 'Mr.Shea',
+                'student uid': 'new@gmail.com',
+                'student name': 'Kushagra',
+              });
             },
             borderRadius: BorderRadius.circular(3000),
             child: FaIcon(

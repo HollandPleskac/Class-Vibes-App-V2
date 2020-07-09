@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import './auth/welcome.dart';
-import 'nav_teacher.dart';
+import './student_portal/chat_student.dart';
 import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
 
@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         ViewClass.routeName: (context) => ViewClass(),
         ClassSettings.routeName: (context) => ClassSettings(),
+        ChatStudent.routeName: (context) => ChatStudent(),
       },
     );
   }
