@@ -7,13 +7,13 @@ import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
 
-class ChatStudent extends StatefulWidget {
-  static const routeName = 'student-chat';
+class ChatTeacher extends StatefulWidget {
+  static const routeName = 'teacher-chat';
   @override
-  _ChatStudentState createState() => _ChatStudentState();
+  _ChatTeacherState createState() => _ChatTeacherState();
 }
 
-class _ChatStudentState extends State<ChatStudent> {
+class _ChatTeacherState extends State<ChatTeacher> {
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -66,7 +66,7 @@ class _ChatStudentState extends State<ChatStudent> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String classId = routeArguments['class id'];
     final String teacherName = routeArguments['teacher name'];
-    final String studentUid = routeArguments['student uid'];
+    final String teacherUid = routeArguments['teacher uid'];
     final String studentName = routeArguments['student name'];
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -85,7 +85,7 @@ class _ChatStudentState extends State<ChatStudent> {
             }),
         centerTitle: true,
         title: Text(
-          'Chat with ' + teacherName,
+          'Chat with ' + studentName,
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
         ),
         actions: <Widget>[
@@ -119,7 +119,7 @@ class _ChatStudentState extends State<ChatStudent> {
                         .collection("Classes")
                         .document(classId)
                         .collection('Students')
-                        .document(studentUid)
+                        .document(teacherUid)
                         .collection("Chats")
                         .orderBy("date", descending: true)
                         .snapshots(),
@@ -136,7 +136,7 @@ class _ChatStudentState extends State<ChatStudent> {
                           reverse: true,
                           children: snapshot.data.documents.map(
                             (DocumentSnapshot document) {
-                              return document['sent type'] == 'teacher'
+                              return document['sent type'] == 'student'
                                   ? RecievedChat(
                                       title: document['title'],
                                       content: document['content'],
@@ -209,20 +209,20 @@ class _ChatStudentState extends State<ChatStudent> {
                                       print('pressed the button');
                                       print('class id ' + classId.toString());
                                       print('student uid ' +
-                                          studentUid.toString());
+                                          teacherUid.toString());
 
                                       await _firestore
                                           .collection('Classes')
                                           .document(classId)
                                           .collection('Students')
-                                          .document(studentUid)
+                                          .document(teacherUid)
                                           .collection("Chats")
                                           .document()
                                           .setData({
                                         'date': DateTime.now(),
                                         'content': _controller.text,
-                                        'title': studentName,
-                                        'sent type': 'student'
+                                        'title': teacherName,
+                                        'sent type': 'teacher'
                                       });
                                       _controller.clear();
                                     }),

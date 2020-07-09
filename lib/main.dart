@@ -5,6 +5,7 @@ import './auth/welcome.dart';
 import './student_portal/chat_student.dart';
 import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
+import './teacher_portal/chat_teacher.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,6 +24,7 @@ class _MyAppState extends State<MyApp> {
         ViewClass.routeName: (context) => ViewClass(),
         ClassSettings.routeName: (context) => ClassSettings(),
         ChatStudent.routeName: (context) => ChatStudent(),
+        ChatTeacher.routeName: (context) => ChatTeacher(),
       },
     );
   }

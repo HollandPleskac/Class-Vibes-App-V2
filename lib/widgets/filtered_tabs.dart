@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 
+import '../teacher_portal/chat_teacher.dart';
 import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -314,10 +314,29 @@ class Student extends StatelessWidget {
             ],
           ),
           Spacer(),
-          FaIcon(
-            FontAwesomeIcons.solidComments,
-            color: kPrimaryColor,
-            size: 35,
+          GestureDetector(
+            onTap: () {
+              // final String classId = routeArguments['class id'];
+              // final String teacherName = routeArguments['teacher name'];
+              // final String teacherUid = routeArguments['teacher uid'];
+              // final String studentName = routeArguments['student name'];
+              print('press');
+              Navigator.pushNamed(
+                context,
+                ChatTeacher.routeName,
+                arguments: {
+                  'class id': 'test class app ui',
+                  'teacher name': 'Mr.Shea',
+                  'teacher uid': 'new1@gmail.com',
+                  'student name': name
+                },
+              );
+            },
+            child: FaIcon(
+              FontAwesomeIcons.solidComments,
+              color: kPrimaryColor,
+              size: 35,
+            ),
           ),
           SizedBox(
             width: 20,
