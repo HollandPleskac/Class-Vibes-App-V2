@@ -66,7 +66,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String classId = routeArguments['class id'];
     final String teacherName = routeArguments['teacher name'];
-    final String teacherUid = routeArguments['teacher uid'];
+    final String studentUid = routeArguments['student uid'];
     final String studentName = routeArguments['student name'];
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -119,7 +119,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         .collection("Classes")
                         .document(classId)
                         .collection('Students')
-                        .document(teacherUid)
+                        .document(studentUid)
                         .collection("Chats")
                         .orderBy("date", descending: true)
                         .snapshots(),
@@ -209,13 +209,13 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       print('pressed the button');
                                       print('class id ' + classId.toString());
                                       print('student uid ' +
-                                          teacherUid.toString());
+                                          studentUid.toString());
 
                                       await _firestore
                                           .collection('Classes')
                                           .document(classId)
                                           .collection('Students')
-                                          .document(teacherUid)
+                                          .document(studentUid)
                                           .collection("Chats")
                                           .document()
                                           .setData({

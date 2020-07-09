@@ -318,7 +318,7 @@ class Student extends StatelessWidget {
             onTap: () {
               // final String classId = routeArguments['class id'];
               // final String teacherName = routeArguments['teacher name'];
-              // final String teacherUid = routeArguments['teacher uid'];
+              // final String teacherUid = routeArguments['student uid'];
               // final String studentName = routeArguments['student name'];
               print('press');
               Navigator.pushNamed(
@@ -327,7 +327,7 @@ class Student extends StatelessWidget {
                 arguments: {
                   'class id': 'test class app ui',
                   'teacher name': 'Mr.Shea',
-                  'teacher uid': 'new1@gmail.com',
+                  'student uid': 'new@gmail.com',
                   'student name': name
                 },
               );
