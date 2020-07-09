@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constant.dart';
 import '../widgets/pie_charts.dart';
+import '../nav_teacher.dart';
 import 'view_class.dart';
 import 'class_settings.dart';
 
@@ -18,6 +19,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavTeacher(),
       // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
       appBar: AppBar(
         backgroundColor: kWetAsphaltColor,
@@ -45,11 +47,13 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
               return Center(
                 child: GridView.count(
+                  physics: BouncingScrollPhysics(),
                   primary: false,
                   padding: const EdgeInsets.all(40),
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 10,
                   crossAxisCount: 2,
+
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return GestureDetector(

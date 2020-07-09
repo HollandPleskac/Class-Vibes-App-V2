@@ -5,94 +5,56 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'screen1.dart';
 import 'teacher_portal/classview_teacher.dart';
 import 'teacher_portal/classview_teacher.dart';
-import 'screen3.dart';
-import 'constant.dart';
+import './teacher_portal/meetings_teacher.dart';
 
-class NavTeacher extends StatefulWidget {
-  @override
-  _NavTeacherState createState() => _NavTeacherState();
-}
 
-class _NavTeacherState extends State<NavTeacher> {
-  int selectedIndex = 1;
-
-  PageController controller = PageController(initialPage: 1);
-
-  var screens = [
-    Screen1(),
-    ClassViewTeacher(),
-    ClassViewStudent(),
-  ];
-
-  List<FaIcon> items = [
-    FaIcon(
-      FontAwesomeIcons.graduationCap,
-      size: 20,
-      color: Colors.white,
-    ),
-    FaIcon(
-      FontAwesomeIcons.stream,
-      size: 20,
-      color: Colors.white,
-    ),
-    FaIcon(
-      FontAwesomeIcons.userAlt,
-      size: 20,
-      color: Colors.white,
-    ),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class NavTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: PageView.builder(
-        onPageChanged: (page) {
-          setState(() {
-            selectedIndex = page;
-          });
-        },
-        controller: controller,
-        itemBuilder: (context, index) {
-          return Container(
-            child: screens[index],
-          );
-        },
-        physics: BouncingScrollPhysics(),
-        itemCount: screens.length,
-        //Can be null - prevents overflow w/ page view
-      ),
-      bottomNavigationBar: SafeArea(
-        child: CurvedNavigationBar(
-          color: kWetAsphaltColor,
-          backgroundColor: Colors.white,
-          buttonBackgroundColor: kPrimaryColor,
-
-          height: 60,
-
-          items: items,
-          // list of items above
-          index: selectedIndex,
-          //Do not need to specify index - only if using page controller
-          onTap: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
-            controller.jumpToPage(index);
-          },
-          animationDuration: Duration(
-            milliseconds: 200,
+    return Drawer(
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the drawer if there isn't enough vertical
+      // space to fit everything.
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            // put image here
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text('drawer header'),
           ),
-          animationCurve: Curves.bounceInOut,
-        ),
+          ListTile(
+            title: Text('Teacher Classes'),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ClassViewTeacher(),
+                ),
+              );
+            },
+          ),
+           ListTile(
+            title: Text('Teacher Meetings'),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MeetingsTeacher(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

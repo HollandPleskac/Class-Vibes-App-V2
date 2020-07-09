@@ -3,9 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
+
 
 class ChatTeacher extends StatefulWidget {
   static const routeName = 'teacher-chat';
@@ -69,6 +71,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
     final String studentUid = routeArguments['student uid'];
     final String studentName = routeArguments['student name'];
     return Scaffold(
+      
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
