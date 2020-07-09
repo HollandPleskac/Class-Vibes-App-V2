@@ -237,20 +237,19 @@ class _StudentClassState extends State<StudentClass> {
         Positioned(
           top: 0,
           right: 0,
-          child: InkWell(
+          child: GestureDetector(
             onTap: () {
               //           final String classId = routeArguments['class id'];
               // final String teacherName = routeArguments['teacher name'];
               // final String studentUid = routeArguments['student uid'];
               print('tap');
-              Navigator.pushNamed(context, ChatStudent.routeName,arguments: {
+              Navigator.pushNamed(context, ChatStudent.routeName, arguments: {
                 'class id': 'test class app ui',
                 'teacher name': 'Mr.Shea',
                 'student uid': 'new@gmail.com',
                 'student name': 'Kushagra',
               });
             },
-            borderRadius: BorderRadius.circular(3000),
             child: FaIcon(
               FontAwesomeIcons.solidComments,
               size: 50,
