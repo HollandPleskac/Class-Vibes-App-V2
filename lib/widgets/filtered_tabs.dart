@@ -315,6 +315,16 @@ class Student extends StatelessWidget {
           ),
           Spacer(),
           GestureDetector(
+            child: FaIcon(
+              FontAwesomeIcons.phone,
+              color: kPrimaryColor,
+              size: 35,
+            ),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          GestureDetector(
             onTap: () {
               // final String classId = routeArguments['class id'];
               // final String teacherName = routeArguments['teacher name'];
@@ -339,7 +349,7 @@ class Student extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 20,
+            width: 15,
           )
         ],
       ),
