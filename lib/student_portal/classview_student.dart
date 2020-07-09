@@ -1,8 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
+import '../logic/fire.dart';
+
+final Firestore _firestore = Firestore.instance;
+final _fire = Fire();
 
 class ClassViewStudent extends StatefulWidget {
   @override
@@ -181,6 +186,11 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  _fire.updateStudentMood(
+                                    uid: 'new@gmail.com',
+                                    classId: 'test class app ui',
+                                    newMood: 'frustrated'
+                                  );
                                   print('tapped frown');
                                 },
                                 child: FaIcon(
@@ -218,6 +228,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                 ),
               ],
             ),
+            
           ],
         ),
       ),
@@ -281,11 +292,13 @@ void showStudentInfoPopUp(BuildContext context) {
                                   size: 43.0,
                                   color: Colors.green,
                                 ),
-                                SizedBox(height: 2,),
+                                SizedBox(
+                                  height: 2,
+                                ),
                                 Text(
                                   "Doing Great",
                                   style: TextStyle(
-                                    fontSize: 15,
+                                      fontSize: 15,
                                       color: Colors.green,
                                       fontWeight: FontWeight.w500),
                                 )
@@ -299,11 +312,13 @@ void showStudentInfoPopUp(BuildContext context) {
                                   size: 43.0,
                                   color: Colors.orange[600],
                                 ),
-                                SizedBox(height: 2,),
+                                SizedBox(
+                                  height: 2,
+                                ),
                                 Text(
                                   " Need Help ",
                                   style: TextStyle(
-                                    fontSize: 15,
+                                      fontSize: 15,
                                       color: Colors.orange[600],
                                       fontWeight: FontWeight.w500),
                                 )
@@ -317,11 +332,13 @@ void showStudentInfoPopUp(BuildContext context) {
                                   size: 43.0,
                                   color: Colors.red[700],
                                 ),
-                                SizedBox(height: 2,),
+                                SizedBox(
+                                  height: 2,
+                                ),
                                 Text(
                                   "Frustrated",
                                   style: TextStyle(
-                                    fontSize: 15,
+                                      fontSize: 15,
                                       color: Colors.red[700],
                                       fontWeight: FontWeight.w500),
                                 )

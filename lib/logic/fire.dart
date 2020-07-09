@@ -4,6 +4,8 @@ import 'package:random_string/random_string.dart';
 final Firestore _firestore = Firestore.instance;
 
 class Fire {
+
+  // class setttings
   void updateClassName(String uid, String classId, String newClassName) {
     _firestore.collection("Classes").document(classId).updateData({
       "class name": newClassName,
@@ -73,5 +75,28 @@ class Fire {
       "class code": newCode,
     });
     return 'success';
+  }
+
+  // student dashboard
+    void updateStudentMood({String uid, String classId, String newMood}) {
+    _firestore
+        .collection('UserData')
+        .document(uid)
+        .collection('Classes')
+        .document(classId)
+        .updateData({
+      'mood': newMood,
+      'date': DateTime.now(),
+    });
+
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(uid)
+        .updateData({
+      'mood': newMood,
+      'date': DateTime.now(),
+    });
   }
 }
