@@ -41,27 +41,54 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(30),
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          children: <Widget>[
-            
-            
-            
-          ],
-        ),
-      ),
+      // body: Container(
+      //   height: MediaQuery.of(context).size.height,
+      //   width: MediaQuery.of(context).size.width,
+      //   child: GridView.count(
+      //     primary: false,
+      //     padding: const EdgeInsets.all(30),
+      //     crossAxisSpacing: 15,
+      //     mainAxisSpacing: 10,
+      //     crossAxisCount: 2,
+      //     children: <Widget>[
+
+      //     ],
+      //   ),
+      // ),
+      body: StreamBuilder(
+          stream: _firestore
+              .collection('UserData')
+              .document('new@gmail.com')
+              .collection('Classes')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: Container(),
+              );
+            }
+
+            return Center(
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(30),
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 10,
+                crossAxisCount: 2,
+                children:
+                    snapshot.data.documents.map((DocumentSnapshot document) {
+                  return StudentClass(
+                    className: document['class name'],
+                    status: document['status'],
+                  );
+                }).toList(),
+              ),
+            );
+          }),
     );
   }
 }
-
-
 
 class StudentClass extends StatefulWidget {
   final String className;
@@ -108,12 +135,12 @@ class _StudentClassState extends State<StudentClass> {
                         onTap: () {
                           _fire.updateStudentMood(
                               uid: 'new@gmail.com',
-                              classId: 'test class app ui',
+                              classId: 'class id',
                               newMood: 'doing great');
                           print('touched happy face');
                         },
                         child: FaIcon(
-                          FontAwesomeIcons.smile,
+                          widget.status == 'doing great' ? FontAwesomeIcons.solidSmile : FontAwesomeIcons.smile,
                           color: Colors.green,
                           size: 35,
                         ),
@@ -122,12 +149,12 @@ class _StudentClassState extends State<StudentClass> {
                         onTap: () {
                           _fire.updateStudentMood(
                               uid: 'new@gmail.com',
-                              classId: 'test class app ui',
+                              classId: 'class id',
                               newMood: 'need help');
                           print('tapped meh');
                         },
                         child: FaIcon(
-                          FontAwesomeIcons.meh,
+                          widget.status == 'need help' ? FontAwesomeIcons.solidMeh : FontAwesomeIcons.meh,
                           color: Colors.yellow[800],
                           size: 35,
                         ),
@@ -136,12 +163,12 @@ class _StudentClassState extends State<StudentClass> {
                         onTap: () {
                           _fire.updateStudentMood(
                               uid: 'new@gmail.com',
-                              classId: 'test class app ui',
+                              classId: 'class id',
                               newMood: 'frustrated');
                           print('tapped frown');
                         },
                         child: FaIcon(
-                          FontAwesomeIcons.solidFrown,
+                          widget.status == 'frustrated' ? FontAwesomeIcons.solidFrown : FontAwesomeIcons.frown,
                           color: Colors.red,
                           size: 35,
                         ),
@@ -177,8 +204,6 @@ class _StudentClassState extends State<StudentClass> {
     );
   }
 }
-
-
 
 void showStudentInfoPopUp(BuildContext context) {
   showDialog(
