@@ -7,6 +7,7 @@ import 'teacher_portal/classview_teacher.dart';
 import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
 import './student_portal/profile_student.dart';
+import './student_portal/meetings_student.dart';
 import './student_portal/classview_student.dart';
 
 
@@ -49,7 +50,7 @@ class NavStudent extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MeetingsTeacher(),
+                  builder: (context) => MeetingsStudent(),
                 ),
               );
             },
