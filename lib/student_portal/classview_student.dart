@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
+import '../nav_student.dart';
 import './chat_student.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -19,6 +20,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavStudent(),
       backgroundColor: Color.fromRGBO(250, 250, 250, 1.0),
       appBar: AppBar(
         backgroundColor: kWetAsphaltColor,

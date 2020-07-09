@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NavStudent(),
+                    builder: (context) => ClassViewStudent(),
                   ),
                 );
               },
