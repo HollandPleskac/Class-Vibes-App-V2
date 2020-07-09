@@ -21,6 +21,8 @@ class _ViewClassState extends State<ViewClass> {
   bool _isTouchedFrustrated = false;
   bool _isTouchedInactive = false;
 
+  
+
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
@@ -214,18 +216,18 @@ class DynamicPieChart extends StatelessWidget {
 
           // if (snapshot.data != null &&
           //     snapshot.data.documents.isEmpty == false) {
-            return PieChartSampleBig(
-              //graph percentage
-              doingGreatStudents: doingGreatStudents,
-              needHelpStudents: needHelpStudents,
-              frustratedStudents: frustratedStudents,
-              inactiveStudents: inactiveStudents,
-              //graph titles
-              doingGreatPercentage: doingGreatPercentage,
-              needHelpPercentage: needHelpPercentage,
-              frustratedPercentage: frustratedPercentage,
-              inactivePercentage: inactivePercentage,
-            );
+          return PieChartSampleBig(
+            //graph percentage
+            doingGreatStudents: doingGreatStudents,
+            needHelpStudents: needHelpStudents,
+            frustratedStudents: frustratedStudents,
+            inactiveStudents: inactiveStudents,
+            //graph titles
+            doingGreatPercentage: doingGreatPercentage,
+            needHelpPercentage: needHelpPercentage,
+            frustratedPercentage: frustratedPercentage,
+            inactivePercentage: inactivePercentage,
+          );
           // } else {
           //   return Center(
           //     child: Text('no data'),

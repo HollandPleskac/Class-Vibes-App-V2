@@ -36,6 +36,7 @@ class AllTab extends StatelessWidget {
                     name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
+                    context: context,
                   );
                 }).toList(),
               );
@@ -86,6 +87,7 @@ class DoingGreatTab extends StatelessWidget {
                     name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
+                    context: context,
                   );
                 }).toList(),
               );
@@ -136,6 +138,7 @@ class NeedHelpTab extends StatelessWidget {
                     name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
+                    context: context,
                   );
                 }).toList(),
               );
@@ -186,6 +189,7 @@ class FrustratedTab extends StatelessWidget {
                     name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
+                    context: context,
                   );
                 }).toList(),
               );
@@ -235,6 +239,7 @@ class InactiveTab extends StatelessWidget {
                     name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
+                    context: context,
                   );
                 }).toList(),
               );
@@ -253,8 +258,127 @@ class Student extends StatelessWidget {
   final String name;
   final String status;
   final String profilePictureLink;
+  final BuildContext context;
 
-  Student({this.name, this.status, this.profilePictureLink});
+  Student({
+    this.name,
+    this.status,
+    this.profilePictureLink,
+    this.context,
+  });
+
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+  final TextEditingController _lengthController = TextEditingController();
+  void showModalSheet() {
+    showModalBottomSheet(
+      barrierColor: Colors.white.withOpacity(0),
+      elevation: 0,
+      context: context,
+      builder: (builder) {
+        return ClipRect(
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300.withOpacity(0.5),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30))),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Setup a Meeting',
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800),
+                ),
+                Form(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20,),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        child: TextFormField(
+                          controller: _titleController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(126, 126, 126, 1),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Colors.grey[700],
+                            ),
+                            hintText: 'Title',
+                            icon: FaIcon(FontAwesomeIcons.speakap),
+                          ),
+                        ),
+                      ),
+                      //Add something for date picker
+                      // Padding(
+                      //   padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                      //   child: TextFormField(
+                      //     controller: _contentController,
+                      //     decoration: InputDecoration(
+                      //       border: InputBorder.none,
+                      //       hintStyle: TextStyle(
+                      //         color: Color.fromRGBO(126, 126, 126, 1),
+                      //       ),
+                      //       labelStyle: TextStyle(
+                      //         color: Colors.grey[700],
+                      //       ),
+                      //       hintText: 'Date/Time',
+                      //       icon: FaIcon(FontAwesomeIcons.speakap),
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        child: TextFormField(
+                          controller: _contentController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(126, 126, 126, 1),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Colors.grey[700],
+                            ),
+                            hintText: 'Message',
+                            icon: FaIcon(FontAwesomeIcons.speakap),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        child: TextFormField(
+                          controller: _lengthController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(126, 126, 126, 1),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Colors.grey[700],
+                            ),
+                            hintText: 'Length',
+                            icon: FaIcon(FontAwesomeIcons.speakap),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -315,6 +439,7 @@ class Student extends StatelessWidget {
           ),
           Spacer(),
           GestureDetector(
+            onTap: () => showModalSheet(),
             child: FaIcon(
               FontAwesomeIcons.phone,
               color: kPrimaryColor,
