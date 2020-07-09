@@ -85,7 +85,7 @@ class Fire {
         .collection('Classes')
         .document(classId)
         .updateData({
-      'mood': newMood,
+      'status': newMood,
       'date': DateTime.now(),
     });
 
@@ -95,7 +95,7 @@ class Fire {
         .collection('Students')
         .document(uid)
         .updateData({
-      'mood': newMood,
+      'status': newMood,
       'date': DateTime.now(),
     });
   }

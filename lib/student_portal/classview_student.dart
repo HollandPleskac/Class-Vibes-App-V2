@@ -51,183 +51,8 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: <Widget>[
-            Stack(
-              children: [
-                Container(
-                  // color: Colors.red,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Card(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 35,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 0),
-                            child: Text(
-                              'Honors Biology',
-                              style: kSubTextStyle.copyWith(fontSize: 20),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print('touched happy face');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.solidSmile,
-                                  color: Colors.green,
-                                  size: 35,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  print('tapped meh');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.meh,
-                                  color: Colors.yellow[800],
-                                  size: 35,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  print('tapped frown');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.frown,
-                                  color: Colors.red,
-                                  size: 35,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {
-                      print('tap');
-                    },
-                    borderRadius: BorderRadius.circular(3000),
-                    child: FaIcon(
-                      FontAwesomeIcons.solidComments,
-                      size: 50,
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  // color: Colors.red,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Card(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 35,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 0),
-                            child: Text(
-                              'AP History',
-                              style: kSubTextStyle.copyWith(fontSize: 20),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  print('touched happy face');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.smile,
-                                  color: Colors.green,
-                                  size: 35,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  print('tapped meh');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.meh,
-                                  color: Colors.yellow[800],
-                                  size: 35,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  _fire.updateStudentMood(
-                                    uid: 'new@gmail.com',
-                                    classId: 'test class app ui',
-                                    newMood: 'frustrated'
-                                  );
-                                  print('tapped frown');
-                                },
-                                child: FaIcon(
-                                  FontAwesomeIcons.solidFrown,
-                                  color: Colors.red,
-                                  size: 35,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {
-                      print('tap');
-                    },
-                    borderRadius: BorderRadius.circular(3000),
-                    child: FaIcon(
-                      FontAwesomeIcons.solidComments,
-                      size: 50,
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            
+            
             
           ],
         ),
@@ -235,6 +60,125 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
     );
   }
 }
+
+
+
+class StudentClass extends StatefulWidget {
+  final String className;
+  final String status;
+  StudentClass({
+    this.className,
+    this.status,
+  });
+  @override
+  _StudentClassState createState() => _StudentClassState();
+}
+
+class _StudentClassState extends State<StudentClass> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          // color: Colors.red,
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Card(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 0),
+                    child: Text(
+                      widget.className,
+                      style: kSubTextStyle.copyWith(fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _fire.updateStudentMood(
+                              uid: 'new@gmail.com',
+                              classId: 'test class app ui',
+                              newMood: 'doing great');
+                          print('touched happy face');
+                        },
+                        child: FaIcon(
+                          FontAwesomeIcons.smile,
+                          color: Colors.green,
+                          size: 35,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _fire.updateStudentMood(
+                              uid: 'new@gmail.com',
+                              classId: 'test class app ui',
+                              newMood: 'need help');
+                          print('tapped meh');
+                        },
+                        child: FaIcon(
+                          FontAwesomeIcons.meh,
+                          color: Colors.yellow[800],
+                          size: 35,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _fire.updateStudentMood(
+                              uid: 'new@gmail.com',
+                              classId: 'test class app ui',
+                              newMood: 'frustrated');
+                          print('tapped frown');
+                        },
+                        child: FaIcon(
+                          FontAwesomeIcons.solidFrown,
+                          color: Colors.red,
+                          size: 35,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(14),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: InkWell(
+            onTap: () {
+              print('tap');
+            },
+            borderRadius: BorderRadius.circular(3000),
+            child: FaIcon(
+              FontAwesomeIcons.solidComments,
+              size: 50,
+              color: kPrimaryColor,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
 
 void showStudentInfoPopUp(BuildContext context) {
   showDialog(
