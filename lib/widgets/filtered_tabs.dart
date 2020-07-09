@@ -274,6 +274,7 @@ class Student extends StatelessWidget {
     showModalBottomSheet(
       barrierColor: Colors.white.withOpacity(0),
       elevation: 0,
+      isScrollControlled: true,
       context: context,
       builder: (builder) {
         return ClipRect(
@@ -284,6 +285,7 @@ class Student extends StatelessWidget {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30))),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 SizedBox(
                   height: 20,
@@ -298,9 +300,12 @@ class Student extends StatelessWidget {
                 Form(
                   child: Column(
                     children: [
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        padding:
+                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         child: TextFormField(
                           controller: _titleController,
                           decoration: InputDecoration(
@@ -335,7 +340,8 @@ class Student extends StatelessWidget {
                       //   ),
                       // ),
                       Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        padding:
+                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         child: TextFormField(
                           controller: _contentController,
                           decoration: InputDecoration(
@@ -352,7 +358,8 @@ class Student extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        padding:
+                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         child: TextFormField(
                           controller: _lengthController,
                           decoration: InputDecoration(
@@ -365,6 +372,24 @@ class Student extends StatelessWidget {
                             ),
                             hintText: 'Length',
                             icon: FaIcon(FontAwesomeIcons.speakap),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20, bottom: 10),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            color: kPrimaryColor,
+                            onPressed: () {},
+                            child: Text(
+                              'Setup',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
                           ),
                         ),
                       ),
