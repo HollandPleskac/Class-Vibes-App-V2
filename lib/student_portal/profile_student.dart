@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../nav_student.dart';
 
-class Profile extends StatefulWidget {
+class ProfileStudent extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfileStudentState createState() => _ProfileStudentState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileStudentState extends State<ProfileStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
