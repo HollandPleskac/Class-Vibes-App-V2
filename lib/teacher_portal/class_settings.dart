@@ -180,7 +180,7 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
           ),
         ),
         Spacer(),
-        CupertinoSwitch(
+        widget.isSwitched == null ? CircularProgressIndicator() : CupertinoSwitch(
           value: widget.isSwitched,
           onChanged: (value) {
             widget.updateSwitch();
@@ -283,16 +283,18 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
           style: TextStyle(fontSize: 18, color: kWetAsphaltColor),
         ),
         Spacer(),
-        NumberPicker.integer(
-          initialValue: widget.maxDaysInactive,
-          minValue: 1,
-          maxValue: 7,
-          onChanged: (value) {
-            setState(() {
-              widget.maxDaysInactive = value;
-            });
-          },
-        ),
+        widget.maxDaysInactive == null
+            ? CircularProgressIndicator()
+            : NumberPicker.integer(
+                initialValue: widget.maxDaysInactive,
+                minValue: 1,
+                maxValue: 7,
+                onChanged: (value) {
+                  setState(() {
+                    widget.maxDaysInactive = value;
+                  });
+                },
+              ),
         Spacer(),
         ClipOval(
           child: Material(
