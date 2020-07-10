@@ -20,9 +20,7 @@ class ViewClass extends StatefulWidget {
 }
 
 class _ViewClassState extends State<ViewClass> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _contentController = TextEditingController();
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -63,121 +61,7 @@ class _ViewClassState extends State<ViewClass> {
             child: ClassSettings(),
           ),
         ]),
-        floatingActionButton: FloatingActionButton(
-          child: FaIcon(FontAwesomeIcons.bullhorn),
-          onPressed: () {
-            showModalBottomSheet(
-              barrierColor: Colors.white.withOpacity(0),
-              elevation: 0,
-              isScrollControlled: true,
-              context: context,
-              builder: (context) {
-                return SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: ClipRect(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade300.withOpacity(0.5),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30))),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'Push an Announcement',
-                              style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                            Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 20, right: 20, bottom: 10),
-                                    child: TextFormField(
-                                      controller: _contentController,
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'announcement has to have a message';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(
-                                          color:
-                                              Color.fromRGBO(126, 126, 126, 1),
-                                        ),
-                                        labelStyle: TextStyle(
-                                          color: Colors.grey[700],
-                                        ),
-                                        hintText: 'Message',
-                                        icon: FaIcon(FontAwesomeIcons.speakap),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(right: 20, bottom: 10),
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: FlatButton(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        color: kPrimaryColor,
-                                        onPressed: () {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            _fire.pushAnnouncement(
-                                              classId: 'test class app ui',
-                                              content: _contentController.text,
-                                              className: 'AP Physics',
-                                            );
-                                            Navigator.pop(context);
-                                          }
-                                        },
-                                        child: Text(
-                                          'Push',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // SizedBox(
-                                  //   height: MediaQuery.of(context).size.height * 0.35,
-                                  // )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
+        
       ),
     );
   }
