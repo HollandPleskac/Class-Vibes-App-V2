@@ -4,7 +4,6 @@ import 'package:random_string/random_string.dart';
 final Firestore _firestore = Firestore.instance;
 
 class Fire {
-
   // class setttings
   void updateClassName(String uid, String classId, String newClassName) {
     _firestore.collection("Classes").document(classId).updateData({
@@ -78,7 +77,7 @@ class Fire {
   }
 
   // student dashboard
-    void updateStudentMood({String uid, String classId, String newMood}) {
+  void updateStudentMood({String uid, String classId, String newMood}) {
     _firestore
         .collection('UserData')
         .document(uid)
@@ -97,6 +96,21 @@ class Fire {
         .updateData({
       'status': newMood,
       'date': DateTime.now(),
+    });
+  }
+
+  void setupMeeting(
+      String studentUid, String length, String title, String content) {
+    _firestore
+        .collection('UserData')
+        .document(studentUid)
+        .collection('Meetings')
+        .document('random meeting id')
+        .setData({
+      'time': length,
+      'title': title,
+      'content': content,
+      'date': 'date',
     });
   }
 }

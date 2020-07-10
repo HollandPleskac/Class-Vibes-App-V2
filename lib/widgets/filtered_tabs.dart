@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../teacher_portal/chat_teacher.dart';
+import '../logic/fire.dart';
 import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
+final _fire = Fire();
 
 class AllTab extends StatelessWidget {
   @override
@@ -270,6 +272,8 @@ class Student extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _lengthController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   void showModalSheet() {
     showModalBottomSheet(
       barrierColor: Colors.white.withOpacity(0),
@@ -298,6 +302,7 @@ class Student extends StatelessWidget {
                       fontWeight: FontWeight.w800),
                 ),
                 Form(
+                  key: _formKey,
                   child: Column(
                     children: [
                       SizedBox(
@@ -308,6 +313,14 @@ class Student extends StatelessWidget {
                             EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         child: TextFormField(
                           controller: _titleController,
+                          autofocus: true,
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'meeting title is required';
+                            } else {
+                              return null;
+                            }
+                          },
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintStyle: TextStyle(
@@ -344,6 +357,13 @@ class Student extends StatelessWidget {
                             EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         child: TextFormField(
                           controller: _contentController,
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'message is requred';
+                            } else {
+                              return null;
+                            }
+                          },
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintStyle: TextStyle(
@@ -361,6 +381,13 @@ class Student extends StatelessWidget {
                         padding:
                             EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'meeting length (ex. 2 hours) is required';
+                            } else {
+                              return null;
+                            }
+                          },
                           controller: _lengthController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -384,7 +411,16 @@ class Student extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             color: kPrimaryColor,
-                            onPressed: () {},
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                _fire.setupMeeting(
+                                    'new@gmail.com',
+                                    _lengthController.text,
+                                    _titleController.text,
+                                    _contentController.text);
+                                Navigator.pop(context);
+                              }
+                            },
                             child: Text(
                               'Setup',
                               style:
@@ -393,7 +429,9 @@ class Student extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height*0.35,)
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                      )
                     ],
                   ),
                 ),
