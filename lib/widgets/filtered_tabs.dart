@@ -426,15 +426,16 @@ class Student extends StatelessWidget {
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
                                     _fire.setupMeeting(
-                                        studentUid: 'new@gmail.com',
-                                        length: _lengthController.text,
-                                        title: _titleController.text,
-                                        content: _contentController.text,
-                                        dateAndTime:
-                                            _dateAndTimeController.text,
-                                        studentName: 'student name',
-                                        teacherUid: 'new1@gmail.com',
-                                        className: 'AP Physics');
+                                      studentUid: 'new@gmail.com',
+                                      length: _lengthController.text,
+                                      title: _titleController.text,
+                                      content: _contentController.text,
+                                      dateAndTime: _dateAndTimeController.text,
+                                      studentName: 'student name',
+                                      teacherUid: 'new1@gmail.com',
+                                      className: 'AP Physics',
+                                      classId: 'test class app ui',
+                                    );
                                     Navigator.pop(context);
                                   }
                                 },

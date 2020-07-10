@@ -108,7 +108,22 @@ class Fire {
     String teacherUid,
     String dateAndTime,
     String className,
+    String classId,
   }) {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Meetings')
+        .document('random meeting id')
+        .setData({
+      'time': length,
+      'title': title,
+      'content': content,
+      'class name': className,
+      'date and time': dateAndTime,
+      'student name': studentName,
+      'timestamp': DateTime.now(),
+    });
     _firestore
         .collection('UserData')
         .document(studentUid)
@@ -120,6 +135,7 @@ class Fire {
       'content': content,
       'class name': className,
       'date and time': dateAndTime,
+      'student name': studentName,
       'timestamp': DateTime.now(),
     });
     _firestore
@@ -142,7 +158,9 @@ class Fire {
     String studentUid,
     String teacherUid,
     String meetingId,
+    String classId,
   }) {
+    _firestore.collection('Classes').document(classId).collection('Meetings').document(meetingId).delete();
     _firestore
         .collection("UserData")
         .document(studentUid)

@@ -185,6 +185,7 @@ class Meeting extends StatelessWidget {
                     studentUid: 'new@gmail.com',
                     teacherUid: 'new1@gmail.com',
                     meetingId: 'random meeting id',
+                    classId: 'test class app ui',
                   );
                 },
                 child: FaIcon(

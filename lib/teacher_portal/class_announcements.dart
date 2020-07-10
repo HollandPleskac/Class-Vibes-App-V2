@@ -134,8 +134,9 @@ class PushAnnouncementBtn extends StatelessWidget {
   TextEditingController _contentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      child: FaIcon(FontAwesomeIcons.bullhorn),
+    return FloatingActionButton.extended(
+      icon: FaIcon(FontAwesomeIcons.bullhorn),
+      label: Text('Push Announcement',style: TextStyle(fontSize: 15),),
       onPressed: () {
         showModalBottomSheet(
           barrierColor: Colors.white.withOpacity(0),

@@ -9,6 +9,7 @@ import '../constant.dart';
 import '../logic/fire.dart';
 import './class_settings.dart';
 import './class_announcements.dart';
+import './class_meetings.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
@@ -50,9 +51,7 @@ class _ViewClassState extends State<ViewClass> {
             child: StudentsTab(),
           ),
           Container(
-            child: Center(
-              child: Text('tab two'),
-            ),
+            child: ClassMeetings(),
           ),
           Container(
             child: ClassAnnouncements(),
