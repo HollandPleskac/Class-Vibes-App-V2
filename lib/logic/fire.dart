@@ -120,7 +120,7 @@ class Fire {
       'content': content,
       'class name': className,
       'date and time': dateAndTime,
-      'timestamp':DateTime.now(),
+      'timestamp': DateTime.now(),
     });
     _firestore
         .collection('UserData')
@@ -130,11 +130,30 @@ class Fire {
         .setData({
       'time': length,
       'title': title,
-      'class name':className,
+      'class name': className,
       'content': content,
       'student name': studentName,
       'date and time': dateAndTime,
-      'timestamp':DateTime.now(),
+      'timestamp': DateTime.now(),
     });
+  }
+
+  void deleteMeeting({
+    String studentUid,
+    String teacherUid,
+    String meetingId,}
+  ) {
+    _firestore
+        .collection("UserData")
+        .document(studentUid)
+        .collection('Meetings')
+        .document(meetingId)
+        .delete();
+    _firestore
+        .collection("UserData")
+        .document(teacherUid)
+        .collection('Meetings')
+        .document(meetingId)
+        .delete();
   }
 }
