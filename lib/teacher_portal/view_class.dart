@@ -7,6 +7,8 @@ import '../widgets/filtered_tabs.dart';
 import '../widgets/filter_btns.dart';
 import '../constant.dart';
 import '../logic/fire.dart';
+import './class_settings.dart';
+import './class_announcements.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
@@ -30,6 +32,7 @@ class _ViewClassState extends State<ViewClass> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: kWetAsphaltColor,
           title: Text(className),
@@ -54,14 +57,10 @@ class _ViewClassState extends State<ViewClass> {
             ),
           ),
           Container(
-            child: Center(
-              child: Text('tab three'),
-            ),
+            child: ClassAnnouncements(),
           ),
           Container(
-            child: Center(
-              child: Text('tab four'),
-            ),
+            child: ClassSettings(),
           ),
         ]),
         floatingActionButton: FloatingActionButton(

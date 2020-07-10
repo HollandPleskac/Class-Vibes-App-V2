@@ -58,66 +58,46 @@ class _ClassSettingsState extends State<ClassSettings> {
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
 
-    return Scaffold(
-      key: _scaffoldKey,
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: StreamBuilder(
-            stream: _firestore
-                .collection('Classes')
-                .document('test class app ui')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                return Text(snapshot.data['class name']);
-              }
-            }),
-        centerTitle: true,
-        backgroundColor: kWetAsphaltColor,
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            EditClassName(
-              controller: _classNameController,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            IsAcceptingJoin(isSwitched, () {
-              setState(() {
-                isSwitched == false ? isSwitched = true : isSwitched = false;
-              });
-            }),
-            SizedBox(
-              height: 50,
-            ),
-            ClassCode(),
-            SizedBox(
-              height: 25,
-            ),
-            InactiveDaysPicker(maxDaysInactive),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GenerateNewClassCode(_scaffoldKey),
-                SizedBox(
-                  width: 20,
-                ),
-                DeleteClass(),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          EditClassName(
+            controller: _classNameController,
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          IsAcceptingJoin(isSwitched, () {
+            setState(() {
+              isSwitched == false ? isSwitched = true : isSwitched = false;
+            });
+          }),
+          SizedBox(
+            height: 50,
+          ),
+          ClassCode(),
+          SizedBox(
+            height: 25,
+          ),
+          InactiveDaysPicker(maxDaysInactive),
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GenerateNewClassCode(_scaffoldKey),
+              SizedBox(
+                width: 20,
+              ),
+              DeleteClass(),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }
@@ -260,21 +240,22 @@ class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
         onPressed: () async {
-          var result = await _fire.generateNewClassCode('new1@gmail.com', 'test class app ui');
+          var result = await _fire.generateNewClassCode(
+              'new1@gmail.com', 'test class app ui');
           print(result);
           if (result != 'success') {
             print('failed');
-             final snackBar = SnackBar(
-                      content: Text('Code Already Taken. Try Again!'),
-                      action: SnackBarAction(
-                        label: 'Hide',
-                        onPressed: () {
-                          widget.scaffoldKey.currentState.hideCurrentSnackBar();
-                        },
-                      ),
-                    );
+            final snackBar = SnackBar(
+              content: Text('Code Already Taken. Try Again!'),
+              action: SnackBarAction(
+                label: 'Hide',
+                onPressed: () {
+                  widget.scaffoldKey.currentState.hideCurrentSnackBar();
+                },
+              ),
+            );
 
-                    widget.scaffoldKey.currentState.showSnackBar(snackBar);
+            widget.scaffoldKey.currentState.showSnackBar(snackBar);
           }
         },
       ),
