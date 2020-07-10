@@ -272,6 +272,7 @@ class Student extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
   final TextEditingController _lengthController = TextEditingController();
+  final TextEditingController _dateAndTimeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void showModalSheet() {
@@ -334,24 +335,30 @@ class Student extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //Add something for date picker
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                      //   child: TextFormField(
-                      //     controller: _contentController,
-                      //     decoration: InputDecoration(
-                      //       border: InputBorder.none,
-                      //       hintStyle: TextStyle(
-                      //         color: Color.fromRGBO(126, 126, 126, 1),
-                      //       ),
-                      //       labelStyle: TextStyle(
-                      //         color: Colors.grey[700],
-                      //       ),
-                      //       hintText: 'Date/Time',
-                      //       icon: FaIcon(FontAwesomeIcons.speakap),
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        child: TextFormField(
+                          controller: _dateAndTimeController,
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'date/time (Thursday 11:55 pm) is requred';
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(126, 126, 126, 1),
+                            ),
+                            labelStyle: TextStyle(
+                              color: Colors.grey[700],
+                            ),
+                            hintText: 'Date/Time',
+                            icon: FaIcon(FontAwesomeIcons.speakap),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding:
                             EdgeInsets.only(left: 20, right: 20, bottom: 10),
@@ -414,10 +421,13 @@ class Student extends StatelessWidget {
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
                                 _fire.setupMeeting(
-                                    'new@gmail.com',
-                                    _lengthController.text,
-                                    _titleController.text,
-                                    _contentController.text);
+                                    studentUid: 'new@gmail.com',
+                                    length: _lengthController.text,
+                                    title: _titleController.text,
+                                    content: _contentController.text,
+                                    studentName: 'student name',
+                                    teacherName: 'teacher name',
+                                    teacherUid: 'new1@gmail.com');
                                 Navigator.pop(context);
                               }
                             },

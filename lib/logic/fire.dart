@@ -99,8 +99,16 @@ class Fire {
     });
   }
 
-  void setupMeeting(
-      String studentUid, String length, String title, String content) {
+  void setupMeeting({
+    String studentUid,
+    String length,
+    String title,
+    String content,
+    String studentName,
+    String teacherName,
+    String teacherUid,
+    String dateAndTime,
+  }) {
     _firestore
         .collection('UserData')
         .document(studentUid)
@@ -110,7 +118,22 @@ class Fire {
       'time': length,
       'title': title,
       'content': content,
-      'date': 'date',
+      'teacher name': teacherName,
+      'date and time': dateAndTime,
+      'timestamp':DateTime.now(),
+    });
+    _firestore
+        .collection('UserData')
+        .document(teacherUid)
+        .collection('Meetings')
+        .document('random meeting id')
+        .setData({
+      'time': length,
+      'title': title,
+      'content': content,
+      'student name': studentName,
+      'date and time': dateAndTime,
+      'timestamp':DateTime.now(),
     });
   }
 }
