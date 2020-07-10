@@ -160,7 +160,6 @@ class Fire {
   void pushAnnouncement({
     String classId,
     String content,
-    String title,
     String className,}
   ) {
     _firestore
@@ -171,7 +170,6 @@ class Fire {
         .setData(
       {
         'context': content,
-        'title':title,
         'timestamp':DateTime.now(),
         'class name':className,
       },

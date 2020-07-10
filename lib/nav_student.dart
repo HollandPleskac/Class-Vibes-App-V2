@@ -9,6 +9,7 @@ import './teacher_portal/meetings_teacher.dart';
 import './student_portal/profile_student.dart';
 import './student_portal/meetings_student.dart';
 import './student_portal/classview_student.dart';
+import './student_portal/announcements_student.dart';
 
 
 class NavStudent extends StatelessWidget {
@@ -51,6 +52,19 @@ class NavStudent extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => MeetingsStudent(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Student Announcements'),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AnnouncementsStudent(),
                 ),
               );
             },

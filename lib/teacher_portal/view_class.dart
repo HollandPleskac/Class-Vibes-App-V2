@@ -175,32 +175,7 @@ class _ViewClassState extends State<ViewClass> {
                                 SizedBox(
                                   height: 20,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, right: 20, bottom: 10),
-                                  child: TextFormField(
-                                    controller: _titleController,
-                                    // autofocus: true,
-                                    validator: (value) {
-                                      if (value == null || value == '') {
-                                        return 'announcement title is required';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintStyle: TextStyle(
-                                        color: Color.fromRGBO(126, 126, 126, 1),
-                                      ),
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey[700],
-                                      ),
-                                      hintText: 'Title',
-                                      icon: FaIcon(FontAwesomeIcons.speakap),
-                                    ),
-                                  ),
-                                ),
+                                
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: 20, right: 20, bottom: 10),
@@ -242,7 +217,6 @@ class _ViewClassState extends State<ViewClass> {
                                           _fire.pushAnnouncement(
                                               classId: 'test class app ui',
                                               content: _contentController.text,
-                                              title: _titleController.text,
                                               className: 'AP Physics');
                                           Navigator.pop(context);
                                         }
