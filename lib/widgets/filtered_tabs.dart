@@ -425,9 +425,10 @@ class Student extends StatelessWidget {
                                     length: _lengthController.text,
                                     title: _titleController.text,
                                     content: _contentController.text,
+                                    dateAndTime: _dateAndTimeController.text,
                                     studentName: 'student name',
-                                    teacherName: 'teacher name',
-                                    teacherUid: 'new1@gmail.com');
+                                    teacherUid: 'new1@gmail.com',
+                                    className: 'AP Physics');
                                 Navigator.pop(context);
                               }
                             },

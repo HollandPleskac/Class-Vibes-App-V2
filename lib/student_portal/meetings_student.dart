@@ -21,7 +21,7 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
               .collection('UserData')
               .document('new@gmail.com')
               .collection('Meetings')
-              .orderBy("date", descending: false)
+              .orderBy("timestamp", descending: false)
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -74,7 +74,7 @@ class Meeting extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Thursday 11:59',
+          dateAndTime,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -84,7 +84,7 @@ class Meeting extends StatelessWidget {
           height: 15,
         ),
         Text(
-          'AP Biology',
+          className,
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -133,7 +133,7 @@ class Meeting extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Math Meet',
+                      title,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -148,7 +148,7 @@ class Meeting extends StatelessWidget {
                       color: kPrimaryColor.withOpacity(0.5),
                       child: Center(
                         child: Text(
-                          '2 hours',
+                          length,
                           style: TextStyle(
                             color: Colors.grey[700],
                             fontSize: 19,
@@ -160,7 +160,7 @@ class Meeting extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      'I need to talk to you',
+                      message,
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.grey[700],
