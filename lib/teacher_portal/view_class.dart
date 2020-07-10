@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
 import '../widgets/filter_btns.dart';
 import '../constant.dart';
+import '../logic/fire.dart';
 
 final Firestore _firestore = Firestore.instance;
+final _fire = Fire();
 
 class ViewClass extends StatefulWidget {
   static const routeName = 'individual-class-teacher';
@@ -20,8 +23,9 @@ class _ViewClassState extends State<ViewClass> {
   bool _isTouchedNeedHelp = false;
   bool _isTouchedFrustrated = false;
   bool _isTouchedInactive = false;
-
-  
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +134,142 @@ class _ViewClassState extends State<ViewClass> {
                                     'IMPORTANT - this text will never show since one of the first values will always be true'),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: FaIcon(FontAwesomeIcons.bullhorn),
+        onPressed: () {
+          showModalBottomSheet(
+            barrierColor: Colors.white.withOpacity(0),
+            elevation: 0,
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: ClipRect(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300.withOpacity(0.5),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30))),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Push an Announcement',
+                            style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800),
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, right: 20, bottom: 10),
+                                  child: TextFormField(
+                                    controller: _titleController,
+                                    // autofocus: true,
+                                    validator: (value) {
+                                      if (value == null || value == '') {
+                                        return 'announcement title is required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                        color: Color.fromRGBO(126, 126, 126, 1),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey[700],
+                                      ),
+                                      hintText: 'Title',
+                                      icon: FaIcon(FontAwesomeIcons.speakap),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 20, right: 20, bottom: 10),
+                                  child: TextFormField(
+                                    controller: _contentController,
+                                    validator: (value) {
+                                      if (value == null || value == '') {
+                                        return 'announcement has to have a message';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                        color: Color.fromRGBO(126, 126, 126, 1),
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey[700],
+                                      ),
+                                      hintText: 'Message',
+                                      icon: FaIcon(FontAwesomeIcons.speakap),
+                                    ),
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(right: 20, bottom: 10),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      color: kPrimaryColor,
+                                      onPressed: () {
+                                        if (_formKey.currentState.validate()) {
+                                          _fire.pushAnnouncement(
+                                              classId: 'test class app ui',
+                                              content: _contentController.text,
+                                              title: _titleController.text,
+                                              className: 'AP Physics');
+                                          Navigator.pop(context);
+                                        }
+                                      },
+                                      child: Text(
+                                        'Push',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   height: MediaQuery.of(context).size.height * 0.35,
+                                // )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

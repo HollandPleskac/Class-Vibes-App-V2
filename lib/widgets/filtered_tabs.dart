@@ -281,172 +281,180 @@ class Student extends StatelessWidget {
       elevation: 0,
       isScrollControlled: true,
       context: context,
-      builder: (builder) {
-        return ClipRect(
+      builder: (context) {
+        return SingleChildScrollView(
           child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey.shade300.withOpacity(0.5),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30))),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                SizedBox(
-                  height: 20,
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: ClipRect(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade300.withOpacity(0.5),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Setup a Meeting',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800),
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: TextFormField(
+                              controller: _titleController,
+                              // autofocus: true,
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'meeting title is required';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Title',
+                                icon: FaIcon(FontAwesomeIcons.speakap),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: TextFormField(
+                              controller: _dateAndTimeController,
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'date/time (Thursday 11:55 pm) is requred';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Date/Time',
+                                icon: FaIcon(FontAwesomeIcons.speakap),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: TextFormField(
+                              controller: _contentController,
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'message is requred';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Message',
+                                icon: FaIcon(FontAwesomeIcons.speakap),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'meeting length (ex. 2 hours) is required';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: _lengthController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Length',
+                                icon: FaIcon(FontAwesomeIcons.speakap),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 20, bottom: 10),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                color: kPrimaryColor,
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    _fire.setupMeeting(
+                                        studentUid: 'new@gmail.com',
+                                        length: _lengthController.text,
+                                        title: _titleController.text,
+                                        content: _contentController.text,
+                                        dateAndTime:
+                                            _dateAndTimeController.text,
+                                        studentName: 'student name',
+                                        teacherUid: 'new1@gmail.com',
+                                        className: 'AP Physics');
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: Text(
+                                  'Setup',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // SizedBox(
+                          //   height: MediaQuery.of(context).size.height * 0.35,
+                          // )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  'Setup a Meeting',
-                  style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                        child: TextFormField(
-                          controller: _titleController,
-                          autofocus: true,
-                          validator: (value) {
-                            if (value == null || value == '') {
-                              return 'meeting title is required';
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: Color.fromRGBO(126, 126, 126, 1),
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey[700],
-                            ),
-                            hintText: 'Title',
-                            icon: FaIcon(FontAwesomeIcons.speakap),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                        child: TextFormField(
-                          controller: _dateAndTimeController,
-                          validator: (value) {
-                            if (value == null || value == '') {
-                              return 'date/time (Thursday 11:55 pm) is requred';
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: Color.fromRGBO(126, 126, 126, 1),
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey[700],
-                            ),
-                            hintText: 'Date/Time',
-                            icon: FaIcon(FontAwesomeIcons.speakap),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                        child: TextFormField(
-                          controller: _contentController,
-                          validator: (value) {
-                            if (value == null || value == '') {
-                              return 'message is requred';
-                            } else {
-                              return null;
-                            }
-                          },
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: Color.fromRGBO(126, 126, 126, 1),
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey[700],
-                            ),
-                            hintText: 'Message',
-                            icon: FaIcon(FontAwesomeIcons.speakap),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value == '') {
-                              return 'meeting length (ex. 2 hours) is required';
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: _lengthController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(
-                              color: Color.fromRGBO(126, 126, 126, 1),
-                            ),
-                            labelStyle: TextStyle(
-                              color: Colors.grey[700],
-                            ),
-                            hintText: 'Length',
-                            icon: FaIcon(FontAwesomeIcons.speakap),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 20, bottom: 10),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            color: kPrimaryColor,
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                _fire.setupMeeting(
-                                    studentUid: 'new@gmail.com',
-                                    length: _lengthController.text,
-                                    title: _titleController.text,
-                                    content: _contentController.text,
-                                    dateAndTime: _dateAndTimeController.text,
-                                    studentName: 'student name',
-                                    teacherUid: 'new1@gmail.com',
-                                    className: 'AP Physics');
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text(
-                              'Setup',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.35,
-                      )
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         );

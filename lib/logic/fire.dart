@@ -141,8 +141,8 @@ class Fire {
   void deleteMeeting({
     String studentUid,
     String teacherUid,
-    String meetingId,}
-  ) {
+    String meetingId,
+  }) {
     _firestore
         .collection("UserData")
         .document(studentUid)
@@ -155,5 +155,26 @@ class Fire {
         .collection('Meetings')
         .document(meetingId)
         .delete();
+  }
+
+  void pushAnnouncement({
+    String classId,
+    String content,
+    String title,
+    String className,}
+  ) {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Announcements')
+        .document('announcement id')
+        .setData(
+      {
+        'context': content,
+        'title':title,
+        'timestamp':DateTime.now(),
+        'class name':className,
+      },
+    );
   }
 }
