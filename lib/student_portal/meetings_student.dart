@@ -41,8 +41,8 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
                     child: Meeting(
                       className: document['class name'],
                       dateAndTime: document['date and time'],
-                      length: document['length'],
-                      message: document['message'],
+                      length: document['time'],
+                      message: document['content'],
                       title: document['title'],
                     ),
                   );
