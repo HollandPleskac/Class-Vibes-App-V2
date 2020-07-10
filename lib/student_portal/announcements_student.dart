@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../nav_student.dart';
+
+final Firestore _firestore = Firestore.instance;
 
 class AnnouncementsStudent extends StatelessWidget {
   @override
@@ -10,9 +13,7 @@ class AnnouncementsStudent extends StatelessWidget {
       appBar: AppBar(
         title: Text('Student Announcements'),
       ),
-      body: Center(
-        child: Text('student announcements'),
-      ),
+      body: Text('view announcements that are sent to you'),
     );
   }
 }

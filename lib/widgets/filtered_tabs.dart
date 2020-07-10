@@ -19,8 +19,8 @@ class AllTab extends StatelessWidget {
           .collection('Students')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+        if (!snapshot.hasData) {
+          return Text('no data');
         }
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:

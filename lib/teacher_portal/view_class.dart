@@ -18,11 +18,6 @@ class ViewClass extends StatefulWidget {
 }
 
 class _ViewClassState extends State<ViewClass> {
-  bool _isTouchedAll = true;
-  bool _isTouchedDoingGreat = false;
-  bool _isTouchedNeedHelp = false;
-  bool _isTouchedFrustrated = false;
-  bool _isTouchedInactive = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
@@ -32,219 +27,272 @@ class _ViewClassState extends State<ViewClass> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String className = routeArguments['class name'];
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kWetAsphaltColor,
-        title: Text(className),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          DynamicPieChart(),
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kWetAsphaltColor,
+          title: Text(className),
+          centerTitle: true,
+          bottom: TabBar(
+            isScrollable: true,
+            tabs: [
+              Tab(text: 'Students'),
+              Tab(text: 'Meetings'),
+              Tab(text: 'Announcements'),
+              Tab(text: 'Settings'),
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
           Container(
-            height: 32.5,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: FilterAll(
-                    isTouched: _isTouchedAll,
-                    onClick: () => setState(() {
-                      _isTouchedAll = true;
-                      _isTouchedDoingGreat = false;
-                      _isTouchedNeedHelp = false;
-                      _isTouchedFrustrated = false;
-                      _isTouchedInactive = false;
-                    }),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: FilterDoingGreat(
-                    isTouched: _isTouchedDoingGreat,
-                    onClick: () => setState(() {
-                      _isTouchedAll = false;
-                      _isTouchedDoingGreat = true;
-                      _isTouchedNeedHelp = false;
-                      _isTouchedFrustrated = false;
-                      _isTouchedInactive = false;
-                    }),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: FilterNeedHelp(
-                    isTouched: _isTouchedNeedHelp,
-                    onClick: () => setState(() {
-                      _isTouchedAll = false;
-                      _isTouchedDoingGreat = false;
-                      _isTouchedNeedHelp = true;
-                      _isTouchedFrustrated = false;
-                      _isTouchedInactive = false;
-                    }),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: FilterFrustrated(
-                    isTouched: _isTouchedFrustrated,
-                    onClick: () => setState(() {
-                      _isTouchedAll = false;
-                      _isTouchedDoingGreat = false;
-                      _isTouchedNeedHelp = false;
-                      _isTouchedFrustrated = true;
-                      _isTouchedInactive = false;
-                    }),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 10),
-                  child: FilterInactive(
-                    isTouched: _isTouchedInactive,
-                    onClick: () => setState(() {
-                      _isTouchedAll = false;
-                      _isTouchedDoingGreat = false;
-                      _isTouchedNeedHelp = false;
-                      _isTouchedFrustrated = false;
-                      _isTouchedInactive = true;
-                    }),
-                  ),
-                ),
-              ],
+            child: StudentsTab(),
+          ),
+          Container(
+            child: Center(
+              child: Text('tab two'),
             ),
           ),
-          SizedBox(
-            height: 20,
+          Container(
+            child: Center(
+              child: Text('tab three'),
+            ),
           ),
           Container(
-            height: 390,
-            child: _isTouchedAll == true
-                ? AllTab()
-                : _isTouchedDoingGreat
-                    ? DoingGreatTab()
-                    : _isTouchedNeedHelp
-                        ? NeedHelpTab()
-                        : _isTouchedFrustrated
-                            ? FrustratedTab()
-                            : _isTouchedInactive
-                                ? InactiveTab()
-                                : Text(
-                                    'IMPORTANT - this text will never show since one of the first values will always be true'),
+            child: Center(
+              child: Text('tab four'),
+            ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: FaIcon(FontAwesomeIcons.bullhorn),
-        onPressed: () {
-          showModalBottomSheet(
-            barrierColor: Colors.white.withOpacity(0),
-            elevation: 0,
-            isScrollControlled: true,
-            context: context,
-            builder: (context) {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: ClipRect(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade300.withOpacity(0.5),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30))),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Push an Announcement',
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800),
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, right: 20, bottom: 10),
-                                  child: TextFormField(
-                                    controller: _contentController,
-                                    validator: (value) {
-                                      if (value == null || value == '') {
-                                        return 'announcement has to have a message';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintStyle: TextStyle(
-                                        color: Color.fromRGBO(126, 126, 126, 1),
-                                      ),
-                                      labelStyle: TextStyle(
-                                        color: Colors.grey[700],
-                                      ),
-                                      hintText: 'Message',
-                                      icon: FaIcon(FontAwesomeIcons.speakap),
-                                    ),
+        ]),
+        floatingActionButton: FloatingActionButton(
+          child: FaIcon(FontAwesomeIcons.bullhorn),
+          onPressed: () {
+            showModalBottomSheet(
+              barrierColor: Colors.white.withOpacity(0),
+              elevation: 0,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: ClipRect(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade300.withOpacity(0.5),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30))),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Push an Announcement',
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 20,
                                   ),
-                                ),
 
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 20, bottom: 10),
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: FlatButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      color: kPrimaryColor,
-                                      onPressed: () {
-                                        if (_formKey.currentState.validate()) {
-                                          _fire.pushAnnouncement(
-                                              classId: 'test class app ui',
-                                              content: _contentController.text,
-                                              className: 'AP Physics');
-                                          Navigator.pop(context);
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 20, right: 20, bottom: 10),
+                                    child: TextFormField(
+                                      controller: _contentController,
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'announcement has to have a message';
+                                        } else {
+                                          return null;
                                         }
                                       },
-                                      child: Text(
-                                        'Push',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 16),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(
+                                          color:
+                                              Color.fromRGBO(126, 126, 126, 1),
+                                        ),
+                                        labelStyle: TextStyle(
+                                          color: Colors.grey[700],
+                                        ),
+                                        hintText: 'Message',
+                                        icon: FaIcon(FontAwesomeIcons.speakap),
                                       ),
                                     ),
                                   ),
-                                ),
-                                // SizedBox(
-                                //   height: MediaQuery.of(context).size.height * 0.35,
-                                // )
-                              ],
+
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(right: 20, bottom: 10),
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: FlatButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        color: kPrimaryColor,
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            _fire.pushAnnouncement(
+                                              classId: 'test class app ui',
+                                              content: _contentController.text,
+                                              className: 'AP Physics',
+                                            );
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                        child: Text(
+                                          'Push',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   height: MediaQuery.of(context).size.height * 0.35,
+                                  // )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
-          );
-        },
+                );
+              },
+            );
+          },
+        ),
       ),
+    );
+  }
+}
+
+class StudentsTab extends StatefulWidget {
+  @override
+  _StudentsTabState createState() => _StudentsTabState();
+}
+
+class _StudentsTabState extends State<StudentsTab> {
+  bool _isTouchedAll = true;
+  bool _isTouchedDoingGreat = false;
+  bool _isTouchedNeedHelp = false;
+  bool _isTouchedFrustrated = false;
+  bool _isTouchedInactive = false;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        DynamicPieChart(),
+        Container(
+          height: 32.5,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: FilterAll(
+                  isTouched: _isTouchedAll,
+                  onClick: () => setState(() {
+                    _isTouchedAll = true;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: FilterDoingGreat(
+                  isTouched: _isTouchedDoingGreat,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = true;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: FilterNeedHelp(
+                  isTouched: _isTouchedNeedHelp,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = true;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: FilterFrustrated(
+                  isTouched: _isTouchedFrustrated,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = true;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 10),
+                child: FilterInactive(
+                  isTouched: _isTouchedInactive,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = true;
+                  }),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+          height: 360,
+          child: _isTouchedAll == true
+              ? AllTab()
+              : _isTouchedDoingGreat
+                  ? DoingGreatTab()
+                  : _isTouchedNeedHelp
+                      ? NeedHelpTab()
+                      : _isTouchedFrustrated
+                          ? FrustratedTab()
+                          : _isTouchedInactive
+                              ? InactiveTab()
+                              : Text(
+                                  'IMPORTANT - this text will never show since one of the first values will always be true'),
+        ),
+      ],
     );
   }
 }
@@ -259,7 +307,7 @@ class DynamicPieChart extends StatelessWidget {
             .collection('Students')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          final double doingGreatStudents = snapshot.data.documents
+          double doingGreatStudents = snapshot.data.documents
               .where((document) => document["status"] == "doing great")
               .where((documentSnapshot) =>
                   DateTime.now()
@@ -271,6 +319,7 @@ class DynamicPieChart extends StatelessWidget {
                   5)
               .length
               .toDouble();
+
           var needHelpStudents = snapshot.data.documents
               .where((documentSnapshot) =>
                   documentSnapshot.data['status'] == 'need help')
@@ -328,25 +377,20 @@ class DynamicPieChart extends StatelessWidget {
             return Text('no data');
           }
 
-          // if (snapshot.data != null &&
-          //     snapshot.data.documents.isEmpty == false) {
           return PieChartSampleBig(
             //graph percentage
-            doingGreatStudents: doingGreatStudents,
-            needHelpStudents: needHelpStudents,
-            frustratedStudents: frustratedStudents,
-            inactiveStudents: inactiveStudents,
+            doingGreatStudents:
+                doingGreatStudents == null ? 0 : doingGreatStudents,
+            needHelpStudents: needHelpStudents == null ? 0 : needHelpStudents,
+            frustratedStudents:
+                frustratedStudents == null ? 0 : frustratedStudents,
+            inactiveStudents: inactiveStudents == null ? 0 : inactiveStudents,
             //graph titles
             doingGreatPercentage: doingGreatPercentage,
             needHelpPercentage: needHelpPercentage,
             frustratedPercentage: frustratedPercentage,
             inactivePercentage: inactivePercentage,
           );
-          // } else {
-          //   return Center(
-          //     child: Text('no data'),
-          //   );
-          // }
         });
   }
 }

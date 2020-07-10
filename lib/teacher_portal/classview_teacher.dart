@@ -99,34 +99,34 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               ),
                             ),
                           ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                ClassSettings.routeName,
-                                arguments: {
-                                  'class name': document['class name']
-                                },
-                              ),
-                              child: Container(
-                                height: 38,
-                                width: 38,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kPrimaryColor,
-                                ),
-                                child: Center(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.cog,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Positioned(
+                          //   top: 0,
+                          //   right: 0,
+                          //   child: GestureDetector(
+                          //     onTap: () => Navigator.pushNamed(
+                          //       context,
+                          //       ClassSettings.routeName,
+                          //       arguments: {
+                          //         'class name': document['class name']
+                          //       },
+                          //     ),
+                          //     child: Container(
+                          //       height: 38,
+                          //       width: 38,
+                          //       decoration: BoxDecoration(
+                          //         shape: BoxShape.circle,
+                          //         color: kPrimaryColor,
+                          //       ),
+                          //       child: Center(
+                          //         child: FaIcon(
+                          //           FontAwesomeIcons.cog,
+                          //           color: Colors.white,
+                          //           size: 20,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     );
