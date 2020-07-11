@@ -200,7 +200,7 @@ class DynamicPieChart extends StatelessWidget {
                         DateTime.parse(
                             documentSnapshot.data['date'].toDate().toString()),
                       )
-                      .inDays >
+                      .inDays >=
                   5)
               .length
               .toDouble();
