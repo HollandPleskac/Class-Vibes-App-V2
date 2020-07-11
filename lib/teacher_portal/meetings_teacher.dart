@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../logic/fire.dart';
+import '../nav_teacher.dart';
 
 final _fire = Fire();
 
@@ -18,8 +19,11 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavTeacher(),
       appBar: AppBar(
         title: Text('Meetings Teacher'),
+        backgroundColor: kWetAsphaltColor,
+        centerTitle: true,
       ),
       body: StreamBuilder(
           stream: _firestore

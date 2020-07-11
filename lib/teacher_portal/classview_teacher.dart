@@ -24,7 +24,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
       appBar: AppBar(
         backgroundColor: kWetAsphaltColor,
         title: Text(
-          'Screen 2',
+          'Teacher Classes',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
