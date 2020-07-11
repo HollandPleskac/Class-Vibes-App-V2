@@ -21,8 +21,6 @@ class ViewClass extends StatefulWidget {
 }
 
 class _ViewClassState extends State<ViewClass> {
- 
-
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
@@ -60,7 +58,6 @@ class _ViewClassState extends State<ViewClass> {
             child: ClassSettings(),
           ),
         ]),
-        
       ),
     );
   }
@@ -189,6 +186,11 @@ class DynamicPieChart extends StatelessWidget {
             .collection('Students')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: Container(),
+            );
+          }
           double doingGreatStudents = snapshot.data.documents
               .where((document) => document["status"] == "doing great")
               .where((documentSnapshot) =>
@@ -202,7 +204,7 @@ class DynamicPieChart extends StatelessWidget {
               .length
               .toDouble();
 
-          var needHelpStudents = snapshot.data.documents
+          double needHelpStudents = snapshot.data.documents
               .where((documentSnapshot) =>
                   documentSnapshot.data['status'] == 'need help')
               .where((documentSnapshot) =>
@@ -215,7 +217,7 @@ class DynamicPieChart extends StatelessWidget {
                   5)
               .length
               .toDouble();
-          var frustratedStudents = snapshot.data.documents
+          double frustratedStudents = snapshot.data.documents
               .where((documentSnapshot) =>
                   documentSnapshot.data['status'] == 'frustrated')
               .where((documentSnapshot) =>
@@ -228,7 +230,7 @@ class DynamicPieChart extends StatelessWidget {
                   5)
               .length
               .toDouble();
-          var inactiveStudents = snapshot.data.documents
+          double inactiveStudents = snapshot.data.documents
               .where((documentSnapshot) =>
                   DateTime.now()
                       .difference(
@@ -239,7 +241,8 @@ class DynamicPieChart extends StatelessWidget {
                   5)
               .length
               .toDouble();
-          var totalStudents = doingGreatStudents +
+
+          double totalStudents = doingGreatStudents +
               needHelpStudents +
               frustratedStudents +
               inactiveStudents.toDouble();
@@ -254,11 +257,6 @@ class DynamicPieChart extends StatelessWidget {
                   '%';
           var inactivePercentage =
               (inactiveStudents / totalStudents * 100).toStringAsFixed(0) + '%';
-
-          if (!snapshot.hasData) {
-            return Text('no data');
-          }
-
           return PieChartSampleBig(
             //graph percentage
             doingGreatStudents:

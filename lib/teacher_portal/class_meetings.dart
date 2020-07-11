@@ -24,7 +24,7 @@ class ClassMeetings extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData)
             return Center(
-              child: Text('No Meetings'),
+              child: Container(),
             );
 
           return Center(
