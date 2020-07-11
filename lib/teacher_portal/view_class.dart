@@ -237,7 +237,7 @@ class DynamicPieChart extends StatelessWidget {
                         DateTime.parse(
                             documentSnapshot.data['date'].toDate().toString()),
                       )
-                      .inDays >
+                      .inDays >=
                   5)
               .length
               .toDouble();
@@ -257,14 +257,18 @@ class DynamicPieChart extends StatelessWidget {
                   '%';
           var inactivePercentage =
               (inactiveStudents / totalStudents * 100).toStringAsFixed(0) + '%';
+
+              print('doing great : ' + doingGreatStudents.toString());
+              print('need help : '+ needHelpStudents.toString());
+              print('frustrated : '+ frustratedStudents.toString());
+              print('inactive : '+ inactiveStudents.toString());
+              print('totla : '+ totalStudents.toString());
           return PieChartSampleBig(
             //graph percentage
-            doingGreatStudents:
-                doingGreatStudents == null ? 0 : doingGreatStudents,
-            needHelpStudents: needHelpStudents == null ? 0 : needHelpStudents,
-            frustratedStudents:
-                frustratedStudents == null ? 0 : frustratedStudents,
-            inactiveStudents: inactiveStudents == null ? 0 : inactiveStudents,
+            doingGreatStudents: doingGreatStudents,
+            needHelpStudents: needHelpStudents,
+            frustratedStudents: frustratedStudents,
+            inactiveStudents: inactiveStudents,
             //graph titles
             doingGreatPercentage: doingGreatPercentage,
             needHelpPercentage: needHelpPercentage,
