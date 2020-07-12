@@ -18,78 +18,100 @@ class _ProfileStudentState extends State<ProfileStudent> {
   void _showModalSheetEditUserName() {
     showModalBottomSheet(
         barrierColor: Colors.white.withOpacity(0),
+        isScrollControlled: true,
         elevation: 0,
         context: context,
         builder: (builder) {
-          return ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade300.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30))),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Edit Username',
-                      style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                          ),
-                          child: TextFormField(
-                            controller: _userNameEditController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(
-                                color: Color.fromRGBO(126, 126, 126, 1),
-                              ),
-                              labelStyle: TextStyle(
-                                color: Colors.grey[700],
-                              ),
-                              hintText: 'new username',
-                              icon: FaIcon(
-                                FontAwesomeIcons.userAlt,
-                                color: Colors.grey,
-                              ),
+          return SingleChildScrollView(
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                child: Container(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade300.withOpacity(0.5),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Edit Username',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Form(
+                        key: _formKey,
+                        child: Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 20,
+                              right: 20,
                             ),
-                            validator: (value) {
-                              if (value == null || value == '') {
-                                return 'Username cannot be blank';
-                              } else {
-                                return null;
-                              }
-                            },
+                            child: TextFormField(
+                              controller: _userNameEditController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'new username',
+                                icon: FaIcon(
+                                  FontAwesomeIcons.userAlt,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'Username cannot be blank';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          print('validated');
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Text('Save'),
-                    ),
-                  ],
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: 20,
+                          ),
+                          child: FlatButton(
+                            color: kPrimaryColor,
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                print('validated');
+                                Navigator.pop(context);
+                              }
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              'Save',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
