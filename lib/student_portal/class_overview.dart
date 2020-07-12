@@ -13,12 +13,11 @@ final _fire = Fire();
 class ClassOverViewStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.35),
-                  child: StreamBuilder(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          StreamBuilder(
               stream: _firestore
                   .collection('UserData')
                   .document('new@gmail.com')
@@ -37,19 +36,20 @@ class ClassOverViewStudent extends StatelessWidget {
                   lastChangedStatus: snapshot.data['date'],
                 );
               }),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text(
-            'Note : Status\'s appear grey if you changed it in a while',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text(
+              'Note : Status\'s appear grey if you changed it in a while',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
