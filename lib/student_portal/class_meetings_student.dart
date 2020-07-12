@@ -88,7 +88,7 @@ class Meeting extends StatelessWidget {
           height: 15,
         ),
         Text(
-          'With '+ teacherName,
+          'With ' + teacherName,
           style: TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.w700,
@@ -173,22 +173,6 @@ class Meeting extends StatelessWidget {
                   ],
                 ),
               ),
-              // Spacer(),
-              // GestureDetector(
-              //   onTap: () {
-              //     print('delete meeting');
-              //     _fire.deleteMeeting(
-              //       studentUid: 'new@gmail.com',
-              //       teacherUid: 'new1@gmail.com',
-              //       meetingId: 'random meeting id',
-              //       classId: 'test class app ui'
-              //     );
-              //   },
-              //   child: FaIcon(
-              //     FontAwesomeIcons.trash,
-              //     color: Colors.grey,
-              //   ),
-              // ),
             ],
           ),
         ),
