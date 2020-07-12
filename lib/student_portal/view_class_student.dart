@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constant.dart';
 import './chat_student.dart';
+import './class_meetings_student.dart';
 
 class ViewClassStudent extends StatelessWidget {
   @override
@@ -25,8 +26,12 @@ class ViewClassStudent extends StatelessWidget {
         ),
         body: TabBarView(children: [
           Container(),
-          Container(),
-          Container(),
+          Container(
+            child: ClassMeetingsStudent(),
+          ),
+          Container(
+          
+          ),
           Container(
             child: ChatStudent(),
           ),

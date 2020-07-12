@@ -435,6 +435,7 @@ class Student extends StatelessWidget {
                                       teacherUid: 'new1@gmail.com',
                                       className: 'AP Physics',
                                       classId: 'test class app ui',
+                                      teacherName: 'teacher name',
                                     );
                                     Navigator.pop(context);
                                   }
