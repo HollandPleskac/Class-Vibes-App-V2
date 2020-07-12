@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/constant.dart';
 import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'teacher_portal/classview_teacher.dart';
 import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
 import './teacher_portal/profile_teacher.dart';
-
 
 class NavTeacher extends StatelessWidget {
   @override
@@ -24,9 +24,17 @@ class NavTeacher extends StatelessWidget {
           DrawerHeader(
             // put image here
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: kWetAsphaltColor,
             ),
-            child: Text('drawer header'),
+            child: Center(
+              child: Text(
+                'drawer header',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ),
           ListTile(
             title: Text('Teacher Classes'),
@@ -41,7 +49,7 @@ class NavTeacher extends StatelessWidget {
               );
             },
           ),
-           ListTile(
+          ListTile(
             title: Text('Teacher Meetings'),
             onTap: () {
               // Update the state of the app.
