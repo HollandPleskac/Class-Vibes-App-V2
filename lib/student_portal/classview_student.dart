@@ -114,7 +114,7 @@ class _StudentClassState extends State<StudentClass> {
         ),
       ),
       child: Container(
-        height: 120,
+        height: 115,
         width: double.infinity,
         child: Padding(
           padding: EdgeInsets.only(
@@ -152,19 +152,19 @@ class _StudentClassState extends State<StudentClass> {
                                         .toDate()
                                         .toString()),
                                   )
-                                  .inDays >
+                                  .inDays >=
                               5
                           ? FaIcon(
                               FontAwesomeIcons.smile,
                               color: Colors.grey,
-                              size: 35,
+                              size: 36,
                             )
                           : FaIcon(
                               widget.status == 'doing great'
                                   ? FontAwesomeIcons.solidSmile
                                   : FontAwesomeIcons.smile,
                               color: Colors.green,
-                              size: 35,
+                              size: 36,
                             ),
                     ),
                     SizedBox(
@@ -184,19 +184,19 @@ class _StudentClassState extends State<StudentClass> {
                                         .toDate()
                                         .toString()),
                                   )
-                                  .inDays >
+                                  .inDays >=
                               5
                           ? FaIcon(
                               FontAwesomeIcons.meh,
                               color: Colors.grey,
-                              size: 35,
+                              size: 36,
                             )
                           : FaIcon(
                               widget.status == 'need help'
                                   ? FontAwesomeIcons.solidMeh
                                   : FontAwesomeIcons.meh,
                               color: Colors.yellow[800],
-                              size: 35,
+                              size: 36,
                             ),
                     ),
                     SizedBox(
@@ -216,19 +216,19 @@ class _StudentClassState extends State<StudentClass> {
                                         .toDate()
                                         .toString()),
                                   )
-                                  .inDays >
+                                  .inDays >=
                               5
                           ? FaIcon(
                               FontAwesomeIcons.meh,
                               color: Colors.grey,
-                              size: 35,
+                              size: 36,
                             )
                           : FaIcon(
                               widget.status == 'frustrated'
                                   ? FontAwesomeIcons.solidFrown
                                   : FontAwesomeIcons.frown,
                               color: Colors.red,
-                              size: 35,
+                              size: 36,
                             ),
                     ),
                   ],
@@ -240,7 +240,7 @@ class _StudentClassState extends State<StudentClass> {
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
-                Radius.circular(3),
+                Radius.circular(10),
               ),
             ),
           ),
