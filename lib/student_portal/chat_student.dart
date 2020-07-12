@@ -60,54 +60,15 @@ class _ChatStudentState extends State<ChatStudent> {
           );
         });
   }
+  var classId = 'test class app ui';
+  var studentName = 'Kushagra';
+  var studentUid = 'new@gmail.com';
 
   @override
   Widget build(BuildContext context) {
-    final routeArguments = ModalRoute.of(context).settings.arguments as Map;
-    final String classId = routeArguments['class id'];
-    final String teacherName = routeArguments['teacher name'];
-    final String studentUid = routeArguments['student uid'];
-    final String studentName = routeArguments['student name'];
-    return Scaffold(
-      extendBodyBehindAppBar: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white.withOpacity(0.9),
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 20,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        centerTitle: true,
-        title: Text(
-          'Chat with ' + teacherName,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-        ),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: _showModalSheet,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
+   
+    return 
+      SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -150,41 +111,7 @@ class _ChatStudentState extends State<ChatStudent> {
                         ),
                       );
                     }),
-                // child: ListView(
-                //   reverse: true,
-                //   children: <Widget>[
-                //     SentChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     RecievedChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     SentChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     RecievedChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     SentChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     RecievedChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //   ],
-                // ),
+         
               ),
               Center(
                 child: Column(
@@ -260,7 +187,7 @@ class _ChatStudentState extends State<ChatStudent> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }

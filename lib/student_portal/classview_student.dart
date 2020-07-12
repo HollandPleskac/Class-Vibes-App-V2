@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../constant.dart';
 import '../logic/fire.dart';
 import '../nav_student.dart';
+import './view_class_student.dart';
 import './chat_student.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -110,156 +111,164 @@ class StudentClass extends StatefulWidget {
 class _StudentClassState extends State<StudentClass> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          // color: Colors.red,
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.all(8),
-            child: Card(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 0),
-                    child: Text(
-                      widget.className,
-                      style: kSubTextStyle.copyWith(fontSize: 20),
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ViewClassStudent(),
+        ),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            // color: Colors.red,
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 35,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _fire.updateStudentMood(
-                              uid: 'new@gmail.com',
-                              classId: 'class id',
-                              newMood: 'doing great');
-                          print('touched happy face');
-                        },
-                        child: DateTime.now()
-                                    .difference(
-                                      DateTime.parse(widget.lastChangedStatus
-                                          .toDate()
-                                          .toString()),
-                                    )
-                                    .inDays >
-                                5
-                            ? FaIcon(
-                                FontAwesomeIcons.smile,
-                                color: Colors.grey,
-                                size: 35,
-                              )
-                            : FaIcon(
-                                widget.status == 'doing great'
-                                    ? FontAwesomeIcons.solidSmile
-                                    : FontAwesomeIcons.smile,
-                                color: Colors.green,
-                                size: 35,
-                              ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 0),
+                      child: Text(
+                        widget.className,
+                        style: kSubTextStyle.copyWith(fontSize: 20),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          _fire.updateStudentMood(
-                              uid: 'new@gmail.com',
-                              classId: 'class id',
-                              newMood: 'need help');
-                          print('tapped meh');
-                        },
-                        child: DateTime.now()
-                                    .difference(
-                                      DateTime.parse(widget.lastChangedStatus
-                                          .toDate()
-                                          .toString()),
-                                    )
-                                    .inDays >
-                                5
-                            ? FaIcon(
-                                FontAwesomeIcons.meh,
-                                color: Colors.grey,
-                                size: 35,
-                              )
-                            : FaIcon(
-                                widget.status == 'need help'
-                                    ? FontAwesomeIcons.solidMeh
-                                    : FontAwesomeIcons.meh,
-                                color: Colors.yellow[800],
-                                size: 35,
-                              ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _fire.updateStudentMood(
-                              uid: 'new@gmail.com',
-                              classId: 'class id',
-                              newMood: 'frustrated');
-                          print('tapped frown');
-                        },
-                        child: DateTime.now()
-                                    .difference(
-                                      DateTime.parse(widget.lastChangedStatus
-                                          .toDate()
-                                          .toString()),
-                                    )
-                                    .inDays >
-                                5
-                            ? FaIcon(
-                                FontAwesomeIcons.meh,
-                                color: Colors.grey,
-                                size: 35,
-                              )
-                            : FaIcon(
-                                widget.status == 'frustrated'
-                                    ? FontAwesomeIcons.solidFrown
-                                    : FontAwesomeIcons.frown,
-                                color: Colors.red,
-                                size: 35,
-                              ),
-                      ),
-                    ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _fire.updateStudentMood(
+                                uid: 'new@gmail.com',
+                                classId: 'class id',
+                                newMood: 'doing great');
+                            print('touched happy face');
+                          },
+                          child: DateTime.now()
+                                      .difference(
+                                        DateTime.parse(widget.lastChangedStatus
+                                            .toDate()
+                                            .toString()),
+                                      )
+                                      .inDays >
+                                  5
+                              ? FaIcon(
+                                  FontAwesomeIcons.smile,
+                                  color: Colors.grey,
+                                  size: 35,
+                                )
+                              : FaIcon(
+                                  widget.status == 'doing great'
+                                      ? FontAwesomeIcons.solidSmile
+                                      : FontAwesomeIcons.smile,
+                                  color: Colors.green,
+                                  size: 35,
+                                ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _fire.updateStudentMood(
+                                uid: 'new@gmail.com',
+                                classId: 'class id',
+                                newMood: 'need help');
+                            print('tapped meh');
+                          },
+                          child: DateTime.now()
+                                      .difference(
+                                        DateTime.parse(widget.lastChangedStatus
+                                            .toDate()
+                                            .toString()),
+                                      )
+                                      .inDays >
+                                  5
+                              ? FaIcon(
+                                  FontAwesomeIcons.meh,
+                                  color: Colors.grey,
+                                  size: 35,
+                                )
+                              : FaIcon(
+                                  widget.status == 'need help'
+                                      ? FontAwesomeIcons.solidMeh
+                                      : FontAwesomeIcons.meh,
+                                  color: Colors.yellow[800],
+                                  size: 35,
+                                ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _fire.updateStudentMood(
+                                uid: 'new@gmail.com',
+                                classId: 'class id',
+                                newMood: 'frustrated');
+                            print('tapped frown');
+                          },
+                          child: DateTime.now()
+                                      .difference(
+                                        DateTime.parse(widget.lastChangedStatus
+                                            .toDate()
+                                            .toString()),
+                                      )
+                                      .inDays >
+                                  5
+                              ? FaIcon(
+                                  FontAwesomeIcons.meh,
+                                  color: Colors.grey,
+                                  size: 35,
+                                )
+                              : FaIcon(
+                                  widget.status == 'frustrated'
+                                      ? FontAwesomeIcons.solidFrown
+                                      : FontAwesomeIcons.frown,
+                                  color: Colors.red,
+                                  size: 35,
+                                ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(14),
                   ),
-                ],
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(14),
                 ),
               ),
             ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: GestureDetector(
-            onTap: () {
-              //           final String classId = routeArguments['class id'];
-              // final String teacherName = routeArguments['teacher name'];
-              // final String studentUid = routeArguments['student uid'];
-              print('tap');
-              Navigator.pushNamed(context, ChatStudent.routeName, arguments: {
-                'class id': 'test class app ui',
-                'teacher name': 'Mr.Shea',
-                'student uid': 'new@gmail.com',
-                'student name': 'Kushagra',
-              });
-            },
-            child: FaIcon(
-              FontAwesomeIcons.solidComments,
-              size: 50,
-              color: kPrimaryColor,
+          Positioned(
+            top: 0,
+            right: 0,
+            child: GestureDetector(
+              onTap: () {
+                //           final String classId = routeArguments['class id'];
+                // final String teacherName = routeArguments['teacher name'];
+                // final String studentUid = routeArguments['student uid'];
+                print('tap');
+                Navigator.pushNamed(context, ChatStudent.routeName, arguments: {
+                  'class id': 'test class app ui',
+                  'teacher name': 'Mr.Shea',
+                  'student uid': 'new@gmail.com',
+                  'student name': 'Kushagra',
+                });
+              },
+              child: FaIcon(
+                FontAwesomeIcons.solidComments,
+                size: 50,
+                color: kPrimaryColor,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
