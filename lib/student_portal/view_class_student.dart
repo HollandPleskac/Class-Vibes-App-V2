@@ -1,8 +1,10 @@
+import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:flutter/material.dart';
 
 import '../constant.dart';
 import './chat_student.dart';
 import './class_meetings_student.dart';
+import './class_announcements_student.dart';
 
 class ViewClassStudent extends StatelessWidget {
   @override
@@ -30,7 +32,7 @@ class ViewClassStudent extends StatelessWidget {
             child: ClassMeetingsStudent(),
           ),
           Container(
-          
+          child: ClassAnnouncementsStudent(),
           ),
           Container(
             child: ChatStudent(),
