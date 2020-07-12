@@ -16,13 +16,19 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Log in as a..',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.w600,
+            Padding(
+              padding: EdgeInsets.only(top: 300),
+              child: Text(
+                'Log in as a..',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 38,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
+            ),
+            SizedBox(
+              height: 60,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                   child: Text(
                     'Student',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       color: Colors.white,
                     ),
                   ),
@@ -63,32 +69,40 @@ class WelcomeScreen extends StatelessWidget {
                   child: Text(
                     'Teacher',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 22,
                       color: Colors.white,
                     ),
                   ),
                 ),
               ],
             ),
-            Row(
-              children: [
-                Text(
-                  'Don\'t have an account? ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  'Sign Up',
-                  style: TextStyle(
+            Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Don\'t have an account? ',
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.underline),
-                ),
-              ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2),
+                    ),
+                  ),
+                ],
+              ),
             )
           ],
         ),
