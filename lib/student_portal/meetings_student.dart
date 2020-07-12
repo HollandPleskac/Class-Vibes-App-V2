@@ -17,6 +17,8 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
     return Scaffold(
       drawer: NavStudent(),
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: kWetAsphaltColor,
         title: Text('Meetings Student'),
       ),
       body: StreamBuilder(

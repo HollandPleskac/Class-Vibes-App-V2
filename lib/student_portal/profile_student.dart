@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
 
 import '../nav_student.dart';
@@ -15,6 +16,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Profile'),
+        backgroundColor: kWetAsphaltColor,
         centerTitle: true,
       ),
       body: ListView(
