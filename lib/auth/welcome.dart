@@ -24,10 +24,72 @@ class WelcomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            FlatButton(
-              onPressed: () {},
-              child: Text('Student'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FlatButton(
+                  onPressed: () {},
+                  color: kPrimaryColor,
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 11),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(
+                      color: Colors.white,
+                      width: 3,
+                    ),
+                  ),
+                  child: Text(
+                    'Student',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                ),
+                FlatButton(
+                  onPressed: () {},
+                  color: kPrimaryColor,
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 11),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(
+                      color: Colors.white,
+                      width: 3,
+                    ),
+                  ),
+                  child: Text(
+                    'Teacher',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
+            Row(
+              children: [
+                Text(
+                  'Don\'t have an account? ',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'Sign Up',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline),
+                ),
+              ],
+            )
           ],
         ),
       ),
