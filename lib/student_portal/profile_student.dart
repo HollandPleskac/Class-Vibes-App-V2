@@ -1,9 +1,10 @@
 import 'dart:ui';
 
-import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../nav_student.dart';
+import '../constant.dart';
 
 class ProfileStudent extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class ProfileStudent extends StatefulWidget {
 
 class _ProfileStudentState extends State<ProfileStudent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _userNameEditController = TextEditingController();
 
   void _showModalSheetEditUserName() {
     showModalBottomSheet(
@@ -40,20 +42,53 @@ class _ProfileStudentState extends State<ProfileStudent> {
                           fontSize: 20,
                           fontWeight: FontWeight.w800),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Form(
                       key: _formKey,
                       child: Container(
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Username cannot be blank';
-                            } else {
-                              return null;
-                            }
-                          },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                          ),
+                          child: TextFormField(
+                            controller: _userNameEditController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(
+                                color: Color.fromRGBO(126, 126, 126, 1),
+                              ),
+                              labelStyle: TextStyle(
+                                color: Colors.grey[700],
+                              ),
+                              hintText: 'new username',
+                              icon: FaIcon(
+                                FontAwesomeIcons.userAlt,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value == null || value == '') {
+                                return 'Username cannot be blank';
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    )
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          print('validated');
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Text('Save'),
+                    ),
                   ],
                 ),
               ),
@@ -181,6 +216,13 @@ class _ProfileStudentState extends State<ProfileStudent> {
                     Text(
                       "UserName",
                       style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.edit,
+                      color: Colors.grey[400],
                     ),
                     SizedBox(
                       width: 15,
