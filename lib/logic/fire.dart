@@ -197,4 +197,16 @@ class Fire {
       },
     );
   }
+
+  void editUserName({
+    String uid,
+    String newUserName,
+  }) {
+    _firestore.collection('UserData').document(uid).updateData(
+      {
+        'display-name':newUserName,
+
+      }
+    );
+  }
 }

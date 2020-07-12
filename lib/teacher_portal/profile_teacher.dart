@@ -2,9 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
+import '../logic/fire.dart';
+
+final Firestore _firestore = Firestore.instance;
+final _fire = Fire();
 
 class ProfileTeacher extends StatefulWidget {
   @override
@@ -96,6 +101,11 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
                                 print('validated');
+                                _fire.editUserName(
+                                  newUserName: _userNameEditController.text,
+                                  uid: 'new1@gmail.com',
+                                );
+                                _userNameEditController.text = '';
                                 Navigator.pop(context);
                               }
                             },
@@ -194,10 +204,22 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                   SizedBox(
                     width: 15,
                   ),
-                  Text(
-                    "abc@gmail.com",
-                    style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                  ),
+                  StreamBuilder(
+                      stream: _firestore
+                          .collection('UserData')
+                          .document('new1@gmail.com')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Text('');
+                        } else {
+                          return Text(
+                            snapshot.data['email'],
+                            style: TextStyle(
+                                color: Colors.grey[800], fontSize: 18),
+                          );
+                        }
+                      }),
                   Spacer(),
                   Text(
                     "Email Address",
@@ -230,10 +252,22 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                     SizedBox(
                       width: 15,
                     ),
-                    Text(
-                      "KushagraS",
-                      style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                    ),
+                    StreamBuilder(
+                        stream: _firestore
+                            .collection('UserData')
+                            .document('new1@gmail.com')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          } else {
+                            return Text(
+                              snapshot.data['display-name'],
+                              style: TextStyle(
+                                  color: Colors.grey[800], fontSize: 18),
+                            );
+                          }
+                        }),
                     Spacer(),
                     Text(
                       "UserName",
