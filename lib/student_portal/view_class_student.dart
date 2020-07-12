@@ -5,6 +5,7 @@ import '../constant.dart';
 import './chat_student.dart';
 import './class_meetings_student.dart';
 import './class_announcements_student.dart';
+import './class_overview.dart';
 
 class ViewClassStudent extends StatelessWidget {
   @override
@@ -27,7 +28,9 @@ class ViewClassStudent extends StatelessWidget {
           ),
         ),
         body: TabBarView(children: [
-          Container(),
+          Container(
+            child: ClassOverViewStudent(),
+          ),
           Container(
             child: ClassMeetingsStudent(),
           ),
