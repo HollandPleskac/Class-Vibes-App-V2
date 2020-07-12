@@ -28,7 +28,7 @@ class NavTeacher extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                'drawer header',
+                'Class Vibes',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
