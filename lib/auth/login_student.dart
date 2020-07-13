@@ -110,9 +110,10 @@ class _StudentLoginState extends State<StudentLogin> {
           ),
           Center(
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (_formKey.currentState.validate()) {
-                  // _auth.loginAsStudent();
+                  List result = await _auth.loginAsStudent();
+                  print('RESULT : '+ result.toString());
                   Navigator.push(
                     context,
                     MaterialPageRoute(
