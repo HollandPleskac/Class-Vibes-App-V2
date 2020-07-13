@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import './auth.dart';
-
-final _auth = Auth();
 final _firebaseAuth = FirebaseAuth.instance;
+final _firestore = Firestore.instance;
 
 class Auth {
   Future<List> loginAsStudent({String email, String password}) async {
@@ -72,7 +71,11 @@ class Auth {
     return ['success', email];
   }
 
-  Future<List> signUp({String email, String password, String username,String accountType}) async {
+  Future<List> signUp(
+      {String email,
+      String password,
+      String username,
+      String accountType}) async {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -90,5 +93,14 @@ class Auth {
       }
     }
     return ['success', email];
+  }
+
+  void setUpAccount(
+      {String email, String password, String username, String accountType}) {
+    _firestore.collection('UserData').document(email).setData({
+      'email': email,
+      'display-name': username,
+      'account type': accountType,
+    });
   }
 }
