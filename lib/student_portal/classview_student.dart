@@ -96,7 +96,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 
           stream: _firestore
               .collection('UserData')
-              .document('new1@gmail.com')
+              .document('new@gmail.com')
               .collection('Classes')
               .snapshots(),
           builder:
@@ -171,6 +171,9 @@ class _StudentClassState extends State<StudentClass> {
                   ),
                 ),
                 Spacer(),
+                //TODO wrap this streambuilder in a row
+                //stream: userdata-new@gmail.com-classes- then get the mood for each of there
+                //copy the code from when u click the class voerview onto here and change sizes
                 Row(
                   children: [
                     FaIcon(
