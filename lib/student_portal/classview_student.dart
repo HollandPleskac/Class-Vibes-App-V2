@@ -142,7 +142,7 @@ class _StudentClassState extends State<StudentClass> {
                       onTap: () {
                         _fire.updateStudentMood(
                             uid: 'new@gmail.com',
-                            classId: 'class id',
+                            classId: 'test class app ui',
                             newMood: 'doing great');
                         print('touched happy face');
                       },
@@ -174,7 +174,7 @@ class _StudentClassState extends State<StudentClass> {
                       onTap: () {
                         _fire.updateStudentMood(
                             uid: 'new@gmail.com',
-                            classId: 'class id',
+                            classId: 'test class app ui',
                             newMood: 'need help');
                         print('tapped meh');
                       },
@@ -206,7 +206,7 @@ class _StudentClassState extends State<StudentClass> {
                       onTap: () {
                         _fire.updateStudentMood(
                             uid: 'new@gmail.com',
-                            classId: 'class id',
+                            classId: 'test class app ui',
                             newMood: 'frustrated');
                         print('tapped frown');
                       },

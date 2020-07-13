@@ -22,7 +22,7 @@ class ClassOverViewStudent extends StatelessWidget {
                   .collection('UserData')
                   .document('new@gmail.com')
                   .collection('Classes')
-                  .document('class id')
+                  .document('test class app ui')
                   .snapshots(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.data == null) {
@@ -79,7 +79,7 @@ class _StatusRowState extends State<StatusRow> {
               onTap: () {
                 _fire.updateStudentMood(
                     uid: 'new@gmail.com',
-                    classId: 'class id',
+                    classId: 'test class app ui',
                     newMood: 'doing great');
                 print('touched happy face');
               },
@@ -121,7 +121,7 @@ class _StatusRowState extends State<StatusRow> {
               onTap: () {
                 _fire.updateStudentMood(
                     uid: 'new@gmail.com',
-                    classId: 'class id',
+                    classId: 'test class app ui',
                     newMood: 'need help');
                 print('tapped meh');
               },
@@ -163,7 +163,7 @@ class _StatusRowState extends State<StatusRow> {
               onTap: () {
                 _fire.updateStudentMood(
                     uid: 'new@gmail.com',
-                    classId: 'class id',
+                    classId: 'test class app ui',
                     newMood: 'frustrated');
                 print('tapped frown');
               },
