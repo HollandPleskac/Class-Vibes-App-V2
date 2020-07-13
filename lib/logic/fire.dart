@@ -5,7 +5,7 @@ final Firestore _firestore = Firestore.instance;
 
 class Fire {
   // class setttings
-  void updateClassName(String uid, String classId, String newClassName) {
+  void updateClassName(String uid, String classId, String newClassName) async {
     _firestore.collection("Classes").document(classId).updateData({
       "class name": newClassName,
     });
@@ -18,6 +18,30 @@ class Fire {
         .updateData({
       "class name": newClassName,
     });
+
+  //gets students in the class
+  //changes name for each student w/ the for loop in the UserData tree
+
+    var students = await _firestore
+        .collection("Classes")
+        .document(classId)
+        .collection('Students')
+        .getDocuments()
+        .then((querySnap) => querySnap.documents);
+    for (var i = 0; i < students.length; i++) {
+      //students[i].data['email'] is the email of each student in the collection
+      _firestore
+          .collection("UserData")
+          .document(students[i].data['email'])
+          .collection('Classes')
+          .document(classId)
+          .updateData(
+        {
+          'class name': newClassName,
+        },
+      );
+    }
+    print('STUDENTS : ' + students.toString());
   }
 
   void updateAllowJoin(String uid, String classId, bool newStatusOnJoin) {
@@ -139,7 +163,7 @@ class Fire {
       'date and time': dateAndTime,
       'student name': studentName,
       'timestamp': DateTime.now(),
-      'teacher name':teacherName,
+      'teacher name': teacherName,
     });
     _firestore
         .collection('UserData')
@@ -164,7 +188,12 @@ class Fire {
     String meetingId,
     String classId,
   }) {
-    _firestore.collection('Classes').document(classId).collection('Meetings').document(meetingId).delete();
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Meetings')
+        .document(meetingId)
+        .delete();
     _firestore
         .collection("UserData")
         .document(studentUid)
@@ -182,8 +211,8 @@ class Fire {
   void pushAnnouncement({
     String classId,
     String content,
-    String className,}
-  ) {
+    String className,
+  }) {
     _firestore
         .collection('Classes')
         .document(classId)
@@ -192,8 +221,8 @@ class Fire {
         .setData(
       {
         'context': content,
-        'timestamp':DateTime.now(),
-        'class name':className,
+        'timestamp': DateTime.now(),
+        'class name': className,
       },
     );
   }
@@ -202,11 +231,8 @@ class Fire {
     String uid,
     String newUserName,
   }) {
-    _firestore.collection('UserData').document(uid).updateData(
-      {
-        'display-name':newUserName,
-
-      }
-    );
+    _firestore.collection('UserData').document(uid).updateData({
+      'display-name': newUserName,
+    });
   }
 }
