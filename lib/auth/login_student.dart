@@ -15,6 +15,9 @@ class _StudentLoginState extends State<StudentLogin> {
   bool isEmailValidate = false;
   bool isPasswordValidate = false;
 
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +49,7 @@ class _StudentLoginState extends State<StudentLogin> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Email'),
                           validator: (value) {
@@ -79,6 +83,7 @@ class _StudentLoginState extends State<StudentLogin> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Password'),
                           validator: (value) {
@@ -112,7 +117,7 @@ class _StudentLoginState extends State<StudentLogin> {
             child: GestureDetector(
               onTap: () async {
                 if (_formKey.currentState.validate()) {
-                  List result = await _auth.loginAsStudent();
+                  List result = await _auth.loginAsStudent(email: _emailController.text,password: _passwordController.text);
                   print('RESULT : '+ result.toString());
                   Navigator.push(
                     context,

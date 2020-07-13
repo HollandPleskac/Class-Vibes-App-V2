@@ -14,6 +14,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
   final _formKey = new GlobalKey<FormState>();
   bool isEmailValidate = false;
   bool isPasswordValidate = false;
+
+    final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +49,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Email'),
                           validator: (value) {
@@ -78,6 +83,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Password'),
                           validator: (value) {
@@ -111,7 +117,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
             child: GestureDetector(
               onTap: () {
                 if (_formKey.currentState.validate()) {
-                  _auth.loginAsTeacher();
+                  _auth.loginAsTeacher(email: _emailController.text,password: _passwordController.text);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
