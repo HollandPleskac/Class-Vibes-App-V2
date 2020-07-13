@@ -18,6 +18,28 @@ class ClassViewStudent extends StatefulWidget {
 }
 
 class _ClassViewStudentState extends State<ClassViewStudent> {
+  List<DocumentSnapshot> classes = [];
+  Future getClasses() async {
+    List studentClasses = await _firestore
+        .collection("UserData")
+        .document("new@gmail.com")
+        .collection("Classes")
+        .getDocuments()
+        .then((querySnapshot) => querySnapshot.documents);
+    classes = studentClasses;
+  }
+
+  @override
+  void initState() {
+    getClasses().then((_) {
+      setState(() {
+        print(classes.runtimeType);
+      });
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,33 +81,38 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
       //     ],
       //   ),
       // ),
-      body: StreamBuilder(
-          stream: _firestore
-              .collection('UserData')
-              .document('new@gmail.com')
-              .collection('Classes')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: Container(),
-              );
-            }
+      // body: StreamBuilder(
+      //     stream: _firestore
+      //         .collection('UserData')
+      //         .document('new@gmail.com')
+      //         .collection('Classes')
+      //         .snapshots(),
+      //     builder:
+      //         (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      //       if (!snapshot.hasData) {
+      //         return Center(
+      //           child: Container(),
+      //         );
+      //       }
 
-            return Center(
-              child: ListView(
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
-                  return StudentClass(
-                    className: document['class name'],
-                    status: document['status'],
-                    lastChangedStatus: document['date'],
-                  );
-                }).toList(),
-              ),
-            );
-          }),
+      //       return Center(
+      //         child: ListView(
+      //           children:
+      //               snapshot.data.documents.map((DocumentSnapshot document) {
+      //             return StudentClass(
+      //               className: document['class name'],
+      //               status: document['status'],
+      //               lastChangedStatus: document['date'],
+      //             );
+      //           }).toList(),
+      //         ),
+      //       );
+      //     }),
+      body: Column(
+        children: classes.map((DocumentSnapshot document) {
+          return Text(document['class name'].toString());
+        }).toList(),
+      ),
     );
   }
 }
