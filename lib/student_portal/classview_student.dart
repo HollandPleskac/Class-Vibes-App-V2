@@ -18,34 +18,34 @@ class ClassViewStudent extends StatefulWidget {
 }
 
 class _ClassViewStudentState extends State<ClassViewStudent> {
-  List classes = [];
-  Future getClasses() async {
-    await _firestore
-        .collection("UserData")
-        .document("new@gmail.com")
-        .collection("Classes")
-        .getDocuments()
-        .then(
-      (querySnapshot) {
-        querySnapshot.documents.forEach((doc) {
-          classes.add(doc.documentID);
-        });
-      },
-    );
+  // List classes = [];
+  // Future getClasses() async {
+  //   await _firestore
+  //       .collection("UserData")
+  //       .document("new@gmail.com")
+  //       .collection("Classes")
+  //       .getDocuments()
+  //       .then(
+  //     (querySnapshot) {
+  //       querySnapshot.documents.forEach((doc) {
+  //         classes.add(doc.documentID);
+  //       });
+  //     },
+  //   );
 
-    // classes = studentClasses;
-  }
+  //   // classes = studentClasses;
+  // }
 
-  @override
-  void initState() {
-    getClasses().then((_) {
-      setState(() {
-        print('CLASSES : ' + classes.toString());
-      });
-    });
+  // @override
+  // void initState() {
+  //   getClasses().then((_) {
+  //     setState(() {
+  //       print('CLASSES : ' + classes.toString());
+  //     });
+  //   });
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +89,15 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
       //   ),
       // ),
       body: StreamBuilder(
+          // stream: _firestore
+          //     .collection('Classes')
+          //     .where(FieldPath.documentId, whereIn: classes)
+          //     .snapshots(),
+
           stream: _firestore
+              .collection('UserData')
+              .document('new1@gmail.com')
               .collection('Classes')
-              .where(FieldPath.documentId, whereIn: classes)
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
