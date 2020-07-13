@@ -111,7 +111,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
             child: GestureDetector(
               onTap: () {
                 if (_formKey.currentState.validate()) {
-                  // _auth.teacherAsStudent();
+                  _auth.loginAsTeacher();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
