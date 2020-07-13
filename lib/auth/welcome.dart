@@ -1,140 +1,121 @@
 import 'package:flutter/material.dart';
 
-import '../teacher_portal/classview_teacher.dart';
-import '../student_portal/classview_student.dart';
+import 'login_student.dart';
+import 'login_teacher.dart';
+import 'sign_up.dart';
 
-import '../nav_student.dart';
-import '../nav_teacher.dart';
-import '../constant.dart';
+class Welcome extends StatefulWidget {
+  @override
+  _WelcomeState createState() => _WelcomeState();
+}
 
-class WelcomeScreen extends StatelessWidget {
+class _WelcomeState extends State<Welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
-      // body: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: [
-      //       Padding(
-      //         padding: EdgeInsets.only(top: 300),
-      //         child: Text(
-      //           'Log in as a..',
-      //           style: TextStyle(
-      //             color: Colors.white,
-      //             fontSize: 38,
-      //             fontWeight: FontWeight.w700,
-      //           ),
-      //         ),
-      //       ),
-      //       SizedBox(
-      //         height: 60,
-      //       ),
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         children: [
-      //           FlatButton(
-      //             onPressed: () {},
-      //             color: kPrimaryColor,
-      //             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 11),
-      //             shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(10),
-      //               side: BorderSide(
-      //                 color: Colors.white,
-      //                 width: 3,
-      //               ),
-      //             ),
-      //             child: Text(
-      //               'Student',
-      //               style: TextStyle(
-      //                 fontSize: 22,
-      //                 color: Colors.white,
-      //               ),
-      //             ),
-      //           ),
-      //           SizedBox(
-      //             width: 50,
-      //           ),
-      //           FlatButton(
-      //             onPressed: () {},
-      //             color: kPrimaryColor,
-      //             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 11),
-      //             shape: RoundedRectangleBorder(
-      //               borderRadius: BorderRadius.circular(10),
-      //               side: BorderSide(
-      //                 color: Colors.white,
-      //                 width: 3,
-      //               ),
-      //             ),
-      //             child: Text(
-      //               'Teacher',
-      //               style: TextStyle(
-      //                 fontSize: 22,
-      //                 color: Colors.white,
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //       Padding(
-      //         padding: EdgeInsets.only(top: 30),
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             Text(
-      //               'Don\'t have an account? ',
-      //               style: TextStyle(
-      //                 color: Colors.white,
-      //                 fontSize: 20,
-      //                 fontWeight: FontWeight.w600,
-      //               ),
-      //             ),
-      //             GestureDetector(
-      //               onTap: () {},
-      //               child: Text(
-      //                 'Sign Up',
-      //                 style: TextStyle(
-      //                     color: Colors.white,
-      //                     fontSize: 20,
-      //                     fontWeight: FontWeight.w600,
-      //                     decoration: TextDecoration.underline,
-      //                     decorationThickness: 2),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ClassViewStudent(),
-                  ),
-                );
-              },
-              child: Text('student'),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.25,
+          ),
+          Center(
+            child: Text(
+              'Login',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 46,
+                  fontWeight: FontWeight.w300),
             ),
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ClassViewTeacher(),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.15,
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: (){
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StudentLogin()),
+            );
+            },
+              child: Container(
+                child: Center(
+                  child: Text(
+                    'Student',
+                    style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400),
                   ),
-                );
-              },
-              child: Text('teacher'),
+                ),
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.85,
+                decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(10)),
+              ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: (){
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TeacherLogin()),
+            );
+            },
+              child: Container(
+                child: Center(
+                  child: Text(
+                    'Teacher',
+                    style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.85,
+                decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
+          Center(
+            child: GestureDetector(
+               onTap: (){
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SignUp()),
+            );
+            },
+              child: Container(
+                child: Center(
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width * 0.85,
+                decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
