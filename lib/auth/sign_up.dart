@@ -17,6 +17,10 @@ class _SignUpState extends State<SignUp> {
   bool isPasswordValidate = false;
   bool isUserNameValidate = false;
   bool isSwitched = true;
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +52,7 @@ class _SignUpState extends State<SignUp> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _usernameController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Username'),
                           validator: (value) {
@@ -81,9 +86,10 @@ class _SignUpState extends State<SignUp> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Email'),
-                              validator: (value) {
+                          validator: (value) {
                             if (value == null || value == '') {
                               setState(() {
                                 isEmailValidate = true;
@@ -114,9 +120,10 @@ class _SignUpState extends State<SignUp> {
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: _passwordController,
                           decoration: InputDecoration(
                               border: InputBorder.none, hintText: 'Password'),
-                              validator: (value) {
+                          validator: (value) {
                             if (value == null || value == '') {
                               setState(() {
                                 isPasswordValidate = true;
@@ -129,7 +136,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    height:isPasswordValidate == true
+                    height: isPasswordValidate == true
                         ? MediaQuery.of(context).size.height * 0.08
                         : MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.85,
@@ -174,10 +181,14 @@ class _SignUpState extends State<SignUp> {
           ),
           Center(
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (isSwitched == true) {
                   if (_formKey.currentState.validate()) {
-                    // _auth.signUp();
+                    List result = await _auth.signUp(
+                        username: _usernameController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        accountType: 'student');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -187,7 +198,11 @@ class _SignUpState extends State<SignUp> {
                   }
                 } else {
                   if (_formKey.currentState.validate()) {
-                    // _auth.signUp();
+                   List result = await _auth.signUp(
+                        username: _usernameController.text,
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        accountType: 'teacher');
                     Navigator.push(
                       context,
                       MaterialPageRoute(

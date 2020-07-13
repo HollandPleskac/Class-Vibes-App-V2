@@ -15,7 +15,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
   bool isEmailValidate = false;
   bool isPasswordValidate = false;
 
-    final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -115,9 +115,12 @@ class _TeacherLoginState extends State<TeacherLogin> {
           ),
           Center(
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (_formKey.currentState.validate()) {
-                  _auth.loginAsTeacher(email: _emailController.text,password: _passwordController.text);
+                  List result = await _auth.loginAsTeacher(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(

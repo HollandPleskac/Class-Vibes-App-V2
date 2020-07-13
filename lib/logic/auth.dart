@@ -72,7 +72,7 @@ class Auth {
     return ['success', email];
   }
 
-  Future<List> signUp(String email, String password) async {
+  Future<List> signUp({String email, String password, String username,String accountType}) async {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
