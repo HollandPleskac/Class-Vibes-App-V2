@@ -19,29 +19,7 @@ class Fire {
       "class name": newClassName,
     });
 
-  //gets students in the class
-  //changes name for each student w/ the for loop in the UserData tree
-
-    var students = await _firestore
-        .collection("Classes")
-        .document(classId)
-        .collection('Students')
-        .getDocuments()
-        .then((querySnap) => querySnap.documents);
-    for (var i = 0; i < students.length; i++) {
-      //students[i].data['email'] is the email of each student in the collection
-      _firestore
-          .collection("UserData")
-          .document(students[i].data['email'])
-          .collection('Classes')
-          .document(classId)
-          .updateData(
-        {
-          'class name': newClassName,
-        },
-      );
-    }
-    print('STUDENTS : ' + students.toString());
+  
   }
 
   void updateAllowJoin(String uid, String classId, bool newStatusOnJoin) {
