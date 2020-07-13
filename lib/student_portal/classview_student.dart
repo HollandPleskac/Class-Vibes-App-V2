@@ -18,35 +18,6 @@ class ClassViewStudent extends StatefulWidget {
 }
 
 class _ClassViewStudentState extends State<ClassViewStudent> {
-  // List classes = [];
-  // Future getClasses() async {
-  //   await _firestore
-  //       .collection("UserData")
-  //       .document("new@gmail.com")
-  //       .collection("Classes")
-  //       .getDocuments()
-  //       .then(
-  //     (querySnapshot) {
-  //       querySnapshot.documents.forEach((doc) {
-  //         classes.add(doc.documentID);
-  //       });
-  //     },
-  //   );
-
-  //   // classes = studentClasses;
-  // }
-
-  // @override
-  // void initState() {
-  //   getClasses().then((_) {
-  //     setState(() {
-  //       print('CLASSES : ' + classes.toString());
-  //     });
-  //   });
-
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,11 +60,6 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
       //   ),
       // ),
       body: StreamBuilder(
-          // stream: _firestore
-          //     .collection('Classes')
-          //     .where(FieldPath.documentId, whereIn: classes)
-          //     .snapshots(),
-
           stream: _firestore
               .collection('UserData')
               .document('new@gmail.com')
@@ -114,6 +80,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return StudentClass(
                     className: document['class name'],
+                    classId: document.documentID,
                   );
                 }).toList(),
               ),
@@ -128,17 +95,14 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
   }
 }
 
-class StudentClass extends StatefulWidget {
+class StudentClass extends StatelessWidget {
   final String className;
+  final String classId;
 
   StudentClass({
     this.className,
+    this.classId,
   });
-  @override
-  _StudentClassState createState() => _StudentClassState();
-}
-
-class _StudentClassState extends State<StudentClass> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -164,7 +128,7 @@ class _StudentClassState extends State<StudentClass> {
                   width: 20,
                 ),
                 Text(
-                  widget.className,
+                  className,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
@@ -174,31 +138,25 @@ class _StudentClassState extends State<StudentClass> {
                 //TODO wrap this streambuilder in a row
                 //stream: userdata-new@gmail.com-classes-test class app ui then get the mood the class
                 //copy the code from when u click the class voerview onto here and change sizes
-                Row(
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.smile,
-                      color: Colors.green,
-                      size: 36,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.meh,
-                      color: Colors.yellow[800],
-                      size: 36,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    FaIcon(
-                      FontAwesomeIcons.frown,
-                      color: Colors.red,
-                      size: 36,
-                    ),
-                  ],
-                ),
+                StreamBuilder(
+                    stream: _firestore
+                        .collection('UserData')
+                        .document('new@gmail.com')
+                        .collection('Classes')
+                        .document(classId)
+                        .snapshots(),
+                    builder: (BuildContext context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(
+                          child: Container(),
+                        );
+                      }
+                      return SelectStatusRow(
+                        classId: classId,
+                        lastChangedStatus: snapshot.data['date'],
+                        status: snapshot.data['status'],
+                      );
+                    }),
                 SizedBox(
                   width: 20,
                 ),
@@ -361,4 +319,133 @@ void showStudentInfoPopUp(BuildContext context) {
       );
     },
   );
+}
+
+class SelectStatusRow extends StatefulWidget {
+  final String classId;
+  final Timestamp lastChangedStatus;
+  final String status;
+
+  SelectStatusRow({
+    this.classId,
+    this.lastChangedStatus,
+    this.status,
+  });
+  @override
+  _SelectStatusRowState createState() => _SelectStatusRowState();
+}
+
+class _SelectStatusRowState extends State<SelectStatusRow> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            _fire.updateStudentMood(
+                    uid: 'new@gmail.com',
+                    classId: 'test class app ui',
+                    newMood: 'doing great');
+            print('changing status');
+          },
+          child: DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            widget.lastChangedStatus.toDate().toString()),
+                      )
+                      .inDays >=
+                  5
+              ? FaIcon(
+                  FontAwesomeIcons.smile,
+                  color: Colors.grey,
+                  size: 36,
+                )
+              : FaIcon(
+                  widget.status == 'doing great'
+                      ? FontAwesomeIcons.solidSmile
+                      : FontAwesomeIcons.smile,
+                  color: Colors.green,
+                  size: 36,
+                ),
+        ),
+        // FaIcon(
+        //   FontAwesomeIcons.smile,
+        //   color: Colors.green,
+        //   size: 36,
+        // ),
+        SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          onTap: () {
+            _fire.updateStudentMood(
+                    uid: 'new@gmail.com',
+                    classId: 'test class app ui',
+                    newMood: 'need help');
+            print('changing status');
+          },
+          child: DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            widget.lastChangedStatus.toDate().toString()),
+                      )
+                      .inDays >=
+                  5
+              ? FaIcon(
+                  FontAwesomeIcons.meh,
+                  color: Colors.grey,
+                  size: 36,
+                )
+              : FaIcon(
+                  widget.status == 'need help'
+                      ? FontAwesomeIcons.solidMeh
+                      : FontAwesomeIcons.meh,
+                  color: Colors.yellow[800],
+                  size: 36,
+                ),
+        ),
+        // FaIcon(
+        //   FontAwesomeIcons.meh,
+        //   color: Colors.yellow[800],
+        //   size: 36,
+        // ),
+        SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          onTap: () {
+            _fire.updateStudentMood(
+                    uid: 'new@gmail.com',
+                    classId: 'test class app ui',
+                    newMood: 'frustrated');
+            print('changing status');
+          },
+          child: DateTime.now()
+                      .difference(
+                        DateTime.parse(
+                            widget.lastChangedStatus.toDate().toString()),
+                      )
+                      .inDays >=
+                  5
+              ? FaIcon(
+                  FontAwesomeIcons.frown,
+                  color: Colors.grey,
+                  size: 36,
+                )
+              : FaIcon(
+                  widget.status == 'frustrated'
+                      ? FontAwesomeIcons.solidFrown
+                      : FontAwesomeIcons.frown,
+                  color: Colors.red,
+                  size: 36,
+                ),
+        ),
+        // FaIcon(
+        //   FontAwesomeIcons.frown,
+        //   color: Colors.red,
+        //   size: 36,
+        // ),
+      ],
+    );
+  }
 }
