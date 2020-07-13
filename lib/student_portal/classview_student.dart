@@ -172,7 +172,7 @@ class _StudentClassState extends State<StudentClass> {
                 ),
                 Spacer(),
                 //TODO wrap this streambuilder in a row
-                //stream: userdata-new@gmail.com-classes- then get the mood for each of there
+                //stream: userdata-new@gmail.com-classes-test class app ui then get the mood the class
                 //copy the code from when u click the class voerview onto here and change sizes
                 Row(
                   children: [
