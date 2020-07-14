@@ -14,6 +14,7 @@ class _StudentLoginState extends State<StudentLogin> {
   final _formKey = new GlobalKey<FormState>();
   bool isEmailValidate = false;
   bool isPasswordValidate = false;
+  String _feedback = '';
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -98,7 +99,7 @@ class _StudentLoginState extends State<StudentLogin> {
                         ),
                       ),
                     ),
-                    height: isEmailValidate == true
+                    height: isPasswordValidate == true
                         ? MediaQuery.of(context).size.height * 0.08
                         : MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.85,
@@ -117,14 +118,33 @@ class _StudentLoginState extends State<StudentLogin> {
             child: GestureDetector(
               onTap: () async {
                 if (_formKey.currentState.validate()) {
-                  List result = await _auth.loginAsStudent(email: _emailController.text,password: _passwordController.text);
-                  print('RESULT : '+ result.toString());
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClassViewStudent(),
-                    ),
-                  );
+                  List result = await _auth.loginAsStudent(
+                      email: _emailController.text,
+                      password: _passwordController.text);
+                  print('RESULT : ' + result.toString());
+                  if (result[0] == 'success') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ClassViewStudent(),
+                      ),
+                    );
+                  } else {
+                    setState(() {
+                      isEmailValidate = false;
+                      isPasswordValidate = false;
+                      _feedback = result[1];
+                    });
+                  }
+                } else {
+                  setState(() {
+                    isEmailValidate == true
+                        ? isEmailValidate = true
+                        : isEmailValidate = false;
+                    isPasswordValidate == true
+                        ? isPasswordValidate = true
+                        : isPasswordValidate = false;
+                  });
                 }
               },
               child: Container(
@@ -144,7 +164,16 @@ class _StudentLoginState extends State<StudentLogin> {
                     borderRadius: BorderRadius.circular(10)),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Text(
+              _feedback,
+              style: TextStyle(color: Colors.red, fontSize: 15.5),
+            ),
+          ),
         ],
       ),
     );
