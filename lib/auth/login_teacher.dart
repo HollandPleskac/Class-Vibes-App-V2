@@ -14,6 +14,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
   final _formKey = new GlobalKey<FormState>();
   bool isEmailValidate = false;
   bool isPasswordValidate = false;
+  String _feedback = '';
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -121,12 +122,32 @@ class _TeacherLoginState extends State<TeacherLogin> {
                     email: _emailController.text,
                     password: _passwordController.text,
                   );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClassViewTeacher(),
-                    ),
-                  );
+
+                  if (result[0] == 'success') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ClassViewTeacher(),
+                      ),
+                    );
+                  } else {
+                    setState(() {
+                      isEmailValidate = false;
+                      isPasswordValidate = false;
+                      _feedback = result[1];
+                    });
+                  }
+               
+                } else {
+                  // determines if the textfield is big to accomodate a validator message
+                  setState(() {
+                    isEmailValidate == true
+                        ? isEmailValidate = true
+                        : isEmailValidate = false;
+                    isPasswordValidate == true
+                        ? isPasswordValidate = true
+                        : isPasswordValidate = false;
+                  });
                 }
               },
               child: Container(
@@ -147,7 +168,16 @@ class _TeacherLoginState extends State<TeacherLogin> {
                 ),
               ),
             ),
-          )
+          ),
+           SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Text(
+              _feedback,
+              style: TextStyle(color: Colors.red, fontSize: 15.5),
+            ),
+          ),
         ],
       ),
     );

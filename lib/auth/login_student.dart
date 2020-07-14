@@ -121,7 +121,6 @@ class _StudentLoginState extends State<StudentLogin> {
                   List result = await _auth.loginAsStudent(
                       email: _emailController.text,
                       password: _passwordController.text);
-                  print('RESULT : ' + result.toString());
                   if (result[0] == 'success') {
                     Navigator.push(
                       context,
@@ -137,6 +136,7 @@ class _StudentLoginState extends State<StudentLogin> {
                     });
                   }
                 } else {
+                  //determines if you need a big textfield box to display a validator message
                   setState(() {
                     isEmailValidate == true
                         ? isEmailValidate = true
