@@ -12,6 +12,10 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
+      if(await checkAccountType(email) == 'Teacher') {
+        return ['failure','Account registered as a teacher'];
+      }
+
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -44,6 +48,10 @@ class Auth {
           email: email, password: password);
 
       FirebaseUser user = authResult.user;
+
+      if(await checkAccountType(email) == 'Student') {
+        return ['failure','Account registered as a student'];
+      }
 
       return ['success', email];
     } catch (error) {
@@ -102,5 +110,13 @@ class Auth {
       'display-name': username,
       'account type': accountType,
     });
+  }
+
+  Future<String> checkAccountType(String email) async {
+    return await _firestore
+        .collection('UserData')
+        .document(email)
+        .get()
+        .then((docSnap) => docSnap.data['Account Type']);
   }
 }
