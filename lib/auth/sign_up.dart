@@ -17,6 +17,7 @@ class _SignUpState extends State<SignUp> {
   bool isPasswordValidate = false;
   bool isUserNameValidate = false;
   bool isSwitched = true;
+  String _feedback = '';
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -183,32 +184,78 @@ class _SignUpState extends State<SignUp> {
             child: GestureDetector(
               onTap: () async {
                 if (isSwitched == true) {
+                  //sign up as a student
                   if (_formKey.currentState.validate()) {
                     List result = await _auth.signUp(
                         username: _usernameController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                         accountType: 'student');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ClassViewStudent(),
-                      ),
-                    );
+                    if (result[0] == 'success') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ClassViewTeacher(),
+                        ),
+                      );
+                    } else {
+                      setState(() {
+                        isEmailValidate = false;
+                        isPasswordValidate = false;
+                        isUserNameValidate = false;
+                        _feedback = result[1];
+                      });
+                    }
+                  } else {
+                    // determines if the textfield is big to accomodate a validator message
+                    setState(() {
+                      isEmailValidate == true
+                          ? isEmailValidate = true
+                          : isEmailValidate = false;
+                      isPasswordValidate == true
+                          ? isPasswordValidate = true
+                          : isPasswordValidate = false;
+                      isUserNameValidate == true
+                          ? isUserNameValidate = true
+                          : isUserNameValidate = false;
+                    });
                   }
                 } else {
+                  //sign up as a teacher
                   if (_formKey.currentState.validate()) {
-                   List result = await _auth.signUp(
+                    List result = await _auth.signUp(
                         username: _usernameController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                         accountType: 'teacher');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ClassViewTeacher(),
-                      ),
-                    );
+                    if (result[0] == 'success') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ClassViewTeacher(),
+                        ),
+                      );
+                    } else {
+                      setState(() {
+                        isEmailValidate = false;
+                        isPasswordValidate = false;
+                        isUserNameValidate = false;
+                        _feedback = result[1];
+                      });
+                    }
+                  } else {
+                    // determines if the textfield is big to accomodate a validator message
+                    setState(() {
+                      isEmailValidate == true
+                          ? isEmailValidate = true
+                          : isEmailValidate = false;
+                      isPasswordValidate == true
+                          ? isPasswordValidate = true
+                          : isPasswordValidate = false;
+                      isUserNameValidate == true
+                          ? isUserNameValidate = true
+                          : isUserNameValidate = false;
+                    });
                   }
                 }
               },
@@ -229,7 +276,16 @@ class _SignUpState extends State<SignUp> {
                     borderRadius: BorderRadius.circular(10)),
               ),
             ),
-          )
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Text(
+              _feedback,
+              style: TextStyle(color: Colors.red, fontSize: 15.5),
+            ),
+          ),
         ],
       ),
     );
