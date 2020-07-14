@@ -1,8 +1,9 @@
-import 'package:class_vibes_v2/constant.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../nav_student.dart';
+import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -34,9 +35,13 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
           .getDocuments()
           .then((querySnap) => querySnap.documents);
 
-          announcementDocuments.forEach((document) { 
-            announcements.add(document.data);
-          });
+      announcementDocuments.forEach((document) {
+        announcements.add(document.data);
+      });
+
+      announcements.sort((a, b) {
+        return a.compareTo(b);
+      });
     }
   }
 
@@ -58,7 +63,94 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
         centerTitle: true,
         backgroundColor: kWetAsphaltColor,
       ),
-      body: Text('view announcements that are sent to you'),
+      // body: Column(
+      //   children: announcements
+      //       .map(
+      //         (announcement) => Text(
+      //           announcement['title'],
+      //         ),
+      //       )
+      //       .toList(),
+      // ),
+      body: Center(
+        child: ListView(
+          children: announcements.map(
+            (announcement) {
+              return Padding(
+                padding:
+                    EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 20),
+                child: Announcement(
+                  announcement['content'],
+                  DateTime.parse(announcement['timestamp'].toDate().toString()),
+                ),
+              );
+            },
+          ).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class Announcement extends StatelessWidget {
+  final String message;
+  final DateTime timestamp;
+
+  Announcement(this.message, this.timestamp);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Color.fromRGBO(235, 235, 235, 1),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 120,
+            width: 8,
+            decoration: BoxDecoration(
+              color: kPrimaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  message,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(
+                  height: 7.5,
+                ),
+                Text(
+                  DateFormat.yMMMMd('en_US')
+                      .add_jm()
+                      .format(timestamp)
+                      .toString(),
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
