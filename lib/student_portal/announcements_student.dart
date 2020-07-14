@@ -16,6 +16,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
   List classIds = [];
   List announcements = [];
   Future getAnnouncements() async {
+    //change this setup to be double streambuilder ??
     List<DocumentSnapshot> classDocuments = await _firestore
         .collection('UserData')
         .document('new@gmail.com')
