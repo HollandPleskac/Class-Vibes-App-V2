@@ -40,7 +40,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
       });
 
       announcements.sort((a, b) {
-        return a.compareTo(b);
+        return b['timestamp'].compareTo(a['timestamp']);
       });
     }
   }

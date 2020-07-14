@@ -198,7 +198,7 @@ class Fire {
         .document('announcement id')
         .setData(
       {
-        'context': content,
+        'content': content,
         'timestamp': DateTime.now(),
         'class name': className,
       },
