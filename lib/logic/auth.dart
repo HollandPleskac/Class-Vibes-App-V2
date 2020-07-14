@@ -18,7 +18,7 @@ class Auth {
         case "ERROR_INVALID_EMAIL":
           return ['failure', 'Email is badly formatted'];
         case "ERROR_WRONG_PASSWORD":
-          return ['failure', 'Password is wrong'];
+          return ['failure', 'Password is incorrect'];
         case "ERROR_USER_NOT_FOUND":
           return ['failure', 'No user exists for this email address'];
         case "ERROR_USER_DISABLED":
@@ -51,7 +51,7 @@ class Auth {
         case "ERROR_INVALID_EMAIL":
           return ['failure', 'Email is badly formatted'];
         case "ERROR_WRONG_PASSWORD":
-          return ['failure', 'Password is wrong'];
+          return ['failure', 'Password is incorrect'];
         case "ERROR_USER_NOT_FOUND":
           return ['failure', 'No user exists for this email address'];
         case "ERROR_USER_DISABLED":
