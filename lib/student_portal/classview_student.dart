@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
@@ -18,6 +19,26 @@ class ClassViewStudent extends StatefulWidget {
 }
 
 class _ClassViewStudentState extends State<ClassViewStudent> {
+  String _email;
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _email = uid;
+    print(_email);
+  }
+
+  @override
+  void initState() {
+    getTeacherEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +83,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
       body: StreamBuilder(
           stream: _firestore
               .collection('UserData')
-              .document('new@gmail.com')
+              .document(_email)
               .collection('Classes')
               .snapshots(),
           builder:
@@ -81,6 +102,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   return StudentClass(
                     className: document['class name'],
                     classId: document.documentID,
+                    email: _email,
                   );
                 }).toList(),
               ),
@@ -98,10 +120,12 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 class StudentClass extends StatelessWidget {
   final String className;
   final String classId;
+  final String email;
 
   StudentClass({
     this.className,
     this.classId,
+    this.email,
   });
   @override
   Widget build(BuildContext context) {
@@ -141,7 +165,7 @@ class StudentClass extends StatelessWidget {
                 StreamBuilder(
                     stream: _firestore
                         .collection('UserData')
-                        .document('new@gmail.com')
+                        .document(email)
                         .collection('Classes')
                         .document(classId)
                         .snapshots(),
@@ -155,6 +179,7 @@ class StudentClass extends StatelessWidget {
                         classId: classId,
                         lastChangedStatus: snapshot.data['date'],
                         status: snapshot.data['status'],
+                        email: email,
                       );
                     }),
                 SizedBox(
@@ -325,11 +350,13 @@ class SelectStatusRow extends StatefulWidget {
   final String classId;
   final Timestamp lastChangedStatus;
   final String status;
+  final String email;
 
   SelectStatusRow({
     this.classId,
     this.lastChangedStatus,
     this.status,
+    this.email,
   });
   @override
   _SelectStatusRowState createState() => _SelectStatusRowState();
@@ -343,9 +370,9 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
         GestureDetector(
           onTap: () {
             _fire.updateStudentMood(
-                    uid: 'new@gmail.com',
-                    classId: 'test class app ui',
-                    newMood: 'doing great');
+                uid: widget.email,
+                classId: widget.classId,
+                newMood: 'doing great');
             print('changing status');
           },
           child: DateTime.now()
@@ -379,9 +406,9 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
         GestureDetector(
           onTap: () {
             _fire.updateStudentMood(
-                    uid: 'new@gmail.com',
-                    classId: 'test class app ui',
-                    newMood: 'need help');
+                uid: widget.email,
+                classId: widget.classId,
+                newMood: 'need help');
             print('changing status');
           },
           child: DateTime.now()
@@ -415,9 +442,9 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
         GestureDetector(
           onTap: () {
             _fire.updateStudentMood(
-                    uid: 'new@gmail.com',
-                    classId: 'test class app ui',
-                    newMood: 'frustrated');
+                uid: widget.email,
+                classId: widget.classId,
+                newMood: 'frustrated');
             print('changing status');
           },
           child: DateTime.now()

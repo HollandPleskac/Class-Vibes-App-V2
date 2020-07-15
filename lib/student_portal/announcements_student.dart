@@ -16,7 +16,7 @@ class AnnouncementsStudent extends StatefulWidget {
 class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
   List classIds = [];
   List announcements = [];
-  String _email = '';
+  String _email;
 
   Future getTeacherEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

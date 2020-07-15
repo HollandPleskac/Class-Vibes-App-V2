@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant.dart';
 
@@ -14,6 +15,8 @@ class ChatStudent extends StatefulWidget {
 }
 
 class _ChatStudentState extends State<ChatStudent> {
+
+
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -60,134 +63,133 @@ class _ChatStudentState extends State<ChatStudent> {
           );
         });
   }
+
   var classId = 'test class app ui';
   var studentName = 'Kushagra';
   var studentUid = 'new@gmail.com';
 
+
+
   @override
   Widget build(BuildContext context) {
-   
-    return 
-      SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height * 0.76,
-                child: StreamBuilder(
-                    stream: _firestore
-                        .collection("Classes")
-                        .document(classId)
-                        .collection('Students')
-                        .document(studentUid)
-                        .collection("Chats")
-                        .orderBy("date", descending: true)
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      //FIX THIS
-                      if (!snapshot.hasData)
-                        return Center(
-                          child: Text('No Chat History'),
-                        );
-
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height * 0.76,
+              child: StreamBuilder(
+                  stream: _firestore
+                      .collection("Classes")
+                      .document(classId)
+                      .collection('Students')
+                      .document(studentUid)
+                      .collection("Chats")
+                      .orderBy("date", descending: true)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    //FIX THIS
+                    if (!snapshot.hasData)
                       return Center(
-                        child: ListView(
-                          reverse: true,
-                          children: snapshot.data.documents.map(
-                            (DocumentSnapshot document) {
-                              return document['sent type'] == 'teacher'
-                                  ? RecievedChat(
-                                      title: document['title'],
-                                      content: document['content'],
-                                    )
-                                  : SentChat(
-                                      title: document['title'],
-                                      content: document['content'],
-                                    );
-                            },
-                          ).toList(),
-                        ),
+                        child: Text('No Chat History'),
                       );
-                    }),
-         
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 50,
-                            height: 50,
-                            child: Row(
-                              children: <Widget>[
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.send,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () async {
-                                      print('pressed the button');
-                                      print('class id ' + classId.toString());
-                                      print('student uid ' +
-                                          studentUid.toString());
 
-                                      await _firestore
-                                          .collection('Classes')
-                                          .document(classId)
-                                          .collection('Students')
-                                          .document(studentUid)
-                                          .collection("Chats")
-                                          .document()
-                                          .setData({
-                                        'date': DateTime.now(),
-                                        'content': _controller.text,
-                                        'title': studentName,
-                                        'sent type': 'student'
-                                      });
-                                      _controller.clear();
-                                    }),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // child: Center(
-                                  //   child: Text(
-                                  //     'Hello Mr. Shea I need help with math',
-                                  //     style: TextStyle(color: Colors.black),
-                                  //   ),
-                                  // ),
-                                  child: Center(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      child: TextField(
-                                        controller: _controller,
-                                      ),
+                    return Center(
+                      child: ListView(
+                        reverse: true,
+                        children: snapshot.data.documents.map(
+                          (DocumentSnapshot document) {
+                            return document['sent type'] == 'teacher'
+                                ? RecievedChat(
+                                    title: document['title'],
+                                    content: document['content'],
+                                  )
+                                : SentChat(
+                                    title: document['title'],
+                                    content: document['content'],
+                                  );
+                          },
+                        ).toList(),
+                      ),
+                    );
+                  }),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width - 50,
+                          height: 50,
+                          child: Row(
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(
+                                    Icons.send,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () async {
+                                    print('pressed the button');
+                                    print('class id ' + classId.toString());
+                                    print(
+                                        'student uid ' + studentUid.toString());
+
+                                    await _firestore
+                                        .collection('Classes')
+                                        .document(classId)
+                                        .collection('Students')
+                                        .document(studentUid)
+                                        .collection("Chats")
+                                        .document()
+                                        .setData({
+                                      'date': DateTime.now(),
+                                      'content': _controller.text,
+                                      'title': studentName,
+                                      'sent type': 'student'
+                                    });
+                                    _controller.clear();
+                                  }),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                // child: Center(
+                                //   child: Text(
+                                //     'Hello Mr. Shea I need help with math',
+                                //     style: TextStyle(color: Colors.black),
+                                //   ),
+                                // ),
+                                child: Center(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    child: TextField(
+                                      controller: _controller,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.withOpacity(0.1),
-                            ),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.withOpacity(0.1),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
-      
+      ),
     );
   }
 }
