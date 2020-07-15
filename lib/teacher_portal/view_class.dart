@@ -67,16 +67,26 @@ class _ViewClassState extends State<ViewClass> {
         ),
         body: TabBarView(children: [
           Container(
-            child: StudentsTab(teacherEmail: _email,classId: 'test class app ui',),
+            child: StudentsTab(
+              teacherEmail: _email,
+              classId: 'test class app ui',
+            ),
           ),
           Container(
-            child: ClassMeetings(teacherEmail: _email,),
+            child: ClassMeetings(
+              teacherEmail: _email,
+              classId: 'test class app ui',
+            ),
           ),
           Container(
-            child: ClassAnnouncements(classId: 'test class app ui',),
+            child: ClassAnnouncements(
+              classId: 'test class app ui',
+            ),
           ),
           Container(
-            child: ClassSettings(classId: 'test class app ui',),
+            child: ClassSettings(
+              classId: 'test class app ui',
+            ),
           ),
         ]),
       ),
@@ -91,7 +101,7 @@ class _ViewClassState extends State<ViewClass> {
 class StudentsTab extends StatefulWidget {
   final String teacherEmail;
   final String classId;
-  StudentsTab({this.teacherEmail,this.classId});
+  StudentsTab({this.teacherEmail, this.classId});
   @override
   _StudentsTabState createState() => _StudentsTabState();
 }
@@ -102,7 +112,7 @@ class _StudentsTabState extends State<StudentsTab> {
   bool _isTouchedNeedHelp = false;
   bool _isTouchedFrustrated = false;
   bool _isTouchedInactive = false;
- 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -188,15 +198,15 @@ class _StudentsTabState extends State<StudentsTab> {
         Container(
           height: 360,
           child: _isTouchedAll == true
-              ? AllTab(widget.classId,widget.teacherEmail)
+              ? AllTab(widget.classId, widget.teacherEmail)
               : _isTouchedDoingGreat
-                  ? DoingGreatTab(widget.classId,widget.teacherEmail)
+                  ? DoingGreatTab(widget.classId, widget.teacherEmail)
                   : _isTouchedNeedHelp
-                      ? NeedHelpTab(widget.classId,widget.teacherEmail)
+                      ? NeedHelpTab(widget.classId, widget.teacherEmail)
                       : _isTouchedFrustrated
-                          ? FrustratedTab(widget.classId,widget.teacherEmail)
+                          ? FrustratedTab(widget.classId, widget.teacherEmail)
                           : _isTouchedInactive
-                              ? InactiveTab(widget.classId,widget.teacherEmail)
+                              ? InactiveTab(widget.classId, widget.teacherEmail)
                               : Text(
                                   'IMPORTANT - this text will never show since one of the first values will always be true'),
         ),

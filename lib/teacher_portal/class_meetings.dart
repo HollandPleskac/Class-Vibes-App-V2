@@ -46,6 +46,7 @@ class ClassMeetings extends StatelessWidget {
                       studentName: document['student name'],
                       title: document['title'],
                       teacherEmail: teacherEmail,
+                      classId: classId,
                     ),
                   );
                 },
@@ -66,6 +67,7 @@ class Meeting extends StatelessWidget {
   final String message;
   final String studentName;
   final String teacherEmail;
+  final String classId;
 
   Meeting({
     this.dateAndTime,
@@ -75,6 +77,7 @@ class Meeting extends StatelessWidget {
     this.message,
     this.studentName,
     this.teacherEmail,
+    this.classId,
   });
   @override
   Widget build(BuildContext context) {
@@ -185,7 +188,7 @@ class Meeting extends StatelessWidget {
                     studentUid: 'new@gmail.com',
                     teacherUid: teacherEmail,
                     meetingId: 'random meeting id',
-                    classId: 'test class app ui'
+                    classId: classId,
                   );
                 },
                 child: FaIcon(
