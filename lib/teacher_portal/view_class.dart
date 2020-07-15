@@ -118,7 +118,7 @@ class _StudentsTabState extends State<StudentsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DynamicPieChart('test class app ui'),
+        DynamicPieChart(widget.classId),
         Container(
           height: 32.5,
           child: ListView(
