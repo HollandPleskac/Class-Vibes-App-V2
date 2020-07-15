@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant.dart';
 import '../widgets/pie_charts.dart';
@@ -16,6 +17,25 @@ class ClassViewTeacher extends StatefulWidget {
 }
 
 class _ClassViewTeacherState extends State<ClassViewTeacher> {
+  String _email;
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _email = uid;
+    print(_email);
+  }
+
+  @override
+  void initState() {
+    getTeacherEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +54,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
         child: StreamBuilder(
             stream: _firestore
                 .collection('UserData')
-                .document('new1@gmail.com')
+                .document(_email)
                 .collection('Classes')
                 .snapshots(),
             builder:
