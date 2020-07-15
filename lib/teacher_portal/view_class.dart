@@ -45,7 +45,6 @@ class _ViewClassState extends State<ViewClass> {
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
-    final String className = routeArguments['class name'];
     final String classId = routeArguments['class id'];
 
     return DefaultTabController(
@@ -54,7 +53,19 @@ class _ViewClassState extends State<ViewClass> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: kWetAsphaltColor,
-          title: Text(className),
+          title: StreamBuilder(
+            stream:
+                _firestore.collection('Classes').document(classId).snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                return Text(
+                  snapshot.data['class name'],
+                );
+              }
+            },
+          ),
           centerTitle: true,
           bottom: TabBar(
             isScrollable: true,
