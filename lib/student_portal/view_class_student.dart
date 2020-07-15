@@ -9,6 +9,7 @@ import './class_announcements_student.dart';
 import './class_overview.dart';
 
 class ViewClassStudent extends StatefulWidget {
+  static const routename = 'view-class-student-screen';
   @override
   _ViewClassStudentState createState() => _ViewClassStudentState();
 }
@@ -25,6 +26,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
     print(_email);
   }
 
+  Future getClassId() async {}
 
   @override
   void initState() {
@@ -37,6 +39,9 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
 
   @override
   Widget build(BuildContext context) {
+    final routeArguments = ModalRoute.of(context).settings.arguments as Map;
+    final String classId = routeArguments['class id'];
+
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -50,22 +55,33 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
               Tab(text: 'Overview'),
               Tab(text: 'Meetings'),
               Tab(text: 'Announcements'),
-              Tab(text: 'Chat',)
+              Tab(
+                text: 'Chat',
+              )
             ],
           ),
         ),
         body: TabBarView(children: [
           Container(
-            child: ClassOverViewStudent(classId: 'test class app ui', email: _email,),
+            child: ClassOverViewStudent(
+              classId: classId,
+              email: _email,
+            ),
           ),
           Container(
-            child: ClassMeetingsStudent(classId: 'test class app ui',),
+            child: ClassMeetingsStudent(
+              classId: classId,
+            ),
           ),
           Container(
-          child: ClassAnnouncementsStudent(classId: 'test class app ui',),
+            child: ClassAnnouncementsStudent(
+              classId: classId,
+            ),
           ),
           Container(
-            child: ChatStudent(email: _email,),
+            child: ChatStudent(
+              email: _email,
+            ),
           ),
         ]),
       ),

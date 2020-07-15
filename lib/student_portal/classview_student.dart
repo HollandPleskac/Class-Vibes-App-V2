@@ -130,12 +130,10 @@ class StudentClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ViewClassStudent(),
-        ),
-      ),
+      onTap: () =>
+          Navigator.pushNamed(context, ViewClassStudent.routename, arguments: {
+        'class id': classId,
+      }),
       child: Container(
         height: 115,
         width: double.infinity,
@@ -159,9 +157,6 @@ class StudentClass extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                //TODO wrap this streambuilder in a row
-                //stream: userdata-new@gmail.com-classes-test class app ui then get the mood the class
-                //copy the code from when u click the class voerview onto here and change sizes
                 StreamBuilder(
                     stream: _firestore
                         .collection('UserData')
