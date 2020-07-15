@@ -125,6 +125,16 @@ class _TeacherLoginState extends State<TeacherLogin> {
                   );
 
                   if (result[0] == 'success') {
+                    //set local storage
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+
+                    await prefs.setString(
+                      'email',
+                      _emailController.text,
+                    );
+
+                    //push to next screen
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -138,7 +148,6 @@ class _TeacherLoginState extends State<TeacherLogin> {
                       _feedback = result[1];
                     });
                   }
-               
                 } else {
                   // determines if the textfield is big to accomodate a validator message
                   setState(() {
@@ -170,7 +179,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
               ),
             ),
           ),
-           SizedBox(
+          SizedBox(
             height: 20,
           ),
           Center(
