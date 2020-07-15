@@ -46,6 +46,7 @@ class _ViewClassState extends State<ViewClass> {
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String className = routeArguments['class name'];
+    final String classId = routeArguments['class id'];
 
     return DefaultTabController(
       length: 4,
@@ -69,23 +70,23 @@ class _ViewClassState extends State<ViewClass> {
           Container(
             child: StudentsTab(
               teacherEmail: _email,
-              classId: 'test class app ui',
+              classId: classId,
             ),
           ),
           Container(
             child: ClassMeetings(
               teacherEmail: _email,
-              classId: 'test class app ui',
+              classId: classId,
             ),
           ),
           Container(
             child: ClassAnnouncements(
-              classId: 'test class app ui',
+              classId: classId,
             ),
           ),
           Container(
             child: ClassSettings(
-              classId: 'test class app ui',
+              classId: classId,
             ),
           ),
         ]),

@@ -36,6 +36,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +74,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 10,
                   crossAxisCount: 2,
-
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return GestureDetector(
@@ -83,6 +83,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           ViewClass.routeName,
                           arguments: {
                             'class name': document['class name'],
+                            'class id': document.documentID,
                           },
                         );
                       },
