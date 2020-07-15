@@ -10,6 +10,8 @@ final Firestore _firestore = Firestore.instance;
 
 class ChatStudent extends StatefulWidget {
   static const routeName = 'student-chat';
+  final String email;
+  ChatStudent({this.email});
   @override
   _ChatStudentState createState() => _ChatStudentState();
 }
@@ -66,7 +68,7 @@ class _ChatStudentState extends State<ChatStudent> {
 
   var classId = 'test class app ui';
   var studentName = 'Kushagra';
-  var studentUid = 'new@gmail.com';
+  
 
 
 
@@ -84,7 +86,7 @@ class _ChatStudentState extends State<ChatStudent> {
                       .collection("Classes")
                       .document(classId)
                       .collection('Students')
-                      .document(studentUid)
+                      .document(widget.email)
                       .collection("Chats")
                       .orderBy("date", descending: true)
                       .snapshots(),
@@ -139,13 +141,13 @@ class _ChatStudentState extends State<ChatStudent> {
                                     print('pressed the button');
                                     print('class id ' + classId.toString());
                                     print(
-                                        'student uid ' + studentUid.toString());
+                                        'student uid ' + widget.email.toString());
 
                                     await _firestore
                                         .collection('Classes')
                                         .document(classId)
                                         .collection('Students')
-                                        .document(studentUid)
+                                        .document(widget.email)
                                         .collection("Chats")
                                         .document()
                                         .setData({
