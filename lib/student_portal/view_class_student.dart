@@ -59,7 +59,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
             child: ClassOverViewStudent(),
           ),
           Container(
-            child: ClassMeetingsStudent(),
+            child: ClassMeetingsStudent(classId: 'test class app ui',),
           ),
           Container(
           child: ClassAnnouncementsStudent(classId: 'test class app ui',),

@@ -10,6 +10,9 @@ final _fire = Fire();
 final Firestore _firestore = Firestore.instance;
 
 class ClassMeetingsStudent extends StatelessWidget {
+  final String classId;
+
+  ClassMeetingsStudent({this.classId});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +20,7 @@ class ClassMeetingsStudent extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore
             .collection("Classes")
-            .document('test class app ui')
+            .document(classId)
             .collection('Meetings')
             .orderBy("timestamp")
             .snapshots(),
