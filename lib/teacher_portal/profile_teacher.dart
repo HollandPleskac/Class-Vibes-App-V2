@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../nav_teacher.dart';
 import '../constant.dart';
@@ -20,7 +21,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _userNameEditController = TextEditingController();
 
-  void _showModalSheetEditUserName() {
+  void _showModalSheetEditUserName(String email) {
     showModalBottomSheet(
         barrierColor: Colors.white.withOpacity(0),
         isScrollControlled: true,
@@ -103,7 +104,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                 print('validated');
                                 _fire.editUserName(
                                   newUserName: _userNameEditController.text,
-                                  uid: 'new1@gmail.com',
+                                  uid: email,
                                 );
                                 _userNameEditController.text = '';
                                 Navigator.pop(context);
@@ -127,6 +128,26 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
             ),
           );
         });
+  }
+
+  String _email;
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _email = uid;
+    print(_email);
+  }
+
+  @override
+  void initState() {
+    getTeacherEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
   }
 
   @override
@@ -207,7 +228,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                   StreamBuilder(
                       stream: _firestore
                           .collection('UserData')
-                          .document('new1@gmail.com')
+                          .document(_email)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -240,7 +261,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
           ),
           GestureDetector(
             onTap: () {
-              _showModalSheetEditUserName();
+              _showModalSheetEditUserName(_email);
               print('user name');
             },
             child: Center(
@@ -255,7 +276,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                     StreamBuilder(
                         stream: _firestore
                             .collection('UserData')
-                            .document('new1@gmail.com')
+                            .document(_email)
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
