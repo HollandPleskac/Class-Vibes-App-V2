@@ -11,7 +11,8 @@ final _fire = Fire();
 
 class AllTab extends StatelessWidget {
   final String classId;
-  AllTab(this.classId);
+  final String teacherEmail;
+  AllTab(this.classId,this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -41,6 +42,8 @@ class AllTab extends StatelessWidget {
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
+                    classId: classId,
+                    teacherEmail: teacherEmail,
                   );
                 }).toList(),
               );
@@ -57,7 +60,8 @@ class AllTab extends StatelessWidget {
 
 class DoingGreatTab extends StatelessWidget {
   final String classId;
-  DoingGreatTab(this.classId);
+  final String teacherEmail;
+  DoingGreatTab(this.classId,this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -94,6 +98,8 @@ class DoingGreatTab extends StatelessWidget {
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
+                    classId: classId,
+                    teacherEmail: teacherEmail,
                   );
                 }).toList(),
               );
@@ -110,7 +116,8 @@ class DoingGreatTab extends StatelessWidget {
 
 class NeedHelpTab extends StatelessWidget {
   final String classId;
-  NeedHelpTab(this.classId);
+  final String teacherEmail;
+  NeedHelpTab(this.classId,this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -147,6 +154,8 @@ class NeedHelpTab extends StatelessWidget {
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
+                    classId: classId,
+                    teacherEmail: teacherEmail,
                   );
                 }).toList(),
               );
@@ -163,7 +172,8 @@ class NeedHelpTab extends StatelessWidget {
 
 class FrustratedTab extends StatelessWidget {
   final String classId;
-  FrustratedTab(this.classId);
+  final String teacherEmail;
+  FrustratedTab(this.classId,this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -200,6 +210,8 @@ class FrustratedTab extends StatelessWidget {
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
+                    classId: classId,
+                    teacherEmail: teacherEmail,
                   );
                 }).toList(),
               );
@@ -216,7 +228,8 @@ class FrustratedTab extends StatelessWidget {
 
 class InactiveTab extends StatelessWidget {
   final String classId;
-  InactiveTab(this.classId);
+  final String teacherEmail;
+  InactiveTab(this.classId,this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -252,6 +265,8 @@ class InactiveTab extends StatelessWidget {
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
+                    classId: classId,
+                    teacherEmail: teacherEmail,
                   );
                 }).toList(),
               );

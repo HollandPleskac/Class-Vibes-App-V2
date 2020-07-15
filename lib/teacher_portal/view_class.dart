@@ -67,7 +67,7 @@ class _ViewClassState extends State<ViewClass> {
         ),
         body: TabBarView(children: [
           Container(
-            child: StudentsTab(),
+            child: StudentsTab(teacherEmail: _email,classId: 'test class app ui',),
           ),
           Container(
             child: ClassMeetings(),
@@ -89,6 +89,9 @@ class _ViewClassState extends State<ViewClass> {
 //located in widgets
 
 class StudentsTab extends StatefulWidget {
+  final String teacherEmail;
+  final String classId;
+  StudentsTab({this.teacherEmail,this.classId});
   @override
   _StudentsTabState createState() => _StudentsTabState();
 }
@@ -99,6 +102,7 @@ class _StudentsTabState extends State<StudentsTab> {
   bool _isTouchedNeedHelp = false;
   bool _isTouchedFrustrated = false;
   bool _isTouchedInactive = false;
+ 
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -184,15 +188,15 @@ class _StudentsTabState extends State<StudentsTab> {
         Container(
           height: 360,
           child: _isTouchedAll == true
-              ? AllTab('test class app ui')
+              ? AllTab(widget.classId,widget.teacherEmail)
               : _isTouchedDoingGreat
-                  ? DoingGreatTab('test class app ui')
+                  ? DoingGreatTab(widget.classId,widget.teacherEmail)
                   : _isTouchedNeedHelp
-                      ? NeedHelpTab('test class app ui')
+                      ? NeedHelpTab(widget.classId,widget.teacherEmail)
                       : _isTouchedFrustrated
-                          ? FrustratedTab('test class app ui')
+                          ? FrustratedTab(widget.classId,widget.teacherEmail)
                           : _isTouchedInactive
-                              ? InactiveTab('test class app ui')
+                              ? InactiveTab(widget.classId,widget.teacherEmail)
                               : Text(
                                   'IMPORTANT - this text will never show since one of the first values will always be true'),
         ),

@@ -3,15 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
 
-
 class ChatTeacher extends StatefulWidget {
   static const routeName = 'teacher-chat';
-  
+
   @override
   _ChatTeacherState createState() => _ChatTeacherState();
 }
@@ -72,7 +70,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
     final String studentEmail = routeArguments['student uid'];
     final String studentName = routeArguments['student name'];
     return Scaffold(
-      
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -154,41 +151,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         ),
                       );
                     }),
-                // child: ListView(
-                //   reverse: true,
-                //   children: <Widget>[
-                //     SentChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     RecievedChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     SentChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     RecievedChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     SentChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //     RecievedChat(
-                //       title: "TITLE",
-                //       content:
-                //           "The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps",
-                //     ),
-                //   ],
-                // ),
               ),
               Center(
                 child: Column(
