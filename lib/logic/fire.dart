@@ -219,6 +219,7 @@ class Fire {
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
     if (isClassCode == true) {
+      
       return 'unique code';
     }
     return 'not unique code';

@@ -5,7 +5,6 @@ import '../constant.dart';
 import '../nav_student.dart';
 import '../logic/fire.dart';
 
-
 final _fire = Fire();
 
 class JoinClass extends StatefulWidget {
@@ -15,9 +14,11 @@ class JoinClass extends StatefulWidget {
 
 class _JoinClassState extends State<JoinClass> {
   String pins = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: NavStudent(),
       appBar: AppBar(
         title: Text('Join a Class'),
@@ -41,6 +42,30 @@ class _JoinClassState extends State<JoinClass> {
               onPressed: () async {
                 String result = await _fire.joinClass(pins);
                 print(result);
+                if (result == 'unique code') {
+                  final snackBar = SnackBar(
+                    content: Text('Successfully joined the class!'),
+                    action: SnackBarAction(
+                      label: 'Hide',
+                      onPressed: () {
+                        _scaffoldKey.currentState.hideCurrentSnackBar();
+                      },
+                    ),
+                  );
+
+                 _scaffoldKey.currentState.showSnackBar(snackBar);
+                }
+                final snackBar = SnackBar(
+                    content: Text('That code does not exist'),
+                    action: SnackBarAction(
+                      label: 'Hide',
+                      onPressed: () {
+                        _scaffoldKey.currentState.hideCurrentSnackBar();
+                      },
+                    ),
+                  );
+
+                 _scaffoldKey.currentState.showSnackBar(snackBar);
               },
             ),
           ],
