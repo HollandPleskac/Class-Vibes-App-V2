@@ -11,6 +11,7 @@ class JoinClass extends StatefulWidget {
 }
 
 class _JoinClassState extends State<JoinClass> {
+  String pins = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +25,19 @@ class _JoinClassState extends State<JoinClass> {
         child: Column(
           children: [
             PinCodeTextField(
-              
-              length: 3,
+              length: 6,
               onChanged: null,
+              onCompleted: (completedPins) {
+                setState(() {
+                  pins = completedPins;
+                });
+              },
+            ),
+            FlatButton(
+              child: Text('Join'),
+              onPressed: () {
+                print(pins);
+              },
             ),
           ],
         ),
