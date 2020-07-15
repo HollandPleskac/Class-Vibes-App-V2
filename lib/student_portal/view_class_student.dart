@@ -56,7 +56,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
         ),
         body: TabBarView(children: [
           Container(
-            child: ClassOverViewStudent(),
+            child: ClassOverViewStudent(classId: 'test class app ui', email: _email,),
           ),
           Container(
             child: ClassMeetingsStudent(classId: 'test class app ui',),

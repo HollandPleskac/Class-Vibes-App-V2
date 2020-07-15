@@ -11,6 +11,10 @@ final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
 
 class ClassOverViewStudent extends StatelessWidget {
+  final String email;
+  final String classId;
+
+  ClassOverViewStudent({this.email, this.classId});
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -20,9 +24,9 @@ class ClassOverViewStudent extends StatelessWidget {
           StreamBuilder(
               stream: _firestore
                   .collection('UserData')
-                  .document('new@gmail.com')
+                  .document(email)
                   .collection('Classes')
-                  .document('test class app ui')
+                  .document(classId)
                   .snapshots(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.data == null) {
@@ -34,6 +38,8 @@ class ClassOverViewStudent extends StatelessWidget {
                   className: snapshot.data['class name'],
                   status: snapshot.data['status'],
                   lastChangedStatus: snapshot.data['date'],
+                  email: email,
+                  classId: classId,
                 );
               }),
           Spacer(),
@@ -58,10 +64,14 @@ class StatusRow extends StatefulWidget {
   final String className;
   final String status;
   final Timestamp lastChangedStatus;
+  final String email;
+  final String classId;
   StatusRow({
     this.className,
     this.status,
     this.lastChangedStatus,
+    this.email,
+    this.classId,
   });
   @override
   _StatusRowState createState() => _StatusRowState();
@@ -78,9 +88,7 @@ class _StatusRowState extends State<StatusRow> {
             GestureDetector(
               onTap: () {
                 _fire.updateStudentMood(
-                    uid: 'new@gmail.com',
-                    classId: 'test class app ui',
-                    newMood: 'doing great');
+                    uid: widget.email, classId: widget.classId, newMood: 'doing great');
                 print('touched happy face');
               },
               child: DateTime.now()
@@ -120,9 +128,7 @@ class _StatusRowState extends State<StatusRow> {
             GestureDetector(
               onTap: () {
                 _fire.updateStudentMood(
-                    uid: 'new@gmail.com',
-                    classId: 'test class app ui',
-                    newMood: 'need help');
+                    uid: widget.email, classId: widget.classId, newMood: 'need help');
                 print('tapped meh');
               },
               child: DateTime.now()
@@ -162,9 +168,7 @@ class _StatusRowState extends State<StatusRow> {
             GestureDetector(
               onTap: () {
                 _fire.updateStudentMood(
-                    uid: 'new@gmail.com',
-                    classId: 'test class app ui',
-                    newMood: 'frustrated');
+                    uid: widget.email, classId: widget.classId, newMood: 'frustrated');
                 print('tapped frown');
               },
               child: DateTime.now()
