@@ -135,7 +135,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                     );
 
                     //push to next screen
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ClassViewTeacher(),

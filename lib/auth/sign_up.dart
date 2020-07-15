@@ -209,7 +209,7 @@ class _SignUpState extends State<SignUp> {
                         _emailController.text,
                       );
                       //push next screen
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ClassViewStudent(),
@@ -262,7 +262,7 @@ class _SignUpState extends State<SignUp> {
                         _emailController.text,
                       );
                       //push next screen
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ClassViewTeacher(),

@@ -133,7 +133,7 @@ class _StudentLoginState extends State<StudentLogin> {
                       _emailController.text,
                     );
                     //push next screen
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ClassViewStudent(),
