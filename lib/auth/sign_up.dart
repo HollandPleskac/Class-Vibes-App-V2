@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../student_portal/classview_student.dart';
 import '../teacher_portal/classview_teacher.dart';
@@ -192,16 +193,26 @@ class _SignUpState extends State<SignUp> {
                         password: _passwordController.text,
                         accountType: 'student');
                     if (result[0] == 'success') {
+                      //ste up account
                       _auth.setUpAccount(
                         accountType: 'Student',
                         username: _usernameController.text,
                         password: _passwordController.text,
                         email: _emailController.text,
                       );
+                      //set local storage
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
+                      await prefs.setString(
+                        'email',
+                        _emailController.text,
+                      );
+                      //push next screen
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ClassViewTeacher(),
+                          builder: (context) => ClassViewStudent(),
                         ),
                       );
                     } else {
@@ -235,12 +246,22 @@ class _SignUpState extends State<SignUp> {
                         password: _passwordController.text,
                         accountType: 'teacher');
                     if (result[0] == 'success') {
-                       _auth.setUpAccount(
+                      //set up account
+                      _auth.setUpAccount(
                         accountType: 'Teacher',
                         username: _usernameController.text,
                         password: _passwordController.text,
                         email: _emailController.text,
                       );
+                      //set local storage
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
+                      await prefs.setString(
+                        'email',
+                        _emailController.text,
+                      );
+                      //push next screen
                       Navigator.push(
                         context,
                         MaterialPageRoute(
