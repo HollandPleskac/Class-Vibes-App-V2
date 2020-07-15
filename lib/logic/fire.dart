@@ -18,8 +18,6 @@ class Fire {
         .updateData({
       "class name": newClassName,
     });
-
-  
   }
 
   void updateAllowJoin(String uid, String classId, bool newStatusOnJoin) {
@@ -212,5 +210,17 @@ class Fire {
     _firestore.collection('UserData').document(uid).updateData({
       'display-name': newUserName,
     });
+  }
+
+  Future<String> joinClass(String classCode) async {
+    bool isClassCode = await _firestore
+        .collection('Classes')
+        .where('class code', isEqualTo: classCode)
+        .getDocuments()
+        .then((querySnap) => querySnap.documents.isNotEmpty);
+    if (isClassCode == true) {
+      print('unique code');
+    }
+    print('not unique code');
   }
 }

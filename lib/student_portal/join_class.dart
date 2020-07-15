@@ -5,6 +5,9 @@ import '../constant.dart';
 import '../nav_student.dart';
 import '../logic/fire.dart';
 
+
+final _fire = Fire();
+
 class JoinClass extends StatefulWidget {
   @override
   _JoinClassState createState() => _JoinClassState();
