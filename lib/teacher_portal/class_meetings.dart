@@ -10,6 +10,10 @@ final _fire = Fire();
 final Firestore _firestore = Firestore.instance;
 
 class ClassMeetings extends StatelessWidget {
+  final String classId;
+  final String teacherEmail;
+
+  ClassMeetings({this.classId,this.teacherEmail});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +21,7 @@ class ClassMeetings extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore
             .collection("Classes")
-            .document('test class app ui')
+            .document(classId)
             .collection('Meetings')
             .orderBy("timestamp")
             .snapshots(),
@@ -41,6 +45,7 @@ class ClassMeetings extends StatelessWidget {
                       message: document['content'],
                       studentName: document['student name'],
                       title: document['title'],
+                      teacherEmail: teacherEmail,
                     ),
                   );
                 },
@@ -60,6 +65,7 @@ class Meeting extends StatelessWidget {
   final String length;
   final String message;
   final String studentName;
+  final String teacherEmail;
 
   Meeting({
     this.dateAndTime,
@@ -68,6 +74,7 @@ class Meeting extends StatelessWidget {
     this.length,
     this.message,
     this.studentName,
+    this.teacherEmail,
   });
   @override
   Widget build(BuildContext context) {
@@ -176,7 +183,7 @@ class Meeting extends StatelessWidget {
                   print('delete meeting');
                   _fire.deleteMeeting(
                     studentUid: 'new@gmail.com',
-                    teacherUid: 'new1@gmail.com',
+                    teacherUid: teacherEmail,
                     meetingId: 'random meeting id',
                     classId: 'test class app ui'
                   );

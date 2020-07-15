@@ -70,7 +70,7 @@ class _ViewClassState extends State<ViewClass> {
             child: StudentsTab(teacherEmail: _email,classId: 'test class app ui',),
           ),
           Container(
-            child: ClassMeetings(),
+            child: ClassMeetings(teacherEmail: _email,),
           ),
           Container(
             child: ClassAnnouncements(classId: 'test class app ui',),
