@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
@@ -21,6 +22,26 @@ class ViewClass extends StatefulWidget {
 }
 
 class _ViewClassState extends State<ViewClass> {
+  String _email;
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _email = uid;
+    print(_email);
+  }
+
+  @override
+  void initState() {
+    getTeacherEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
@@ -258,11 +279,11 @@ class DynamicPieChart extends StatelessWidget {
           var inactivePercentage =
               (inactiveStudents / totalStudents * 100).toStringAsFixed(0) + '%';
 
-              print('doing great : ' + doingGreatStudents.toString());
-              print('need help : '+ needHelpStudents.toString());
-              print('frustrated : '+ frustratedStudents.toString());
-              print('inactive : '+ inactiveStudents.toString());
-              print('totla : '+ totalStudents.toString());
+          print('doing great : ' + doingGreatStudents.toString());
+          print('need help : ' + needHelpStudents.toString());
+          print('frustrated : ' + frustratedStudents.toString());
+          print('inactive : ' + inactiveStudents.toString());
+          print('totla : ' + totalStudents.toString());
           return PieChartSampleBig(
             //graph percentage
             doingGreatStudents: doingGreatStudents,
