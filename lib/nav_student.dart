@@ -11,6 +11,7 @@ import './student_portal/profile_student.dart';
 import './student_portal/meetings_student.dart';
 import './student_portal/classview_student.dart';
 import './student_portal/announcements_student.dart';
+import './student_portal/join_class.dart';
 
 class NavStudent extends StatelessWidget {
   @override
@@ -41,6 +42,19 @@ class NavStudent extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ClassViewStudent(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text('Join Class'),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => JoinClass(),
                 ),
               );
             },

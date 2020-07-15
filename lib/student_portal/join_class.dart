@@ -8,7 +8,7 @@ class JoinClass extends StatefulWidget {
 class _JoinClassState extends State<JoinClass> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
       
     );
   }
