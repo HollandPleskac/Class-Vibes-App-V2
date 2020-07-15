@@ -2,6 +2,7 @@ import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../logic/fire.dart';
 import '../nav_teacher.dart';
@@ -16,6 +17,25 @@ class MeetingsTeacher extends StatefulWidget {
 }
 
 class _MeetingsTeacherState extends State<MeetingsTeacher> {
+  String _teacherEmail;
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _teacherEmail = uid;
+    print(_teacherEmail);
+  }
+
+  @override
+  void initState() {
+    getTeacherEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +48,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
       body: StreamBuilder(
           stream: _firestore
               .collection('UserData')
-              .document('new1@gmail.com')
+              .document(_teacherEmail)
               .collection('Meetings')
               .orderBy("timestamp", descending: false)
               .snapshots(),
@@ -54,6 +74,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                       message: document['content'],
                       studentName: document['student name'],
                       title: document['title'],
+                      teacherEmail: _teacherEmail,
                     ),
                   );
                 }).toList(),
@@ -71,6 +92,7 @@ class Meeting extends StatelessWidget {
   final String length;
   final String message;
   String studentName;
+  final String teacherEmail;
 
   Meeting({
     this.dateAndTime,
@@ -79,6 +101,7 @@ class Meeting extends StatelessWidget {
     this.length,
     this.message,
     this.studentName,
+    this.teacherEmail,
   });
   @override
   Widget build(BuildContext context) {
@@ -187,7 +210,7 @@ class Meeting extends StatelessWidget {
                   print('delete meeting');
                   _fire.deleteMeeting(
                     studentUid: 'new@gmail.com',
-                    teacherUid: 'new1@gmail.com',
+                    teacherUid: teacherEmail,
                     meetingId: 'random meeting id',
                     classId: 'test class app ui',
                   );
