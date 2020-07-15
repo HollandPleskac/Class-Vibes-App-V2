@@ -192,6 +192,12 @@ class _SignUpState extends State<SignUp> {
                         password: _passwordController.text,
                         accountType: 'student');
                     if (result[0] == 'success') {
+                      _auth.setUpAccount(
+                        accountType: 'Student',
+                        username: _usernameController.text,
+                        password: _passwordController.text,
+                        email: _emailController.text,
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -229,6 +235,12 @@ class _SignUpState extends State<SignUp> {
                         password: _passwordController.text,
                         accountType: 'teacher');
                     if (result[0] == 'success') {
+                       _auth.setUpAccount(
+                        accountType: 'Teacher',
+                        username: _usernameController.text,
+                        password: _passwordController.text,
+                        email: _emailController.text,
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(

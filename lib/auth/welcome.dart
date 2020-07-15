@@ -33,12 +33,12 @@ class _WelcomeState extends State<Welcome> {
           ),
           Center(
             child: GestureDetector(
-              onTap: (){
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => StudentLogin()),
-            );
-            },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StudentLogin()),
+                );
+              },
               child: Container(
                 child: Center(
                   child: Text(
@@ -62,12 +62,12 @@ class _WelcomeState extends State<Welcome> {
           ),
           Center(
             child: GestureDetector(
-              onTap: (){
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TeacherLogin()),
-            );
-            },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TeacherLogin()),
+                );
+              },
               child: Container(
                 child: Center(
                   child: Text(
@@ -91,12 +91,12 @@ class _WelcomeState extends State<Welcome> {
           ),
           Center(
             child: GestureDetector(
-               onTap: (){
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignUp()),
-            );
-            },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUp()),
+                );
+              },
               child: Container(
                 child: Center(
                   child: Text(
