@@ -38,8 +38,9 @@ class _JoinClassState extends State<JoinClass> {
             ),
             FlatButton(
               child: Text('Join'),
-              onPressed: () {
-                print(pins);
+              onPressed: () async {
+                String result = await _fire.joinClass(pins);
+                print(result);
               },
             ),
           ],
