@@ -1,6 +1,7 @@
 import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../nav_student.dart';
 
@@ -12,6 +13,25 @@ class MeetingsStudent extends StatefulWidget {
 }
 
 class _MeetingsStudentState extends State<MeetingsStudent> {
+  String _email;
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _email = uid;
+    print(_email);
+  }
+
+  @override
+  void initState() {
+    getTeacherEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +44,7 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
       body: StreamBuilder(
           stream: _firestore
               .collection('UserData')
-              .document('new@gmail.com')
+              .document(_email)
               .collection('Meetings')
               .orderBy("timestamp", descending: false)
               .snapshots(),
