@@ -25,6 +25,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
     print(_email);
   }
 
+
   @override
   void initState() {
     getTeacherEmail().then((_) {
@@ -61,7 +62,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
             child: ClassMeetingsStudent(),
           ),
           Container(
-          child: ClassAnnouncementsStudent(),
+          child: ClassAnnouncementsStudent(classId: 'test class app ui',),
           ),
           Container(
             child: ChatStudent(email: _email,),

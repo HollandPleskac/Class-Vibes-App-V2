@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,12 +11,14 @@ final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
 
 class ClassAnnouncementsStudent extends StatelessWidget {
+  final String classId;
+  ClassAnnouncementsStudent({this.classId});
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection("Classes")
-          .document('test class app ui')
+          .document(classId)
           .collection('Announcements')
           .orderBy("timestamp", descending: true)
           .snapshots(),
