@@ -50,7 +50,7 @@ class _StudentLoginState extends State<StudentLogin> {
                   child: Container(
                     child: Center(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.042),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.045),
                         child: TextFormField(
                           controller: _emailController,
                           decoration: InputDecoration(
@@ -84,7 +84,7 @@ class _StudentLoginState extends State<StudentLogin> {
                   child: Container(
                     child: Center(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.042),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.045),
                         child: TextFormField(
                           controller: _passwordController,
                           decoration: InputDecoration(
