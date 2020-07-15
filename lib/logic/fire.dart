@@ -212,16 +212,25 @@ class Fire {
     });
   }
 
-  Future<String> joinClass(String classCode) async {
+  Future<String> joinClass(String classCode, String studentEmail) async {
     bool isClassCode = await _firestore
         .collection('Classes')
         .where('class code', isEqualTo: classCode)
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
-    if (isClassCode == true) {
-      
-      return 'unique code';
+
+    bool isAlreadyInClass = await _firestore
+        .collection('UserData').document(studentEmail).collection('Classes')
+        .where('class code', isEqualTo: classCode)
+        .getDocuments()
+        .then((querySnap) => querySnap.documents.isNotEmpty);
+    if (isAlreadyInClass == true) {
+      return 'You are already in that class.';
     }
-    return 'not unique code';
+    if (isClassCode == true) {
+      //put the student in that class
+      return 'You have joined the class!';
+    }
+    return 'That code does not exist.';
   }
 }
