@@ -12,6 +12,8 @@ final Firestore _firestore = Firestore.instance;
 
 class ClassSettings extends StatefulWidget {
   static const routeName = 'individual-class-settings-teacher';
+  final String classId;
+  ClassSettings({this.classId});
   @override
   _ClassSettingsState createState() => _ClassSettingsState();
 }
@@ -25,7 +27,7 @@ class _ClassSettingsState extends State<ClassSettings> {
   Future getInitialSwitchValue() async {
     bool initialSwitchVal = await _firestore
         .collection("Classes")
-        .document("test class app ui")
+        .document(widget.classId)
         .get()
         .then((docSnap) => docSnap.data['allow join']);
     print('initial val of switch ' + initialSwitchVal.toString());
@@ -35,7 +37,7 @@ class _ClassSettingsState extends State<ClassSettings> {
   Future getDaysInactive() async {
     int daysInactive = await _firestore
         .collection("Classes")
-        .document("test class app ui")
+        .document(widget.classId)
         .get()
         .then((docSnap) => docSnap.data['max days inactive']);
     maxDaysInactive = daysInactive;
@@ -56,8 +58,6 @@ class _ClassSettingsState extends State<ClassSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final routeArguments = ModalRoute.of(context).settings.arguments as Map;
-
     return Center(
       child: Column(
         children: [
