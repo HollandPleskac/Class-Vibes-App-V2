@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
 import '../nav_student.dart';
 import '../logic/fire.dart';
 
 final _fire = Fire();
+final Firestore _firestore = Firestore.instance;
 
 class JoinClass extends StatefulWidget {
   @override
@@ -18,8 +20,9 @@ class _JoinClassState extends State<JoinClass> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String _email;
+  String _studentName;
 
-  Future getTeacherEmail() async {
+  Future getStudentEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String uid = prefs.getString('email');
@@ -28,10 +31,22 @@ class _JoinClassState extends State<JoinClass> {
     print(_email);
   }
 
+  Future getStudentName(String email) async {
+    String nameOfStudent = await _firestore
+        .collection('UserData')
+        .document(email)
+        .get()
+        .then((docSnap) => docSnap.data['display-name']);
+
+    _studentName = nameOfStudent;
+  }
+
   @override
   void initState() {
-    getTeacherEmail().then((_) {
-      setState(() {});
+    getStudentEmail().then((_) {
+      getStudentName(_email).then((_) {
+        setState(() {});
+      });
     });
 
     super.initState();
@@ -62,7 +77,8 @@ class _JoinClassState extends State<JoinClass> {
             FlatButton(
               child: Text('Join'),
               onPressed: () async {
-                String result = await _fire.joinClass(pins, _email);
+                String result =
+                    await _fire.joinClass(pins, _email, _studentName);
                 print(result);
 
                 if (result == 'You have joined the class!') {

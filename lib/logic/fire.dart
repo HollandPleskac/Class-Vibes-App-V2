@@ -212,7 +212,7 @@ class Fire {
     });
   }
 
-  Future<String> joinClass(String classCode, String studentEmail) async {
+  Future<String> joinClass(String classCode, String studentEmail,String studentName,) async {
     bool isClassCode = await _firestore
         .collection('Classes')
         .where('class code', isEqualTo: classCode)
@@ -229,6 +229,12 @@ class Fire {
     }
     if (isClassCode == true) {
       //put the student in that class
+      _firestore.collection('Classes').document(classCode).collection('Students').document(studentEmail).setData({
+        'date': DateTime.now(),
+        'email': studentEmail,
+        'name': studentName,
+        'status': 'doing great',
+      });
       return 'You have joined the class!';
     }
     return 'That code does not exist.';
