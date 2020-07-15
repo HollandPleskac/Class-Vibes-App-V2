@@ -73,7 +73,7 @@ class _ViewClassState extends State<ViewClass> {
             child: ClassMeetings(),
           ),
           Container(
-            child: ClassAnnouncements(),
+            child: ClassAnnouncements(classId: 'test class app ui',),
           ),
           Container(
             child: ClassSettings(),
