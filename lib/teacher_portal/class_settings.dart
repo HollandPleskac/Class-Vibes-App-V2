@@ -157,7 +157,7 @@ class EditClassName extends StatelessWidget {
 }
 
 class IsAcceptingJoin extends StatefulWidget {
-  bool isSwitched;
+  final bool isSwitched;
   Function updateSwitch;
   IsAcceptingJoin(this.isSwitched, this.updateSwitch);
   @override
