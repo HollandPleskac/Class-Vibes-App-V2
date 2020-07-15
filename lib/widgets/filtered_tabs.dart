@@ -10,12 +10,14 @@ final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
 
 class AllTab extends StatelessWidget {
+  final String classId;
+  AllTab(this.classId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document('test class app ui')
+          .document(classId)
           .collection('Students')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -54,12 +56,14 @@ class AllTab extends StatelessWidget {
 }
 
 class DoingGreatTab extends StatelessWidget {
+  final String classId;
+  DoingGreatTab(this.classId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document('test class app ui')
+          .document(classId)
           .collection('Students')
           .where("status", isEqualTo: 'doing great')
           .where(
@@ -105,12 +109,14 @@ class DoingGreatTab extends StatelessWidget {
 }
 
 class NeedHelpTab extends StatelessWidget {
+  final String classId;
+  NeedHelpTab(this.classId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document('test class app ui')
+          .document(classId)
           .collection('Students')
           .where("status", isEqualTo: 'need help')
           .where(
@@ -156,12 +162,14 @@ class NeedHelpTab extends StatelessWidget {
 }
 
 class FrustratedTab extends StatelessWidget {
+  final String classId;
+  FrustratedTab(this.classId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document('test class app ui')
+          .document(classId)
           .collection('Students')
           .where("status", isEqualTo: 'frustrated')
           .where(
@@ -207,12 +215,14 @@ class FrustratedTab extends StatelessWidget {
 }
 
 class InactiveTab extends StatelessWidget {
+  final String classId;
+  InactiveTab(this.classId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document('test class app ui')
+          .document(classId)
           .collection('Students')
           .where(
             "date",
@@ -261,12 +271,16 @@ class Student extends StatelessWidget {
   final String status;
   final String profilePictureLink;
   final BuildContext context;
+  final String classId;
+  final String teacherEmail;
 
   Student({
     this.name,
     this.status,
     this.profilePictureLink,
     this.context,
+    this.classId,
+    this.teacherEmail,
   });
 
   final TextEditingController _titleController = TextEditingController();
@@ -432,9 +446,9 @@ class Student extends StatelessWidget {
                                       content: _contentController.text,
                                       dateAndTime: _dateAndTimeController.text,
                                       studentName: 'student name',
-                                      teacherUid: 'new1@gmail.com',
+                                      teacherUid: teacherEmail,
                                       className: 'AP Physics',
-                                      classId: 'test class app ui',
+                                      classId: classId,
                                       teacherName: 'teacher name',
                                     );
                                     Navigator.pop(context);
@@ -545,7 +559,7 @@ class Student extends StatelessWidget {
                 context,
                 ChatTeacher.routeName,
                 arguments: {
-                  'class id': 'test class app ui',
+                  'class id': classId,
                   'teacher name': 'Mr.Shea',
                   'student uid': 'new@gmail.com',
                   'student name': name

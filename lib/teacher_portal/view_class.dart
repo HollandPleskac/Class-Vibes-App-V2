@@ -84,6 +84,10 @@ class _ViewClassState extends State<ViewClass> {
   }
 }
 
+//filter btns - are the nav btns
+//filter tabs - are the content displayed if u click on a btn
+//located in widgets
+
 class StudentsTab extends StatefulWidget {
   @override
   _StudentsTabState createState() => _StudentsTabState();
@@ -99,7 +103,7 @@ class _StudentsTabState extends State<StudentsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DynamicPieChart(),
+        DynamicPieChart('test class app ui'),
         Container(
           height: 32.5,
           child: ListView(
@@ -180,15 +184,15 @@ class _StudentsTabState extends State<StudentsTab> {
         Container(
           height: 360,
           child: _isTouchedAll == true
-              ? AllTab()
+              ? AllTab('test class app ui')
               : _isTouchedDoingGreat
-                  ? DoingGreatTab()
+                  ? DoingGreatTab('test class app ui')
                   : _isTouchedNeedHelp
-                      ? NeedHelpTab()
+                      ? NeedHelpTab('test class app ui')
                       : _isTouchedFrustrated
-                          ? FrustratedTab()
+                          ? FrustratedTab('test class app ui')
                           : _isTouchedInactive
-                              ? InactiveTab()
+                              ? InactiveTab('test class app ui')
                               : Text(
                                   'IMPORTANT - this text will never show since one of the first values will always be true'),
         ),
@@ -198,12 +202,15 @@ class _StudentsTabState extends State<StudentsTab> {
 }
 
 class DynamicPieChart extends StatelessWidget {
+  final String classId;
+
+  DynamicPieChart(this.classId);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: _firestore
             .collection('Classes')
-            .document('test class app ui')
+            .document(classId)
             .collection('Students')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
