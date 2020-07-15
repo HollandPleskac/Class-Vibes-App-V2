@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
@@ -15,11 +16,22 @@ class AnnouncementsStudent extends StatefulWidget {
 class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
   List classIds = [];
   List announcements = [];
-  Future getAnnouncements() async {
+  String _email = '';
+
+  Future getTeacherEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String uid = prefs.getString('email');
+
+    _email = uid;
+    print(_email);
+  }
+
+  Future getAnnouncements(String email) async {
     //change this setup to be double streambuilder ??
     List<DocumentSnapshot> classDocuments = await _firestore
         .collection('UserData')
-        .document('new@gmail.com')
+        .document(email)
         .collection('Classes')
         .getDocuments()
         .then((querySnap) => querySnap.documents);
@@ -48,10 +60,13 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
 
   @override
   void initState() {
-    getAnnouncements().then((_) {
-      setState(() {});
-      print(announcements);
+    getTeacherEmail().then((_) {
+      getAnnouncements(_email).then((_) {
+        setState(() {});
+        print(announcements);
+      });
     });
+
     super.initState();
   }
 
