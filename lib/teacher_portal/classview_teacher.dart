@@ -111,7 +111,9 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                 List result = await _fire.addClass(
                                     className: _classNameController.text,
                                     uid: email);
+                                print('RESULT : ' + result.toString());
                                 if (result[0] != 'success') {
+                                  Navigator.pop(context);
                                   final snackBar = SnackBar(
                                     content: Text(result[1]),
                                     action: SnackBarAction(
@@ -125,9 +127,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
                                   _scaffoldKey.currentState
                                       .showSnackBar(snackBar);
+                                } else {
+                                  _classNameController.text = '';
+                                  Navigator.pop(context);
                                 }
-                                _classNameController.text = '';
-                                Navigator.pop(context);
                               }
                             },
                             shape: RoundedRectangleBorder(

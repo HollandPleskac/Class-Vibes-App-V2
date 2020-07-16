@@ -225,36 +225,21 @@ class Fire {
   }
 
   Future<List> addClass({String uid, String className}) async {
-    int count = 0;
-    Future<List> generateCode() async {
-      String classCode = randomAlphaNumeric(6);
-      // String classCode = '5gUxwD';
-      int isCodeUnique = await _firestore
-          .collection("Classes")
-          .where("class code", isEqualTo: classCode)
-          .getDocuments()
-          .then((querySnapshot) => querySnapshot.documents.length);
-      if (count > 10) {
-        print('failed');
-        return ['failed', ''];
-      }
-      if (isCodeUnique != null || isCodeUnique != 0) {
-        count++;
-        generateCode();
-      } else {
-        return ['success', classCode];
-      }
+    String classCode = randomAlphaNumeric(6);
+    // String classCode = '5gUxwD';
+
+    int isCodeUnique = await _firestore
+        .collection("Classes")
+        .where("class code", isEqualTo: classCode)
+        .getDocuments()
+        .then((querySnapshot) => querySnapshot.documents.length);
+
+    if (isCodeUnique != null || isCodeUnique != 0) {
+      return ['failure', 'An error occurred try again'];
     }
 
-    List uniqueClassCode = await generateCode();
-    print('unique class code ' + uniqueClassCode[1]);
-
-    if (uniqueClassCode[0] != 'success') {
-      return ['failed', 'Generating the class failed try again'];
-    }
-
-    _firestore.collection('Classes').document(uniqueClassCode[1]).setData({
-      'class code': uniqueClassCode,
+    _firestore.collection('Classes').document(classCode).setData({
+      'class code': classCode,
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
@@ -264,13 +249,13 @@ class Fire {
         .collection('UserData')
         .document(uid)
         .collection('Classes')
-        .document(uniqueClassCode[1])
+        .document(classCode)
         .setData({
-      'class code': uniqueClassCode,
+      'class code': classCode,
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
     });
-    return ['success', ''];
+    return ['success', classCode];
   }
 }
