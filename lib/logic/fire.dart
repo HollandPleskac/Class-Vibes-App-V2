@@ -234,7 +234,7 @@ class Fire {
         .getDocuments()
         .then((querySnapshot) => querySnapshot.documents.length);
 
-    if (isCodeUnique != null || isCodeUnique != 0) {
+    if (isCodeUnique != 0) {
       return ['failure', 'An error occurred try again'];
     }
 
