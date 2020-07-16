@@ -49,33 +49,6 @@ class Fire {
     });
   }
 
-  Future<String> generateNewClassCode(String uid, String classId) async {
-    String newCode = randomAlphaNumeric(6);
-    // String newCode = '8RDS1y';
-    int isCodeUnique = await _firestore
-        .collection("Classes")
-        .where("class code", isEqualTo: newCode)
-        .getDocuments()
-        .then((querySnapshot) => querySnapshot.documents.length);
-
-    if (isCodeUnique != 0) {
-      // code not unique
-      return 'retry';
-    }
-    _firestore.collection("Classes").document(classId).updateData({
-      "class code": newCode,
-    });
-    _firestore
-        .collection("UserData")
-        .document(uid)
-        .collection("Classes")
-        .document(classId)
-        .updateData({
-      "class code": newCode,
-    });
-    return 'success';
-  }
-
   // student dashboard
   void updateStudentMood({String uid, String classId, String newMood}) {
     _firestore
@@ -253,33 +226,30 @@ class Fire {
 
   void addClass({String uid, String className}) async {
     int count = 0;
-    Future<String> generateCode() async {
-      // String classCode = randomAlphaNumeric(6);
-      String classCode = '5gUxwD';
+    Future<List> generateCode() async {
+      String classCode = randomAlphaNumeric(6);
+      // String classCode = '5gUxwD';
       int isCodeUnique = await _firestore
           .collection("Classes")
           .where("class code", isEqualTo: classCode)
           .getDocuments()
           .then((querySnapshot) => querySnapshot.documents.length);
-      print(isCodeUnique);
       if (count > 10) {
         print('failed');
-        return '';
+        return ['failed',''];
       }
       if (isCodeUnique != null || isCodeUnique != 0) {
         count++;
-        print('generateing code again');
         generateCode();
       } else {
-        print('returning ' + classCode);
-        return classCode;
+        return ['success',classCode];
       }
     }
 
-    String uniqueClassCode = await generateCode();
-    print('unique class code ' + uniqueClassCode);
+    List uniqueClassCode = await generateCode();
+    print('unique class code ' + uniqueClassCode[1]);
 
-    _firestore.collection('Classes').document(uniqueClassCode).setData({
+    _firestore.collection('Classes').document(uniqueClassCode[1]).setData({
       'class code': uniqueClassCode,
       'class name': className,
       'allow join': true,
@@ -290,7 +260,7 @@ class Fire {
         .collection('UserData')
         .document(uid)
         .collection('Classes')
-        .document(uniqueClassCode)
+        .document(uniqueClassCode[1])
         .setData({
       'class code': uniqueClassCode,
       'class name': className,
