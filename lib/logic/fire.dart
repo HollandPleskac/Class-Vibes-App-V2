@@ -222,6 +222,18 @@ class Fire {
         'name': studentName,
         'status': 'doing great',
       });
+
+      _firestore
+          .collection('UserData')
+          .document(studentEmail)
+          .collection('Classes')
+          .document(classCode)
+          .setData({
+            'date': DateTime.now(),
+        'email': studentEmail,
+        'name': studentName,
+        'status': 'doing great',
+          });
       return 'You have joined the class!';
     }
     return 'That code does not exist.';
