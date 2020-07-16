@@ -262,8 +262,43 @@ class Fire {
     return ['success', classCode];
   }
 
-  void deleteClass({String classId, String teacherEmail}) {
-    print('deleting class');
-    //query all the students then delete the class from the students tree
+  void deleteClass({String classId, String teacherEmail}) async {
+    //delete class from Classes
+
+    _firestore.collection('Classes').document(classId).delete();
+
+    // delete class from Teachers
+
+    _firestore
+        .collection('UserData')
+        .document(teacherEmail)
+        .collection('Classes')
+        .document(classId)
+        .delete();
+
+    //delete class from Students
+    //important : must be List<DocumentSnapshot> in order to do for each
+
+    List<DocumentSnapshot> studentDocuments = await _firestore
+        .collection('UserData')
+        .document(teacherEmail)
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .getDocuments()
+        .then((querySnap) => querySnap.documents);
+    print(studentDocuments);
+
+    for (var i = 0; i < studentDocuments.length; i++) {
+      studentDocuments.forEach((DocumentSnapshot document) {
+        //document.documentID is a student email
+        _firestore
+            .collection('UserData')
+            .document(document.documentID)
+            .collection('Classes')
+            .document(classId)
+            .delete();
+      });
+    }
   }
 }

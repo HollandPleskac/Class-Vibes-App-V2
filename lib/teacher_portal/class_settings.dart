@@ -84,7 +84,7 @@ class _ClassSettingsState extends State<ClassSettings> {
           SizedBox(
             height: 50,
           ),
-          ClassCode(),
+          ClassCode(widget.classId),
           SizedBox(
             height: 25,
           ),
@@ -93,7 +93,10 @@ class _ClassSettingsState extends State<ClassSettings> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DeleteClass(),
+              DeleteClass(
+                classId: widget.classId,
+                teacherEmail: widget.email,
+              ),
             ],
           ),
           SizedBox(
@@ -222,6 +225,10 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
 }
 
 class DeleteClass extends StatefulWidget {
+  final String classId;
+  final String teacherEmail;
+
+  DeleteClass({this.classId, this.teacherEmail});
   @override
   _DeleteClassState createState() => _DeleteClassState();
 }
@@ -238,7 +245,8 @@ class _DeleteClassState extends State<DeleteClass> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
         onPressed: () {
-          print('deleting class');
+          _fire.deleteClass(
+              classId: widget.classId, teacherEmail: widget.teacherEmail);
         },
       ),
     );
@@ -310,6 +318,9 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
 }
 
 class ClassCode extends StatefulWidget {
+  String classId;
+
+  ClassCode(this.classId);
   @override
   _ClassCodeState createState() => _ClassCodeState();
 }
@@ -333,7 +344,7 @@ class _ClassCodeState extends State<ClassCode> {
         StreamBuilder(
             stream: _firestore
                 .collection('Classes')
-                .document('test class app ui')
+                .document(widget.classId)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
