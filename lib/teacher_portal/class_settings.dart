@@ -375,40 +375,89 @@ class _ClassCodeState extends State<ClassCode> {
                 .document(widget.classId)
                 .snapshots(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                String code = snapshot.data['class code'];
-                List codeLetters = code.split("");
-
-                return Row(
-                  children: codeLetters.map((letter) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            letter,
-                            style: TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Container(
-                            color: kPrimaryColor,
-                            height: 2,
-                            width: 25,
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                );
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
               }
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(
+                    child: Container(),
+                  );
+
+                default:
+                  try {
+                    String code = snapshot.data['class code'];
+                    List codeLetters = code.split("");
+                    if (snapshot.data != null) {
+                      return Row(
+                        children: codeLetters.map((letter) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  letter,
+                                  style: TextStyle(
+                                      color: kPrimaryColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 6,
+                                ),
+                                Container(
+                                  color: kPrimaryColor,
+                                  height: 2,
+                                  width: 25,
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    } else {
+                      return Center(
+                        child: Text('no data'),
+                      );
+                    }
+                  } catch (error) {
+                    return Padding(
+                      padding: EdgeInsets.only(right:20),
+                      // child: Text('Error class code does not exist',style: TextStyle(color: Colors.red,fontSize: 16),),
+                      // class code always exists - used when deleteing class is called and streambuilder cant do anything
+                      child: Container(),
+                    );
+                  }
+              }
+
+              // return Row(
+              //   children: codeLetters.map((letter) {
+              //     return Padding(
+              //       padding: const EdgeInsets.only(right: 15),
+              //       child: Column(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Text(
+              //             letter,
+              //             style: TextStyle(
+              //                 color: kPrimaryColor,
+              //                 fontSize: 16,
+              //                 fontWeight: FontWeight.bold),
+              //           ),
+              //           SizedBox(
+              //             height: 6,
+              //           ),
+              //           Container(
+              //             color: kPrimaryColor,
+              //             height: 2,
+              //             width: 25,
+              //           ),
+              //         ],
+              //       ),
+              //     );
+              //   }).toList(),
+              // );
             }),
       ],
     );
