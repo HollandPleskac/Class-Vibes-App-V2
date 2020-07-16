@@ -11,14 +11,13 @@ final Firestore _firestore = Firestore.instance;
 class ChatStudent extends StatefulWidget {
   static const routeName = 'student-chat';
   final String email;
-  ChatStudent({this.email});
+  final String classId;
+  ChatStudent({this.email,this.classId,});
   @override
   _ChatStudentState createState() => _ChatStudentState();
 }
 
 class _ChatStudentState extends State<ChatStudent> {
-
-
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -66,11 +65,7 @@ class _ChatStudentState extends State<ChatStudent> {
         });
   }
 
-  var classId = 'test class app ui';
   var studentName = 'Kushagra';
-  
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,42 +76,90 @@ class _ChatStudentState extends State<ChatStudent> {
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height * 0.76,
-              child: StreamBuilder(
-                  stream: _firestore
-                      .collection("Classes")
-                      .document(classId)
-                      .collection('Students')
-                      .document(widget.email)
-                      .collection("Chats")
-                      .orderBy("date", descending: true)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    //FIX THIS
-                    if (!snapshot.hasData)
-                      return Center(
-                        child: Text('No Chat History'),
-                      );
+              // child: StreamBuilder(
+              //     stream: _firestore
+              //         .collection("Classes")
+              //         .document(classId)
+              //         .collection('Students')
+              //         .document(widget.email)
+              //         .collection("Chats")
+              //         .orderBy("date", descending: true)
+              //         .snapshots(),
+              //     builder: (BuildContext context,
+              //         AsyncSnapshot<QuerySnapshot> snapshot) {
+              //       //FIX THIS
+              //       if (!snapshot.hasData)
+              //         return Center(
+              //           child: Text('No Chat History'),
+              //         );
 
-                    return Center(
-                      child: ListView(
-                        reverse: true,
-                        children: snapshot.data.documents.map(
-                          (DocumentSnapshot document) {
-                            return document['sent type'] == 'teacher'
-                                ? RecievedChat(
-                                    title: document['title'],
-                                    content: document['content'],
-                                  )
-                                : SentChat(
-                                    title: document['title'],
-                                    content: document['content'],
-                                  );
-                          },
-                        ).toList(),
-                      ),
-                    );
-                  }),
+              //       return Center(
+              //         child: ListView(
+              //           reverse: true,
+              //           children: snapshot.data.documents.map(
+              //             (DocumentSnapshot document) {
+              //               return document['sent type'] == 'teacher'
+              //                   ? RecievedChat(
+              //                       title: document['title'],
+              //                       content: document['content'],
+              //                     )
+              //                   : SentChat(
+              //                       title: document['title'],
+              //                       content: document['content'],
+              //                     );
+              //             },
+              //           ).toList(),
+              //         ),
+              //       );
+              //     }),
+              child: StreamBuilder(
+                stream: _firestore
+                    .collection("Classes")
+                    .document(widget.classId)
+                    .collection('Students')
+                    .document(widget.email)
+                    .collection("Chats")
+                    .orderBy("date", descending: true)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return Center(
+                        child: Container(),
+                      );
+                    default:
+                      if (snapshot.data != null &&
+                          snapshot.data.documents.isEmpty == false) {
+                        return Center(
+                          child: ListView(
+                            reverse: true,
+                            children: snapshot.data.documents.map(
+                              (DocumentSnapshot document) {
+                                return document['sent type'] == 'teacher'
+                                    ? RecievedChat(
+                                        title: document['title'],
+                                        content: document['content'],
+                                      )
+                                    : SentChat(
+                                        title: document['title'],
+                                        content: document['content'],
+                                      );
+                              },
+                            ).toList(),
+                          ),
+                        );
+                      } else {
+                        return Center(
+                          child: Text('no chat history'),
+                        );
+                      }
+                  }
+                },
+              ),
             ),
             Center(
               child: Column(
@@ -139,13 +182,13 @@ class _ChatStudentState extends State<ChatStudent> {
                                   ),
                                   onPressed: () async {
                                     print('pressed the button');
-                                    print('class id ' + classId.toString());
-                                    print(
-                                        'student uid ' + widget.email.toString());
+                                    print('class id ' + widget.classId.toString());
+                                    print('student uid ' +
+                                        widget.email.toString());
 
                                     await _firestore
                                         .collection('Classes')
-                                        .document(classId)
+                                        .document(widget.classId)
                                         .collection('Students')
                                         .document(widget.email)
                                         .collection("Chats")
@@ -160,12 +203,6 @@ class _ChatStudentState extends State<ChatStudent> {
                                   }),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                // child: Center(
-                                //   child: Text(
-                                //     'Hello Mr. Shea I need help with math',
-                                //     style: TextStyle(color: Colors.black),
-                                //   ),
-                                // ),
                                 child: Center(
                                   child: Container(
                                     width:

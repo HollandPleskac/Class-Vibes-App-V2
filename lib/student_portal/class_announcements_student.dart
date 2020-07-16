@@ -15,38 +15,7 @@ class ClassAnnouncementsStudent extends StatelessWidget {
   ClassAnnouncementsStudent({this.classId});
   @override
   Widget build(BuildContext context) {
-    // return StreamBuilder(
-    //   stream: _firestore
-    //       .collection("Classes")
-    //       .document(classId)
-    //       .collection('Announcements')
-    //       .orderBy("timestamp", descending: true)
-    //       .snapshots(),
-    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    //     //FIX THIS
-    //     if (!snapshot.hasData)
-    //       return Center(
-    //         child: Text('No Announcements'),
-    //       );
-
-    //     return Center(
-    //       child: ListView(
-    //         children: snapshot.data.documents.map(
-    //           (DocumentSnapshot document) {
-    //             return Padding(
-    //               padding:
-    //                   EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 20),
-    //               child: Announcement(
-    //                 document['content'],
-    //                 DateTime.parse(document['timestamp'].toDate().toString()),
-    //               ),
-    //             );
-    //           },
-    //         ).toList(),
-    //       ),
-    //     );
-    //   },
-    // );
+    
     return StreamBuilder(
       stream: _firestore
           .collection("Classes")

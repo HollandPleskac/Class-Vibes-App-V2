@@ -81,6 +81,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
           Container(
             child: ChatStudent(
               email: _email,
+              classId: classId,
             ),
           ),
         ]),
