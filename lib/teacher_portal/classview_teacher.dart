@@ -105,10 +105,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           ),
                           child: FlatButton(
                             color: kPrimaryColor,
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 print('validated');
-                                _fire.addClass(
+                                List result = await _fire.addClass(
                                   className: _classNameController.text,
                                   uid: email
                                 );

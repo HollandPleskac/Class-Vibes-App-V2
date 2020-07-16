@@ -87,7 +87,6 @@ class _ClassSettingsState extends State<ClassSettings> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
               DeleteClass(),
             ],
           ),
@@ -177,14 +176,17 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
           ),
         ),
         Spacer(),
-        widget.isSwitched == null ? CircularProgressIndicator() : CupertinoSwitch(
-          value: widget.isSwitched,
-          onChanged: (value) {
-            widget.updateSwitch();
-            _fire.updateAllowJoin('new1@gmail.com', 'test class app ui', value);
-          },
-          activeColor: kPrimaryColor,
-        ),
+        widget.isSwitched == null
+            ? CircularProgressIndicator()
+            : CupertinoSwitch(
+                value: widget.isSwitched,
+                onChanged: (value) {
+                  widget.updateSwitch();
+                  _fire.updateAllowJoin(
+                      'new1@gmail.com', 'test class app ui', value);
+                },
+                activeColor: kPrimaryColor,
+              ),
         SizedBox(
           width: 20,
         ),
@@ -216,7 +218,6 @@ class _DeleteClassState extends State<DeleteClass> {
     );
   }
 }
-
 
 class InactiveDaysPicker extends StatefulWidget {
   int maxDaysInactive;
