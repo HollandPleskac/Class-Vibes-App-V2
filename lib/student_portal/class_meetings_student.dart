@@ -63,42 +63,7 @@ class ClassMeetingsStudent extends StatelessWidget {
           }
         },
       ),
-      // child: StreamBuilder(
-      //   stream: _firestore
-      //       .collection("Classes")
-      //       .document(classId)
-      //       .collection('Meetings')
-      //       .orderBy("timestamp")
-      //       .snapshots(),
-      //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      //     if (!snapshot.hasData)
-      //       return Center(
-      //         child: Container(),
-      //       );
-
-      //     return Center(
-      //       child: ListView(
-      //         children: snapshot.data.documents.map(
-      //           (DocumentSnapshot document) {
-      //             return Padding(
-      //               padding: EdgeInsets.only(
-      //                   top: 20, left: 40, right: 40, bottom: 20),
-      //               child: Meeting(
-      //                 className: document['class name'],
-      //                 dateAndTime: document['date and time'],
-      //                 length: document['time'],
-      //                 message: document['content'],
-      //                 studentName: document['student name'],
-      //                 title: document['title'],
-      //                 teacherName: document['teacher name'],
-      //               ),
-      //             );
-      //           },
-      //         ).toList(),
-      //       ),
-      //     );
-      //   },
-      // ),
+      
     );
   }
 }
