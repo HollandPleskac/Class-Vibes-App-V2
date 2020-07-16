@@ -21,8 +21,9 @@ class ClassViewTeacher extends StatefulWidget {
 }
 
 class _ClassViewTeacherState extends State<ClassViewTeacher> {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController _classNameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _classNameController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _showModalSheetEditUserName(String email) {
     showModalBottomSheet(
@@ -88,8 +89,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                   return 'Class name cannot be blank';
                                 } else if (value.length > 16) {
                                   return 'Class name cannot be greater than 16 characters';
-                                }
-                                else {
+                                } else {
                                   return null;
                                 }
                               },
@@ -109,9 +109,23 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               if (_formKey.currentState.validate()) {
                                 print('validated');
                                 List result = await _fire.addClass(
-                                  className: _classNameController.text,
-                                  uid: email
-                                );
+                                    className: _classNameController.text,
+                                    uid: email);
+                                if (result[0] != 'success') {
+                                  final snackBar = SnackBar(
+                                    content: Text(result[1]),
+                                    action: SnackBarAction(
+                                      label: 'Hide',
+                                      onPressed: () {
+                                        _scaffoldKey.currentState
+                                            .hideCurrentSnackBar();
+                                      },
+                                    ),
+                                  );
+
+                                  _scaffoldKey.currentState
+                                      .showSnackBar(snackBar);
+                                }
                                 _classNameController.text = '';
                                 Navigator.pop(context);
                               }
@@ -159,6 +173,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       drawer: NavTeacher(),
       // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
       appBar: AppBar(
