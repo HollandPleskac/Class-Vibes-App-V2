@@ -60,9 +60,14 @@ class _ViewClassState extends State<ViewClass> {
               if (!snapshot.hasData) {
                 return Text('');
               } else {
-                return Text(
-                  snapshot.data['class name'],
-                );
+                try {
+                  return Text(
+                    snapshot.data['class name'],
+                  );
+                } catch (error) {
+                  //this check for classid is used to prevent a red error from occurring when deleting a class
+                  return Container();
+                }
               }
             },
           ),
