@@ -66,53 +66,71 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
           ),
         ],
       ),
-      // body: Container(
-      //   height: MediaQuery.of(context).size.height,
-      //   width: MediaQuery.of(context).size.width,
-      //   child: GridView.count(
-      //     primary: false,
-      //     padding: const EdgeInsets.all(30),
-      //     crossAxisSpacing: 15,
-      //     mainAxisSpacing: 10,
-      //     crossAxisCount: 2,
-      //     children: <Widget>[
-
-      //     ],
-      //   ),
-      // ),
       body: StreamBuilder(
-          stream: _firestore
-              .collection('UserData')
-              .document(_email)
-              .collection('Classes')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            print('SNAP : ' + snapshot.data.toString());
-            if (!snapshot.hasData) {
+        stream: _firestore
+            .collection('UserData')
+            .document(_email)
+            .collection('Classes')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
               return Center(
                 child: Container(),
               );
-            }
+            default:
+              if (snapshot.data != null &&
+                  snapshot.data.documents.isEmpty == false) {
+                return ListView(
+                  physics: BouncingScrollPhysics(),
+                  children:
+                      snapshot.data.documents.map((DocumentSnapshot document) {
+                    return StudentClass(
+                      className: document['class name'],
+                      classId: document.documentID,
+                      email: _email,
+                    );
+                  }).toList(),
+                );
+              } else {
+                return Center(
+                  child: Text('no classes'),
+                );
+              }
+          }
+        },
+      ),
+      // body: StreamBuilder(
+      //     stream: _firestore
+      //         .collection('UserData')
+      //         .document(_email)
+      //         .collection('Classes')
+      //         .snapshots(),
+      //     builder:
+      //         (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      //       print('SNAP : ' + snapshot.data.toString());
+      //       if (!snapshot.hasData) {
+      //         return Center(
+      //           child: Container(),
+      //         );
+      //       }
 
-            return Center(
-              child: ListView(
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
-                  return StudentClass(
-                    className: document['class name'],
-                    classId: document.documentID,
-                    email: _email,
-                  );
-                }).toList(),
-              ),
-            );
-          }),
-      // body: Column(
-      //   children: classes.map((DocumentSnapshot document) {
-      //     return Text(document['class name'].toString());
-      //   }).toList(),
-      // ),
+      //       return Center(
+      //         child: ListView(
+      //           children:
+      //               snapshot.data.documents.map((DocumentSnapshot document) {
+      //             return StudentClass(
+      //               className: document['class name'],
+      //               classId: document.documentID,
+      //               email: _email,
+      //             );
+      //           }).toList(),
+      //         ),
+      //       );
+      //     }),
     );
   }
 }

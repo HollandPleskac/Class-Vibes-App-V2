@@ -89,20 +89,25 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
       //       .toList(),
       // ),
       body: Center(
-        child: ListView(
-          children: announcements.map(
-            (announcement) {
-              return Padding(
-                padding:
-                    EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 20),
-                child: Announcement(
-                  announcement['content'],
-                  DateTime.parse(announcement['timestamp'].toDate().toString()),
-                ),
-              );
-            },
-          ).toList(),
-        ),
+        child: announcements == []
+            ? ListView(
+                children: announcements.map(
+                  (announcement) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          top: 20, left: 40, right: 40, bottom: 20),
+                      child: Announcement(
+                        announcement['content'],
+                        DateTime.parse(
+                            announcement['timestamp'].toDate().toString()),
+                      ),
+                    );
+                  },
+                ).toList(),
+              )
+            : Center(
+                child: Text('no announcements'),
+              ),
       ),
     );
   }
