@@ -251,12 +251,36 @@ class Fire {
     return 'That code does not exist.';
   }
 
-  void addClass({String uid, String className}) {
+  void addClass({String uid, String className}) async {
+    int count = 0;
+    Future<String> generateCode() async {
+      // String classCode = randomAlphaNumeric(6);
+      String classCode = '5gUxwD';
+      int isCodeUnique = await _firestore
+          .collection("Classes")
+          .where("class code", isEqualTo: classCode)
+          .getDocuments()
+          .then((querySnapshot) => querySnapshot.documents.length);
+      print(isCodeUnique);
+      if (count > 10) {
+        print('failed');
+        return '';
+      }
+      if (isCodeUnique != null || isCodeUnique != 0) {
+        count++;
+        print('generateing code again');
+        generateCode();
+      } else {
+        print('returning ' + classCode);
+        return classCode;
+      }
+    }
 
-    String classCode = randomAlphaNumeric(6);
+    String uniqueClassCode = await generateCode();
+    print('unique class code ' + uniqueClassCode);
 
-    _firestore.collection('Classes').document(classCode).setData({
-      'class code':classCode,
+    _firestore.collection('Classes').document(uniqueClassCode).setData({
+      'class code': uniqueClassCode,
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
@@ -266,9 +290,9 @@ class Fire {
         .collection('UserData')
         .document(uid)
         .collection('Classes')
-        .document(classCode)
+        .document(uniqueClassCode)
         .setData({
-          'class code':classCode,
+      'class code': uniqueClassCode,
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
