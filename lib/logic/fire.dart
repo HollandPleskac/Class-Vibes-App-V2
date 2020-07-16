@@ -98,6 +98,7 @@ class Fire {
       'student name': studentName,
       'timestamp': DateTime.now(),
       'teacher name': teacherName,
+      'class id': classId,
     });
     _firestore
         .collection('UserData')
@@ -113,6 +114,7 @@ class Fire {
       'student name': studentName,
       'timestamp': DateTime.now(),
       'teacher name': teacherName,
+      'class id': classId,
     });
     _firestore
         .collection('UserData')
@@ -128,6 +130,7 @@ class Fire {
       'date and time': dateAndTime,
       'timestamp': DateTime.now(),
       'teacher name': teacherName,
+      'class id': classId,
     });
   }
 
