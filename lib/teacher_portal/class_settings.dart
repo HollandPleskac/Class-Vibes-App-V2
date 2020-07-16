@@ -106,14 +106,6 @@ class _ClassSettingsState extends State<ClassSettings> {
               DeleteClass(
                 classId: widget.classId,
                 teacherEmail: widget.email,
-                changeProperties: () {
-                  setState(() {
-                    isSwitched = false;
-                    maxDaysInactive = 3;
-                    widget.email = '';
-                    widget.classId = '';
-                  });
-                },
               ),
             ],
           ),
@@ -251,9 +243,8 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
 class DeleteClass extends StatefulWidget {
   final String classId;
   final String teacherEmail;
-  final Function changeProperties;
 
-  DeleteClass({this.classId, this.teacherEmail, this.changeProperties});
+  DeleteClass({this.classId, this.teacherEmail});
   @override
   _DeleteClassState createState() => _DeleteClassState();
 }
@@ -270,10 +261,9 @@ class _DeleteClassState extends State<DeleteClass> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
         onPressed: () {
-          widget.changeProperties();
           _fire.deleteClass(
               classId: widget.classId, teacherEmail: widget.teacherEmail);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => ClassViewTeacher(),
