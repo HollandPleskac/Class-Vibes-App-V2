@@ -198,108 +198,226 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: StreamBuilder(
-            stream: _firestore
-                .collection('UserData')
-                .document(_email)
-                .collection('Classes')
-                .snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
+          stream: _firestore
+              .collection('UserData')
+              .document(_email)
+              .collection('Classes')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
                 return Center(
                   child: Container(),
                 );
-              }
-
-              return Center(
-                child: GridView.count(
-                  physics: BouncingScrollPhysics(),
-                  primary: false,
-                  padding: const EdgeInsets.all(40),
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: 2,
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          ViewClass.routeName,
-                          arguments: {
-                            'class name': document['class name'],
-                            'class id': document.documentID,
+              default:
+                if (snapshot.data != null &&
+                    snapshot.data.documents.isEmpty == false) {
+                  return Center(
+                    child: GridView.count(
+                      physics: BouncingScrollPhysics(),
+                      primary: false,
+                      padding: const EdgeInsets.all(40),
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 10,
+                      crossAxisCount: 2,
+                      children: snapshot.data.documents
+                          .map((DocumentSnapshot document) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              ViewClass.routeName,
+                              arguments: {
+                                'class name': document['class name'],
+                                'class id': document.documentID,
+                              },
+                            );
                           },
-                        );
-                      },
-                      child: Stack(
-                        children: [
-                          Container(
-                            // color: Colors.red,
-                            width: double.infinity,
-                            child: Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Card(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
+                          child: Stack(
+                            children: [
+                              Container(
+                                // color: Colors.red,
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Card(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        DynamicPieChart(),
+                                        Padding(
+                                          padding: EdgeInsets.only(bottom: 25),
+                                          child: Text(
+                                            document['class name'],
+                                            style: kSubTextStyle.copyWith(
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    DynamicPieChart(),
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 25),
-                                      child: Text(
-                                        document['class name'],
-                                        style: kSubTextStyle.copyWith(
-                                            fontSize: 16),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(14),
                                       ),
                                     ),
-                                  ],
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(14),
                                   ),
                                 ),
                               ),
-                            ),
+                              // Positioned(
+                              //   top: 0,
+                              //   right: 0,
+                              //   child: GestureDetector(
+                              //     onTap: () => Navigator.pushNamed(
+                              //       context,
+                              //       ClassSettings.routeName,
+                              //       arguments: {
+                              //         'class name': document['class name']
+                              //       },
+                              //     ),
+                              //     child: Container(
+                              //       height: 38,
+                              //       width: 38,
+                              //       decoration: BoxDecoration(
+                              //         shape: BoxShape.circle,
+                              //         color: kPrimaryColor,
+                              //       ),
+                              //       child: Center(
+                              //         child: FaIcon(
+                              //           FontAwesomeIcons.cog,
+                              //           color: Colors.white,
+                              //           size: 20,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
-                          // Positioned(
-                          //   top: 0,
-                          //   right: 0,
-                          //   child: GestureDetector(
-                          //     onTap: () => Navigator.pushNamed(
-                          //       context,
-                          //       ClassSettings.routeName,
-                          //       arguments: {
-                          //         'class name': document['class name']
-                          //       },
-                          //     ),
-                          //     child: Container(
-                          //       height: 38,
-                          //       width: 38,
-                          //       decoration: BoxDecoration(
-                          //         shape: BoxShape.circle,
-                          //         color: kPrimaryColor,
-                          //       ),
-                          //       child: Center(
-                          //         child: FaIcon(
-                          //           FontAwesomeIcons.cog,
-                          //           color: Colors.white,
-                          //           size: 20,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-              );
-            }),
+                        );
+                      }).toList(),
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Text('no classes'),
+                  );
+                }
+            }
+          },
+        ),
+
+        //old streambuilder
+        // child: StreamBuilder(
+        //     stream: _firestore
+        //         .collection('UserData')
+        //         .document(_email)
+        //         .collection('Classes')
+        //         .snapshots(),
+        //     builder:
+        //         (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        //       if (!snapshot.hasData) {
+        //         return Center(
+        //           child: Container(),
+        //         );
+        //       }
+
+        //       return Center(
+        //         child: GridView.count(
+        //           physics: BouncingScrollPhysics(),
+        //           primary: false,
+        //           padding: const EdgeInsets.all(40),
+        //           crossAxisSpacing: 15,
+        //           mainAxisSpacing: 10,
+        //           crossAxisCount: 2,
+        //           children:
+        //               snapshot.data.documents.map((DocumentSnapshot document) {
+        //             return GestureDetector(
+        //               onTap: () {
+        //                 Navigator.pushNamed(
+        //                   context,
+        //                   ViewClass.routeName,
+        //                   arguments: {
+        //                     'class name': document['class name'],
+        //                     'class id': document.documentID,
+        //                   },
+        //                 );
+        //               },
+        //               child: Stack(
+        //                 children: [
+        //                   Container(
+        //                     // color: Colors.red,
+        //                     width: double.infinity,
+        //                     child: Padding(
+        //                       padding: EdgeInsets.all(8),
+        //                       child: Card(
+        //                         child: Column(
+        //                           mainAxisAlignment: MainAxisAlignment.center,
+        //                           children: [
+        //                             SizedBox(
+        //                               height: 10,
+        //                             ),
+        //                             DynamicPieChart(),
+        //                             Padding(
+        //                               padding: EdgeInsets.only(bottom: 25),
+        //                               child: Text(
+        //                                 document['class name'],
+        //                                 style: kSubTextStyle.copyWith(
+        //                                     fontSize: 16),
+        //                               ),
+        //                             ),
+        //                           ],
+        //                         ),
+        //                         shape: RoundedRectangleBorder(
+        //                           borderRadius: BorderRadius.all(
+        //                             Radius.circular(14),
+        //                           ),
+        //                         ),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                   // Positioned(
+        //                   //   top: 0,
+        //                   //   right: 0,
+        //                   //   child: GestureDetector(
+        //                   //     onTap: () => Navigator.pushNamed(
+        //                   //       context,
+        //                   //       ClassSettings.routeName,
+        //                   //       arguments: {
+        //                   //         'class name': document['class name']
+        //                   //       },
+        //                   //     ),
+        //                   //     child: Container(
+        //                   //       height: 38,
+        //                   //       width: 38,
+        //                   //       decoration: BoxDecoration(
+        //                   //         shape: BoxShape.circle,
+        //                   //         color: kPrimaryColor,
+        //                   //       ),
+        //                   //       child: Center(
+        //                   //         child: FaIcon(
+        //                   //           FontAwesomeIcons.cog,
+        //                   //           color: Colors.white,
+        //                   //           size: 20,
+        //                   //         ),
+        //                   //       ),
+        //                   //     ),
+        //                   //   ),
+        //                   // ),
+        //                 ],
+        //               ),
+        //             );
+        //           }).toList(),
+        //         ),
+        //       );
+        //     }),
       ),
     );
   }
