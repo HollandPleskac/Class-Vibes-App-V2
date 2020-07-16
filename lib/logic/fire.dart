@@ -212,7 +212,11 @@ class Fire {
     });
   }
 
-  Future<String> joinClass(String classCode, String studentEmail,String studentName,) async {
+  Future<String> joinClass(
+    String classCode,
+    String studentEmail,
+    String studentName,
+  ) async {
     bool isClassCode = await _firestore
         .collection('Classes')
         .where('class code', isEqualTo: classCode)
@@ -220,7 +224,9 @@ class Fire {
         .then((querySnap) => querySnap.documents.isNotEmpty);
 
     bool isAlreadyInClass = await _firestore
-        .collection('UserData').document(studentEmail).collection('Classes')
+        .collection('UserData')
+        .document(studentEmail)
+        .collection('Classes')
         .where('class code', isEqualTo: classCode)
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
@@ -229,7 +235,12 @@ class Fire {
     }
     if (isClassCode == true) {
       //put the student in that class
-      _firestore.collection('Classes').document(classCode).collection('Students').document(studentEmail).setData({
+      _firestore
+          .collection('Classes')
+          .document(classCode)
+          .collection('Students')
+          .document(studentEmail)
+          .setData({
         'date': DateTime.now(),
         'email': studentEmail,
         'name': studentName,
@@ -238,5 +249,29 @@ class Fire {
       return 'You have joined the class!';
     }
     return 'That code does not exist.';
+  }
+
+  void addClass({String uid, String className}) {
+
+    String classCode = randomAlphaNumeric(6);
+
+    _firestore.collection('Classes').document(classCode).setData({
+      'class code':classCode,
+      'class name': className,
+      'allow join': true,
+      'max days inactive': 7,
+    });
+
+    _firestore
+        .collection('UserData')
+        .document(uid)
+        .collection('Classes')
+        .document(classCode)
+        .setData({
+          'class code':classCode,
+      'class name': className,
+      'allow join': true,
+      'max days inactive': 7,
+    });
   }
 }
