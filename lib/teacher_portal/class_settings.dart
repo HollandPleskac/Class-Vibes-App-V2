@@ -6,14 +6,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
+import './classview_teacher.dart';
 
 final _fire = Fire();
 final Firestore _firestore = Firestore.instance;
 
 class ClassSettings extends StatefulWidget {
   static const routeName = 'individual-class-settings-teacher';
-  final String classId;
-  final String email;
+  String classId;
+  String email;
   ClassSettings({
     this.classId,
     this.email,
@@ -76,11 +77,16 @@ class _ClassSettingsState extends State<ClassSettings> {
           SizedBox(
             height: 50,
           ),
-          IsAcceptingJoin(isSwitched, () {
-            setState(() {
-              isSwitched == false ? isSwitched = true : isSwitched = false;
-            });
-          }),
+          IsAcceptingJoin(
+            isSwitched: isSwitched,
+            updateSwitch: () {
+              setState(() {
+                isSwitched == false ? isSwitched = true : isSwitched = false;
+              });
+            },
+            classId: widget.classId,
+            email: widget.email,
+          ),
           SizedBox(
             height: 50,
           ),
@@ -88,7 +94,11 @@ class _ClassSettingsState extends State<ClassSettings> {
           SizedBox(
             height: 25,
           ),
-          InactiveDaysPicker(maxDaysInactive),
+          InactiveDaysPicker(
+            maxDaysInactive,
+            widget.email,
+            widget.classId,
+          ),
           Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -96,6 +106,14 @@ class _ClassSettingsState extends State<ClassSettings> {
               DeleteClass(
                 classId: widget.classId,
                 teacherEmail: widget.email,
+                changeProperties: () {
+                  setState(() {
+                    isSwitched = false;
+                    maxDaysInactive = 3;
+                    widget.email = '';
+                    widget.classId = '';
+                  });
+                },
               ),
             ],
           ),
@@ -184,7 +202,14 @@ class EditClassName extends StatelessWidget {
 class IsAcceptingJoin extends StatefulWidget {
   final bool isSwitched;
   Function updateSwitch;
-  IsAcceptingJoin(this.isSwitched, this.updateSwitch);
+  final String classId;
+  final String email;
+  IsAcceptingJoin({
+    this.isSwitched,
+    this.updateSwitch,
+    this.classId,
+    this.email,
+  });
   @override
   _IsAcceptingJoinState createState() => _IsAcceptingJoinState();
 }
@@ -211,8 +236,7 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
                 value: widget.isSwitched,
                 onChanged: (value) {
                   widget.updateSwitch();
-                  _fire.updateAllowJoin(
-                      'new1@gmail.com', 'test class app ui', value);
+                  _fire.updateAllowJoin(widget.email, widget.classId, value);
                 },
                 activeColor: kPrimaryColor,
               ),
@@ -227,8 +251,9 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
 class DeleteClass extends StatefulWidget {
   final String classId;
   final String teacherEmail;
+  final Function changeProperties;
 
-  DeleteClass({this.classId, this.teacherEmail});
+  DeleteClass({this.classId, this.teacherEmail, this.changeProperties});
   @override
   _DeleteClassState createState() => _DeleteClassState();
 }
@@ -245,8 +270,15 @@ class _DeleteClassState extends State<DeleteClass> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
         onPressed: () {
+          widget.changeProperties();
           _fire.deleteClass(
               classId: widget.classId, teacherEmail: widget.teacherEmail);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClassViewTeacher(),
+            ),
+          );
         },
       ),
     );
@@ -255,7 +287,13 @@ class _DeleteClassState extends State<DeleteClass> {
 
 class InactiveDaysPicker extends StatefulWidget {
   int maxDaysInactive;
-  InactiveDaysPicker(this.maxDaysInactive);
+  String email;
+  String classId;
+  InactiveDaysPicker(
+    this.maxDaysInactive,
+    this.email,
+    this.classId,
+  );
   @override
   _InactiveDaysPickerState createState() => _InactiveDaysPickerState();
 }
@@ -303,8 +341,8 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                 ),
               ),
               onTap: () {
-                _fire.updateMaxDaysInactive('new1@gmail.com',
-                    'test class app ui', widget.maxDaysInactive);
+                _fire.updateMaxDaysInactive(
+                    widget.email, widget.classId, widget.maxDaysInactive);
               },
             ),
           ),

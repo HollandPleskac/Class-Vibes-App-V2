@@ -277,7 +277,6 @@ class Fire {
         .delete();
 
     //delete class from Students
-    //important : must be List<DocumentSnapshot> in order to do for each
 
     List<DocumentSnapshot> studentDocuments = await _firestore
         .collection('UserData')
