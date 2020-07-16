@@ -228,12 +228,7 @@ class Fire {
           .document(studentEmail)
           .collection('Classes')
           .document(classCode)
-          .setData({
-            'date': DateTime.now(),
-        'email': studentEmail,
-        'name': studentName,
-        'status': 'doing great',
-          });
+          .setData({});
       return 'You have joined the class!';
     }
     return 'That code does not exist.';

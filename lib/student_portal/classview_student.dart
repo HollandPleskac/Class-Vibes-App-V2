@@ -89,7 +89,6 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return StudentClass(
-                      className: document['class name'],
                       classId: document.documentID,
                       email: _email,
                     );
@@ -136,12 +135,10 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 }
 
 class StudentClass extends StatelessWidget {
-  final String className;
   final String classId;
   final String email;
 
   StudentClass({
-    this.className,
     this.classId,
     this.email,
   });
@@ -167,20 +164,32 @@ class StudentClass extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text(
-                  className,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                StreamBuilder(
+                    stream: _firestore
+                        .collection('Classes')
+                        .document(classId)
+                        .snapshots(),
+                    builder: (BuildContext context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(
+                          child: Container(),
+                        );
+                      }
+                      return Text(
+                        snapshot.data['class name'],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      );
+                    }),
                 Spacer(),
                 StreamBuilder(
                     stream: _firestore
-                        .collection('UserData')
-                        .document(email)
                         .collection('Classes')
                         .document(classId)
+                        .collection('Students')
+                        .document(email)
                         .snapshots(),
                     builder: (BuildContext context, snapshot) {
                       if (snapshot.data == null) {
