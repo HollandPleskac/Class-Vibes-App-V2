@@ -23,10 +23,10 @@ class ClassOverViewStudent extends StatelessWidget {
         children: [
           StreamBuilder(
               stream: _firestore
-                  .collection('UserData')
-                  .document(email)
                   .collection('Classes')
                   .document(classId)
+                  .collection('Students')
+                  .document(email)
                   .snapshots(),
               builder: (BuildContext context, snapshot) {
                 if (snapshot.data == null) {
@@ -88,7 +88,9 @@ class _StatusRowState extends State<StatusRow> {
             GestureDetector(
               onTap: () {
                 _fire.updateStudentMood(
-                    uid: widget.email, classId: widget.classId, newMood: 'doing great');
+                    uid: widget.email,
+                    classId: widget.classId,
+                    newMood: 'doing great');
                 print('touched happy face');
               },
               child: DateTime.now()
@@ -128,7 +130,9 @@ class _StatusRowState extends State<StatusRow> {
             GestureDetector(
               onTap: () {
                 _fire.updateStudentMood(
-                    uid: widget.email, classId: widget.classId, newMood: 'need help');
+                    uid: widget.email,
+                    classId: widget.classId,
+                    newMood: 'need help');
                 print('tapped meh');
               },
               child: DateTime.now()
@@ -168,7 +172,9 @@ class _StatusRowState extends State<StatusRow> {
             GestureDetector(
               onTap: () {
                 _fire.updateStudentMood(
-                    uid: widget.email, classId: widget.classId, newMood: 'frustrated');
+                    uid: widget.email,
+                    classId: widget.classId,
+                    newMood: 'frustrated');
                 print('tapped frown');
               },
               child: DateTime.now()
