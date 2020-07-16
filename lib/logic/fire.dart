@@ -224,38 +224,43 @@ class Fire {
     return 'That code does not exist.';
   }
 
-  Future<List> addClass({String uid, String className}) async {
-    String classCode = randomAlphaNumeric(6);
-    // String classCode = '5gUxwD';
+  // Future<List> addClass({String uid, String className}) async {
+  //   String classCode = randomAlphaNumeric(6);
+  //   // String classCode = '5gUxwD';
 
-    int isCodeUnique = await _firestore
-        .collection("Classes")
-        .where("class code", isEqualTo: classCode)
-        .getDocuments()
-        .then((querySnapshot) => querySnapshot.documents.length);
+  //   int isCodeUnique = await _firestore
+  //       .collection("Classes")
+  //       .where("class code", isEqualTo: classCode)
+  //       .getDocuments()
+  //       .then((querySnapshot) => querySnapshot.documents.length);
 
-    if (isCodeUnique != 0) {
-      return ['failure', 'An error occurred try again'];
-    }
+  //   if (isCodeUnique != 0) {
+  //     return ['failure', 'An error occurred try again'];
+  //   }
 
-    _firestore.collection('Classes').document(classCode).setData({
-      'class code': classCode,
-      'class name': className,
-      'allow join': true,
-      'max days inactive': 7,
-    });
+  //   _firestore.collection('Classes').document(classCode).setData({
+  //     'class code': classCode,
+  //     'class name': className,
+  //     'allow join': true,
+  //     'max days inactive': 7,
+  //   });
 
-    _firestore
-        .collection('UserData')
-        .document(uid)
-        .collection('Classes')
-        .document(classCode)
-        .setData({
-      'class code': classCode,
-      'class name': className,
-      'allow join': true,
-      'max days inactive': 7,
-    });
-    return ['success', classCode];
+  //   _firestore
+  //       .collection('UserData')
+  //       .document(uid)
+  //       .collection('Classes')
+  //       .document(classCode)
+  //       .setData({
+  //     'class code': classCode,
+  //     'class name': className,
+  //     'allow join': true,
+  //     'max days inactive': 7,
+  //   });
+  //   return ['success', classCode];
+  // }
+
+  void deleteClass({String classId, String teacherEmail}) {
+    print('deleting class');
+    //query all the students then delete the class from the students tree
   }
 }
