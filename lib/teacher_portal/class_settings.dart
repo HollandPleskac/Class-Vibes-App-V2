@@ -13,7 +13,11 @@ final Firestore _firestore = Firestore.instance;
 class ClassSettings extends StatefulWidget {
   static const routeName = 'individual-class-settings-teacher';
   final String classId;
-  ClassSettings({this.classId});
+  final String email;
+  ClassSettings({
+    this.classId,
+    this.email,
+  });
   @override
   _ClassSettingsState createState() => _ClassSettingsState();
 }
@@ -66,6 +70,8 @@ class _ClassSettingsState extends State<ClassSettings> {
           ),
           EditClassName(
             controller: _classNameController,
+            classId: widget.classId,
+            teacherEmail: widget.email,
           ),
           SizedBox(
             height: 50,
@@ -101,8 +107,15 @@ class _ClassSettingsState extends State<ClassSettings> {
 
 class EditClassName extends StatelessWidget {
   final TextEditingController controller;
+  final String teacherEmail;
+  final String classId;
 
-  EditClassName({this.controller});
+  EditClassName({
+    this.controller,
+    this.teacherEmail,
+    this.classId,
+  });
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -110,13 +123,25 @@ class EditClassName extends StatelessWidget {
         SizedBox(
           width: 20,
         ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.725,
-          child: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: 'Class Name',
-              labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
+        Form(
+          key: _formKey,
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.725,
+            child: TextFormField(
+              controller: controller,
+              decoration: InputDecoration(
+                labelText: 'Class Name',
+                labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
+              ),
+              validator: (value) {
+                if (value == null || value == '') {
+                  return 'Class name cannot be blank';
+                } else if (value.length > 16) {
+                  return 'Class name cannot be greater than 16 characters';
+                } else {
+                  return null;
+                }
+              },
             ),
           ),
         ),
@@ -138,8 +163,9 @@ class EditClassName extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                _fire.updateClassName(
-                    'new1@gmail.com', 'test class app ui', controller.text);
+                if (_formKey.currentState.validate()) {
+                  _fire.updateClassName(teacherEmail, classId, controller.text);
+                }
               },
             ),
           ),

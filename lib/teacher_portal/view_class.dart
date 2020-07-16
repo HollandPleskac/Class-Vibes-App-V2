@@ -98,6 +98,7 @@ class _ViewClassState extends State<ViewClass> {
           Container(
             child: ClassSettings(
               classId: classId,
+              email: _email,
             ),
           ),
         ]),
