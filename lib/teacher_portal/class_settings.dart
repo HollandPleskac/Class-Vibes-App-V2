@@ -424,8 +424,7 @@ class _ClassCodeState extends State<ClassCode> {
                   } catch (error) {
                     return Padding(
                       padding: EdgeInsets.only(right:20),
-                      // child: Text('Error class code does not exist',style: TextStyle(color: Colors.red,fontSize: 16),),
-                      // class code always exists - used when deleteing class is called and streambuilder cant do anything
+                      // class code always exists - used when delete class is called and streambuilder doesnt have a classcode and throws an error
                       child: Container(),
                     );
                   }
