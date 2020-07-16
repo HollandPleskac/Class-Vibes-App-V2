@@ -87,10 +87,7 @@ class _ClassSettingsState extends State<ClassSettings> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GenerateNewClassCode(_scaffoldKey),
-              SizedBox(
-                width: 20,
-              ),
+              
               DeleteClass(),
             ],
           ),
@@ -220,48 +217,6 @@ class _DeleteClassState extends State<DeleteClass> {
   }
 }
 
-class GenerateNewClassCode extends StatefulWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
-  GenerateNewClassCode(this.scaffoldKey);
-
-  @override
-  _GenerateNewClassCodeState createState() => _GenerateNewClassCodeState();
-}
-
-class _GenerateNewClassCodeState extends State<GenerateNewClassCode> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FlatButton(
-        child: Text(
-          'New Class Code',
-          style: TextStyle(color: kPrimaryColor, fontSize: 16),
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        color: Colors.grey[300],
-        onPressed: () async {
-          var result = await _fire.generateNewClassCode(
-              'new1@gmail.com', 'test class app ui');
-          print(result);
-          if (result != 'success') {
-            print('failed');
-            final snackBar = SnackBar(
-              content: Text('Code Already Taken. Try Again!'),
-              action: SnackBarAction(
-                label: 'Hide',
-                onPressed: () {
-                  widget.scaffoldKey.currentState.hideCurrentSnackBar();
-                },
-              ),
-            );
-
-            widget.scaffoldKey.currentState.showSnackBar(snackBar);
-          }
-        },
-      ),
-    );
-  }
-}
 
 class InactiveDaysPicker extends StatefulWidget {
   int maxDaysInactive;
