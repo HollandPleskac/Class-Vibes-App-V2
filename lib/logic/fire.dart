@@ -316,4 +316,20 @@ class Fire {
       });
     }
   }
+
+  void leaveClass({String studentEmail, String classId}) {
+    _firestore
+        .collection('UserData')
+        .document(studentEmail)
+        .collection('Classes')
+        .document(classId)
+        .delete();
+
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .delete();
+  }
 }

@@ -54,6 +54,22 @@ class ClassOverViewStudent extends StatelessWidget {
               ),
             ),
           ),
+          Spacer(),
+          FlatButton(
+            color: kPrimaryColor,
+            onPressed: () {
+              _fire.leaveClass(
+                classId: classId,
+                studentEmail: email,
+              );
+            },
+            child: Text(
+              'Leave Class',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );
