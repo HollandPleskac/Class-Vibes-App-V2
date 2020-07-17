@@ -63,7 +63,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
     getTeacherEmail().then((_) {
       getAnnouncements(_email).then((_) {
         setState(() {});
-        print(announcements);
+        print('Announcements : ' + announcements.toString());
       });
     });
 
@@ -89,7 +89,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
       //       .toList(),
       // ),
       body: Center(
-        child: announcements == []
+        child: announcements.length != 0
             ? ListView(
                 children: announcements.map(
                   (announcement) {
