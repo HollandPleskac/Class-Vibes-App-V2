@@ -381,7 +381,7 @@ class _ClassCodeState extends State<ClassCode> {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                   return Center(
-                    child: Container(),
+                    child: Container(height: 27,),
                   );
 
                 default:
