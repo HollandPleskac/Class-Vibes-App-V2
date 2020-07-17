@@ -70,6 +70,17 @@ class Fire {
       'status': newMood,
       'date': DateTime.now(),
     });
+
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Reactions')
+        .document()
+        .setData({
+          'date':DateTime.now(),
+          'reaction':newMood,
+          'student email':uid,
+        });
   }
 
   void setupMeeting({
