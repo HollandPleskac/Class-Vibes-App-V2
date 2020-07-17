@@ -1,6 +1,5 @@
 import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant.dart';
 import './chat_student.dart';

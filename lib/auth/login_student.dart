@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 import '../student_portal/classview_student.dart';
@@ -124,14 +123,7 @@ class _StudentLoginState extends State<StudentLogin> {
                       email: _emailController.text,
                       password: _passwordController.text);
                   if (result[0] == 'success') {
-                    //set local storage
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-
-                    await prefs.setString(
-                      'email',
-                      _emailController.text,
-                    );
+                
                     //push next screen
                     Navigator.pushReplacement(
                       context,

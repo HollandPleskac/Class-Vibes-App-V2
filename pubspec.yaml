@@ -31,7 +31,6 @@ dependencies:
   fl_chart: ^0.10.0
   font_awesome_flutter: ^8.8.1
   cloud_firestore: ^0.13.5
-  shared_preferences: ^0.5.7+3
   curved_navigation_bar: ^0.3.3
   numberpicker: ^1.2.0
   intl: ^0.16.1
