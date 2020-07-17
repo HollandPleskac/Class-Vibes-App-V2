@@ -43,8 +43,9 @@ class ClassAnnouncementsStudent extends StatelessWidget {
                     padding: EdgeInsets.only(
                         top: 20, left: 40, right: 40, bottom: 20),
                     child: Announcement(
-                      document['content'],
-                      DateTime.parse(document['timestamp'].toDate().toString()),
+                      message:document['content'],
+                      timestamp: DateTime.parse(document['timestamp'].toDate().toString()),
+                      announcementId: document.documentID,
                     ),
                   );
                 }).toList(),
@@ -63,8 +64,9 @@ class ClassAnnouncementsStudent extends StatelessWidget {
 class Announcement extends StatelessWidget {
   final String message;
   final DateTime timestamp;
+  final String announcementId;
 
-  Announcement(this.message, this.timestamp);
+  Announcement({this.message, this.timestamp,this.announcementId});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,6 +119,7 @@ class Announcement extends StatelessWidget {
               ],
             ),
           ),
+          
         ],
       ),
     );

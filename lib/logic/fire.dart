@@ -179,6 +179,15 @@ class Fire {
     );
   }
 
+  void deleteAnnouncement({String classId, String announcementId}) {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Announcements')
+        .document(announcementId)
+        .delete();
+  }
+
   void editUserName({
     String uid,
     String newUserName,

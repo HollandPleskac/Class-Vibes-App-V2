@@ -51,16 +51,18 @@ class ClassAnnouncements extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 top: 20, left: 40, right: 40, bottom: 20),
                             child: Announcement(
-                              document['content'],
-                              DateTime.parse(
+                              message: document['content'],
+                              timestamp: DateTime.parse(
                                   document['timestamp'].toDate().toString()),
+                              announcementId: document.documentID,
+                              classId: classId,
                             ),
                           );
                         }).toList(),
                       );
                     } else {
                       return Center(
-                        child: Text('no meetings'),
+                        child: Text('no announcements'),
                       );
                     }
                 }
@@ -123,8 +125,15 @@ class ClassAnnouncements extends StatelessWidget {
 class Announcement extends StatelessWidget {
   final String message;
   final DateTime timestamp;
+  final String announcementId;
+  final String classId;
 
-  Announcement(this.message, this.timestamp);
+  Announcement({
+    this.message,
+    this.timestamp,
+    this.announcementId,
+    this.classId,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -175,6 +184,23 @@ class Announcement extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(right: 30),
+            child: GestureDetector(
+              onTap: () {
+                print('delet');
+                _fire.deleteAnnouncement(
+                  classId: classId,
+                  announcementId: announcementId,
+                );
+              },
+              child: FaIcon(
+                FontAwesomeIcons.trash,
+                color: Colors.grey,
+              ),
             ),
           ),
         ],
