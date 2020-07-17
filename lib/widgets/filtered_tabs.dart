@@ -12,7 +12,7 @@ final _fire = Fire();
 class AllTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  AllTab(this.classId,this.teacherEmail);
+  AllTab(this.classId, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -22,9 +22,6 @@ class AllTab extends StatelessWidget {
           .collection('Students')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return Text('no data');
-        }
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Center(
@@ -61,7 +58,7 @@ class AllTab extends StatelessWidget {
 class DoingGreatTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  DoingGreatTab(this.classId,this.teacherEmail);
+  DoingGreatTab(this.classId, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -117,7 +114,7 @@ class DoingGreatTab extends StatelessWidget {
 class NeedHelpTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  NeedHelpTab(this.classId,this.teacherEmail);
+  NeedHelpTab(this.classId, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -173,7 +170,7 @@ class NeedHelpTab extends StatelessWidget {
 class FrustratedTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  FrustratedTab(this.classId,this.teacherEmail);
+  FrustratedTab(this.classId, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -229,7 +226,7 @@ class FrustratedTab extends StatelessWidget {
 class InactiveTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  InactiveTab(this.classId,this.teacherEmail);
+  InactiveTab(this.classId, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

@@ -12,8 +12,9 @@ final _fire = Fire();
 
 class ClassAnnouncements extends StatelessWidget {
   final String classId;
+  final String className;
 
-  ClassAnnouncements({this.classId});
+  ClassAnnouncements({this.classId,this.className,});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,24 +23,29 @@ class ClassAnnouncements extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height * 0.75,
             child: StreamBuilder(
-                stream: _firestore
-                    .collection("Classes")
-                    .document(classId)
-                    .collection('Announcements')
-                    .orderBy("timestamp", descending: true)
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //FIX THIS
-                  if (!snapshot.hasData)
+              stream: _firestore
+                  .collection("Classes")
+                  .document(classId)
+                  .collection('Announcements')
+                  .orderBy("timestamp", descending: true)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
                     return Center(
-                      child: Text('No Announcements'),
+                      child: Container(),
                     );
-
-                  return Center(
-                    child: ListView(
-                      children: snapshot.data.documents.map(
-                        (DocumentSnapshot document) {
+                  default:
+                    if (snapshot.data != null &&
+                        snapshot.data.documents.isEmpty == false) {
+                      return ListView(
+                        physics: BouncingScrollPhysics(),
+                        children: snapshot.data.documents
+                            .map((DocumentSnapshot document) {
                           return Padding(
                             padding: EdgeInsets.only(
                                 top: 20, left: 40, right: 40, bottom: 20),
@@ -49,17 +55,58 @@ class ClassAnnouncements extends StatelessWidget {
                                   document['timestamp'].toDate().toString()),
                             ),
                           );
-                        },
-                      ).toList(),
-                    ),
-                  );
-                }),
+                        }).toList(),
+                      );
+                    } else {
+                      return Center(
+                        child: Text('no meetings'),
+                      );
+                    }
+                }
+              },
+            ),
+            // child: StreamBuilder(
+            // stream: _firestore
+            //     .collection("Classes")
+            //     .document(classId)
+            //     .collection('Announcements')
+            //     .orderBy("timestamp", descending: true)
+            //     .snapshots(),
+            // builder: (BuildContext context,
+            //     AsyncSnapshot<QuerySnapshot> snapshot) {
+            //   //FIX THIS
+            //   if (!snapshot.hasData)
+            //     return Center(
+            //       child: Text('No Announcements'),
+            //     );
+
+            //   return Center(
+            //     child: ListView(
+            //       children: snapshot.data.documents.map(
+            //         (DocumentSnapshot document) {
+            //           return Padding(
+            //             padding: EdgeInsets.only(
+            //                 top: 20, left: 40, right: 40, bottom: 20),
+            //             child: Announcement(
+            //               document['content'],
+            //               DateTime.parse(
+            //                   document['timestamp'].toDate().toString()),
+            //             ),
+            //           );
+            //         },
+            //       ).toList(),
+            //     ),
+            //   );
+            // }),
           ),
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.only(right: 20),
-              child: PushAnnouncementBtn(),
+              child: PushAnnouncementBtn(
+                classId: classId,
+                className: className,
+              ),
             ),
           ),
         ],
@@ -132,6 +179,10 @@ class Announcement extends StatelessWidget {
 }
 
 class PushAnnouncementBtn extends StatelessWidget {
+  String classId;
+  String className;
+
+  PushAnnouncementBtn({this.classId,this.className});
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
@@ -139,7 +190,10 @@ class PushAnnouncementBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       icon: FaIcon(FontAwesomeIcons.bullhorn),
-      label: Text('Push Announcement',style: TextStyle(fontSize: 15),),
+      label: Text(
+        'Push Announcement',
+        style: TextStyle(fontSize: 15),
+      ),
       onPressed: () {
         showModalBottomSheet(
           barrierColor: Colors.white.withOpacity(0),
@@ -217,9 +271,9 @@ class PushAnnouncementBtn extends StatelessWidget {
                                     onPressed: () {
                                       if (_formKey.currentState.validate()) {
                                         _fire.pushAnnouncement(
-                                          classId: 'test class app ui',
+                                          classId: classId,
                                           content: _contentController.text,
-                                          className: 'AP Physics',
+                                          className: className,
                                         );
                                         Navigator.pop(context);
                                       }

@@ -98,6 +98,7 @@ class _ViewClassState extends State<ViewClass> {
           Container(
             child: ClassAnnouncements(
               classId: classId,
+              className: 'className',
             ),
           ),
           Container(
