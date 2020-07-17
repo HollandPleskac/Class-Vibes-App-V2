@@ -169,7 +169,7 @@ class Fire {
         .collection('Classes')
         .document(classId)
         .collection('Announcements')
-        .document('announcement id')
+        .document()
         .setData(
       {
         'content': content,

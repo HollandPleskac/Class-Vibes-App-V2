@@ -12,9 +12,10 @@ final _fire = Fire();
 
 class ClassAnnouncements extends StatelessWidget {
   final String classId;
-  final String className;
 
-  ClassAnnouncements({this.classId,this.className,});
+  ClassAnnouncements({
+    this.classId,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -105,7 +106,11 @@ class ClassAnnouncements extends StatelessWidget {
               padding: EdgeInsets.only(right: 20),
               child: PushAnnouncementBtn(
                 classId: classId,
-                className: className,
+                getClassName: () async => await _firestore
+                    .collection('Classes')
+                    .document(classId)
+                    .get()
+                    .then((docSnap) => docSnap.data['class name']),
               ),
             ),
           ),
@@ -180,9 +185,9 @@ class Announcement extends StatelessWidget {
 
 class PushAnnouncementBtn extends StatelessWidget {
   String classId;
-  String className;
+  Function getClassName;
 
-  PushAnnouncementBtn({this.classId,this.className});
+  PushAnnouncementBtn({this.classId, this.getClassName});
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _contentController = TextEditingController();
@@ -268,12 +273,12 @@ class PushAnnouncementBtn extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     color: kPrimaryColor,
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (_formKey.currentState.validate()) {
                                         _fire.pushAnnouncement(
                                           classId: classId,
                                           content: _contentController.text,
-                                          className: className,
+                                          className: await getClassName(),
                                         );
                                         Navigator.pop(context);
                                       }
