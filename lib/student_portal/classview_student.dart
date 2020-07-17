@@ -51,16 +51,14 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
         ),
         centerTitle: true,
         actions: [
-          Center(
-            child: GestureDetector(
-              onTap: () {
-                print('press question');
-                showStudentInfoPopUp(context);
-              },
-              child: FaIcon(
-                FontAwesomeIcons.question,
-                size: 25,
-              ),
+          IconButton(
+            onPressed: () {
+              print('press question');
+              showStudentInfoPopUp(context);
+            },
+            icon: FaIcon(
+              FontAwesomeIcons.question,
+              size: 20,
             ),
           ),
         ],
