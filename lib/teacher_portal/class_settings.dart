@@ -369,67 +369,36 @@ class _ClassCodeState extends State<ClassCode> {
           ),
         ),
         Spacer(),
-        StreamBuilder(
-            stream: _firestore
-                .collection('Classes')
-                .document(widget.classId)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Center(
-                    child: Container(height: 27,),
-                  );
-
-                default:
-                  try {
-                    String code = snapshot.data['class code'];
-                    List codeLetters = code.split("");
-                    if (snapshot.data != null) {
-                      return Row(
-                        children: codeLetters.map((letter) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 15),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  letter,
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 6,
-                                ),
-                                Container(
-                                  color: kPrimaryColor,
-                                  height: 2,
-                                  width: 25,
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    } else {
-                      return Center(
-                        child: Text('no data'),
-                      );
-                    }
-                  } catch (error) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      // class code always exists - used when delete class is called and streambuilder doesnt have a classcode and throws an error
-                      child: Container(),
-                    );
-                  }
-              }
-            }),
+        Padding(
+          padding: EdgeInsets.only(right:15),
+                  child: Row(
+            children: widget.classId.split("").map((letter) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      letter,
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Container(
+                      color: kPrimaryColor,
+                      height: 2,
+                      width: 25,
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ),
       ],
     );
   }
