@@ -76,42 +76,7 @@ class _ChatStudentState extends State<ChatStudent> {
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height * 0.76,
-              // child: StreamBuilder(
-              //     stream: _firestore
-              //         .collection("Classes")
-              //         .document(classId)
-              //         .collection('Students')
-              //         .document(widget.email)
-              //         .collection("Chats")
-              //         .orderBy("date", descending: true)
-              //         .snapshots(),
-              //     builder: (BuildContext context,
-              //         AsyncSnapshot<QuerySnapshot> snapshot) {
-              //       //FIX THIS
-              //       if (!snapshot.hasData)
-              //         return Center(
-              //           child: Text('No Chat History'),
-              //         );
-
-              //       return Center(
-              //         child: ListView(
-              //           reverse: true,
-              //           children: snapshot.data.documents.map(
-              //             (DocumentSnapshot document) {
-              //               return document['sent type'] == 'teacher'
-              //                   ? RecievedChat(
-              //                       title: document['title'],
-              //                       content: document['content'],
-              //                     )
-              //                   : SentChat(
-              //                       title: document['title'],
-              //                       content: document['content'],
-              //                     );
-              //             },
-              //           ).toList(),
-              //         ),
-              //       );
-              //     }),
+             
               child: StreamBuilder(
                 stream: _firestore
                     .collection("Classes")

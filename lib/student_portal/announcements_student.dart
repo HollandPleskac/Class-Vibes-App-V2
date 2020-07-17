@@ -2,11 +2,13 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class AnnouncementsStudent extends StatefulWidget {
   @override
@@ -19,12 +21,10 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
   String _email;
 
   Future getTeacherEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final email = user.email;
 
-    String uid = prefs.getString('email');
-
-    _email = uid;
-    print(_email);
+    _email = email;
   }
 
   Future getAnnouncements(String email) async {

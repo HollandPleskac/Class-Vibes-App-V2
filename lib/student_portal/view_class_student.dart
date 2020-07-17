@@ -7,6 +7,9 @@ import './chat_student.dart';
 import './class_meetings_student.dart';
 import './class_announcements_student.dart';
 import './class_overview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class ViewClassStudent extends StatefulWidget {
   static const routename = 'view-class-student-screen';
@@ -17,13 +20,11 @@ class ViewClassStudent extends StatefulWidget {
 class _ViewClassStudentState extends State<ViewClassStudent> {
   String _email;
 
-  Future getTeacherEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+ Future getTeacherEmail() async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final email = user.email;
 
-    String uid = prefs.getString('email');
-
-    _email = uid;
-    print(_email);
+    _email = email;
   }
 
   Future getClassId() async {}
