@@ -65,7 +65,7 @@ class _JoinClassState extends State<JoinClass> {
         child: Column(
           children: [
             PinCodeTextField(
-              length: 6,
+              length: 4,
               onChanged: null,
               onCompleted: (completedPins) {
                 setState(() {
