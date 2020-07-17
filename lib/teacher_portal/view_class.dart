@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
@@ -13,6 +14,7 @@ import './class_announcements.dart';
 import './class_meetings.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 
 class ViewClass extends StatefulWidget {
@@ -25,12 +27,10 @@ class _ViewClassState extends State<ViewClass> {
   String _email;
 
   Future getTeacherEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final email = user.email;
 
-    String uid = prefs.getString('email');
-
-    _email = uid;
-    print(_email);
+    _email = email;
   }
 
   @override

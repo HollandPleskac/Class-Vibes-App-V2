@@ -10,9 +10,11 @@ import '../widgets/pie_charts.dart';
 import '../nav_teacher.dart';
 import '../logic/fire.dart';
 import 'view_class.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'class_settings.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 
 class ClassViewTeacher extends StatefulWidget {
@@ -156,12 +158,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   String _email;
 
   Future getTeacherEmail() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final email = user.email;
 
-    String uid = prefs.getString('email');
-
-    _email = uid;
-    print(_email);
+    _email = email;
   }
 
   @override
