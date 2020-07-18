@@ -119,6 +119,7 @@ class StudentsTab extends StatefulWidget {
   final String teacherEmail;
   final String classId;
   StudentsTab({this.teacherEmail, this.classId});
+  bool isSwitched = false;
   @override
   _StudentsTabState createState() => _StudentsTabState();
 }
@@ -134,7 +135,34 @@ class _StudentsTabState extends State<StudentsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        DynamicPieChart(widget.classId),
+        Stack(
+          children: [
+            Positioned(
+              right: 10,
+              top: 10,
+              child: Container(
+                height: 30,
+                child: Switch(
+                  value: widget.isSwitched,
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      widget.isSwitched = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            widget.isSwitched == false
+                ? DynamicPieChart(widget.classId)
+                : AspectRatio(
+                    aspectRatio: 1.6,
+                    child: Center(
+                      child: Text('chart'),
+                    ),
+                  ),
+          ],
+        ),
         Container(
           height: 32.5,
           child: ListView(
@@ -239,101 +267,122 @@ class DynamicPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _firestore
-            .collection('Classes')
-            .document(classId)
-            .collection('Students')
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
+      stream: _firestore
+          .collection('Classes')
+          .document(classId)
+          .collection('Students')
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
             return Center(
-              child: Container(),
+              child: AspectRatio(aspectRatio: 1.6),
             );
-          }
-          double doingGreatStudents = snapshot.data.documents
-              .where((document) => document["status"] == "doing great")
-              .where((documentSnapshot) =>
-                  DateTime.now()
-                      .difference(
-                        DateTime.parse(
-                            documentSnapshot.data['date'].toDate().toString()),
-                      )
-                      .inDays <
-                  5)
-              .length
-              .toDouble();
+          default:
+            if (snapshot.data != null &&
+                snapshot.data.documents.isEmpty == false) {
+              double doingGreatStudents = snapshot.data.documents
+                  .where((document) => document["status"] == "doing great")
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays <
+                      5)
+                  .length
+                  .toDouble();
 
-          double needHelpStudents = snapshot.data.documents
-              .where((documentSnapshot) =>
-                  documentSnapshot.data['status'] == 'need help')
-              .where((documentSnapshot) =>
-                  DateTime.now()
-                      .difference(
-                        DateTime.parse(
-                            documentSnapshot.data['date'].toDate().toString()),
-                      )
-                      .inDays <
-                  5)
-              .length
-              .toDouble();
-          double frustratedStudents = snapshot.data.documents
-              .where((documentSnapshot) =>
-                  documentSnapshot.data['status'] == 'frustrated')
-              .where((documentSnapshot) =>
-                  DateTime.now()
-                      .difference(
-                        DateTime.parse(
-                            documentSnapshot.data['date'].toDate().toString()),
-                      )
-                      .inDays <
-                  5)
-              .length
-              .toDouble();
-          double inactiveStudents = snapshot.data.documents
-              .where((documentSnapshot) =>
-                  DateTime.now()
-                      .difference(
-                        DateTime.parse(
-                            documentSnapshot.data['date'].toDate().toString()),
-                      )
-                      .inDays >=
-                  5)
-              .length
-              .toDouble();
+              double needHelpStudents = snapshot.data.documents
+                  .where((documentSnapshot) =>
+                      documentSnapshot.data['status'] == 'need help')
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays <
+                      5)
+                  .length
+                  .toDouble();
+              double frustratedStudents = snapshot.data.documents
+                  .where((documentSnapshot) =>
+                      documentSnapshot.data['status'] == 'frustrated')
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays <
+                      5)
+                  .length
+                  .toDouble();
+              double inactiveStudents = snapshot.data.documents
+                  .where((documentSnapshot) =>
+                      DateTime.now()
+                          .difference(
+                            DateTime.parse(documentSnapshot.data['date']
+                                .toDate()
+                                .toString()),
+                          )
+                          .inDays >=
+                      5)
+                  .length
+                  .toDouble();
 
-          double totalStudents = doingGreatStudents +
-              needHelpStudents +
-              frustratedStudents +
-              inactiveStudents.toDouble();
+              double totalStudents = doingGreatStudents +
+                  needHelpStudents +
+                  frustratedStudents +
+                  inactiveStudents.toDouble();
 
-          var doingGreatPercentage =
-              (doingGreatStudents / totalStudents * 100).toStringAsFixed(0) +
-                  '%';
-          var needHelpPercentage =
-              (needHelpStudents / totalStudents * 100).toStringAsFixed(0) + '%';
-          var frustratedPercentage =
-              (frustratedStudents / totalStudents * 100).toStringAsFixed(0) +
-                  '%';
-          var inactivePercentage =
-              (inactiveStudents / totalStudents * 100).toStringAsFixed(0) + '%';
+              var doingGreatPercentage =
+                  (doingGreatStudents / totalStudents * 100)
+                          .toStringAsFixed(0) +
+                      '%';
+              var needHelpPercentage =
+                  (needHelpStudents / totalStudents * 100).toStringAsFixed(0) +
+                      '%';
+              var frustratedPercentage =
+                  (frustratedStudents / totalStudents * 100)
+                          .toStringAsFixed(0) +
+                      '%';
+              var inactivePercentage =
+                  (inactiveStudents / totalStudents * 100).toStringAsFixed(0) +
+                      '%';
 
-          print('doing great : ' + doingGreatStudents.toString());
-          print('need help : ' + needHelpStudents.toString());
-          print('frustrated : ' + frustratedStudents.toString());
-          print('inactive : ' + inactiveStudents.toString());
-          print('totla : ' + totalStudents.toString());
-          return PieChartSampleBig(
-            //graph percentage
-            doingGreatStudents: doingGreatStudents,
-            needHelpStudents: needHelpStudents,
-            frustratedStudents: frustratedStudents,
-            inactiveStudents: inactiveStudents,
-            //graph titles
-            doingGreatPercentage: doingGreatPercentage,
-            needHelpPercentage: needHelpPercentage,
-            frustratedPercentage: frustratedPercentage,
-            inactivePercentage: inactivePercentage,
-          );
-        });
+              print('doing great : ' + doingGreatStudents.toString());
+              print('need help : ' + needHelpStudents.toString());
+              print('frustrated : ' + frustratedStudents.toString());
+              print('inactive : ' + inactiveStudents.toString());
+              print('totla : ' + totalStudents.toString());
+              return PieChartSampleBig(
+                //graph percentage
+                doingGreatStudents: doingGreatStudents,
+                needHelpStudents: needHelpStudents,
+                frustratedStudents: frustratedStudents,
+                inactiveStudents: inactiveStudents,
+                //graph titles
+                doingGreatPercentage: doingGreatPercentage,
+                needHelpPercentage: needHelpPercentage,
+                frustratedPercentage: frustratedPercentage,
+                inactivePercentage: inactivePercentage,
+              );
+            } else {
+              return Center(
+                child: Text('no meetings'),
+              );
+            }
+        }
+      },
+    );
   }
 }
