@@ -8,10 +8,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../nav_student.dart';
 import '../constant.dart';
 import '../logic/fire.dart';
+import '../logic/auth.dart';
+import '../auth/welcome.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
+final _auth = Auth();
 
 class ProfileStudent extends StatefulWidget {
   @override
@@ -311,6 +314,21 @@ class _ProfileStudentState extends State<ProfileStudent> {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(140, 15, 140, 0),
+            child: FlatButton(
+              color: Colors.grey[200],
+              onPressed: () {
+                print('logging out');
+                _auth.signOut();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Welcome()));
+              },
+              child: Text(
+                'Log Out',
+              ),
+            ),
+          )
         ],
       ),
     );

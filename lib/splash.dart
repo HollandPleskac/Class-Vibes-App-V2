@@ -17,6 +17,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   FirebaseUser user;
   String accountType;
+  bool isCheckedAccount = false;
   Future getUser() async {
     try {
       final FirebaseUser theUser = await _firebaseAuth.currentUser();
@@ -31,11 +32,14 @@ class _SplashScreenState extends State<SplashScreen> {
       try {
         String type = await _auth.checkAccountType(user.email);
         accountType = type;
+        isCheckedAccount = true;
       } catch (_) {
         accountType = null;
+        isCheckedAccount = true;
       }
     } else {
       accountType = null;
+      isCheckedAccount = true;
     }
   }
 
@@ -54,8 +58,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return accountType == 'Student'
-        ? ClassViewStudent()
-        : accountType == 'Teacher' ? ClassViewTeacher() : Welcome();
+    return isCheckedAccount == true
+        ? accountType == 'Student'
+            ? ClassViewStudent()
+            : accountType == 'Teacher' ? ClassViewTeacher() : Welcome()
+        : Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
   }
 }
