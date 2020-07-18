@@ -27,10 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future getAccountType(FirebaseUser user) async {
-    final email = user.email;
-    if (email != null) {
+    if (user != null) {
       try {
-        String type = await _auth.checkAccountType(email);
+        String type = await _auth.checkAccountType(user.email);
         accountType = type;
       } catch (_) {
         accountType = null;

@@ -119,4 +119,8 @@ class Auth {
         .get()
         .then((docSnap) => docSnap.data['Account Type']);
   }
+
+  void signOut() async {
+    await _firebaseAuth.signOut();
+  }
 }
