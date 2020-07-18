@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import './student_portal/classview_student.dart';
+import './teacher_portal/classview_teacher.dart';
+import './auth/welcome.dart';
 import './logic/auth.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -51,10 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('splash screen'),
-      ),
-    );
+    return accountType == 'Student'
+        ? ClassViewStudent()
+        : accountType == 'Teacher' ? ClassViewTeacher() : Welcome();
   }
 }
