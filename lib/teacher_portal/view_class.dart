@@ -350,7 +350,12 @@ class DynamicPieChart extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no meetings'),
+                child: AspectRatio(
+                  aspectRatio: 1.6,
+                  child: Center(
+                    child: Text('no students'),
+                  ),
+                ),
               );
             }
         }
@@ -358,7 +363,6 @@ class DynamicPieChart extends StatelessWidget {
     );
   }
 }
-
 
 class ChartSwitch extends StatefulWidget {
   final String classId;
@@ -372,32 +376,32 @@ class _ChartSwitchState extends State<ChartSwitch> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-          children: [
-            Positioned(
-              right: 10,
-              top: 10,
-              child: Container(
-                height: 30,
-                child: Switch(
-                  value: isSwitched,
-                  onChanged: (value) {
-                    print(value);
-                    setState(() {
-                      isSwitched = value;
-                    });
-                  },
+      children: [
+        Positioned(
+          right: 10,
+          top: 10,
+          child: Container(
+            height: 30,
+            child: Switch(
+              value: isSwitched,
+              onChanged: (value) {
+                print(value);
+                setState(() {
+                  isSwitched = value;
+                });
+              },
+            ),
+          ),
+        ),
+        isSwitched == false
+            ? DynamicPieChart(widget.classId)
+            : AspectRatio(
+                aspectRatio: 1.6,
+                child: Center(
+                  child: Text('chart'),
                 ),
               ),
-            ),
-            isSwitched == false
-                ? DynamicPieChart(widget.classId)
-                : AspectRatio(
-                    aspectRatio: 1.6,
-                    child: Center(
-                      child: Text('chart'),
-                    ),
-                  ),
-          ],
-        );
+      ],
+    );
   }
 }
