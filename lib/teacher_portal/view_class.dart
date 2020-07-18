@@ -119,7 +119,6 @@ class StudentsTab extends StatefulWidget {
   final String teacherEmail;
   final String classId;
   StudentsTab({this.teacherEmail, this.classId});
-  bool isSwitched = false;
   @override
   _StudentsTabState createState() => _StudentsTabState();
 }
@@ -135,34 +134,7 @@ class _StudentsTabState extends State<StudentsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Positioned(
-              right: 10,
-              top: 10,
-              child: Container(
-                height: 30,
-                child: Switch(
-                  value: widget.isSwitched,
-                  onChanged: (value) {
-                    print(value);
-                    setState(() {
-                      widget.isSwitched = value;
-                    });
-                  },
-                ),
-              ),
-            ),
-            widget.isSwitched == false
-                ? DynamicPieChart(widget.classId)
-                : AspectRatio(
-                    aspectRatio: 1.6,
-                    child: Center(
-                      child: Text('chart'),
-                    ),
-                  ),
-          ],
-        ),
+        ChartSwitch(widget.classId),
         Container(
           height: 32.5,
           child: ListView(
@@ -384,5 +356,48 @@ class DynamicPieChart extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+
+class ChartSwitch extends StatefulWidget {
+  final String classId;
+  ChartSwitch(this.classId);
+  @override
+  _ChartSwitchState createState() => _ChartSwitchState();
+}
+
+class _ChartSwitchState extends State<ChartSwitch> {
+  bool isSwitched = false;
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+          children: [
+            Positioned(
+              right: 10,
+              top: 10,
+              child: Container(
+                height: 30,
+                child: Switch(
+                  value: isSwitched,
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      isSwitched = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+            isSwitched == false
+                ? DynamicPieChart(widget.classId)
+                : AspectRatio(
+                    aspectRatio: 1.6,
+                    child: Center(
+                      child: Text('chart'),
+                    ),
+                  ),
+          ],
+        );
   }
 }
