@@ -186,12 +186,26 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              _showModalSheetEditUserName(_email);
+          StreamBuilder(
+            stream: _firestore
+                .collection('Application Management')
+                .document('ServerManagement')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                return snapshot.data['serversAreUp'] == false
+                    ? Container()
+                    : IconButton(
+                        onPressed: () {
+                          _showModalSheetEditUserName(_email);
+                        },
+                        icon: Icon(Icons.add),
+                      );
+              }
             },
-            icon: Icon(Icons.add),
-          ),
+          )
         ],
       ),
       body: StreamBuilder(
@@ -312,8 +326,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     );
             }
           }),
-
-     
     );
   }
 }
