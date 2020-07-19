@@ -37,10 +37,10 @@ class LineChartSample1State extends State<LineChartSample1> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 const SizedBox(
-                  height: 37,
+                  height: 28,
                 ),
                 const Text(
-                  'Unfold Shop 2018',
+                  'Day   Week',
                   style: TextStyle(
                     color: Color(0xff827daa),
                     fontSize: 16,
@@ -48,10 +48,10 @@ class LineChartSample1State extends State<LineChartSample1> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 12,
                 ),
-                const Text(
-                  'Monthly Sales',
+                Text(
+                  isShowingMainData ? 'Status By Day AM' : 'Status By Day PM',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -76,9 +76,10 @@ class LineChartSample1State extends State<LineChartSample1> {
                 ),
               ],
             ),
+            
             IconButton(
               icon: Icon(
-                Icons.refresh,
+                Icons.access_time,
                 color: Colors.white.withOpacity(isShowingMainData ? 1.0 : 0.5),
               ),
               onPressed: () {
@@ -108,21 +109,39 @@ class LineChartSample1State extends State<LineChartSample1> {
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: true,
-          reservedSize: 22,
+          reservedSize: 24,
           textStyle: const TextStyle(
             color: Color(0xff72719b),
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 12,
           ),
-          margin: 10,
+          margin: 8,
           getTitles: (value) {
             switch (value.toInt()) {
+              case 1:
+                return '1\n am';
               case 2:
-                return 'SEPT';
+                return '2\n am';
+              case 3:
+                return '3\n am';
+              case 4:
+                return '4\n am';
+              case 5:
+                return '5\n am';
+              case 6:
+                return '6\n am';
               case 7:
-                return 'OCT';
+                return '7\n am';
+              case 8:
+                return '8\n am';
+              case 9:
+                return '9\n am';
+              case 10:
+                return '10\n am';
+              case 11:
+                return '11\n am';
               case 12:
-                return 'DEC';
+                return '12\n am';
             }
             return '';
           },
@@ -262,21 +281,39 @@ class LineChartSample1State extends State<LineChartSample1> {
       titlesData: FlTitlesData(
         bottomTitles: SideTitles(
           showTitles: true,
-          reservedSize: 22,
+          reservedSize: 24,
           textStyle: const TextStyle(
             color: Color(0xff72719b),
             fontWeight: FontWeight.bold,
-            fontSize: 16,
+            fontSize: 12,
           ),
-          margin: 10,
+          margin: 8,
           getTitles: (value) {
             switch (value.toInt()) {
+             case 1:
+                return '1\n pm';
               case 2:
-                return 'SEPT';
+                return '2\n pm';
+              case 3:
+                return '3\n pm';
+              case 4:
+                return '4\n pm';
+              case 5:
+                return '5\n pm';
+              case 6:
+                return '6\n pm';
               case 7:
-                return 'OCT';
+                return '7\n pm';
+              case 8:
+                return '8\n pm';
+              case 9:
+                return '9\n pm';
+              case 10:
+                return '10\n pm';
+              case 11:
+                return '11\n pm';
               case 12:
-                return 'DEC';
+                return '12\n pm';
             }
             return '';
           },
