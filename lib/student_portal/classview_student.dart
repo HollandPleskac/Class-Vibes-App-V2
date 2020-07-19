@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,97 +41,93 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavStudent(),
-      backgroundColor: Color.fromRGBO(250, 250, 250, 1.0),
-      appBar: AppBar(
-        backgroundColor: kWetAsphaltColor,
-        title: Text(
-          'Screen 3',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        actions: [
-          StreamBuilder(
-              stream: _firestore
-                  .collection('Application Management')
-                  .document('ServerManagement')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text('');
-                } else {
-                  return snapshot.data['serversAreUp'] == false
-                      ? Container()
-                      : IconButton(
-                          onPressed: () {
-                            print('press question');
-                            showStudentInfoPopUp(context);
-                          },
-                          icon: FaIcon(
-                            FontAwesomeIcons.question,
-                            size: 20,
-                          ),
-                        );
-                }
-              }),
-        ],
-      ),
-      body: StreamBuilder(
-          stream: _firestore
-              .collection('Application Management')
-              .document('ServerManagement')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Text('');
-            } else {
-              return snapshot.data['serversAreUp'] == false
-                  ? Center(
-                      child: Text(
-                        'Servers are down',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                      ),
-                    )
-                  : StreamBuilder(
-                      stream: _firestore
-                          .collection('UserData')
-                          .document(_email)
-                          .collection('Classes')
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Center(
-                              child: Container(),
-                            );
-                          default:
-                            if (snapshot.data != null &&
-                                snapshot.data.documents.isEmpty == false) {
-                              return ListView(
-                                physics: BouncingScrollPhysics(),
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return StudentClass(
-                                    classId: document.documentID,
-                                    email: _email,
-                                  );
-                                }).toList(),
-                              );
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Application Management')
+          .document('ServerManagement')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text('');
+        } else {
+          return snapshot.data['serversAreUp'] == false
+              ? ServersDown()
+              : Scaffold(
+                  drawer: NavStudent(),
+                  backgroundColor: Color.fromRGBO(250, 250, 250, 1.0),
+                  appBar: AppBar(
+                    backgroundColor: kWetAsphaltColor,
+                    title: Text(
+                      'Screen 3',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    centerTitle: true,
+                    actions: [
+                      StreamBuilder(
+                          stream: _firestore
+                              .collection('Application Management')
+                              .document('ServerManagement')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('');
                             } else {
-                              return Center(
-                                child: Text('no classes'),
-                              );
+                              return snapshot.data['serversAreUp'] == false
+                                  ? Container()
+                                  : IconButton(
+                                      onPressed: () {
+                                        print('press question');
+                                        showStudentInfoPopUp(context);
+                                      },
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.question,
+                                        size: 20,
+                                      ),
+                                    );
                             }
-                        }
-                      },
-                    );
-            }
-          }),
+                          }),
+                    ],
+                  ),
+                  body: StreamBuilder(
+                    stream: _firestore
+                        .collection('UserData')
+                        .document(_email)
+                        .collection('Classes')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(
+                            child: Container(),
+                          );
+                        default:
+                          if (snapshot.data != null &&
+                              snapshot.data.documents.isEmpty == false) {
+                            return ListView(
+                              physics: BouncingScrollPhysics(),
+                              children: snapshot.data.documents
+                                  .map((DocumentSnapshot document) {
+                                return StudentClass(
+                                  classId: document.documentID,
+                                  email: _email,
+                                );
+                              }).toList(),
+                            );
+                          } else {
+                            return Center(
+                              child: Text('no classes'),
+                            );
+                          }
+                      }
+                    },
+                  ),
+                );
+        }
+      },
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -53,64 +54,45 @@ class _JoinClassState extends State<JoinClass> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: NavStudent(),
-      appBar: AppBar(
-        title: Text('Join a Class'),
-        centerTitle: true,
-        backgroundColor: kWetAsphaltColor,
-      ),
-      body: StreamBuilder(
-          stream: _firestore
-              .collection('Application Management')
-              .document('ServerManagement')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Text('');
-            } else {
-              return snapshot.data['serversAreUp'] == false
-                  ? Center(
-                      child: Text(
-                        'Servers are down',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                      ),
-                    )
-                  : Center(
-                      child: Column(
-                        children: [
-                          PinCodeTextField(
-                            length: 4,
-                            onChanged: null,
-                            onCompleted: (completedPins) {
-                              setState(() {
-                                pins = completedPins;
-                              });
-                            },
-                          ),
-                          FlatButton(
-                            child: Text('Join'),
-                            onPressed: () async {
-                              String result = await _fire.joinClass(
-                                  pins, _email, _studentName);
-                              print(result);
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Application Management')
+          .document('ServerManagement')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text('');
+        } else {
+          return snapshot.data['serversAreUp'] == false
+              ? ServersDown()
+              : Scaffold(
+                  key: _scaffoldKey,
+                  drawer: NavStudent(),
+                  appBar: AppBar(
+                    title: Text('Join a Class'),
+                    centerTitle: true,
+                    backgroundColor: kWetAsphaltColor,
+                  ),
+                  body: Center(
+                    child: Column(
+                      children: [
+                        PinCodeTextField(
+                          length: 4,
+                          onChanged: null,
+                          onCompleted: (completedPins) {
+                            setState(() {
+                              pins = completedPins;
+                            });
+                          },
+                        ),
+                        FlatButton(
+                          child: Text('Join'),
+                          onPressed: () async {
+                            String result = await _fire.joinClass(
+                                pins, _email, _studentName);
+                            print(result);
 
-                              if (result == 'You have joined the class!') {
-                                final snackBar = SnackBar(
-                                  content: Text(result),
-                                  action: SnackBarAction(
-                                    label: 'Hide',
-                                    onPressed: () {
-                                      _scaffoldKey.currentState
-                                          .hideCurrentSnackBar();
-                                    },
-                                  ),
-                                );
-
-                                _scaffoldKey.currentState
-                                    .showSnackBar(snackBar);
-                              }
+                            if (result == 'You have joined the class!') {
                               final snackBar = SnackBar(
                                 content: Text(result),
                                 action: SnackBarAction(
@@ -123,13 +105,27 @@ class _JoinClassState extends State<JoinClass> {
                               );
 
                               _scaffoldKey.currentState.showSnackBar(snackBar);
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-            }
-          }),
+                            }
+                            final snackBar = SnackBar(
+                              content: Text(result),
+                              action: SnackBarAction(
+                                label: 'Hide',
+                                onPressed: () {
+                                  _scaffoldKey.currentState
+                                      .hideCurrentSnackBar();
+                                },
+                              ),
+                            );
+
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+        }
+      },
     );
   }
 }

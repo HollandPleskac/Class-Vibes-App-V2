@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -71,56 +72,49 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavStudent(),
-      appBar: AppBar(
-        title: Text('Student Announcements'),
-        centerTitle: true,
-        backgroundColor: kWetAsphaltColor,
-      ),
-      body: StreamBuilder(
-          stream: _firestore
-              .collection('Application Management')
-              .document('ServerManagement')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Text('');
-            } else {
-              return snapshot.data['serversAreUp'] == false
-                  ? Center(
-                      child: Text(
-                        'Servers are down',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                      ),
-                    )
-                  : Center(
-                      child: announcements.length != 0
-                          ? ListView(
-                              children: announcements.map(
-                                (announcement) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 20,
-                                        left: 40,
-                                        right: 40,
-                                        bottom: 20),
-                                    child: Announcement(
-                                      announcement['content'],
-                                      DateTime.parse(announcement['timestamp']
-                                          .toDate()
-                                          .toString()),
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                            )
-                          : Center(
-                              child: Text('no announcements'),
-                            ),
-                    );
-            }
-          }),
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Application Management')
+          .document('ServerManagement')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text('');
+        } else {
+          return snapshot.data['serversAreUp'] == false
+              ? ServersDown()
+              : Scaffold(
+                  drawer: NavStudent(),
+                  appBar: AppBar(
+                    title: Text('Student Announcements'),
+                    centerTitle: true,
+                    backgroundColor: kWetAsphaltColor,
+                  ),
+                  body: Center(
+                    child: announcements.length != 0
+                        ? ListView(
+                            children: announcements.map(
+                              (announcement) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 20, left: 40, right: 40, bottom: 20),
+                                  child: Announcement(
+                                    announcement['content'],
+                                    DateTime.parse(announcement['timestamp']
+                                        .toDate()
+                                        .toString()),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          )
+                        : Center(
+                            child: Text('no announcements'),
+                          ),
+                  ),
+                );
+        }
+      },
     );
   }
 }

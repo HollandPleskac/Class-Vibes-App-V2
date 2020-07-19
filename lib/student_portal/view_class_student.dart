@@ -1,4 +1,5 @@
 import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -46,68 +47,63 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
 
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: kWetAsphaltColor,
-          title: Text('className'),
-          centerTitle: true,
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(text: 'Overview'),
-              Tab(text: 'Meetings'),
-              Tab(text: 'Announcements'),
-              Tab(
-                text: 'Chat',
-              )
-            ],
-          ),
-        ),
-        body: StreamBuilder(
-            stream: _firestore
-                .collection('Application Management')
-                .document('ServerManagement')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                return snapshot.data['serversAreUp'] == false
-                    ? Center(
-                        child: Text(
-                          'Servers are down',
-                          style:
-                              TextStyle(color: Colors.grey[800], fontSize: 18),
-                        ),
-                      )
-                    : TabBarView(
-                        children: [
-                          Container(
-                            child: ClassOverViewStudent(
-                              classId: classId,
-                              email: _email,
-                            ),
-                          ),
-                          Container(
-                            child: ClassMeetingsStudent(
-                              classId: classId,
-                            ),
-                          ),
-                          Container(
-                            child: ClassAnnouncementsStudent(
-                              classId: classId,
-                            ),
-                          ),
-                          Container(
-                            child: ChatStudent(
-                              email: _email,
-                              classId: classId,
-                            ),
-                          ),
+      child: StreamBuilder(
+        stream: _firestore
+            .collection('Application Management')
+            .document('ServerManagement')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('');
+          } else {
+            return snapshot.data['serversAreUp'] == false
+                ? ServersDown()
+                : Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: kWetAsphaltColor,
+                      title: Text('className'),
+                      centerTitle: true,
+                      bottom: TabBar(
+                        isScrollable: true,
+                        tabs: [
+                          Tab(text: 'Overview'),
+                          Tab(text: 'Meetings'),
+                          Tab(text: 'Announcements'),
+                          Tab(
+                            text: 'Chat',
+                          )
                         ],
-                      );
-              }
-            }),
+                      ),
+                    ),
+                    body: TabBarView(
+                      children: [
+                        Container(
+                          child: ClassOverViewStudent(
+                            classId: classId,
+                            email: _email,
+                          ),
+                        ),
+                        Container(
+                          child: ClassMeetingsStudent(
+                            classId: classId,
+                          ),
+                        ),
+                        Container(
+                          child: ClassAnnouncementsStudent(
+                            classId: classId,
+                          ),
+                        ),
+                        Container(
+                          child: ChatStudent(
+                            email: _email,
+                            classId: classId,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+          }
+        },
       ),
     );
   }
