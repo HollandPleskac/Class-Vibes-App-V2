@@ -82,31 +82,52 @@ class _ViewClassState extends State<ViewClass> {
             ],
           ),
         ),
-        body: TabBarView(children: [
-          Container(
-            child: StudentsTab(
-              teacherEmail: _email,
-              classId: classId,
-            ),
-          ),
-          Container(
-            child: ClassMeetings(
-              teacherEmail: _email,
-              classId: classId,
-            ),
-          ),
-          Container(
-            child: ClassAnnouncements(
-              classId: classId,
-            ),
-          ),
-          Container(
-            child: ClassSettings(
-              classId: classId,
-              email: _email,
-            ),
-          ),
-        ]),
+        body: StreamBuilder(
+            stream: _firestore
+                .collection('Application Management')
+                .document('ServerManagement')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                return snapshot.data['serversAreUp'] == false
+                    ? Center(
+                        child: Text(
+                          'Servers are down',
+                          style:
+                              TextStyle(color: Colors.grey[800], fontSize: 18),
+                        ),
+                      )
+                    : TabBarView(
+                        children: [
+                          Container(
+                            child: StudentsTab(
+                              teacherEmail: _email,
+                              classId: classId,
+                            ),
+                          ),
+                          Container(
+                            child: ClassMeetings(
+                              teacherEmail: _email,
+                              classId: classId,
+                            ),
+                          ),
+                          Container(
+                            child: ClassAnnouncements(
+                              classId: classId,
+                            ),
+                          ),
+                          Container(
+                            child: ClassSettings(
+                              classId: classId,
+                              email: _email,
+                            ),
+                          ),
+                        ],
+                      );
+              }
+            }),
       ),
     );
   }
