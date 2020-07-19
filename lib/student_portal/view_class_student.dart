@@ -1,5 +1,6 @@
 import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
 import './chat_student.dart';
@@ -9,6 +10,7 @@ import './class_overview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+final Firestore _firestore = Firestore.instance;
 
 class ViewClassStudent extends StatefulWidget {
   static const routename = 'view-class-student-screen';
@@ -19,7 +21,7 @@ class ViewClassStudent extends StatefulWidget {
 class _ViewClassStudentState extends State<ViewClassStudent> {
   String _email;
 
- Future getTeacherEmail() async {
+  Future getTeacherEmail() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
     final email = user.email;
 
@@ -61,30 +63,51 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
             ],
           ),
         ),
-        body: TabBarView(children: [
-          Container(
-            child: ClassOverViewStudent(
-              classId: classId,
-              email: _email,
-            ),
-          ),
-          Container(
-            child: ClassMeetingsStudent(
-              classId: classId,
-            ),
-          ),
-          Container(
-            child: ClassAnnouncementsStudent(
-              classId: classId,
-            ),
-          ),
-          Container(
-            child: ChatStudent(
-              email: _email,
-              classId: classId,
-            ),
-          ),
-        ]),
+        body: StreamBuilder(
+            stream: _firestore
+                .collection('Application Management')
+                .document('ServerManagement')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                return snapshot.data['serversAreUp'] == false
+                    ? Center(
+                        child: Text(
+                          'Servers are down',
+                          style:
+                              TextStyle(color: Colors.grey[800], fontSize: 18),
+                        ),
+                      )
+                    : TabBarView(
+                        children: [
+                          Container(
+                            child: ClassOverViewStudent(
+                              classId: classId,
+                              email: _email,
+                            ),
+                          ),
+                          Container(
+                            child: ClassMeetingsStudent(
+                              classId: classId,
+                            ),
+                          ),
+                          Container(
+                            child: ClassAnnouncementsStudent(
+                              classId: classId,
+                            ),
+                          ),
+                          Container(
+                            child: ChatStudent(
+                              email: _email,
+                              classId: classId,
+                            ),
+                          ),
+                        ],
+                      );
+              }
+            }),
       ),
     );
   }
