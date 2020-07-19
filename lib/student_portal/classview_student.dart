@@ -64,69 +64,60 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
         ],
       ),
       body: StreamBuilder(
-        stream: _firestore
-            .collection('UserData')
-            .document(_email)
-            .collection('Classes')
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(
-                child: Container(),
-              );
-            default:
-              if (snapshot.data != null &&
-                  snapshot.data.documents.isEmpty == false) {
-                return ListView(
-                  physics: BouncingScrollPhysics(),
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    return StudentClass(
-                      classId: document.documentID,
-                      email: _email,
+          stream: _firestore
+              .collection('Application Management')
+              .document('ServerManagement')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Text('');
+            } else {
+              return snapshot.data['serversAreUp'] == false
+                  ? Center(
+                      child: Text(
+                        'Servers are down',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
+                      ),
+                    )
+                  : StreamBuilder(
+                      stream: _firestore
+                          .collection('UserData')
+                          .document(_email)
+                          .collection('Classes')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Center(
+                              child: Container(),
+                            );
+                          default:
+                            if (snapshot.data != null &&
+                                snapshot.data.documents.isEmpty == false) {
+                              return ListView(
+                                physics: BouncingScrollPhysics(),
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return StudentClass(
+                                    classId: document.documentID,
+                                    email: _email,
+                                  );
+                                }).toList(),
+                              );
+                            } else {
+                              return Center(
+                                child: Text('no classes'),
+                              );
+                            }
+                        }
+                      },
                     );
-                  }).toList(),
-                );
-              } else {
-                return Center(
-                  child: Text('no classes'),
-                );
-              }
-          }
-        },
-      ),
-      // body: StreamBuilder(
-      //     stream: _firestore
-      //         .collection('UserData')
-      //         .document(_email)
-      //         .collection('Classes')
-      //         .snapshots(),
-      //     builder:
-      //         (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      //       print('SNAP : ' + snapshot.data.toString());
-      //       if (!snapshot.hasData) {
-      //         return Center(
-      //           child: Container(),
-      //         );
-      //       }
-
-      //       return Center(
-      //         child: ListView(
-      //           children:
-      //               snapshot.data.documents.map((DocumentSnapshot document) {
-      //             return StudentClass(
-      //               className: document['class name'],
-      //               classId: document.documentID,
-      //               email: _email,
-      //             );
-      //           }).toList(),
-      //         ),
-      //       );
-      //     }),
+            }
+          }),
     );
   }
 }
