@@ -143,109 +143,14 @@ class StudentsTab extends StatefulWidget {
 }
 
 class _StudentsTabState extends State<StudentsTab> {
-  bool _isTouchedAll = true;
-  bool _isTouchedDoingGreat = false;
-  bool _isTouchedNeedHelp = false;
-  bool _isTouchedFrustrated = false;
-  bool _isTouchedInactive = false;
+
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         DynamicPieChart(widget.classId),
-        Container(
-          height: 32.5,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: FilterAll(
-                  isTouched: _isTouchedAll,
-                  onClick: () => setState(() {
-                    _isTouchedAll = true;
-                    _isTouchedDoingGreat = false;
-                    _isTouchedNeedHelp = false;
-                    _isTouchedFrustrated = false;
-                    _isTouchedInactive = false;
-                  }),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: FilterDoingGreat(
-                  isTouched: _isTouchedDoingGreat,
-                  onClick: () => setState(() {
-                    _isTouchedAll = false;
-                    _isTouchedDoingGreat = true;
-                    _isTouchedNeedHelp = false;
-                    _isTouchedFrustrated = false;
-                    _isTouchedInactive = false;
-                  }),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: FilterNeedHelp(
-                  isTouched: _isTouchedNeedHelp,
-                  onClick: () => setState(() {
-                    _isTouchedAll = false;
-                    _isTouchedDoingGreat = false;
-                    _isTouchedNeedHelp = true;
-                    _isTouchedFrustrated = false;
-                    _isTouchedInactive = false;
-                  }),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: FilterFrustrated(
-                  isTouched: _isTouchedFrustrated,
-                  onClick: () => setState(() {
-                    _isTouchedAll = false;
-                    _isTouchedDoingGreat = false;
-                    _isTouchedNeedHelp = false;
-                    _isTouchedFrustrated = true;
-                    _isTouchedInactive = false;
-                  }),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 10),
-                child: FilterInactive(
-                  isTouched: _isTouchedInactive,
-                  onClick: () => setState(() {
-                    _isTouchedAll = false;
-                    _isTouchedDoingGreat = false;
-                    _isTouchedNeedHelp = false;
-                    _isTouchedFrustrated = false;
-                    _isTouchedInactive = true;
-                  }),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          height: 360,
-          child: _isTouchedAll == true
-              ? AllTab(widget.classId, widget.teacherEmail)
-              : _isTouchedDoingGreat
-                  ? DoingGreatTab(widget.classId, widget.teacherEmail)
-                  : _isTouchedNeedHelp
-                      ? NeedHelpTab(widget.classId, widget.teacherEmail)
-                      : _isTouchedFrustrated
-                          ? FrustratedTab(widget.classId, widget.teacherEmail)
-                          : _isTouchedInactive
-                              ? InactiveTab(widget.classId, widget.teacherEmail)
-                              : Text(
-                                  'IMPORTANT - this text will never show since one of the first values will always be true'),
-        ),
+        FilterView(classId: widget.classId,teacherEmail: widget.teacherEmail,),
       ],
     );
   }
@@ -380,6 +285,123 @@ class DynamicPieChart extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+class FilterView extends StatefulWidget {
+  final String classId;
+  final String teacherEmail;
+
+  FilterView({this.classId,this.teacherEmail});
+  @override
+  _FilterViewState createState() => _FilterViewState();
+}
+
+class _FilterViewState extends State<FilterView> {
+    bool _isTouchedAll = true;
+  bool _isTouchedDoingGreat = false;
+  bool _isTouchedNeedHelp = false;
+  bool _isTouchedFrustrated = false;
+  bool _isTouchedInactive = false;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+              height: 32.5,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                physics: BouncingScrollPhysics(),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: FilterAll(
+                      isTouched: _isTouchedAll,
+                      onClick: () => setState(() {
+                        _isTouchedAll = true;
+                        _isTouchedDoingGreat = false;
+                        _isTouchedNeedHelp = false;
+                        _isTouchedFrustrated = false;
+                        _isTouchedInactive = false;
+                      }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: FilterDoingGreat(
+                      isTouched: _isTouchedDoingGreat,
+                      onClick: () => setState(() {
+                        _isTouchedAll = false;
+                        _isTouchedDoingGreat = true;
+                        _isTouchedNeedHelp = false;
+                        _isTouchedFrustrated = false;
+                        _isTouchedInactive = false;
+                      }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: FilterNeedHelp(
+                      isTouched: _isTouchedNeedHelp,
+                      onClick: () => setState(() {
+                        _isTouchedAll = false;
+                        _isTouchedDoingGreat = false;
+                        _isTouchedNeedHelp = true;
+                        _isTouchedFrustrated = false;
+                        _isTouchedInactive = false;
+                      }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: FilterFrustrated(
+                      isTouched: _isTouchedFrustrated,
+                      onClick: () => setState(() {
+                        _isTouchedAll = false;
+                        _isTouchedDoingGreat = false;
+                        _isTouchedNeedHelp = false;
+                        _isTouchedFrustrated = true;
+                        _isTouchedInactive = false;
+                      }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 10),
+                    child: FilterInactive(
+                      isTouched: _isTouchedInactive,
+                      onClick: () => setState(() {
+                        _isTouchedAll = false;
+                        _isTouchedDoingGreat = false;
+                        _isTouchedNeedHelp = false;
+                        _isTouchedFrustrated = false;
+                        _isTouchedInactive = true;
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+              SizedBox(
+          height: 20,
+        ),
+        Container(
+          height: 360,
+          child: _isTouchedAll == true
+              ? AllTab(widget.classId, widget.teacherEmail)
+              : _isTouchedDoingGreat
+                  ? DoingGreatTab(widget.classId, widget.teacherEmail)
+                  : _isTouchedNeedHelp
+                      ? NeedHelpTab(widget.classId, widget.teacherEmail)
+                      : _isTouchedFrustrated
+                          ? FrustratedTab(widget.classId, widget.teacherEmail)
+                          : _isTouchedInactive
+                              ? InactiveTab(widget.classId, widget.teacherEmail)
+                              : Text(
+                                  'IMPORTANT - this text will never show since one of the first values will always be true'),
+        ),
+      ],
+    );
+      
   }
 }
 
