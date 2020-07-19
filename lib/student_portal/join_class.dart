@@ -61,54 +61,75 @@ class _JoinClassState extends State<JoinClass> {
         centerTitle: true,
         backgroundColor: kWetAsphaltColor,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            PinCodeTextField(
-              length: 4,
-              onChanged: null,
-              onCompleted: (completedPins) {
-                setState(() {
-                  pins = completedPins;
-                });
-              },
-            ),
-            FlatButton(
-              child: Text('Join'),
-              onPressed: () async {
-                String result =
-                    await _fire.joinClass(pins, _email, _studentName);
-                print(result);
+      body: StreamBuilder(
+          stream: _firestore
+              .collection('Application Management')
+              .document('ServerManagement')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Text('');
+            } else {
+              return snapshot.data['serversAreUp'] == false
+                  ? Center(
+                      child: Text(
+                        'Servers are down',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
+                      ),
+                    )
+                  : Center(
+                      child: Column(
+                        children: [
+                          PinCodeTextField(
+                            length: 4,
+                            onChanged: null,
+                            onCompleted: (completedPins) {
+                              setState(() {
+                                pins = completedPins;
+                              });
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('Join'),
+                            onPressed: () async {
+                              String result = await _fire.joinClass(
+                                  pins, _email, _studentName);
+                              print(result);
 
-                if (result == 'You have joined the class!') {
-                  final snackBar = SnackBar(
-                    content: Text(result),
-                    action: SnackBarAction(
-                      label: 'Hide',
-                      onPressed: () {
-                        _scaffoldKey.currentState.hideCurrentSnackBar();
-                      },
-                    ),
-                  );
+                              if (result == 'You have joined the class!') {
+                                final snackBar = SnackBar(
+                                  content: Text(result),
+                                  action: SnackBarAction(
+                                    label: 'Hide',
+                                    onPressed: () {
+                                      _scaffoldKey.currentState
+                                          .hideCurrentSnackBar();
+                                    },
+                                  ),
+                                );
 
-                  _scaffoldKey.currentState.showSnackBar(snackBar);
-                }
-                final snackBar = SnackBar(
-                  content: Text(result),
-                  action: SnackBarAction(
-                    label: 'Hide',
-                    onPressed: () {
-                      _scaffoldKey.currentState.hideCurrentSnackBar();
-                    },
-                  ),
-                );
+                                _scaffoldKey.currentState
+                                    .showSnackBar(snackBar);
+                              }
+                              final snackBar = SnackBar(
+                                content: Text(result),
+                                action: SnackBarAction(
+                                  label: 'Hide',
+                                  onPressed: () {
+                                    _scaffoldKey.currentState
+                                        .hideCurrentSnackBar();
+                                  },
+                                ),
+                              );
 
-                _scaffoldKey.currentState.showSnackBar(snackBar);
-              },
-            ),
-          ],
-        ),
-      ),
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+            }
+          }),
     );
   }
 }
