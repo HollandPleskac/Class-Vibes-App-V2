@@ -135,7 +135,7 @@ class _StudentsTabState extends State<StudentsTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ChartSwitch(widget.classId),
+        DynamicPieChart(widget.classId),
         Container(
           height: 32.5,
           child: ListView(
@@ -365,48 +365,48 @@ class DynamicPieChart extends StatelessWidget {
   }
 }
 
-class ChartSwitch extends StatefulWidget {
-  final String classId;
-  ChartSwitch(this.classId);
-  @override
-  _ChartSwitchState createState() => _ChartSwitchState();
-}
+// class ChartSwitch extends StatefulWidget {
+//   final String classId;
+//   ChartSwitch(this.classId);
+//   @override
+//   _ChartSwitchState createState() => _ChartSwitchState();
+// }
 
-class _ChartSwitchState extends State<ChartSwitch> {
-  bool isSwitched = false;
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          right: 10,
-          top: 10,
-          child: Container(
-            height: 30,
-            child: Switch(
-              value: isSwitched,
-              onChanged: (value) {
-                print(value);
-                setState(() {
-                  isSwitched = value;
-                });
-              },
-            ),
-          ),
-        ),
-        isSwitched == false
-            ? DynamicPieChart(widget.classId)
-            : Padding(
-              padding: EdgeInsets.only(top:50),
-                child: LineChartSample1(),
-              ),
-        // : AspectRatio(
-        //     aspectRatio: 1.6,
-        //     child: Center(
-        //       child: Text('chart'),
-        //     ),
-        //   ),
-      ],
-    );
-  }
-}
+// class _ChartSwitchState extends State<ChartSwitch> {
+//   bool isSwitched = false;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Stack(
+//       children: [
+//         Positioned(
+//           right: 10,
+//           top: 10,
+//           child: Container(
+//             height: 30,
+//             child: Switch(
+//               value: isSwitched,
+//               onChanged: (value) {
+//                 print(value);
+//                 setState(() {
+//                   isSwitched = value;
+//                 });
+//               },
+//             ),
+//           ),
+//         ),
+//         isSwitched == false
+//             ? DynamicPieChart(widget.classId)
+//             : Padding(
+//               padding: EdgeInsets.only(top:50),
+//                 child: LineChartSample1(),
+//               ),
+//         // : AspectRatio(
+//         //     aspectRatio: 1.6,
+//         //     child: Center(
+//         //       child: Text('chart'),
+//         //     ),
+//         //   ),
+//       ],
+//     );
+//   }
+// }
