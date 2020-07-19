@@ -20,7 +20,7 @@ class MeetingsTeacher extends StatefulWidget {
 class _MeetingsTeacherState extends State<MeetingsTeacher> {
   String _teacherEmail;
 
-      Future getTeacherEmail() async {
+  Future getTeacherEmail() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
     final email = user.email;
 
@@ -46,52 +46,74 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
         centerTitle: true,
       ),
       body: StreamBuilder(
-        stream: _firestore
-            .collection('UserData')
-            .document(_teacherEmail)
-            .collection('Meetings')
-            .orderBy("timestamp", descending: false)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Center(
-                child: Container(),
-              );
-            default:
-              if (snapshot.data != null &&
-                  snapshot.data.documents.isEmpty == false) {
-                return ListView(
-                  physics: BouncingScrollPhysics(),
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          left: 40, right: 40, top: 20, bottom: 30),
-                      child: Meeting(
-                        className: document['class name'],
-                        dateAndTime: document['date and time'],
-                        length: document['time'],
-                        message: document['content'],
-                        studentName: document['student name'],
-                        title: document['title'],
-                        teacherEmail: _teacherEmail,
-                        classId: document['class id'],
+          stream: _firestore
+              .collection('Application Management')
+              .document('ServerManagement')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Text('');
+            } else {
+              return snapshot.data['serversAreUp'] == false
+                  ? Center(
+                      child: Text(
+                        'Servers are down',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
                       ),
+                    )
+                  : StreamBuilder(
+                      stream: _firestore
+                          .collection('UserData')
+                          .document(_teacherEmail)
+                          .collection('Meetings')
+                          .orderBy("timestamp", descending: false)
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Center(
+                              child: Container(),
+                            );
+                          default:
+                            if (snapshot.data != null &&
+                                snapshot.data.documents.isEmpty == false) {
+                              return ListView(
+                                physics: BouncingScrollPhysics(),
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 40,
+                                        right: 40,
+                                        top: 20,
+                                        bottom: 30),
+                                    child: Meeting(
+                                      className: document['class name'],
+                                      dateAndTime: document['date and time'],
+                                      length: document['time'],
+                                      message: document['content'],
+                                      studentName: document['student name'],
+                                      title: document['title'],
+                                      teacherEmail: _teacherEmail,
+                                      classId: document['class id'],
+                                    ),
+                                  );
+                                }).toList(),
+                              );
+                            } else {
+                              return Center(
+                                child: Text('no meetings'),
+                              );
+                            }
+                        }
+                      },
                     );
-                  }).toList(),
-                );
-              } else {
-                return Center(
-                  child: Text('no meetings'),
-                );
-              }
-          }
-        },
-      ),
+            }
+          }),
     );
   }
 }
