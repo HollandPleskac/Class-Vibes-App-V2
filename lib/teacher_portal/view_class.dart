@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
 import '../widgets/filter_btns.dart';
+import '../widgets/line_charts.dart';
 import '../constant.dart';
 import '../logic/fire.dart';
 import './class_settings.dart';
@@ -395,12 +396,16 @@ class _ChartSwitchState extends State<ChartSwitch> {
         ),
         isSwitched == false
             ? DynamicPieChart(widget.classId)
-            : AspectRatio(
-                aspectRatio: 1.6,
-                child: Center(
-                  child: Text('chart'),
-                ),
+            : Padding(
+              padding: EdgeInsets.only(top:50),
+                child: LineChartSample1(),
               ),
+        // : AspectRatio(
+        //     aspectRatio: 1.6,
+        //     child: Center(
+        //       child: Text('chart'),
+        //     ),
+        //   ),
       ],
     );
   }

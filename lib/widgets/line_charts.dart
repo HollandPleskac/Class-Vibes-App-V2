@@ -18,7 +18,7 @@ class LineChartSample1State extends State<LineChartSample1> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1.23,
+      aspectRatio: 1.6,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(18)),
@@ -192,7 +192,7 @@ class LineChartSample1State extends State<LineChartSample1> {
       colors: [
         const Color(0xff4af699),
       ],
-      barWidth: 8,
+      barWidth: 4,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: false,
@@ -214,7 +214,7 @@ class LineChartSample1State extends State<LineChartSample1> {
       colors: [
         const Color(0xffaa4cfc),
       ],
-      barWidth: 8,
+      barWidth: 4,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: false,
@@ -235,7 +235,7 @@ class LineChartSample1State extends State<LineChartSample1> {
       colors: const [
         Color(0xff27b6fc),
       ],
-      barWidth: 8,
+      barWidth: 4,
       isStrokeCapRound: true,
       dotData: FlDotData(
         show: false,
