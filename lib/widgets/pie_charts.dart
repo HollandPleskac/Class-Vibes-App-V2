@@ -422,7 +422,7 @@ class _PieChartSampleSmallState extends State<PieChartSampleSmall> {
 }
 
 ///
-///   INDICATOR CLASS - USED BY SAMPLE 2 FOR THE GRAPH KEY
+///   INDICATOR CLASS - USED BY SAMPLE 2 (big chart) FOR THE GRAPH KEY
 ///
 
 class Indicator extends StatelessWidget {

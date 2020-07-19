@@ -46,7 +46,7 @@ class AllTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no data'),
+                child: Text('no students'),
               );
             }
         }
@@ -102,7 +102,7 @@ class DoingGreatTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no data'),
+                child: Text('no students'),
               );
             }
         }
@@ -158,7 +158,7 @@ class NeedHelpTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no data'),
+                child: Text('no students'),
               );
             }
         }
@@ -214,7 +214,7 @@ class FrustratedTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no data'),
+                child: Text('no students'),
               );
             }
         }
@@ -269,7 +269,7 @@ class InactiveTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no data'),
+                child: Text('no students'),
               );
             }
         }

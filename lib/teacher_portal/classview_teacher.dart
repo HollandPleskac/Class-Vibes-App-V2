@@ -444,7 +444,7 @@ class DynamicPieChart extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1.6,
                   child: Center(
-                    child: Text('no graph'),
+                    child: Text('no students'),
                   ),
                 ),
               );
