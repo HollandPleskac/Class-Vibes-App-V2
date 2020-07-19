@@ -174,158 +174,156 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      drawer: NavTeacher(),
-      // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
-      appBar: AppBar(
-        backgroundColor: kWetAsphaltColor,
-        title: Text(
-          'Teacher Classes',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        actions: [
-          StreamBuilder(
-            stream: _firestore
-                .collection('Application Management')
-                .document('ServerManagement')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                return snapshot.data['serversAreUp'] == false
-                    ? Container()
-                    : IconButton(
-                        onPressed: () {
-                          _showModalSheetEditUserName(_email);
-                        },
-                        icon: Icon(Icons.add),
-                      );
-              }
-            },
-          )
-        ],
-      ),
-      body: StreamBuilder(
-          stream: _firestore
-              .collection('Application Management')
-              .document('ServerManagement')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Text('');
-            } else {
-              return snapshot.data['serversAreUp'] == false
-                  ? Center(
-                      child: Text(
-                        'Servers are down',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                      ),
-                    )
-                  : Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: StreamBuilder(
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Application Management')
+          .document('ServerManagement')
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text('');
+        } else {
+          return snapshot.data['serversAreUp'] == false
+              ? Center(
+                  child: Text(
+                    'Servers are down',
+                    style: TextStyle(color: Colors.grey[800], fontSize: 18),
+                  ),
+                )
+              : Scaffold(
+                  key: _scaffoldKey,
+                  drawer: NavTeacher(),
+                  // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
+                  appBar: AppBar(
+                    backgroundColor: kWetAsphaltColor,
+                    title: Text(
+                      'Teacher Classes',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    centerTitle: true,
+                    actions: [
+                      StreamBuilder(
                         stream: _firestore
-                            .collection('UserData')
-                            .document(_email)
-                            .collection('Classes')
+                            .collection('Application Management')
+                            .document('ServerManagement')
                             .snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          } else {
+                            return snapshot.data['serversAreUp'] == false
+                                ? Container()
+                                : IconButton(
+                                    onPressed: () {
+                                      _showModalSheetEditUserName(_email);
+                                    },
+                                    icon: Icon(Icons.add),
+                                  );
                           }
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
+                        },
+                      )
+                    ],
+                  ),
+                  body: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: StreamBuilder(
+                      stream: _firestore
+                          .collection('UserData')
+                          .document(_email)
+                          .collection('Classes')
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Center(
+                              child: Container(),
+                            );
+                          default:
+                            if (snapshot.data != null &&
+                                snapshot.data.documents.isEmpty == false) {
                               return Center(
-                                child: Container(),
-                              );
-                            default:
-                              if (snapshot.data != null &&
-                                  snapshot.data.documents.isEmpty == false) {
-                                return Center(
-                                  child: GridView.count(
-                                    physics: BouncingScrollPhysics(),
-                                    primary: false,
-                                    padding: const EdgeInsets.all(40),
-                                    crossAxisSpacing: 15,
-                                    mainAxisSpacing: 10,
-                                    crossAxisCount: 2,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            ViewClass.routeName,
-                                            arguments: {
-                                              'class name':
-                                                  document['class name'],
-                                              'class id': document.documentID,
-                                            },
-                                          );
-                                        },
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              // color: Colors.red,
-                                              width: double.infinity,
-                                              child: Padding(
-                                                padding: EdgeInsets.all(8),
-                                                child: Card(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      DynamicPieChart(
-                                                          classId: document
-                                                              .documentID),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 25),
-                                                        child: Text(
-                                                          document[
-                                                              'class name'],
-                                                          style: kSubTextStyle
-                                                              .copyWith(
-                                                                  fontSize: 16),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(14),
+                                child: GridView.count(
+                                  physics: BouncingScrollPhysics(),
+                                  primary: false,
+                                  padding: const EdgeInsets.all(40),
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 10,
+                                  crossAxisCount: 2,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          ViewClass.routeName,
+                                          arguments: {
+                                            'class name':
+                                                document['class name'],
+                                            'class id': document.documentID,
+                                          },
+                                        );
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            // color: Colors.red,
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8),
+                                              child: Card(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 10,
                                                     ),
+                                                    DynamicPieChart(
+                                                        classId: document
+                                                            .documentID),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 25),
+                                                      child: Text(
+                                                        document['class name'],
+                                                        style: kSubTextStyle
+                                                            .copyWith(
+                                                                fontSize: 16),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(14),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                );
-                              } else {
-                                return Center(
-                                  child: Text('no classes'),
-                                );
-                              }
-                          }
-                        },
-                      ),
-                    );
-            }
-          }),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            } else {
+                              return Center(
+                                child: Text('no classes'),
+                              );
+                            }
+                        }
+                      },
+                    ),
+                  ),
+                );
+        }
+      },
     );
   }
 }

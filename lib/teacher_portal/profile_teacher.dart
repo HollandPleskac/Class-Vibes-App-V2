@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -155,31 +156,27 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavTeacher(),
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: kWetAsphaltColor,
-        centerTitle: true,
-      ),
-      body: StreamBuilder(
-          stream: _firestore
-              .collection('Application Management')
-              .document('ServerManagement')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Text('');
-            } else {
-              return snapshot.data['serversAreUp'] == false
-                  ? Center(
-                      child: Text(
-                        'Servers are down',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                      ),
-                    )
-                  : ListView(
+    return StreamBuilder(
+        stream: _firestore
+            .collection('Application Management')
+            .document('ServerManagement')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            
+            return Text('');
+          } else {
+            return snapshot.data['serversAreUp'] == false
+                ? ServersDown()
+                : Scaffold(
+                    drawer: NavTeacher(),
+                    backgroundColor: Colors.white,
+                    appBar: AppBar(
+                      title: Text('Profile'),
+                      backgroundColor: kWetAsphaltColor,
+                      centerTitle: true,
+                    ),
+                    body: ListView(
                       children: [
                         SizedBox(
                           height: 60,
@@ -355,31 +352,10 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           ),
                         )
                       ],
-                    );
-            }
-          }),
-    );
+                    ),
+                  );
+          }
+        });
   }
 }
 
-//for later to copy
-
-// body: StreamBuilder(
-//           stream: _firestore
-//               .collection('Application Management')
-//               .document('ServerManagement')
-//               .snapshots(),
-//           builder: (context, snapshot) {
-//             if (!snapshot.hasData) {
-//               return Text('');
-//             } else {
-//               return snapshot.data['serversAreUp'] == false
-//                   ? Center(
-//                       child: Text(
-//                         'Servers are down',
-//                         style: TextStyle(color: Colors.grey[800], fontSize: 18),
-//                       ),
-//                     )
-//                   : Text('text goes here for screen');
-//             }
-//           }),

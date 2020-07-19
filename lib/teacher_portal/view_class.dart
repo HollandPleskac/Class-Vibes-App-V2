@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -49,85 +50,82 @@ class _ViewClassState extends State<ViewClass> {
 
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          backgroundColor: kWetAsphaltColor,
-          title: StreamBuilder(
-            stream:
-                _firestore.collection('Classes').document(classId).snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                try {
-                  return Text(
-                    snapshot.data['class name'],
-                  );
-                } catch (error) {
-                  //this check for classid is used to prevent a red error from occurring when deleting a class
-                  return Container();
-                }
-              }
-            },
-          ),
-          centerTitle: true,
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: [
-              Tab(text: 'Students'),
-              Tab(text: 'Meetings'),
-              Tab(text: 'Announcements'),
-              Tab(text: 'Settings'),
-            ],
-          ),
-        ),
-        body: StreamBuilder(
-            stream: _firestore
-                .collection('Application Management')
-                .document('ServerManagement')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                return snapshot.data['serversAreUp'] == false
-                    ? Center(
-                        child: Text(
-                          'Servers are down',
-                          style:
-                              TextStyle(color: Colors.grey[800], fontSize: 18),
-                        ),
-                      )
-                    : TabBarView(
-                        children: [
-                          Container(
-                            child: StudentsTab(
-                              teacherEmail: _email,
-                              classId: classId,
-                            ),
-                          ),
-                          Container(
-                            child: ClassMeetings(
-                              teacherEmail: _email,
-                              classId: classId,
-                            ),
-                          ),
-                          Container(
-                            child: ClassAnnouncements(
-                              classId: classId,
-                            ),
-                          ),
-                          Container(
-                            child: ClassSettings(
-                              classId: classId,
-                              email: _email,
-                            ),
-                          ),
+      child: StreamBuilder(
+        stream: _firestore
+            .collection('Application Management')
+            .document('ServerManagement')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('');
+          } else {
+            return snapshot.data['serversAreUp'] == false
+                ? ServersDown()
+                : Scaffold(
+                    resizeToAvoidBottomPadding: false,
+                    appBar: AppBar(
+                      backgroundColor: kWetAsphaltColor,
+                      title: StreamBuilder(
+                        stream: _firestore
+                            .collection('Classes')
+                            .document(classId)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          } else {
+                            try {
+                              return Text(
+                                snapshot.data['class name'],
+                              );
+                            } catch (error) {
+                              //this check for classid is used to prevent a red error from occurring when deleting a class
+                              return Container();
+                            }
+                          }
+                        },
+                      ),
+                      centerTitle: true,
+                      bottom: TabBar(
+                        isScrollable: true,
+                        tabs: [
+                          Tab(text: 'Students'),
+                          Tab(text: 'Meetings'),
+                          Tab(text: 'Announcements'),
+                          Tab(text: 'Settings'),
                         ],
-                      );
-              }
-            }),
+                      ),
+                    ),
+                    body: TabBarView(
+                      children: [
+                        Container(
+                          child: StudentsTab(
+                            teacherEmail: _email,
+                            classId: classId,
+                          ),
+                        ),
+                        Container(
+                          child: ClassMeetings(
+                            teacherEmail: _email,
+                            classId: classId,
+                          ),
+                        ),
+                        Container(
+                          child: ClassAnnouncements(
+                            classId: classId,
+                          ),
+                        ),
+                        Container(
+                          child: ClassSettings(
+                            classId: classId,
+                            email: _email,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+          }
+        },
       ),
     );
   }
