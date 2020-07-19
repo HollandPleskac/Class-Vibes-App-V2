@@ -51,16 +51,29 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              print('press question');
-              showStudentInfoPopUp(context);
-            },
-            icon: FaIcon(
-              FontAwesomeIcons.question,
-              size: 20,
-            ),
-          ),
+          StreamBuilder(
+              stream: _firestore
+                  .collection('Application Management')
+                  .document('ServerManagement')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text('');
+                } else {
+                  return snapshot.data['serversAreUp'] == false
+                      ? Container()
+                      : IconButton(
+                          onPressed: () {
+                            print('press question');
+                            showStudentInfoPopUp(context);
+                          },
+                          icon: FaIcon(
+                            FontAwesomeIcons.question,
+                            size: 20,
+                          ),
+                        );
+                }
+              }),
         ],
       ),
       body: StreamBuilder(
