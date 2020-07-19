@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -35,12 +36,7 @@ class _StudentLoginState extends State<StudentLogin> {
               return Text('');
             } else {
               return snapshot.data['serversAreUp'] == false
-                  ? Center(
-                      child: Text(
-                        'Servers are down',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                      ),
-                    )
+                  ? ServersDown()
                   : ListView(
                       children: [
                         SizedBox(
