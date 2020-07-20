@@ -142,10 +142,21 @@ class StudentClass extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    Future getClassName() async {
+      return await _firestore
+          .collection('Classes')
+          .document(classId)
+          .get()
+          .then(
+            (docSnap) => docSnap.data['class name'],
+          );
+    }
+
     return GestureDetector(
-      onTap: () =>
+      onTap: () async =>
           Navigator.pushNamed(context, ViewClassStudent.routename, arguments: {
         'class id': classId,
+        'class name': await getClassName(),
       }),
       child: Container(
         height: 115,

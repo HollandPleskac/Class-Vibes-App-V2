@@ -44,6 +44,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String classId = routeArguments['class id'];
+    final String className = routeArguments['class name'];
 
     return DefaultTabController(
       length: 4,
@@ -61,7 +62,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                 : Scaffold(
                     appBar: AppBar(
                       backgroundColor: kWetAsphaltColor,
-                      title: Text('className'),
+                      title: Text(className),
                       centerTitle: true,
                       bottom: TabBar(
                         isScrollable: true,
