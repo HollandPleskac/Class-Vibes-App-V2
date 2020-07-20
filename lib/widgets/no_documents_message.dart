@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../constant.dart';
 
 class NoDocsClassViewStudent extends StatelessWidget {
   @override
@@ -7,27 +10,63 @@ class NoDocsClassViewStudent extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('PIC'),
+          SvgPicture.asset(
+            'assets/svg/undraw_no_data_qbuo.svg',
+            width: MediaQuery.of(context).size.width * 0.475,
+          ),
           SizedBox(
-            height: 50,
+            height: 10,
           ),
-          Text('Nothing to see here'),
-           SizedBox(
-            height: 50,
+          Text(
+            'Nothing to see here',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 34,
+                color: Colors.grey[800]),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.add),
-              Text('Join a class (push) join class screen')
-            ],
+          SizedBox(
+            height: 20,
+          ),
+          FlatButton(
+            padding: EdgeInsets.only(right: 15),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            color: Color.fromRGBO(78, 115, 223, 1),
+            onPressed: () {},
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color:  Color.fromRGBO(70, 100, 210, 1),
+                      borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                  )),
+                  height: 50,
+                  width: 50,
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Join a class',
+                  style: TextStyle(color: Colors.white, fontSize: 21),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 }
-
 
 class NoDocsMeetingsStudent extends StatelessWidget {
   @override
@@ -41,12 +80,12 @@ class NoDocsMeetingsStudent extends StatelessWidget {
             height: 50,
           ),
           Text('Nothing much to see here. Just chill out'),
-           
         ],
       ),
     );
   }
 }
+
 class NoDocsAnnouncementsStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -59,7 +98,6 @@ class NoDocsAnnouncementsStudent extends StatelessWidget {
             height: 50,
           ),
           Text('Your all caught up, nothing to see here')
-           
         ],
       ),
     );
