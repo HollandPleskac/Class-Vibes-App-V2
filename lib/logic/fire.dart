@@ -204,7 +204,7 @@ class Fire {
     String newUserName,
   }) {
     _firestore.collection('UserData').document(uid).updateData({
-      'display-name': newUserName,
+      'display name': newUserName,
     });
   }
 

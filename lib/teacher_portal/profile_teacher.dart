@@ -303,7 +303,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                           return Text('');
                                         } else {
                                           return Text(
-                                            snapshot.data['display-name'],
+                                            snapshot.data['display name'],
                                             style: TextStyle(
                                                 color: Colors.grey[800],
                                                 fontSize: 18),

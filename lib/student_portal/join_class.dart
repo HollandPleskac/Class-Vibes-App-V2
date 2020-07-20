@@ -36,7 +36,7 @@ class _JoinClassState extends State<JoinClass> {
         .collection('UserData')
         .document(email)
         .get()
-        .then((docSnap) => docSnap.data['display-name']);
+        .then((docSnap) => docSnap.data['display name']);
 
     _studentName = nameOfStudent;
   }

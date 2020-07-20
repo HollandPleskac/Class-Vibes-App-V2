@@ -107,7 +107,7 @@ class Auth {
       {String email, String password, String username, String accountType}) {
     _firestore.collection('UserData').document(email).setData({
       'email': email,
-      'display-name': username,
+      'display name': username,
       'account type': accountType,
     });
   }
