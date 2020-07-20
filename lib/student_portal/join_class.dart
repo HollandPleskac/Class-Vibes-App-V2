@@ -78,12 +78,24 @@ class _JoinClassState extends State<JoinClass> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                       
+                        Text(
+                          'Enter your class code below',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.5,
                           child: PinCodeTextField(
                             backgroundColor: Colors.transparent,
-                            pinTheme: PinTheme.defaults(),
+                            pinTheme: PinTheme.defaults(
+                              activeColor: Colors.blue[600],
+                              inactiveColor: kWetAsphaltColor,
+                            ),
                             length: 4,
                             onChanged: null,
                             onCompleted: (completedPins) {
@@ -94,16 +106,26 @@ class _JoinClassState extends State<JoinClass> {
                           ),
                         ),
                         SizedBox(
-                          width: 20,
+                          height: 10,
                         ),
                         FlatButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          color: kPrimaryColor,
+                          padding: EdgeInsets.only(
+                            top: 10,
+                            bottom: 10,
+                            left: 17.5,
+                            right: 17.5,
+                          ),
+                          color: Color.fromRGBO(131, 158, 241, 1),
                           child: Text(
                             'Join Class',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           onPressed: () async {
                             String result = await _fire.joinClass(
