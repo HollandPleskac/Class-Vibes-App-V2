@@ -75,18 +75,36 @@ class _JoinClassState extends State<JoinClass> {
                   ),
                   body: Center(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        PinCodeTextField(
-                          length: 4,
-                          onChanged: null,
-                          onCompleted: (completedPins) {
-                            setState(() {
-                              pins = completedPins;
-                            });
-                          },
+                       
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: PinCodeTextField(
+                            backgroundColor: Colors.transparent,
+                            pinTheme: PinTheme.defaults(),
+                            length: 4,
+                            onChanged: null,
+                            onCompleted: (completedPins) {
+                              setState(() {
+                                pins = completedPins;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
                         ),
                         FlatButton(
-                          child: Text('Join'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          color: kPrimaryColor,
+                          child: Text(
+                            'Join Class',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                           onPressed: () async {
                             String result = await _fire.joinClass(
                                 pins, _email, _studentName);
