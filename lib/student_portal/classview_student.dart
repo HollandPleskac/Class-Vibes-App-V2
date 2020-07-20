@@ -10,6 +10,7 @@ import '../logic/fire.dart';
 import '../nav_student.dart';
 import './view_class_student.dart';
 import './chat_student.dart';
+import '../widgets/no_documents_message.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -119,7 +120,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                             );
                           } else {
                             return Center(
-                              child: Text('no classes'),
+                              child: NoDocsClassViewStudent(),
                             );
                           }
                       }
