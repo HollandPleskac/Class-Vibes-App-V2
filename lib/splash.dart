@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -53,19 +55,37 @@ class _SplashScreenState extends State<SplashScreen> {
         });
       });
     });
+    Timer(
+      Duration(seconds: 2),
+      () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => isCheckedAccount == true
+              ? accountType == 'Student'
+                  ? ClassViewStudent()
+                  : accountType == 'Teacher' ? ClassViewTeacher() : Welcome()
+              : Welcome(),
+        ),
+      ),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return isCheckedAccount == true
-        ? accountType == 'Student'
-            ? ClassViewStudent()
-            : accountType == 'Teacher' ? ClassViewTeacher() : Welcome()
-        : Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Splash Screen!'),
+            SizedBox(
+              height: 150,
             ),
-          );
+            CircularProgressIndicator(),
+          ],
+        ),
+      ),
+    );
   }
 }
