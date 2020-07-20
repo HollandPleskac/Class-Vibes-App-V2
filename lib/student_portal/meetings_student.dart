@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../widgets/no_documents_message.dart';
 import '../nav_student.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -92,7 +93,7 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
                             );
                           } else {
                             return Center(
-                              child: Text('no meetings'),
+                              child: NoDocsMeetingsStudent(),
                             );
                           }
                       }
