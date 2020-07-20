@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:class_vibes_v2/constant.dart';
+import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -61,6 +62,12 @@ class ClassOverViewStudent extends StatelessWidget {
               _fire.leaveClass(
                 classId: classId,
                 studentEmail: email,
+              );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ClassViewStudent(),
+                ),
               );
             },
             child: Text(
