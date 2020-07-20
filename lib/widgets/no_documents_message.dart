@@ -79,7 +79,37 @@ class NoDocsClassViewStudent extends StatelessWidget {
 class NoDocsMeetingsStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('no meetings');
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_Group_chat_unwm.svg',
+            width: MediaQuery.of(context).size.width * 0.475,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Scheduled Meetings',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 34,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Nothing much to see here. Just chill out.',
+            style: TextStyle(
+              color: Colors.grey[700],
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
