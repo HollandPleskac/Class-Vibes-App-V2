@@ -26,7 +26,7 @@ class NoDocsClassViewStudent extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 20,
+            height: 40,
           ),
           FlatButton(
             padding: EdgeInsets.only(right: 15),
