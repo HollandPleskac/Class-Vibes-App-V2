@@ -73,19 +73,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('Splash');
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Splash Screen!'),
-            SizedBox(
-              height: 150,
-            ),
-            CircularProgressIndicator(),
-          ],
-        ),
-      ),
+          child: Image.asset('Loading/loading.gif',fit: BoxFit.contain,)),
     );
   }
 }
