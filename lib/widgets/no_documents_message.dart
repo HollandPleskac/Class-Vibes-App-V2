@@ -216,11 +216,15 @@ class NoDocsMeetingsTeacher extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Text(
-            'Nothing much to see here. Just chill out.',
-            style: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 15,
+          Padding(
+            padding: EdgeInsets.only(left:15,right:15),
+                      child: Text(
+              'To schedule a meeting go to classes and click on a class.  Go to the Students tab and click on the meeting icon with a student.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 16,
+              ),
             ),
           ),
         ],

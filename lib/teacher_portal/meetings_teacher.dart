@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../logic/fire.dart';
 import '../nav_teacher.dart';
+import '../widgets/no_documents_message.dart';
 
 final _fire = Fire();
 
@@ -99,7 +100,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                             );
                           } else {
                             return Center(
-                              child: Text('no meetings'),
+                              child: NoDocsMeetingsTeacher(),
                             );
                           }
                       }
