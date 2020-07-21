@@ -577,13 +577,13 @@ class Student extends StatelessWidget {
           GestureDetector(
             onTap: () => showModalSheet(),
             child: FaIcon(
-              FontAwesomeIcons.handshake,
+              FontAwesomeIcons.paperPlane,
               color: kPrimaryColor,
               size: 35,
             ),
           ),
           SizedBox(
-            width: 20,
+            width: 30,
           ),
           GestureDetector(
             onTap: () {
