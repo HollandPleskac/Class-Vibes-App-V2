@@ -12,6 +12,7 @@ import 'view_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'class_settings.dart';
 import '../widgets/no_documents_message.dart';
+import 'package:flutter_svg/svg.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -445,7 +446,10 @@ class DynamicPieChart extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1.6,
                   child: Center(
-                    child: Text('no students'),
+                    child: SvgPicture.asset(
+                      'assets/svg/undraw_analytics_5pgy.svg',
+                      width: MediaQuery.of(context).size.width * 0.35,
+                    ),
                   ),
                 ),
               );
