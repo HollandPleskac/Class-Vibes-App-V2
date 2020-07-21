@@ -289,7 +289,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                             .documentID),
                                                     Padding(
                                                       padding: EdgeInsets.only(
-                                                          bottom: 25),
+                                                          bottom: 20),
                                                       child: Text(
                                                         document['class name'],
                                                         style: kSubTextStyle
@@ -448,7 +448,7 @@ class DynamicPieChart extends StatelessWidget {
                   child: Center(
                     child: SvgPicture.asset(
                       'assets/svg/undraw_analytics_5pgy.svg',
-                      width: MediaQuery.of(context).size.width * 0.35,
+                      width: MediaQuery.of(context).size.width * 0.2,
                     ),
                   ),
                 ),
