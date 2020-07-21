@@ -65,15 +65,20 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => isCheckedAccount == true
-              ? (accountType == 'Student' && accountStatus == 'Activated')
-                  ? ClassViewStudent()
-                  : (accountType == 'Teacher' && accountStatus == 'Activated')
-                      ? ClassViewTeacher()
-                      : Welcome()
-              : Welcome(
-                //this welcome screen never actually shows up
-              ),
+          builder: (context) {
+            if (accountStatus != 'Activated') {
+              _auth.signOut();
+            }
+            return isCheckedAccount == true
+                ? (accountType == 'Student' && accountStatus == 'Activated')
+                    ? ClassViewStudent()
+                    : (accountType == 'Teacher' && accountStatus == 'Activated')
+                        ? ClassViewTeacher()
+                        : Welcome()
+                : Welcome(
+                    //this welcome screen never actually shows up
+                    );
+          },
         ),
       ),
     );

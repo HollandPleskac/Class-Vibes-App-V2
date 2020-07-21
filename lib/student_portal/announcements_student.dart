@@ -20,6 +20,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
   List classIds = [];
   List announcements = [];
   String _email;
+  bool waiting = true;
 
   Future getTeacherEmail() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
@@ -57,6 +58,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
         return b['timestamp'].compareTo(a['timestamp']);
       });
     }
+    waiting = false;
   }
 
   @override
@@ -91,28 +93,36 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                     centerTitle: true,
                     backgroundColor: kWetAsphaltColor,
                   ),
-                  body: Center(
-                    child: announcements.length != 0
-                        ? ListView(
-                            children: announcements.map(
-                              (announcement) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20, left: 40, right: 40, bottom: 20),
-                                  child: Announcement(
-                                    announcement['content'],
-                                    DateTime.parse(announcement['timestamp']
-                                        .toDate()
-                                        .toString()),
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                          )
-                        : Center(
-                            child: NoDocsAnnouncementsStudent(),
-                          ),
-                  ),
+                  body: waiting == true
+                      ? Center(
+                          child: Container(),
+                        )
+                      : Center(
+                          child: announcements.length != 0
+                              ? ListView(
+                                  children: announcements.map(
+                                    (announcement) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 20,
+                                            left: 40,
+                                            right: 40,
+                                            bottom: 20),
+                                        child: Announcement(
+                                          announcement['content'],
+                                          DateTime.parse(
+                                              announcement['timestamp']
+                                                  .toDate()
+                                                  .toString()),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
+                                )
+                              : Center(
+                                  child: NoDocsAnnouncementsStudent(),
+                                ),
+                        ),
                 );
         }
       },

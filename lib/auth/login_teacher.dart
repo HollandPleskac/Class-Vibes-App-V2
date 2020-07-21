@@ -205,9 +205,13 @@ class _TeacherLoginState extends State<TeacherLogin> {
                           height: 20,
                         ),
                         Center(
-                          child: Text(
-                            _feedback,
-                            style: TextStyle(color: Colors.red, fontSize: 15.5),
+                          child: Padding(
+                            padding: EdgeInsets.only(left:15,right:15),
+                            child: Text(
+                              _feedback,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red, fontSize: 15.5),
+                            ),
                           ),
                         ),
                       ],
