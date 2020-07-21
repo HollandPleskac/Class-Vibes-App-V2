@@ -16,6 +16,10 @@ class Auth {
         return ['failure','Account registered as a teacher'];
       }
 
+       if(await checkAccountStatus(email) != 'Activated') {
+        return ['failure','Account is Deactivated. If you think this is a mistake contact {class vibes email}'];
+      }
+
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -51,6 +55,10 @@ class Auth {
 
       if(await checkAccountType(email) == 'Student') {
         return ['failure','Account registered as a student'];
+      }
+
+      if(await checkAccountStatus(email) != 'Activated') {
+        return ['failure','Account is Deactivated. If you think this is a mistake contact {class vibes email}'];
       }
 
       return ['success', email];
@@ -109,6 +117,7 @@ class Auth {
       'email': email,
       'display name': username,
       'account type': accountType,
+      'account status': 'Activated',
     });
   }
 
@@ -117,7 +126,15 @@ class Auth {
         .collection('UserData')
         .document(email)
         .get()
-        .then((docSnap) => docSnap.data['Account Type']);
+        .then((docSnap) => docSnap.data['account type']);
+  }
+
+    Future<String> checkAccountStatus(String email) async {
+    return await _firestore
+        .collection('UserData')
+        .document(email)
+        .get()
+        .then((docSnap) => docSnap.data['account status']);
   }
 
   void signOut() async {
