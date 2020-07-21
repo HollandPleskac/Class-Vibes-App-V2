@@ -5,7 +5,6 @@ import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
 
-
 class FilterAll extends StatelessWidget {
   final Function onClick;
   final bool isTouched;
@@ -13,21 +12,18 @@ class FilterAll extends StatelessWidget {
   FilterAll({this.onClick, this.isTouched});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 92,
-      child: FlatButton(
-        padding: EdgeInsets.all(2),
-        color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
-        onPressed: () {
-          onClick();
-        },
-        child: Text(
-          'All',
-          style: TextStyle(
-              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
-              fontWeight: FontWeight.w600,
-              fontSize: 13.5),
-        ),
+    return FlatButton(
+      padding: EdgeInsets.all(2),
+      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      onPressed: () {
+        onClick();
+      },
+      child: Text(
+        'All',
+        style: TextStyle(
+            color: isTouched == true ? kPrimaryColor : Colors.grey[700],
+            fontWeight: FontWeight.w600,
+            fontSize: 13.5),
       ),
     );
   }
@@ -40,21 +36,18 @@ class FilterDoingGreat extends StatelessWidget {
   FilterDoingGreat({this.onClick, this.isTouched});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 92,
-      child: FlatButton(
-        padding: EdgeInsets.all(2),
-        color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
-        onPressed: () {
-          onClick();
-        },
-        child: Text(
-          'Doing Great',
-          style: TextStyle(
-              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
-              fontWeight: FontWeight.w600,
-              fontSize: 13.5),
-        ),
+    return FlatButton(
+      padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
+      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      onPressed: () {
+        onClick();
+      },
+      child: Text(
+        'Doing Great',
+        style: TextStyle(
+            color: isTouched == true ? kPrimaryColor : Colors.grey[700],
+            fontWeight: FontWeight.w600,
+            fontSize: 13.5),
       ),
     );
   }
@@ -67,21 +60,18 @@ class FilterNeedHelp extends StatelessWidget {
   FilterNeedHelp({this.onClick, this.isTouched});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 92,
-      child: FlatButton(
-        padding: EdgeInsets.all(2),
-        color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
-        onPressed: () {
-          onClick();
-        },
-        child: Text(
-          'Need Help',
-          style: TextStyle(
-              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
-              fontWeight: FontWeight.w600,
-              fontSize: 13.5),
-        ),
+    return FlatButton(
+      padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
+      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      onPressed: () {
+        onClick();
+      },
+      child: Text(
+        'Need Help',
+        style: TextStyle(
+            color: isTouched == true ? kPrimaryColor : Colors.grey[700],
+            fontWeight: FontWeight.w600,
+            fontSize: 13.5),
       ),
     );
   }
@@ -94,21 +84,18 @@ class FilterFrustrated extends StatelessWidget {
   FilterFrustrated({this.onClick, this.isTouched});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 92,
-      child: FlatButton(
-        padding: EdgeInsets.all(2),
-        color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
-        onPressed: () {
-          onClick();
-        },
-        child: Text(
-          'Frustrated',
-          style: TextStyle(
-              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
-              fontWeight: FontWeight.w600,
-              fontSize: 13.5),
-        ),
+    return FlatButton(
+      padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
+      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      onPressed: () {
+        onClick();
+      },
+      child: Text(
+        'Frustrated',
+        style: TextStyle(
+            color: isTouched == true ? kPrimaryColor : Colors.grey[700],
+            fontWeight: FontWeight.w600,
+            fontSize: 13.5),
       ),
     );
   }
@@ -121,21 +108,18 @@ class FilterInactive extends StatelessWidget {
   FilterInactive({this.onClick, this.isTouched});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 92,
-      child: FlatButton(
-        padding: EdgeInsets.all(2),
-        color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
-        onPressed: () {
-          onClick();
-        },
-        child: Text(
-          'Inactive',
-          style: TextStyle(
-              color: isTouched == true ? kPrimaryColor : Colors.grey[700],
-              fontWeight: FontWeight.w600,
-              fontSize: 13.5),
-        ),
+    return FlatButton(
+      padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
+      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      onPressed: () {
+        onClick();
+      },
+      child: Text(
+        'Inactive',
+        style: TextStyle(
+            color: isTouched == true ? kPrimaryColor : Colors.grey[700],
+            fontWeight: FontWeight.w600,
+            fontSize: 13.5),
       ),
     );
   }
