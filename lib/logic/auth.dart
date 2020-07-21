@@ -136,21 +136,24 @@ class Auth {
       bool isEligibleForJoin = await _firestore
           .collection('Districts')
           .document(districtId)
-          .collection('Allowed Teaches')
+          .collection('Allowed Teachers')
           .where(FieldPath.documentId, isEqualTo: email)
           .getDocuments()
           .then((querySnap) => querySnap.documents.isNotEmpty);
+    
       if (isEligibleForJoin) {
         // if so --> sign up the teacher
+        print('iseligible');
         try {
           AuthResult result = await _firebaseAuth
               .createUserWithEmailAndPassword(email: email, password: password);
           FirebaseUser user = result.user;
-
+          print('RES + '+result.toString());
           return ['success', email];
         } catch (error) {
+          print(error.code);
           switch (error.code) {
-            case "ERROR_WEAk_PASSWORD":
+            case "ERROR_WEAK_PASSWORD":
               return ['failure', 'Password is not strong enough'];
             case "ERROR_INVALID_EMAIL":
               return ['failure', 'Email address formatted incorrectly'];
@@ -161,13 +164,14 @@ class Auth {
       } else {
         return [
           'failure',
-          'You are not eligible to join this district.  If you think this is an error please contact your district administrator'
+          'That email address is not eligible to join this district.  If you think this is an error please contact your district administrator'
         ];
       }
     } else {
       return ['failure', 'District Id does not extis'];
     }
     // this return should never show - all other possibilities are in the tree already
+    print('error unknown');
     return ['failure', 'unknown error'];
   }
 
