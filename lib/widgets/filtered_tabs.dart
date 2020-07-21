@@ -46,7 +46,12 @@ class AllTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no students'),
+                child: Text('There are no students in this class',
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),),
               );
             }
         }
@@ -102,7 +107,12 @@ class DoingGreatTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no students'),
+                child: Text('No students are doing great',
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),),
               );
             }
         }
@@ -158,7 +168,12 @@ class NeedHelpTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no students'),
+                child: Text('No students need help',
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),),
               );
             }
         }
@@ -214,7 +229,12 @@ class FrustratedTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no students'),
+                child: Text('No students are frustrated',
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),),
               );
             }
         }
@@ -269,7 +289,12 @@ class InactiveTab extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no students'),
+                child: Text('No students are inactive',
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),),
               );
             }
         }
