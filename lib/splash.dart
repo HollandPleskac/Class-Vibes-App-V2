@@ -19,6 +19,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   FirebaseUser user;
   String accountType;
+  String accountStatus;
   bool isCheckedAccount = false;
   Future getUser() async {
     try {
@@ -29,18 +30,22 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future getAccountType(FirebaseUser user) async {
+  Future getAccountTypeAndStatus(FirebaseUser user) async {
     if (user != null) {
       try {
         String type = await _auth.checkAccountType(user.email);
+        String status = await _auth.checkAccountStatus(user.email);
         accountType = type;
+        accountStatus = status;
         isCheckedAccount = true;
       } catch (_) {
         accountType = null;
+        accountStatus = null;
         isCheckedAccount = true;
       }
     } else {
       accountType = null;
+      accountStatus = null;
       isCheckedAccount = true;
     }
   }
@@ -48,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     getUser().then((_) {
-      getAccountType(user).then((_) {
+      getAccountTypeAndStatus(user).then((_) {
         setState(() {
           print(user);
           print(accountType);
@@ -61,10 +66,14 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => isCheckedAccount == true
-              ? accountType == 'Student'
+              ? (accountType == 'Student' && accountStatus == 'Activated')
                   ? ClassViewStudent()
-                  : accountType == 'Teacher' ? ClassViewTeacher() : Welcome()
-              : Welcome(),
+                  : (accountType == 'Teacher' && accountStatus == 'Activated')
+                      ? ClassViewTeacher()
+                      : Welcome()
+              : Welcome(
+                //this welcome screen never actually shows up
+              ),
         ),
       ),
     );
@@ -77,7 +86,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-          child: Image.asset('Loading/loading.gif',fit: BoxFit.contain,)),
+          child: Image.asset(
+        'Loading/loading.gif',
+        fit: BoxFit.contain,
+      )),
     );
   }
 }
