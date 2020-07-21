@@ -278,7 +278,6 @@ class NoDocsAnnouncementsClassTeacher extends StatelessWidget {
   }
 }
 
-
 class NoDocsMeetingsClassTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -314,6 +313,33 @@ class NoDocsMeetingsClassTeacher extends StatelessWidget {
                   fontSize: 17,
                   fontWeight: FontWeight.w600),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NoDocsGraphClassTeacher extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_personal_goals_edgd.svg',
+            width: MediaQuery.of(context).size.width * 0.35,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'No Students',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 38,
+                color: Colors.grey[800]),
           ),
         ],
       ),

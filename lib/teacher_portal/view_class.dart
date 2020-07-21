@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -277,7 +278,7 @@ class DynamicPieChart extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1.6,
                   child: Center(
-                    child: Text('no graph'),
+                    child: NoDocsGraphClassTeacher(),
                   ),
                 ),
               );
