@@ -87,8 +87,7 @@ class Auth {
     return ['success', email];
   }
 
-//sign up as a teacher
-//sign up as a student
+
 // if teacher - get district id - check w/ district id and sort out all the errors before signing up
 
   Future<List> signUpStudent(
