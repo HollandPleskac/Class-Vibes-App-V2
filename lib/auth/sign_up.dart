@@ -335,7 +335,7 @@ class _SignUpState extends State<SignUp> {
                                   );
                                   if (result[0] == 'success') {
                                     //set up account
-                                    _auth.setUpAccountTeacher(
+                                    await _auth.setUpAccountTeacher(
                                       districtId: _districtIdController.text,
                                       username: _usernameController.text,
                                       password: _passwordController.text,
