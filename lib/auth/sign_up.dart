@@ -398,7 +398,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: MediaQuery.of(context).size.height*0.025,
                         ),
                         Center(
                           child: Padding(

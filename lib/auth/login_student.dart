@@ -198,7 +198,7 @@ class _StudentLoginState extends State<StudentLogin> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: MediaQuery.of(context).size.height*0.025,
                         ),
                         Center(
                           child: Padding(

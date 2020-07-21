@@ -108,7 +108,7 @@ class Auth {
       return ['success', email];
     } catch (error) {
       switch (error.code) {
-        case "ERROR_WEAk_PASSWORD":
+        case "ERROR_WEAK_PASSWORD":
           return ['failure', 'Password is not strong enough'];
         case "ERROR_INVALID_EMAIL":
           return ['failure', 'Email address formatted incorrectly'];
@@ -116,7 +116,7 @@ class Auth {
           return ['failure', 'Email already in use'];
       }
     }
-    return ['success', email];
+    return ['failure', 'unknown error'];
   }
 
   Future<List> signUpTeacher({

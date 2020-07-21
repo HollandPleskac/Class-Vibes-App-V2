@@ -16,7 +16,7 @@ class NoDocsClassViewStudent extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.475,
           ),
           SizedBox(
-            height: 10,
+            height: MediaQuery.of(context).size.height * 0.015,
           ),
           Text(
             'Nothing to see here',
@@ -26,10 +26,11 @@ class NoDocsClassViewStudent extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 40,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
           FlatButton(
-            padding: EdgeInsets.only(right: 15),
+            padding: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.035),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
@@ -52,8 +53,8 @@ class NoDocsClassViewStudent extends StatelessWidget {
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5),
                       )),
-                  height: 50,
-                  width: 50,
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.height * 0.06,
                   child: Icon(
                     Icons.add,
                     color: Colors.white,
@@ -61,7 +62,7 @@ class NoDocsClassViewStudent extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: MediaQuery.of(context).size.width * 0.027,
                 ),
                 Text(
                   'Join a class',
@@ -88,7 +89,7 @@ class NoDocsMeetingsStudent extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.475,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Scheduled Meetings',
@@ -98,7 +99,7 @@ class NoDocsMeetingsStudent extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Text(
             'Nothing much to see here. Just chill out.',
@@ -126,7 +127,7 @@ class NoDocsAnnouncementsStudent extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.475,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Announcements',
@@ -136,7 +137,7 @@ class NoDocsAnnouncementsStudent extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Text(
             'You\'re all caught up, nothing to see here.',
@@ -164,7 +165,7 @@ class NoDocsClassViewTeacher extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.475,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Classes To See',
@@ -174,7 +175,7 @@ class NoDocsClassViewTeacher extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
@@ -206,7 +207,7 @@ class NoDocsMeetingsTeacher extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Meetings',
@@ -216,7 +217,7 @@ class NoDocsMeetingsTeacher extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
@@ -248,7 +249,7 @@ class NoDocsAnnouncementsClassTeacher extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Announcements',
@@ -258,7 +259,7 @@ class NoDocsAnnouncementsClassTeacher extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
@@ -290,7 +291,7 @@ class NoDocsMeetingsClassTeacher extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Meetings',
@@ -300,7 +301,7 @@ class NoDocsMeetingsClassTeacher extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
@@ -332,7 +333,7 @@ class NoDocsGraphClassTeacher extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.35,
           ),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height*0.025,
           ),
           Text(
             'No Students',
@@ -347,8 +348,6 @@ class NoDocsGraphClassTeacher extends StatelessWidget {
   }
 }
 
-
-
 class NoDocsAnnouncementsClassStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -361,7 +360,7 @@ class NoDocsAnnouncementsClassStudent extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Announcements',
@@ -371,7 +370,7 @@ class NoDocsAnnouncementsClassStudent extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
@@ -403,7 +402,7 @@ class NoDocsMeetingsClassStudent extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
-            height: 30,
+            height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
             'No Meetings',
@@ -413,7 +412,7 @@ class NoDocsMeetingsClassStudent extends StatelessWidget {
                 color: Colors.grey[800]),
           ),
           SizedBox(
-            height: 15,
+            height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
