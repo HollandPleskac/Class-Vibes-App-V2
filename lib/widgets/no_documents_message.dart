@@ -200,17 +200,17 @@ class NoDocsMeetingsTeacher extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/svg/undraw_Group_chat_unwm.svg',
-            width: MediaQuery.of(context).size.width * 0.475,
+            'assets/svg/undraw_checking_boxes_2ibd.svg',
+            width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
             height: 30,
           ),
           Text(
-            'No Scheduled Meetings',
+            'No Meetings',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 34,
+                fontSize: 38,
                 color: Colors.grey[800]),
           ),
           SizedBox(
@@ -221,9 +221,12 @@ class NoDocsMeetingsTeacher extends StatelessWidget {
                       child: Text(
               'To schedule a meeting go to classes and click on a class.  Go to the Students tab and click on the meeting icon with a student.',
               textAlign: TextAlign.center,
+              
               style: TextStyle(
-                color: Colors.grey[700],
-                fontSize: 16,
+                height: 2,
+                color: Colors.grey[600],
+                fontSize: 17,
+                fontWeight: FontWeight.w600
               ),
             ),
           ),
