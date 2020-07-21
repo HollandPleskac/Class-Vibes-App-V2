@@ -19,12 +19,14 @@ class _SignUpState extends State<SignUp> {
   bool isEmailValidate = false;
   bool isPasswordValidate = false;
   bool isUserNameValidate = false;
+  bool isDistrictIdValidate = false;
   bool isSwitched = true;
   String _feedback = '';
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _districtIdController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,6 +184,58 @@ class _SignUpState extends State<SignUp> {
                                       borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
+                              isSwitched == false
+                                  ? SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                    )
+                                  : Container(),
+                              isSwitched == false
+                                  ? Center(
+                                      child: Container(
+                                        child: Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: TextFormField(
+                                              controller: _districtIdController,
+                                              decoration: InputDecoration(
+                                                  border: InputBorder.none,
+                                                  hintText: 'District Id'),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value == '') {
+                                                  setState(() {
+                                                    isDistrictIdValidate = true;
+                                                  });
+
+                                                  return 'District Id cannot be blank';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        height: isDistrictIdValidate == true
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.08
+                                            : MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.06,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.85,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[100],
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -251,6 +305,7 @@ class _SignUpState extends State<SignUp> {
                                       isEmailValidate = false;
                                       isPasswordValidate = false;
                                       isUserNameValidate = false;
+                                      isDistrictIdValidate = false;
                                       _feedback = result[1];
                                     });
                                   }
@@ -266,6 +321,9 @@ class _SignUpState extends State<SignUp> {
                                     isUserNameValidate == true
                                         ? isUserNameValidate = true
                                         : isUserNameValidate = false;
+                                    isDistrictIdValidate == true
+                                        ? isDistrictIdValidate = true
+                                        : isDistrictIdValidate = false;
                                   });
                                 }
                               } else {
@@ -298,6 +356,7 @@ class _SignUpState extends State<SignUp> {
                                       isEmailValidate = false;
                                       isPasswordValidate = false;
                                       isUserNameValidate = false;
+                                      isDistrictIdValidate = false;
                                       _feedback = result[1];
                                     });
                                   }
@@ -313,6 +372,9 @@ class _SignUpState extends State<SignUp> {
                                     isUserNameValidate == true
                                         ? isUserNameValidate = true
                                         : isUserNameValidate = false;
+                                    isDistrictIdValidate == true
+                                        ? isDistrictIdValidate = true
+                                        : isDistrictIdValidate = false;
                                   });
                                 }
                               }
@@ -340,11 +402,12 @@ class _SignUpState extends State<SignUp> {
                         ),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.only(left:15,right:15),
+                            padding: EdgeInsets.only(left: 15, right: 15),
                             child: Text(
                               _feedback,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.red, fontSize: 15.5),
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 15.5),
                             ),
                           ),
                         ),
