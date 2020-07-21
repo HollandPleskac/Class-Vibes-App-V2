@@ -87,11 +87,14 @@ class Auth {
     return ['success', email];
   }
 
-  Future<List> signUp(
+//sign up as a teacher
+//sign up as a student
+// if teacher - get district id - check w/ district id and sort out all the errors before signing up
+
+  Future<List> signUpStudent(
       {String email,
       String password,
-      String username,
-      String accountType}) async {
+      String username,}) async {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -111,12 +114,45 @@ class Auth {
     return ['success', email];
   }
 
-  void setUpAccount(
-      {String email, String password, String username, String accountType}) {
+    Future<List> signUpTeacher(
+      {String email,
+      String password,
+      String username,}) async {
+    try {
+      AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+
+      return ['success', email];
+    } catch (error) {
+      switch (error.code) {
+        case "ERROR_WEAk_PASSWORD":
+          return ['failure', 'Password is not strong enough'];
+        case "ERROR_INVALID_EMAIL":
+          return ['failure', 'Email address formatted incorrectly'];
+        case "ERROR_EMAIL_ALREADY_IN_USE ":
+          return ['failure', 'Email already in use'];
+      }
+    }
+    return ['success', email];
+  }
+
+  void setUpAccountStudent(
+      {String email, String password, String username}) {
     _firestore.collection('UserData').document(email).setData({
       'email': email,
       'display name': username,
-      'account type': accountType,
+      'account type': 'Student',
+      'account status': 'Activated',
+    });
+  }
+
+    void setUpAccountTeacher(
+      {String email, String password, String username,String districtId}) {
+    _firestore.collection('UserData').document(email).setData({
+      'email': email,
+      'display name': username,
+      'account type': 'Teacher',
       'account status': 'Activated',
     });
   }

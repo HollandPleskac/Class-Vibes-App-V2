@@ -278,15 +278,14 @@ class _SignUpState extends State<SignUp> {
                               if (isSwitched == true) {
                                 //sign up as a student
                                 if (_formKey.currentState.validate()) {
-                                  List result = await _auth.signUp(
-                                      username: _usernameController.text,
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                      accountType: 'student');
+                                  List result = await _auth.signUpStudent(
+                                    username: _usernameController.text,
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
                                   if (result[0] == 'success') {
                                     //ste up account
-                                    _auth.setUpAccount(
-                                      accountType: 'Student',
+                                    _auth.setUpAccountStudent(
                                       username: _usernameController.text,
                                       password: _passwordController.text,
                                       email: _emailController.text,
@@ -329,15 +328,15 @@ class _SignUpState extends State<SignUp> {
                               } else {
                                 //sign up as a teacher
                                 if (_formKey.currentState.validate()) {
-                                  List result = await _auth.signUp(
-                                      username: _usernameController.text,
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                      accountType: 'teacher');
+                                  List result = await _auth.signUpTeacher(
+                                    username: _usernameController.text,
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
                                   if (result[0] == 'success') {
                                     //set up account
-                                    _auth.setUpAccount(
-                                      accountType: 'Teacher',
+                                    _auth.setUpAccountTeacher(
+                                      districtId: _districtIdController.text,
                                       username: _usernameController.text,
                                       password: _passwordController.text,
                                       email: _emailController.text,
