@@ -106,8 +106,7 @@ class NoDocsMeetingsStudent extends StatelessWidget {
                 height: 2,
                 color: Colors.grey[600],
                 fontSize: 17,
-                fontWeight: FontWeight.w600
-              ),
+                fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -145,15 +144,13 @@ class NoDocsAnnouncementsStudent extends StatelessWidget {
                 height: 2,
                 color: Colors.grey[600],
                 fontSize: 17,
-                fontWeight: FontWeight.w600
-              ),
+                fontWeight: FontWeight.w600),
           ),
         ],
       ),
     );
   }
 }
-
 
 class NoDocsClassViewTeacher extends StatelessWidget {
   @override
@@ -180,16 +177,15 @@ class NoDocsClassViewTeacher extends StatelessWidget {
             height: 15,
           ),
           Padding(
-            padding: EdgeInsets.only(left:15,right:15),
-                      child: Text(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
               'You have not created any classes yet.  To create a class hit the + icon in the top right corner of this screen.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                height: 2,
-                color: Colors.grey[600],
-                fontSize: 17,
-                fontWeight: FontWeight.w600
-              ),
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -223,17 +219,100 @@ class NoDocsMeetingsTeacher extends StatelessWidget {
             height: 15,
           ),
           Padding(
-            padding: EdgeInsets.only(left:15,right:15),
-                      child: Text(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
               'To schedule a meeting go to classes and click on a class.  Go to the Students tab and click on the meeting icon with a student.',
               textAlign: TextAlign.center,
-              
               style: TextStyle(
-                height: 2,
-                color: Colors.grey[600],
-                fontSize: 17,
-                fontWeight: FontWeight.w600
-              ),
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NoDocsAnnouncementsClassTeacher extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_news_go0e.svg',
+            width: MediaQuery.of(context).size.width * 0.65,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Announcements',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 38,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
+              'Push an announcement to the entire class with the button below!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class NoDocsMeetingsClassTeacher extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_remote_meeting_cbfk.svg',
+            width: MediaQuery.of(context).size.width * 0.65,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Meetings',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 38,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
+              'To schedule a meeting go to the Students Tab.  Then click on the meeting icon next to a student name!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
             ),
           ),
         ],
