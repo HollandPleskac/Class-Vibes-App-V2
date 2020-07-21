@@ -152,6 +152,8 @@ class Auth {
     });
   }
 
+//need to check if the teacher is in the district so move code that checks for the district id to the other teacher set up account function
+
   Future<List> setUpAccountTeacher({
     String email,
     String password,
