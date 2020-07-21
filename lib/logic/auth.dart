@@ -12,12 +12,15 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
-      if(await checkAccountType(email) == 'Teacher') {
-        return ['failure','Account registered as a teacher'];
+      if (await checkAccountType(email) == 'Teacher') {
+        return ['failure', 'Account registered as a teacher'];
       }
 
-       if(await checkAccountStatus(email) != 'Activated') {
-        return ['failure','Account is Deactivated. If you think this is a mistake contact {class vibes email}'];
+      if (await checkAccountStatus(email) != 'Activated') {
+        return [
+          'failure',
+          'Account is Deactivated. If you think this is a mistake contact {class vibes email}'
+        ];
       }
 
       return ['success', email];
@@ -53,12 +56,15 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
-      if(await checkAccountType(email) == 'Student') {
-        return ['failure','Account registered as a student'];
+      if (await checkAccountType(email) == 'Student') {
+        return ['failure', 'Account registered as a student'];
       }
 
-      if(await checkAccountStatus(email) != 'Activated') {
-        return ['failure','Account is Deactivated. If you think this is a mistake contact {class vibes email}'];
+      if (await checkAccountStatus(email) != 'Activated') {
+        return [
+          'failure',
+          'Account is Deactivated. If you think this is a mistake contact {class vibes email}'
+        ];
       }
 
       return ['success', email];
@@ -87,13 +93,13 @@ class Auth {
     return ['success', email];
   }
 
-
 // if teacher - get district id - check w/ district id and sort out all the errors before signing up
 
-  Future<List> signUpStudent(
-      {String email,
-      String password,
-      String username,}) async {
+  Future<List> signUpStudent({
+    String email,
+    String password,
+    String username,
+  }) async {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -113,10 +119,11 @@ class Auth {
     return ['success', email];
   }
 
-    Future<List> signUpTeacher(
-      {String email,
-      String password,
-      String username,}) async {
+  Future<List> signUpTeacher({
+    String email,
+    String password,
+    String username,
+  }) async {
     try {
       AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -136,8 +143,7 @@ class Auth {
     return ['success', email];
   }
 
-  void setUpAccountStudent(
-      {String email, String password, String username}) {
+  void setUpAccountStudent({String email, String password, String username}) {
     _firestore.collection('UserData').document(email).setData({
       'email': email,
       'display name': username,
@@ -146,14 +152,41 @@ class Auth {
     });
   }
 
-    void setUpAccountTeacher(
-      {String email, String password, String username,String districtId}) {
-    _firestore.collection('UserData').document(email).setData({
-      'email': email,
-      'display name': username,
-      'account type': 'Teacher',
-      'account status': 'Activated',
-    });
+  Future<List> setUpAccountTeacher({
+    String email,
+    String password,
+    String username,
+    String districtId,
+  }) async {
+    bool districtIdExists = await _firestore
+        .collection('Districts')
+        .where('district id', isEqualTo: districtId)
+        .getDocuments()
+        .then((querySnap) => querySnap.documents.isNotEmpty);
+
+    if (districtIdExists) {
+      bool isEligibleForJoin = await _firestore
+          .collection('Districts')
+          .document(districtId)
+          .collection('Allowed Teaches')
+          .where(FieldPath.documentId, isEqualTo: email)
+          .getDocuments()
+          .then((querySnap) => querySnap.documents.isNotEmpty);
+      if (isEligibleForJoin) {
+        _firestore.collection('UserData').document(email).setData({
+          'email': email,
+          'display name': username,
+          'account type': 'Teacher',
+          'account status': 'Activated',
+        });
+        return ['success', ''];
+      }
+      return [
+        'failure',
+        'You are not eligible to join this district. Contact your district if you think this is a mistake.'
+      ];
+    }
+    return ['failure', 'District Id does not extis'];
   }
 
   Future<String> checkAccountType(String email) async {
@@ -164,7 +197,7 @@ class Auth {
         .then((docSnap) => docSnap.data['account type']);
   }
 
-    Future<String> checkAccountStatus(String email) async {
+  Future<String> checkAccountStatus(String email) async {
     return await _firestore
         .collection('UserData')
         .document(email)
