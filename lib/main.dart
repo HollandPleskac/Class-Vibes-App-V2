@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './auth/welcome.dart';
 import './student_portal/chat_student.dart';
@@ -8,7 +9,10 @@ import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
 import './splash.dart';
 
-void main() => runApp(MyApp());
+void main() =>  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+    .then((_) {
+      runApp(new MyApp());
+    });
 
 class MyApp extends StatefulWidget {
   @override
