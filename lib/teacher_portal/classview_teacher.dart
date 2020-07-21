@@ -11,6 +11,7 @@ import '../logic/fire.dart';
 import 'view_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'class_settings.dart';
+import '../widgets/no_documents_message.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -314,7 +315,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               );
                             } else {
                               return Center(
-                                child: Text('no classes'),
+                                child: NoDocsClassViewTeacher(),
                               );
                             }
                         }

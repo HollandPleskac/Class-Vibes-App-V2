@@ -149,3 +149,82 @@ class NoDocsAnnouncementsStudent extends StatelessWidget {
     );
   }
 }
+
+
+class NoDocsClassViewTeacher extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_taking_notes_tjaf.svg',
+            width: MediaQuery.of(context).size.width * 0.475,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Classes To See',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 34,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left:15,right:15),
+                      child: Text(
+              'You have not created any classes yet.  To create a class hit the + icon in the top right corner of this screen.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NoDocsMeetingsTeacher extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_Group_chat_unwm.svg',
+            width: MediaQuery.of(context).size.width * 0.475,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Scheduled Meetings',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 34,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            'Nothing much to see here. Just chill out.',
+            style: TextStyle(
+              color: Colors.grey[700],
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
