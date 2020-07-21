@@ -103,9 +103,11 @@ class NoDocsMeetingsStudent extends StatelessWidget {
           Text(
             'Nothing much to see here. Just chill out.',
             style: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 15,
-            ),
+                height: 2,
+                color: Colors.grey[600],
+                fontSize: 17,
+                fontWeight: FontWeight.w600
+              ),
           ),
         ],
       ),
@@ -140,9 +142,11 @@ class NoDocsAnnouncementsStudent extends StatelessWidget {
           Text(
             'You\'re all caught up, nothing to see here.',
             style: TextStyle(
-              color: Colors.grey[700],
-              fontSize: 15,
-            ),
+                height: 2,
+                color: Colors.grey[600],
+                fontSize: 17,
+                fontWeight: FontWeight.w600
+              ),
           ),
         ],
       ),
@@ -181,8 +185,10 @@ class NoDocsClassViewTeacher extends StatelessWidget {
               'You have not created any classes yet.  To create a class hit the + icon in the top right corner of this screen.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey[700],
-                fontSize: 16,
+                height: 2,
+                color: Colors.grey[600],
+                fontSize: 17,
+                fontWeight: FontWeight.w600
               ),
             ),
           ),
