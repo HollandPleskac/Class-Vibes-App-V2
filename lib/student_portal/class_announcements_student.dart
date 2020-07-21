@@ -1,4 +1,5 @@
 import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
+import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -52,7 +53,7 @@ class ClassAnnouncementsStudent extends StatelessWidget {
               );
             } else {
               return Center(
-                child: Text('no announcements'),
+                child: NoDocsAnnouncementsClassStudent(),
               );
             }
         }

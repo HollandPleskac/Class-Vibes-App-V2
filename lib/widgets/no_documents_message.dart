@@ -346,3 +346,89 @@ class NoDocsGraphClassTeacher extends StatelessWidget {
     );
   }
 }
+
+
+
+class NoDocsAnnouncementsClassStudent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_news_go0e.svg',
+            width: MediaQuery.of(context).size.width * 0.65,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Announcements',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 38,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
+              'There are no announcements to see.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NoDocsMeetingsClassStudent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_remote_meeting_cbfk.svg',
+            width: MediaQuery.of(context).size.width * 0.65,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'No Meetings',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 38,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
+              'You have no scheduled meetings.  Let your teacher know if you would like to have a meeting through the chat tab.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
