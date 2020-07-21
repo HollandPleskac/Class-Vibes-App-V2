@@ -123,24 +123,52 @@ class Auth {
     String email,
     String password,
     String username,
+    String districtId,
   }) async {
-    try {
-      AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      FirebaseUser user = result.user;
+    //get does district id exist?
+    bool districtIdExists = await _firestore
+        .collection('Districts')
+        .where('district id', isEqualTo: districtId)
+        .getDocuments()
+        .then((querySnap) => querySnap.documents.isNotEmpty);
+    if (districtIdExists) {
+      //is teacher is allowed teachers collection?
+      bool isEligibleForJoin = await _firestore
+          .collection('Districts')
+          .document(districtId)
+          .collection('Allowed Teaches')
+          .where(FieldPath.documentId, isEqualTo: email)
+          .getDocuments()
+          .then((querySnap) => querySnap.documents.isNotEmpty);
+      if (isEligibleForJoin) {
+        // if so --> sign up the teacher
+        try {
+          AuthResult result = await _firebaseAuth
+              .createUserWithEmailAndPassword(email: email, password: password);
+          FirebaseUser user = result.user;
 
-      return ['success', email];
-    } catch (error) {
-      switch (error.code) {
-        case "ERROR_WEAk_PASSWORD":
-          return ['failure', 'Password is not strong enough'];
-        case "ERROR_INVALID_EMAIL":
-          return ['failure', 'Email address formatted incorrectly'];
-        case "ERROR_EMAIL_ALREADY_IN_USE ":
-          return ['failure', 'Email already in use'];
+          return ['success', email];
+        } catch (error) {
+          switch (error.code) {
+            case "ERROR_WEAk_PASSWORD":
+              return ['failure', 'Password is not strong enough'];
+            case "ERROR_INVALID_EMAIL":
+              return ['failure', 'Email address formatted incorrectly'];
+            case "ERROR_EMAIL_ALREADY_IN_USE ":
+              return ['failure', 'Email already in use'];
+          }
+        }
+      } else {
+        return [
+          'failure',
+          'You are not eligible to join this district.  If you think this is an error please contact your district administrator'
+        ];
       }
+    } else {
+      return ['failure', 'District Id does not extis'];
     }
-    return ['success', email];
+    // this return should never show - all other possibilities are in the tree already
+    return ['failure', 'unknown error'];
   }
 
   void setUpAccountStudent({String email, String password, String username}) {
@@ -152,43 +180,19 @@ class Auth {
     });
   }
 
-//need to check if the teacher is in the district so move code that checks for the district id to the other teacher set up account function
-
-  Future<List> setUpAccountTeacher({
+  void setUpAccountTeacher({
     String email,
     String password,
     String username,
     String districtId,
   }) async {
-    bool districtIdExists = await _firestore
-        .collection('Districts')
-        .where('district id', isEqualTo: districtId)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
-
-    if (districtIdExists) {
-      bool isEligibleForJoin = await _firestore
-          .collection('Districts')
-          .document(districtId)
-          .collection('Allowed Teaches')
-          .where(FieldPath.documentId, isEqualTo: email)
-          .getDocuments()
-          .then((querySnap) => querySnap.documents.isNotEmpty);
-      if (isEligibleForJoin) {
-        _firestore.collection('UserData').document(email).setData({
-          'email': email,
-          'display name': username,
-          'account type': 'Teacher',
-          'account status': 'Activated',
-        });
-        return ['success', ''];
-      }
-      return [
-        'failure',
-        'You are not eligible to join this district. Contact your district if you think this is a mistake.'
-      ];
-    }
-    return ['failure', 'District Id does not extis'];
+    _firestore.collection('UserData').document(email).setData({
+      'email': email,
+      'display name': username,
+      'account type': 'Teacher',
+      'account status': 'Activated',
+      'district id': districtId,
+    });
   }
 
   Future<String> checkAccountType(String email) async {

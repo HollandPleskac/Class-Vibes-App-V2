@@ -332,10 +332,11 @@ class _SignUpState extends State<SignUp> {
                                     username: _usernameController.text,
                                     email: _emailController.text,
                                     password: _passwordController.text,
+                                    districtId: _districtIdController.text,
                                   );
                                   if (result[0] == 'success') {
                                     //set up account
-                                    await _auth.setUpAccountTeacher(
+                                    _auth.setUpAccountTeacher(
                                       districtId: _districtIdController.text,
                                       username: _usernameController.text,
                                       password: _passwordController.text,
@@ -360,7 +361,7 @@ class _SignUpState extends State<SignUp> {
                                     });
                                   }
                                 } else {
-                                  // determines if the textfield is big to accomodate a validator message
+                                  // form key doesnt validate -- > determines if the textfield is big to accomodate a validator message
                                   setState(() {
                                     isEmailValidate == true
                                         ? isEmailValidate = true
