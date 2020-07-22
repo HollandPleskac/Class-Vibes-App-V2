@@ -289,9 +289,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                             .documentID),
                                                     Padding(
                                                       padding: EdgeInsets.only(
-                                                          bottom: 20),
+                                                          bottom: 20,right:10,left:10),
                                                       child: Text(
                                                         document['class name'],
+                                                        overflow: TextOverflow.ellipsis,
                                                         style: kSubTextStyle
                                                             .copyWith(
                                                                 fontSize: 16),
