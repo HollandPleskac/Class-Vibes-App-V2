@@ -138,7 +138,7 @@ class Announcement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height:MediaQuery.of(context).size.height*0.15,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color.fromRGBO(235, 235, 235, 1),
@@ -146,7 +146,7 @@ class Announcement extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height: 120,
+            height:MediaQuery.of(context).size.height*0.15,
             width: 8,
             decoration: BoxDecoration(
               color: kPrimaryColor,
