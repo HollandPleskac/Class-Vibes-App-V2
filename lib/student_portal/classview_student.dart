@@ -185,11 +185,15 @@ class StudentClass extends StatelessWidget {
                           child: Container(),
                         );
                       }
-                      return Text(
-                        snapshot.data['class name'],
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
+                      return Flexible(
+                        child: Text(
+                            snapshot.data['class name'],
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
                         ),
                       );
                     }),
