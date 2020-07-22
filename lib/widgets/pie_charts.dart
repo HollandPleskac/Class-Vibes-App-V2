@@ -15,7 +15,6 @@ class PieChartSampleBig extends StatefulWidget {
   String frustratedPercentage;
   String inactivePercentage;
 
-
   PieChartSampleBig({
     // values
     this.doingGreatStudents,
@@ -27,7 +26,6 @@ class PieChartSampleBig extends StatefulWidget {
     this.needHelpPercentage,
     this.frustratedPercentage,
     this.inactivePercentage,
-
   });
   @override
   _PieChartSampleBigState createState() => _PieChartSampleBigState();
@@ -56,10 +54,8 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                         if (pieTouchResponse.touchInput is FlLongPressEnd ||
                             pieTouchResponse.touchInput is FlPanEnd) {
                           touchedIndex = -1;
-                          
                         } else {
                           touchedIndex = pieTouchResponse.touchedSectionIndex;
-                        
                         }
                       });
                     }),
@@ -73,19 +69,21 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 38, left: 30),
+            padding: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.095,
+                left: MediaQuery.of(context).size.width * 0.08),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
+              children: <Widget>[
                 Indicator(
                   color: kPieChartDoingGreatColor,
                   text: 'Doing Great',
                   isSquare: false,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: MediaQuery.of(context).size.height * 0.0135,
                 ),
                 Indicator(
                   color: kPieChartNeedHelpColor,
@@ -93,7 +91,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                   isSquare: false,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: MediaQuery.of(context).size.height * 0.0135,
                 ),
                 Indicator(
                   color: kPieChartFrustratedColor,
@@ -101,7 +99,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                   isSquare: false,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: MediaQuery.of(context).size.height * 0.0135,
                 ),
                 Indicator(
                   color: kPieChartInactiveColor,
@@ -129,7 +127,6 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
       final double radius = isTouched ? 60 : 50;
       switch (i) {
         case 0:
-        
           return PieChartSectionData(
             color: kPieChartDoingGreatColor,
             value: widget.doingGreatStudents,
@@ -342,13 +339,11 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
 ///
 
 class PieChartSampleSmall extends StatefulWidget {
-    // chart values
+  // chart values
   double doingGreatStudents;
   double needHelpStudents;
   double frustratedStudents;
   double inactiveStudents;
-
-
 
   PieChartSampleSmall({
     // values
@@ -356,8 +351,6 @@ class PieChartSampleSmall extends StatefulWidget {
     this.needHelpStudents,
     this.frustratedStudents,
     this.inactiveStudents,
-
-
   });
   @override
   _PieChartSampleSmallState createState() => _PieChartSampleSmallState();
