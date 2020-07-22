@@ -185,8 +185,7 @@ class StudentClass extends StatelessWidget {
                           child: Container(),
                         );
                       }
-                      return Flexible(
-                        child: Text(
+                      return Text(
                             snapshot.data['class name'],
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
@@ -194,7 +193,7 @@ class StudentClass extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
                             ),
-                        ),
+                        
                       );
                     }),
                 Spacer(),
