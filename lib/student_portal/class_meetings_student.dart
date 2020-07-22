@@ -42,8 +42,16 @@ class ClassMeetingsStudent extends StatelessWidget {
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return Padding(
-                      padding: EdgeInsets.only(
-                          left: 40, right: 40, top: 20, bottom: 30),
+                       padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.1,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.1,
+                                      top: MediaQuery.of(context).size.height *
+                                          0.035,
+                                      bottom:
+                                          MediaQuery.of(context).size.height *
+                                              0.032),
                       child: Meeting(
                         className: document['class name'],
                         dateAndTime: document['date and time'],
@@ -113,12 +121,12 @@ class Meeting extends StatelessWidget {
           height: 15,
         ),
         Container(
-          height: 120,
+                height: MediaQuery.of(context).size.height * 0.165,
           child: Row(
             children: [
               Container(
-                width: 50,
-                height: 120,
+                 width: MediaQuery.of(context).size.width * 0.125,
+                height: MediaQuery.of(context).size.height * 0.165,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +145,7 @@ class Meeting extends StatelessWidget {
                     ),
                     Container(
                       color: kPrimaryColor,
-                      height: 90,
+                      height: MediaQuery.of(context).size.height * 0.115,
                       width: 3.5,
                     ),
                   ],
@@ -147,7 +155,7 @@ class Meeting extends StatelessWidget {
                 width: 20,
               ),
               Container(
-                height: 120,
+                height: MediaQuery.of(context).size.height * 0.165,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -162,8 +170,8 @@ class Meeting extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      height: 40,
-                      width: 100,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.225,
                       color: kPrimaryColor.withOpacity(0.5),
                       child: Center(
                         child: Text(
