@@ -309,13 +309,13 @@ class _FilterViewState extends State<FilterView> {
     return Column(
       children: [
         Container(
-              height: 32.5,
+              height: MediaQuery.of(context).size.height*0.04,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 physics: BouncingScrollPhysics(),
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02),
                     child: FilterAll(
                       isTouched: _isTouchedAll,
                       onClick: () => setState(() {
@@ -328,7 +328,7 @@ class _FilterViewState extends State<FilterView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018),
                     child: FilterDoingGreat(
                       isTouched: _isTouchedDoingGreat,
                       onClick: () => setState(() {
@@ -341,7 +341,7 @@ class _FilterViewState extends State<FilterView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018),
                     child: FilterNeedHelp(
                       isTouched: _isTouchedNeedHelp,
                       onClick: () => setState(() {
@@ -354,7 +354,7 @@ class _FilterViewState extends State<FilterView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018),
                     child: FilterFrustrated(
                       isTouched: _isTouchedFrustrated,
                       onClick: () => setState(() {
@@ -367,7 +367,7 @@ class _FilterViewState extends State<FilterView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 10),
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018, right: MediaQuery.of(context).size.width*0.02),
                     child: FilterInactive(
                       isTouched: _isTouchedInactive,
                       onClick: () => setState(() {
@@ -383,7 +383,7 @@ class _FilterViewState extends State<FilterView> {
               ),
             ),
               SizedBox(
-          height: 20,
+          height: MediaQuery.of(context).size.height*0.02,
         ),
         Container(
           height: MediaQuery.of(context).size.height*0.43,

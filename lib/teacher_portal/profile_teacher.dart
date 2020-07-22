@@ -50,7 +50,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 20,
+                        height: MediaQuery.of(context).size.height*0.02,
                       ),
                       Text(
                         'Edit Username',
@@ -60,15 +60,15 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             fontWeight: FontWeight.w800),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: MediaQuery.of(context).size.height*0.01,
                       ),
                       Form(
                         key: _formKey,
                         child: Container(
                           child: Padding(
                             padding: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
+                              left: MediaQuery.of(context).size.width*0.05,
+                              right: MediaQuery.of(context).size.width*0.05,
                             ),
                             child: TextFormField(
                               controller: _userNameEditController,
@@ -101,7 +101,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: EdgeInsets.only(
-                            right: 20,
+                            right: MediaQuery.of(context).size.width*0.05,
                           ),
                           child: FlatButton(
                             color: kPrimaryColor,
@@ -179,7 +179,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                     body: ListView(
                       children: [
                         SizedBox(
-                          height: 60,
+                          height: MediaQuery.of(context).size.width*0.145,
                         ),
                         Center(
                           child: Container(
@@ -199,11 +199,11 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           ),
                         ),
                         SizedBox(
-                          height: 80,
+                          height: MediaQuery.of(context).size.width*0.2,
                         ),
                         Center(
                           child: Container(
-                            height: 42,
+                            height: MediaQuery.of(context).size.height*0.0525,
                             width: MediaQuery.of(context).size.width - 50,
                             child: Row(
                               children: [
@@ -236,7 +236,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                         ),
                         Center(
                           child: Container(
-                            height: 42,
+                            height:  MediaQuery.of(context).size.height*0.0525,
                             width: MediaQuery.of(context).size.width - 50,
                             child: Row(
                               children: [
@@ -286,7 +286,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           },
                           child: Center(
                             child: Container(
-                              height: 42,
+                              height:  MediaQuery.of(context).size.height*0.0525,
                               width: MediaQuery.of(context).size.width - 50,
                               child: Row(
                                 children: [
