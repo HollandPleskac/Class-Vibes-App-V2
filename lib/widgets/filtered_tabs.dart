@@ -348,7 +348,7 @@ class Student extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     SizedBox(
-                      height: 20,
+                      height: MediaQuery.of(context).size.height*0.0125,
                     ),
                     Text(
                       'Setup a Meeting',
@@ -362,11 +362,11 @@ class Student extends StatelessWidget {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: MediaQuery.of(context).size.height*0.0125,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10),
+                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
                             child: TextFormField(
                               controller: _titleController,
                               // autofocus: true,
@@ -392,7 +392,7 @@ class Student extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10),
+                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
                             child: TextFormField(
                               controller: _dateAndTimeController,
                               validator: (value) {
@@ -417,7 +417,7 @@ class Student extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10),
+                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
                             child: TextFormField(
                               controller: _contentController,
                               validator: (value) {
@@ -442,7 +442,7 @@ class Student extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10),
+                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
                             child: TextFormField(
                               validator: (value) {
                                 if (value == null || value == '') {
@@ -466,7 +466,7 @@ class Student extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 20, bottom: 10),
+                            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: FlatButton(
