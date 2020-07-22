@@ -167,12 +167,12 @@ class Meeting extends StatelessWidget {
           height: 15,
         ),
         Container(
-          height: MediaQuery.of(context).size.height*0.165,
+          height: MediaQuery.of(context).size.height * 0.165,
           child: Row(
             children: [
               Container(
-                width: MediaQuery.of(context).size.width*0.125,
-                height: MediaQuery.of(context).size.height*0.165,
+                width: MediaQuery.of(context).size.width * 0.125,
+                height: MediaQuery.of(context).size.height * 0.165,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +191,7 @@ class Meeting extends StatelessWidget {
                     ),
                     Container(
                       color: kPrimaryColor,
-                      height: MediaQuery.of(context).size.height*0.115,
+                      height: MediaQuery.of(context).size.height * 0.115,
                       width: 3.5,
                     ),
                   ],
@@ -201,7 +201,7 @@ class Meeting extends StatelessWidget {
                 width: 20,
               ),
               Container(
-                height: MediaQuery.of(context).size.height*0.165,
+                height: MediaQuery.of(context).size.height * 0.165,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -216,8 +216,8 @@ class Meeting extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height*0.05,
-                      width: MediaQuery.of(context).size.width*0.225,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.225,
                       color: kPrimaryColor.withOpacity(0.5),
                       child: Center(
                         child: Text(
