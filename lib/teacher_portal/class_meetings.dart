@@ -182,7 +182,7 @@ class Meeting extends StatelessWidget {
                     ),
                     Container(
                       color: kPrimaryColor,
-                      height: 90,
+                      height: MediaQuery.of(context).size.height * 0.115,
                       width: 3.5,
                     ),
                   ],
