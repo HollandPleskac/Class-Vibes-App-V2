@@ -207,11 +207,15 @@ class Meeting extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.225,
                       color: kPrimaryColor.withOpacity(0.5),
                       child: Center(
-                        child: Text(
-                          length,
-                          style: TextStyle(
-                            color: Colors.grey[700],
-                            fontSize: 19,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 7.5, right: 7.5),
+                          child: Text(
+                            length,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 19,
+                            ),
                           ),
                         ),
                       ),
