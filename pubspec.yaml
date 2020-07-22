@@ -38,6 +38,8 @@ dependencies:
   firebase_auth: ^0.16.1
   pin_code_fields: ^4.0.0
   flutter_svg: ^0.18.0
+  flutter_launcher_icons: ^0.7.5
+
 
 
 
