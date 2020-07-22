@@ -519,15 +519,15 @@ class Student extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 80,
+      height: MediaQuery.of(context).size.height*0.09,
       child: Row(
         children: [
           SizedBox(
-            width: 20,
+            width: MediaQuery.of(context).size.width*0.04,
           ),
           Container(
-            height: 60,
-            width: 60,
+            height: MediaQuery.of(context).size.height*0.075,
+            width: MediaQuery.of(context).size.height*0.075,
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(9999),
@@ -550,7 +550,7 @@ class Student extends StatelessWidget {
                   ),
           ),
           SizedBox(
-            width: 20,
+            width: MediaQuery.of(context).size.width*0.05,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -583,7 +583,7 @@ class Student extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 30,
+            width: MediaQuery.of(context).size.width*0.075,
           ),
           GestureDetector(
             onTap: () {
@@ -610,7 +610,7 @@ class Student extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 15,
+            width: MediaQuery.of(context).size.width*0.04,
           )
         ],
       ),
