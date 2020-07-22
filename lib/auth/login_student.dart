@@ -112,6 +112,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                               0.045),
                                       child: TextFormField(
                                         controller: _passwordController,
+                                        obscureText: true,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'Password'),

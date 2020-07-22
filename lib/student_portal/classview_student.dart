@@ -59,7 +59,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   appBar: AppBar(
                     backgroundColor: kWetAsphaltColor,
                     title: Text(
-                      'Screen 3',
+                      'Home',
                       style: TextStyle(color: Colors.white),
                     ),
                     centerTitle: true,
@@ -265,11 +265,11 @@ void showStudentInfoPopUp(BuildContext context) {
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 30.0, sigmaY: 30.0),
               child: Container(
-                  width: 300.0,
+                  width: MediaQuery.of(context).size.width * 0.85,
                   height: 200.0,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white.withOpacity(01)),
+                      color: Colors.white.withOpacity(0.9)),
                   child: Column(
                     children: [
                       SizedBox(
@@ -297,7 +297,7 @@ void showStudentInfoPopUp(BuildContext context) {
                       ),
                       Container(
                         height: 80,
-                        width: MediaQuery.of(context).size.width / 3 + 120,
+                  width: MediaQuery.of(context).size.width * 0.85 - 30,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,

@@ -156,6 +156,7 @@ class _SignUpState extends State<SignUp> {
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
                                         controller: _passwordController,
+                                        obscureText: true,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'Password'),
@@ -398,7 +399,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.025,
+                          height: MediaQuery.of(context).size.height * 0.025,
                         ),
                         Center(
                           child: Padding(
