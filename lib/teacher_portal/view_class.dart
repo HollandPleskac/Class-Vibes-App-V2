@@ -144,15 +144,18 @@ class StudentsTab extends StatefulWidget {
 }
 
 class _StudentsTabState extends State<StudentsTab> {
-
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DynamicPieChart(widget.classId),
-        FilterView(classId: widget.classId,teacherEmail: widget.teacherEmail,),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          DynamicPieChart(widget.classId),
+          FilterView(
+            classId: widget.classId,
+            teacherEmail: widget.teacherEmail,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -293,13 +296,13 @@ class FilterView extends StatefulWidget {
   final String classId;
   final String teacherEmail;
 
-  FilterView({this.classId,this.teacherEmail});
+  FilterView({this.classId, this.teacherEmail});
   @override
   _FilterViewState createState() => _FilterViewState();
 }
 
 class _FilterViewState extends State<FilterView> {
-    bool _isTouchedAll = true;
+  bool _isTouchedAll = true;
   bool _isTouchedDoingGreat = false;
   bool _isTouchedNeedHelp = false;
   bool _isTouchedFrustrated = false;
@@ -309,84 +312,91 @@ class _FilterViewState extends State<FilterView> {
     return Column(
       children: [
         Container(
-              height: MediaQuery.of(context).size.height*0.04,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02),
-                    child: FilterAll(
-                      isTouched: _isTouchedAll,
-                      onClick: () => setState(() {
-                        _isTouchedAll = true;
-                        _isTouchedDoingGreat = false;
-                        _isTouchedNeedHelp = false;
-                        _isTouchedFrustrated = false;
-                        _isTouchedInactive = false;
-                      }),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018),
-                    child: FilterDoingGreat(
-                      isTouched: _isTouchedDoingGreat,
-                      onClick: () => setState(() {
-                        _isTouchedAll = false;
-                        _isTouchedDoingGreat = true;
-                        _isTouchedNeedHelp = false;
-                        _isTouchedFrustrated = false;
-                        _isTouchedInactive = false;
-                      }),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018),
-                    child: FilterNeedHelp(
-                      isTouched: _isTouchedNeedHelp,
-                      onClick: () => setState(() {
-                        _isTouchedAll = false;
-                        _isTouchedDoingGreat = false;
-                        _isTouchedNeedHelp = true;
-                        _isTouchedFrustrated = false;
-                        _isTouchedInactive = false;
-                      }),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018),
-                    child: FilterFrustrated(
-                      isTouched: _isTouchedFrustrated,
-                      onClick: () => setState(() {
-                        _isTouchedAll = false;
-                        _isTouchedDoingGreat = false;
-                        _isTouchedNeedHelp = false;
-                        _isTouchedFrustrated = true;
-                        _isTouchedInactive = false;
-                      }),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.018, right: MediaQuery.of(context).size.width*0.02),
-                    child: FilterInactive(
-                      isTouched: _isTouchedInactive,
-                      onClick: () => setState(() {
-                        _isTouchedAll = false;
-                        _isTouchedDoingGreat = false;
-                        _isTouchedNeedHelp = false;
-                        _isTouchedFrustrated = false;
-                        _isTouchedInactive = true;
-                      }),
-                    ),
-                  ),
-                ],
+          height: MediaQuery.of(context).size.height * 0.04,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.02),
+                child: FilterAll(
+                  isTouched: _isTouchedAll,
+                  onClick: () => setState(() {
+                    _isTouchedAll = true;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = false;
+                  }),
+                ),
               ),
-            ),
-              SizedBox(
-          height: MediaQuery.of(context).size.height*0.02,
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.018),
+                child: FilterDoingGreat(
+                  isTouched: _isTouchedDoingGreat,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = true;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.018),
+                child: FilterNeedHelp(
+                  isTouched: _isTouchedNeedHelp,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = true;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.018),
+                child: FilterFrustrated(
+                  isTouched: _isTouchedFrustrated,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = true;
+                    _isTouchedInactive = false;
+                  }),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.018,
+                    right: MediaQuery.of(context).size.width * 0.02),
+                child: FilterInactive(
+                  isTouched: _isTouchedInactive,
+                  onClick: () => setState(() {
+                    _isTouchedAll = false;
+                    _isTouchedDoingGreat = false;
+                    _isTouchedNeedHelp = false;
+                    _isTouchedFrustrated = false;
+                    _isTouchedInactive = true;
+                  }),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.02,
         ),
         Container(
-          height: MediaQuery.of(context).size.height*0.43,
+          height: MediaQuery.of(context).size.height * 0.41,
+          color: Colors.brown,
           child: _isTouchedAll == true
               ? AllTab(widget.classId, widget.teacherEmail)
               : _isTouchedDoingGreat
@@ -402,7 +412,6 @@ class _FilterViewState extends State<FilterView> {
         ),
       ],
     );
-      
   }
 }
 
