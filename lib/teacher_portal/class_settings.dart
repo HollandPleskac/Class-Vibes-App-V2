@@ -67,7 +67,7 @@ class _ClassSettingsState extends State<ClassSettings> {
       child: Column(
         children: [
           SizedBox(
-            height: 50,
+            height: 25,
           ),
           EditClassName(
             controller: _classNameController,
@@ -297,7 +297,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
           width: 20,
         ),
         Text(
-          'Max Student Inactive Days',
+          'Max Inactive Days',
           style: TextStyle(fontSize: 18, color: kWetAsphaltColor),
         ),
         Spacer(),

@@ -275,22 +275,23 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                             // color: Colors.red,
                                             width: double.infinity,
                                             child: Padding(
-                                              padding: EdgeInsets.all(8),
+                                              padding: EdgeInsets.all(6),
                                               child: Card(
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
+                                                    // SizedBox(
+                                                    //   height: 10,
+                                                    // ),
                                                     DynamicPieChart(
                                                         classId: document
                                                             .documentID),
                                                     Padding(
                                                       padding: EdgeInsets.only(
-                                                          bottom: 20,right:10,left:10),
-                                                      child: Text(
+                                                          bottom: 20,right:5,left:5),
+                                                      child: 
+                                                      Text(
                                                         document['class name'],
                                                         overflow: TextOverflow.ellipsis,
                                                         style: kSubTextStyle
@@ -444,12 +445,15 @@ class DynamicPieChart extends StatelessWidget {
               );
             } else {
               return Center(
-                child: AspectRatio(
-                  aspectRatio: 1.6,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      'assets/svg/undraw_analytics_5pgy.svg',
-                      width: MediaQuery.of(context).size.width * 0.2,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom:MediaQuery.of(context).size.height*0.012),
+                                  child: AspectRatio(
+                    aspectRatio: 1.6,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/svg/undraw_analytics_5pgy.svg',
+                        width: MediaQuery.of(context).size.width * 0.2,
+                      ),
                     ),
                   ),
                 ),

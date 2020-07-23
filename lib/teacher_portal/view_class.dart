@@ -396,7 +396,6 @@ class _FilterViewState extends State<FilterView> {
         ),
         Container(
           height: MediaQuery.of(context).size.height * 0.41,
-          color: Colors.brown,
           child: _isTouchedAll == true
               ? AllTab(widget.classId, widget.teacherEmail)
               : _isTouchedDoingGreat
