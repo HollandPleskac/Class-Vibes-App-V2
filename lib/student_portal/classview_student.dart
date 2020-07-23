@@ -175,7 +175,7 @@ class StudentClass extends StatelessWidget {
                       }
                       return Text(
                             snapshot.data['class name'],
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.fade,
                             softWrap: false,
                             style: TextStyle(
                               fontSize: MediaQuery.of(context).size.width*0.046,
