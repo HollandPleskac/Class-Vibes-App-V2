@@ -289,7 +289,7 @@ class Fire {
     return ['success', classCode];
   }
 
-  void deleteClass({String classId, String teacherEmail}) async {
+  Future<void> deleteClass({String classId, String teacherEmail}) async {
     //delete class from Classes
 
     _firestore.collection('Classes').document(classId).delete();

@@ -260,8 +260,8 @@ class _DeleteClassState extends State<DeleteClass> {
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
-        onPressed: () {
-          _fire.deleteClass(
+        onPressed: () async {
+          await _fire.deleteClass(
               classId: widget.classId, teacherEmail: widget.teacherEmail);
           Navigator.pushReplacement(
             context,
