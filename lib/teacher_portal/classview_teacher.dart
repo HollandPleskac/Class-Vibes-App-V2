@@ -251,7 +251,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                 child: GridView.count(
                                   physics: BouncingScrollPhysics(),
                                   primary: false,
-                                  padding: const EdgeInsets.all(30),
+                                  padding: const EdgeInsets.all(28),
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 10,
                                   crossAxisCount: 2,
@@ -434,12 +434,12 @@ class DynamicPieChart extends StatelessWidget {
                     inactiveStudents: inactiveStudents,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.0225,right: 5, left: 5),
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.0225,right: 10, left: 10),
                     child: Text(
                       className,
                       overflow: TextOverflow.fade,
                       softWrap: false,
-                      style: kSubTextStyle.copyWith(fontSize: 16),
+                      style: kSubTextStyle.copyWith(fontSize:  MediaQuery.of(context).size.width*0.038),
                     ),
                   ),
                 ],
@@ -460,12 +460,12 @@ class DynamicPieChart extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(right: 5, left: 5),
+                    padding: EdgeInsets.only(right: 10, left: 10),
                     child: Text(
                       className,
                       overflow: TextOverflow.fade,
                       softWrap: false,
-                      style: kSubTextStyle.copyWith(fontSize: 16),
+                      style: kSubTextStyle.copyWith(fontSize: MediaQuery.of(context).size.width*0.038),
                     ),
                   ),
                 ],
