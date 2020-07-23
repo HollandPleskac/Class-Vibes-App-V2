@@ -277,29 +277,11 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                             child: Padding(
                                               padding: EdgeInsets.all(6),
                                               child: Card(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    // SizedBox(
-                                                    //   height: 10,
-                                                    // ),
-                                                    DynamicPieChart(
-                                                        classId: document
-                                                            .documentID),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          bottom: 20,right:5,left:5),
-                                                      child: 
-                                                      Text(
-                                                        document['class name'],
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: kSubTextStyle
-                                                            .copyWith(
-                                                                fontSize: 16),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                child: Center(
+                                                  child: DynamicPieChart(
+                                                    classId:
+                                                        document.documentID,
+                                                  ),
                                                 ),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
@@ -335,7 +317,9 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 class DynamicPieChart extends StatelessWidget {
   final String classId;
 
-  DynamicPieChart({this.classId});
+  DynamicPieChart({
+    this.classId,
+  });
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -436,27 +420,50 @@ class DynamicPieChart extends StatelessWidget {
               print('frustrated : ' + frustratedStudents.toString());
               print('inactive : ' + inactiveStudents.toString());
               print('totla : ' + totalStudents.toString());
-              return PieChartSampleSmall(
-                //graph percentage
-                doingGreatStudents: doingGreatStudents,
-                needHelpStudents: needHelpStudents,
-                frustratedStudents: frustratedStudents,
-                inactiveStudents: inactiveStudents,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PieChartSampleSmall(
+                    //graph percentage
+                    doingGreatStudents: doingGreatStudents,
+                    needHelpStudents: needHelpStudents,
+                    frustratedStudents: frustratedStudents,
+                    inactiveStudents: inactiveStudents,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.0225,right: 5, left: 5),
+                    child: Text(
+                      'className',
+                      overflow: TextOverflow.ellipsis,
+                      style: kSubTextStyle.copyWith(fontSize: 16),
+                    ),
+                  ),
+                ],
               );
             } else {
-              return Center(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom:MediaQuery.of(context).size.height*0.012),
-                                  child: AspectRatio(
-                    aspectRatio: 1.6,
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/svg/undraw_analytics_5pgy.svg',
-                        width: MediaQuery.of(context).size.width * 0.2,
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: AspectRatio(
+                      aspectRatio: 1.6,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/svg/undraw_analytics_5pgy.svg',
+                          width: MediaQuery.of(context).size.width * 0.2,
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 5, left: 5),
+                    child: Text(
+                      'className',
+                      overflow: TextOverflow.ellipsis,
+                      style: kSubTextStyle.copyWith(fontSize: 16),
+                    ),
+                  ),
+                ],
               );
             }
         }
