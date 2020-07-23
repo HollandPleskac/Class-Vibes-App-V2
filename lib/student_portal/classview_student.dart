@@ -64,18 +64,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                     ),
                     centerTitle: true,
                     actions: [
-                      StreamBuilder(
-                          stream: _firestore
-                              .collection('Application Management')
-                              .document('ServerManagement')
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return Text('');
-                            } else {
-                              return snapshot.data['serversAreUp'] == false
-                                  ? Container()
-                                  : IconButton(
+                      IconButton(
                                       onPressed: () {
                                         print('press question');
                                         showStudentInfoPopUp(context);
@@ -84,9 +73,8 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                         FontAwesomeIcons.question,
                                         size: 20,
                                       ),
-                                    );
-                            }
-                          }),
+                                    ),
+                       
                     ],
                   ),
                   body: StreamBuilder(
