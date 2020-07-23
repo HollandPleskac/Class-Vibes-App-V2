@@ -22,8 +22,8 @@ class ClassAnnouncements extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.75,
+          Flexible(
+            flex: 7,
             child: StreamBuilder(
               stream: _firestore
                   .collection("Classes")
@@ -69,19 +69,25 @@ class ClassAnnouncements extends StatelessWidget {
                 }
               },
             ),
-            
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: PushAnnouncementBtn(
-                classId: classId,
-                getClassName: () async => await _firestore
-                    .collection('Classes')
-                    .document(classId)
-                    .get()
-                    .then((docSnap) => docSnap.data['class name']),
+          Flexible(
+            flex: 1,
+            child: Container(
+              color: Colors.brown,
+              child: Align(
+                alignment: Alignment.centerRight,
+
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: PushAnnouncementBtn(
+                    classId: classId,
+                    getClassName: () async => await _firestore
+                        .collection('Classes')
+                        .document(classId)
+                        .get()
+                        .then((docSnap) => docSnap.data['class name']),
+                  ),
+                ),
               ),
             ),
           ),
@@ -106,7 +112,7 @@ class Announcement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height*0.15,
+      height: MediaQuery.of(context).size.height * 0.15,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color.fromRGBO(235, 235, 235, 1),
@@ -114,7 +120,7 @@ class Announcement extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height:MediaQuery.of(context).size.height*0.15,
+            height: MediaQuery.of(context).size.height * 0.15,
             width: 8,
             decoration: BoxDecoration(
               color: kPrimaryColor,
