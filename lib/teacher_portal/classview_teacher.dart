@@ -275,12 +275,13 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                             // color: Colors.red,
                                             width: double.infinity,
                                             child: Padding(
-                                              padding: EdgeInsets.all(6),
+                                              padding: EdgeInsets.all(5),
                                               child: Card(
                                                 child: Center(
                                                   child: DynamicPieChart(
                                                     classId:
                                                         document.documentID,
+                                                        className: document['class name'],
                                                   ),
                                                 ),
                                                 shape: RoundedRectangleBorder(
@@ -316,9 +317,11 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
 class DynamicPieChart extends StatelessWidget {
   final String classId;
+  final String className;
 
   DynamicPieChart({
     this.classId,
+    this.className,
   });
   @override
   Widget build(BuildContext context) {
@@ -433,8 +436,9 @@ class DynamicPieChart extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.0225,right: 5, left: 5),
                     child: Text(
-                      'className',
-                      overflow: TextOverflow.ellipsis,
+                      className,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
                       style: kSubTextStyle.copyWith(fontSize: 16),
                     ),
                   ),
@@ -458,8 +462,9 @@ class DynamicPieChart extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 5, left: 5),
                     child: Text(
-                      'className',
-                      overflow: TextOverflow.ellipsis,
+                      className,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
                       style: kSubTextStyle.copyWith(fontSize: 16),
                     ),
                   ),

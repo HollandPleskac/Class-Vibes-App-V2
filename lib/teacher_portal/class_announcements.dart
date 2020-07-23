@@ -73,7 +73,6 @@ class ClassAnnouncements extends StatelessWidget {
           Flexible(
             flex: 1,
             child: Container(
-              color: Colors.brown,
               child: Align(
                 alignment: Alignment.centerRight,
 
