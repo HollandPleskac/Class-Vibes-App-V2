@@ -251,7 +251,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                 child: GridView.count(
                                   physics: BouncingScrollPhysics(),
                                   primary: false,
-                                  padding: const EdgeInsets.all(35),
+                                  padding: const EdgeInsets.all(30),
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 10,
                                   crossAxisCount: 2,
