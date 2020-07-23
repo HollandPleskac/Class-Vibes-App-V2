@@ -148,19 +148,19 @@ class StudentClass extends StatelessWidget {
         'class name': await getClassName(),
       }),
       child: Container(
-        height: 115,
+        height: MediaQuery.of(context).size.height*0.14,
         width: double.infinity,
         child: Padding(
           padding: EdgeInsets.only(
-            top: 30,
-            left: 25,
-            right: 25,
+            top: MediaQuery.of(context).size.height*0.035,
+            left: MediaQuery.of(context).size.width*0.05,
+            right: MediaQuery.of(context).size.width*0.05,
           ),
           child: Card(
             child: Row(
               children: [
                 SizedBox(
-                  width: 20,
+                  width: MediaQuery.of(context).size.width*0.05,
                 ),
                 StreamBuilder(
                     stream: _firestore
@@ -178,7 +178,7 @@ class StudentClass extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: MediaQuery.of(context).size.width*0.046,
                               fontWeight: FontWeight.w400,
                             ),
                         
@@ -408,14 +408,16 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
               ? FaIcon(
                   FontAwesomeIcons.smile,
                   color: Colors.grey,
-                  size: 36,
+                  size: MediaQuery.of(context).size.width*0.0825,
+                  //used to be 36
                 )
               : FaIcon(
                   widget.status == 'doing great'
                       ? FontAwesomeIcons.solidSmile
                       : FontAwesomeIcons.smile,
                   color: Colors.green,
-                  size: 36,
+                  size: MediaQuery.of(context).size.width*0.0825,
+                  //used to be 36
                 ),
         ),
         // FaIcon(
@@ -444,14 +446,16 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
               ? FaIcon(
                   FontAwesomeIcons.meh,
                   color: Colors.grey,
-                  size: 36,
+                  size: MediaQuery.of(context).size.width*0.0825,
+                  //used to be 36
                 )
               : FaIcon(
                   widget.status == 'need help'
                       ? FontAwesomeIcons.solidMeh
                       : FontAwesomeIcons.meh,
                   color: Colors.yellow[800],
-                  size: 36,
+                  size: MediaQuery.of(context).size.width*0.0825,
+                  //used to be 36
                 ),
         ),
         // FaIcon(
@@ -480,14 +484,16 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
               ? FaIcon(
                   FontAwesomeIcons.frown,
                   color: Colors.grey,
-                  size: 36,
+                  size: MediaQuery.of(context).size.width*0.0825,
+                  //used to be 36
                 )
               : FaIcon(
                   widget.status == 'frustrated'
                       ? FontAwesomeIcons.solidFrown
                       : FontAwesomeIcons.frown,
                   color: Colors.red,
-                  size: 36,
+                  size: MediaQuery.of(context).size.width*0.0825,
+                  //used to be 36
                 ),
         ),
         // FaIcon(
