@@ -77,10 +77,10 @@ class Fire {
         .collection('Reactions')
         .document()
         .setData({
-          'date':DateTime.now(),
-          'reaction':newMood,
-          'student email':uid,
-        });
+      'date': DateTime.now(),
+      'reaction': newMood,
+      'student email': uid,
+    });
   }
 
   void setupMeeting({
@@ -94,12 +94,13 @@ class Fire {
     String className,
     String classId,
     String teacherName,
+    DateTime timestampId,
   }) {
     _firestore
         .collection('Classes')
         .document(classId)
         .collection('Meetings')
-        .document('random meeting id')
+        .document(timestampId.toString())
         .setData({
       'time': length,
       'title': title,
@@ -115,7 +116,7 @@ class Fire {
         .collection('UserData')
         .document(studentUid)
         .collection('Meetings')
-        .document('random meeting id')
+        .document(timestampId.toString())
         .setData({
       'time': length,
       'title': title,
@@ -131,7 +132,7 @@ class Fire {
         .collection('UserData')
         .document(teacherUid)
         .collection('Meetings')
-        .document('random meeting id')
+        .document(timestampId.toString())
         .setData({
       'time': length,
       'title': title,
