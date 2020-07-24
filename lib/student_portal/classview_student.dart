@@ -148,7 +148,7 @@ class StudentClass extends StatelessWidget {
               arguments: {
                 'class id': classId,
                 'class name': await getClassName(),
-                'initial index':0,
+                'initial index': 0,
               }),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.14,
@@ -227,16 +227,13 @@ class StudentClass extends StatelessWidget {
           right: MediaQuery.of(context).size.width * 0.025,
           child: GestureDetector(
             onTap: () async {
-              //           final String classId = routeArguments['class id'];
-              // final String teacherName = routeArguments['teacher name'];
-              // final String studentUid = routeArguments['student uid'];
               print('tap');
 
               Navigator.pushNamed(context, ViewClassStudent.routename,
                   arguments: {
                     'class id': classId,
                     'class name': await getClassName(),
-                    'initial index':1,
+                    'initial index': 1,
                   });
             },
             child: FaIcon(
