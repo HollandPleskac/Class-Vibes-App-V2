@@ -20,73 +20,64 @@ class ClassAnnouncements extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child: Stack(
         children: [
-          Flexible(
-            flex: 7,
-            child: StreamBuilder(
-              stream: _firestore
-                  .collection("Classes")
-                  .document(classId)
-                  .collection('Announcements')
-                  .orderBy("timestamp", descending: true)
-                  .snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return Center(
-                      child: Container(),
+          StreamBuilder(
+            stream: _firestore
+                .collection("Classes")
+                .document(classId)
+                .collection('Announcements')
+                .orderBy("timestamp", descending: true)
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(
+                    child: Container(),
+                  );
+                default:
+                  if (snapshot.data != null &&
+                      snapshot.data.documents.isEmpty == false) {
+                    return ListView(
+                      physics: BouncingScrollPhysics(),
+                      children: snapshot.data.documents
+                          .map((DocumentSnapshot document) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              top: 20, left: 40, right: 40, bottom: 20),
+                          child: Announcement(
+                            message: document['content'],
+                            timestamp: DateTime.parse(
+                                document['timestamp'].toDate().toString()),
+                            announcementId: document.documentID,
+                            classId: classId,
+                          ),
+                        );
+                      }).toList(),
                     );
-                  default:
-                    if (snapshot.data != null &&
-                        snapshot.data.documents.isEmpty == false) {
-                      return ListView(
-                        physics: BouncingScrollPhysics(),
-                        children: snapshot.data.documents
-                            .map((DocumentSnapshot document) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                top: 20, left: 40, right: 40, bottom: 20),
-                            child: Announcement(
-                              message: document['content'],
-                              timestamp: DateTime.parse(
-                                  document['timestamp'].toDate().toString()),
-                              announcementId: document.documentID,
-                              classId: classId,
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    } else {
-                      return Center(
-                        child: NoDocsAnnouncementsClassTeacher(),
-                      );
-                    }
-                }
-              },
-            ),
+                  } else {
+                    return Center(
+                      child: NoDocsAnnouncementsClassTeacher(),
+                    );
+                  }
+              }
+            },
           ),
-          Flexible(
-            flex: 1,
-            child: Container(
-              child: Align(
-                alignment: Alignment.centerRight,
-
-                child: Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: PushAnnouncementBtn(
-                    classId: classId,
-                    getClassName: () async => await _firestore
-                        .collection('Classes')
-                        .document(classId)
-                        .get()
-                        .then((docSnap) => docSnap.data['class name']),
-                  ),
-                ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: 20,bottom: 20),
+              child: PushAnnouncementBtn(
+                classId: classId,
+                getClassName: () async => await _firestore
+                    .collection('Classes')
+                    .document(classId)
+                    .get()
+                    .then((docSnap) => docSnap.data['class name']),
               ),
             ),
           ),
