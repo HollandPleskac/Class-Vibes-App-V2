@@ -45,9 +45,11 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String classId = routeArguments['class id'];
     final String className = routeArguments['class name'];
+    final int initialIndex = routeArguments['initial index'];
 
     return DefaultTabController(
       length: 4,
+      initialIndex: initialIndex,
       child: StreamBuilder(
         stream: _firestore
             .collection('Application Management')

@@ -65,16 +65,15 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                     centerTitle: true,
                     actions: [
                       IconButton(
-                                      onPressed: () {
-                                        print('press question');
-                                        showStudentInfoPopUp(context);
-                                      },
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.question,
-                                        size: 20,
-                                      ),
-                                    ),
-                       
+                        onPressed: () {
+                          print('press question');
+                          showStudentInfoPopUp(context);
+                        },
+                        icon: FaIcon(
+                          FontAwesomeIcons.question,
+                          size: 20,
+                        ),
+                      ),
                     ],
                   ),
                   body: StreamBuilder(
@@ -144,25 +143,27 @@ class StudentClass extends StatelessWidget {
     return Stack(
       children: [
         GestureDetector(
-          onTap: () async =>
-              Navigator.pushNamed(context, ViewClassStudent.routename, arguments: {
-            'class id': classId,
-            'class name': await getClassName(),
-          }),
+          onTap: () async => Navigator.pushNamed(
+              context, ViewClassStudent.routename,
+              arguments: {
+                'class id': classId,
+                'class name': await getClassName(),
+                'initial index':0,
+              }),
           child: Container(
-            height: MediaQuery.of(context).size.height*0.14,
+            height: MediaQuery.of(context).size.height * 0.14,
             width: double.infinity,
             child: Padding(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height*0.035,
-                left: MediaQuery.of(context).size.width*0.05,
-                right: MediaQuery.of(context).size.width*0.05,
+                top: MediaQuery.of(context).size.height * 0.035,
+                left: MediaQuery.of(context).size.width * 0.05,
+                right: MediaQuery.of(context).size.width * 0.05,
               ),
               child: Card(
                 child: Row(
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width*0.05,
+                      width: MediaQuery.of(context).size.width * 0.05,
                     ),
                     StreamBuilder(
                         stream: _firestore
@@ -176,14 +177,14 @@ class StudentClass extends StatelessWidget {
                             );
                           }
                           return Text(
-                                snapshot.data['class name'],
-                                overflow: TextOverflow.fade,
-                                softWrap: false,
-                                style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.width*0.046,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                            
+                            snapshot.data['class name'],
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.046,
+                              fontWeight: FontWeight.w400,
+                            ),
                           );
                         }),
                     Spacer(),
@@ -220,31 +221,31 @@ class StudentClass extends StatelessWidget {
               ),
             ),
           ),
-         
         ),
-         Positioned(
-            top: MediaQuery.of(context).size.height*0.0125,
-            right: MediaQuery.of(context).size.width*0.025,
-            child: GestureDetector(
-              onTap: () {
-                //           final String classId = routeArguments['class id'];
-                // final String teacherName = routeArguments['teacher name'];
-                // final String studentUid = routeArguments['student uid'];
-                print('tap');
-                Navigator.pushNamed(context, ChatStudent.routeName, arguments: {
-                  'class id': 'test class app ui',
-                  'teacher name': 'Mr.Shea',
-                  'student uid': 'new@gmail.com',
-                  'student name': 'Kushagra',
-                });
-              },
-              child: FaIcon(
-                FontAwesomeIcons.solidComments,
-                size: 40,
-                color: kPrimaryColor,
-              ),
+        Positioned(
+          top: MediaQuery.of(context).size.height * 0.013,
+          right: MediaQuery.of(context).size.width * 0.025,
+          child: GestureDetector(
+            onTap: () async {
+              //           final String classId = routeArguments['class id'];
+              // final String teacherName = routeArguments['teacher name'];
+              // final String studentUid = routeArguments['student uid'];
+              print('tap');
+
+              Navigator.pushNamed(context, ViewClassStudent.routename,
+                  arguments: {
+                    'class id': classId,
+                    'class name': await getClassName(),
+                    'initial index':1,
+                  });
+            },
+            child: FaIcon(
+              FontAwesomeIcons.solidComments,
+              size: 37.5,
+              color: kPrimaryColor,
             ),
           ),
+        ),
       ],
     );
   }
@@ -293,7 +294,7 @@ void showStudentInfoPopUp(BuildContext context) {
                       ),
                       Container(
                         height: 80,
-                  width: MediaQuery.of(context).size.width * 0.85 - 30,
+                        width: MediaQuery.of(context).size.width * 0.85 - 30,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -413,7 +414,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
               ? FaIcon(
                   FontAwesomeIcons.smile,
                   color: Colors.grey,
-                  size: MediaQuery.of(context).size.width*0.0825,
+                  size: MediaQuery.of(context).size.width * 0.0825,
                   //used to be 36
                 )
               : FaIcon(
@@ -421,7 +422,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                       ? FontAwesomeIcons.solidSmile
                       : FontAwesomeIcons.smile,
                   color: Colors.green,
-                  size: MediaQuery.of(context).size.width*0.0825,
+                  size: MediaQuery.of(context).size.width * 0.0825,
                   //used to be 36
                 ),
         ),
@@ -451,7 +452,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
               ? FaIcon(
                   FontAwesomeIcons.meh,
                   color: Colors.grey,
-                  size: MediaQuery.of(context).size.width*0.0825,
+                  size: MediaQuery.of(context).size.width * 0.0825,
                   //used to be 36
                 )
               : FaIcon(
@@ -459,7 +460,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                       ? FontAwesomeIcons.solidMeh
                       : FontAwesomeIcons.meh,
                   color: Colors.yellow[800],
-                  size: MediaQuery.of(context).size.width*0.0825,
+                  size: MediaQuery.of(context).size.width * 0.0825,
                   //used to be 36
                 ),
         ),
@@ -489,7 +490,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
               ? FaIcon(
                   FontAwesomeIcons.frown,
                   color: Colors.grey,
-                  size: MediaQuery.of(context).size.width*0.0825,
+                  size: MediaQuery.of(context).size.width * 0.0825,
                   //used to be 36
                 )
               : FaIcon(
@@ -497,7 +498,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                       ? FontAwesomeIcons.solidFrown
                       : FontAwesomeIcons.frown,
                   color: Colors.red,
-                  size: MediaQuery.of(context).size.width*0.0825,
+                  size: MediaQuery.of(context).size.width * 0.0825,
                   //used to be 36
                 ),
         ),
