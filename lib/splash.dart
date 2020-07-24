@@ -11,12 +11,12 @@ import './logic/auth.dart';
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _auth = Auth();
 
-class SplashScreen extends StatefulWidget {
+class Splash extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashState createState() => _SplashState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashState extends State<Splash> {
   FirebaseUser user;
   String accountType;
   String accountStatus;
@@ -96,5 +96,6 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: BoxFit.contain,
       )),
     );
+ 
   }
 }
