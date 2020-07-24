@@ -68,11 +68,10 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                         isScrollable: true,
                         tabs: [
                           Tab(text: 'Overview'),
+                          Tab(text: 'Chat'),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
-                          Tab(
-                            text: 'Chat',
-                          )
+                          
                         ],
                       ),
                     ),
@@ -85,6 +84,12 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                           ),
                         ),
                         Container(
+                          child: ChatStudent(
+                            email: _email,
+                            classId: classId,
+                          ),
+                        ),
+                        Container(
                           child: ClassMeetingsStudent(
                             classId: classId,
                           ),
@@ -94,12 +99,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                             classId: classId,
                           ),
                         ),
-                        Container(
-                          child: ChatStudent(
-                            email: _email,
-                            classId: classId,
-                          ),
-                        ),
+                        
                       ],
                     ),
                   );
