@@ -141,106 +141,111 @@ class StudentClass extends StatelessWidget {
           );
     }
 
-    return GestureDetector(
-      onTap: () async =>
-          Navigator.pushNamed(context, ViewClassStudent.routename, arguments: {
-        'class id': classId,
-        'class name': await getClassName(),
-      }),
-      child: Container(
-        height: MediaQuery.of(context).size.height*0.14,
-        width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height*0.035,
-            left: MediaQuery.of(context).size.width*0.05,
-            right: MediaQuery.of(context).size.width*0.05,
-          ),
-          child: Card(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*0.05,
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () async =>
+              Navigator.pushNamed(context, ViewClassStudent.routename, arguments: {
+            'class id': classId,
+            'class name': await getClassName(),
+          }),
+          child: Container(
+            height: MediaQuery.of(context).size.height*0.14,
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height*0.035,
+                left: MediaQuery.of(context).size.width*0.05,
+                right: MediaQuery.of(context).size.width*0.05,
+              ),
+              child: Card(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width*0.05,
+                    ),
+                    StreamBuilder(
+                        stream: _firestore
+                            .collection('Classes')
+                            .document(classId)
+                            .snapshots(),
+                        builder: (BuildContext context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Center(
+                              child: Container(),
+                            );
+                          }
+                          return Text(
+                                snapshot.data['class name'],
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.width*0.046,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                            
+                          );
+                        }),
+                    Spacer(),
+                    StreamBuilder(
+                        stream: _firestore
+                            .collection('Classes')
+                            .document(classId)
+                            .collection('Students')
+                            .document(email)
+                            .snapshots(),
+                        builder: (BuildContext context, snapshot) {
+                          if (snapshot.data == null) {
+                            return Center(
+                              child: Container(),
+                            );
+                          }
+                          return SelectStatusRow(
+                            classId: classId,
+                            lastChangedStatus: snapshot.data['date'],
+                            status: snapshot.data['status'],
+                            email: email,
+                          );
+                        }),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
                 ),
-                StreamBuilder(
-                    stream: _firestore
-                        .collection('Classes')
-                        .document(classId)
-                        .snapshots(),
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Center(
-                          child: Container(),
-                        );
-                      }
-                      return Text(
-                            snapshot.data['class name'],
-                            overflow: TextOverflow.fade,
-                            softWrap: false,
-                            style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width*0.046,
-                              fontWeight: FontWeight.w400,
-                            ),
-                        
-                      );
-                    }),
-                Spacer(),
-                StreamBuilder(
-                    stream: _firestore
-                        .collection('Classes')
-                        .document(classId)
-                        .collection('Students')
-                        .document(email)
-                        .snapshots(),
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Center(
-                          child: Container(),
-                        );
-                      }
-                      return SelectStatusRow(
-                        classId: classId,
-                        lastChangedStatus: snapshot.data['date'],
-                        status: snapshot.data['status'],
-                        email: email,
-                      );
-                    }),
-                SizedBox(
-                  width: 20,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
                 ),
-              ],
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
               ),
             ),
           ),
+         
         ),
-      ),
-      // Positioned(
-      //   top: 0,
-      //   right: 0,
-      //   child: GestureDetector(
-      //     onTap: () {
-      //       //           final String classId = routeArguments['class id'];
-      //       // final String teacherName = routeArguments['teacher name'];
-      //       // final String studentUid = routeArguments['student uid'];
-      //       print('tap');
-      //       Navigator.pushNamed(context, ChatStudent.routeName, arguments: {
-      //         'class id': 'test class app ui',
-      //         'teacher name': 'Mr.Shea',
-      //         'student uid': 'new@gmail.com',
-      //         'student name': 'Kushagra',
-      //       });
-      //     },
-      //     child: FaIcon(
-      //       FontAwesomeIcons.solidComments,
-      //       size: 50,
-      //       color: kPrimaryColor,
-      //     ),
-      //   ),
-      // ),
+         Positioned(
+            top: MediaQuery.of(context).size.height*0.0125,
+            right: MediaQuery.of(context).size.width*0.025,
+            child: GestureDetector(
+              onTap: () {
+                //           final String classId = routeArguments['class id'];
+                // final String teacherName = routeArguments['teacher name'];
+                // final String studentUid = routeArguments['student uid'];
+                print('tap');
+                Navigator.pushNamed(context, ChatStudent.routeName, arguments: {
+                  'class id': 'test class app ui',
+                  'teacher name': 'Mr.Shea',
+                  'student uid': 'new@gmail.com',
+                  'student name': 'Kushagra',
+                });
+              },
+              child: FaIcon(
+                FontAwesomeIcons.solidComments,
+                size: 40,
+                color: kPrimaryColor,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
