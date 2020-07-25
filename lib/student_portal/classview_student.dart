@@ -148,7 +148,7 @@ class StudentClass extends StatelessWidget {
               arguments: {
                 'class id': classId,
                 'class name': await getClassName(),
-                'initial index': 0,
+                'initial index': 1,
               }),
           child: Container(
             height: MediaQuery.of(context).size.height * 0.14,
@@ -233,7 +233,7 @@ class StudentClass extends StatelessWidget {
                   arguments: {
                     'class id': classId,
                     'class name': await getClassName(),
-                    'initial index': 1,
+                    'initial index': 0,
                   });
             },
             child: FaIcon(

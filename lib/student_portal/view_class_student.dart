@@ -9,10 +9,14 @@ import './chat_student.dart';
 import './class_meetings_student.dart';
 import './class_announcements_student.dart';
 import './class_overview.dart';
+import '../logic/fire.dart';
+import '../student_portal/classview_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final Firestore _firestore = Firestore.instance;
+
+final _fire = Fire();
 
 class ViewClassStudent extends StatefulWidget {
   static const routename = 'view-class-student-screen';
@@ -23,7 +27,7 @@ class ViewClassStudent extends StatefulWidget {
 class _ViewClassStudentState extends State<ViewClassStudent> {
   String _email;
 
-  Future getTeacherEmail() async {
+  Future getStudentEmail() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
     final email = user.email;
 
@@ -34,7 +38,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
 
   @override
   void initState() {
-    getTeacherEmail().then((_) {
+    getStudentEmail().then((_) {
       setState(() {});
     });
 
@@ -49,7 +53,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
     final int initialIndex = routeArguments['initial index'];
 
     return DefaultTabController(
-      length: 4,
+      length: 3,
       initialIndex: initialIndex,
       child: StreamBuilder(
         stream: _firestore
@@ -74,14 +78,25 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                             size: 19.5,
                             color: Colors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _fire.leaveClass(
+                              classId: classId,
+                              studentEmail: _email,
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ClassViewStudent(),
+                              ),
+                            );
+                          },
                         ),
                       ],
                       bottom: TabBar(
                         isScrollable: true,
                         tabs: [
-                          Tab(text: 'Overview'),
-                          Tab(text: 'Chat'),
+                          // Tab(text: 'Overview'),
+                          Tab(text: 'Live Chat'),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
                         ],
@@ -89,12 +104,12 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                     ),
                     body: TabBarView(
                       children: [
-                        Container(
-                          child: ClassOverViewStudent(
-                            classId: classId,
-                            email: _email,
-                          ),
-                        ),
+                        // Container(
+                        //   child: ClassOverViewStudent(
+                        //     classId: classId,
+                        //     email: _email,
+                        //   ),
+                        // ),
                         Container(
                           child: ChatStudent(
                             email: _email,
