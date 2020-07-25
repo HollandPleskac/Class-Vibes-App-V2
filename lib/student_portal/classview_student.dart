@@ -238,7 +238,7 @@ class StudentClass extends StatelessWidget {
             },
             child: FaIcon(
               FontAwesomeIcons.solidComments,
-              size: 37.5,
+              size: 35,
               color: kPrimaryColor,
             ),
           ),
