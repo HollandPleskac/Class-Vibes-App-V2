@@ -109,6 +109,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
         ],
       ),
       body: SingleChildScrollView(
+        reverse: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
