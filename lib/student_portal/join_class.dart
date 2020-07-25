@@ -132,20 +132,7 @@ class _JoinClassState extends State<JoinClass> {
                                 pins, _email, _studentName);
                             print(result);
 
-                            if (result == 'You have joined the class!') {
-                              final snackBar = SnackBar(
-                                content: Text(result),
-                                action: SnackBarAction(
-                                  label: 'Hide',
-                                  onPressed: () {
-                                    _scaffoldKey.currentState
-                                        .hideCurrentSnackBar();
-                                  },
-                                ),
-                              );
-
-                              _scaffoldKey.currentState.showSnackBar(snackBar);
-                            }
+                            
                             final snackBar = SnackBar(
                               content: Text(result),
                               action: SnackBarAction(
