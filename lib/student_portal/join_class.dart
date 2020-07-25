@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../constant.dart';
 import '../nav_student.dart';
 import '../logic/fire.dart';
+import './classview_student.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
@@ -132,7 +133,6 @@ class _JoinClassState extends State<JoinClass> {
                                 pins, _email, _studentName);
                             print(result);
 
-                            
                             final snackBar = SnackBar(
                               content: Text(result),
                               action: SnackBarAction(
@@ -145,6 +145,16 @@ class _JoinClassState extends State<JoinClass> {
                             );
 
                             _scaffoldKey.currentState.showSnackBar(snackBar);
+
+                            // if (result == 'You have joined the class!') {
+                              
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => ClassViewStudent(),
+                            //     ),
+                            //   );
+                            // }
                           },
                         ),
                       ],
