@@ -152,9 +152,23 @@ class _StudentsTabState extends State<StudentsTab> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          DynamicPieChart(
-            widget.classId,
-          ),
+          // pie chart
+          StreamBuilder(
+              stream: _firestore
+                  .collection('Classes')
+                  .document(widget.classId)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text('');
+                } else {
+                  return DynamicPieChart(
+                    widget.classId,
+                    snapshot.data['max days inactive'],
+                  );
+                }
+              }),
+          //filter view
           FilterView(
             classId: widget.classId,
             teacherEmail: widget.teacherEmail,
@@ -167,9 +181,11 @@ class _StudentsTabState extends State<StudentsTab> {
 
 class DynamicPieChart extends StatelessWidget {
   final String classId;
+  final int maxDaysInactive;
 
   DynamicPieChart(
     this.classId,
+    this.maxDaysInactive,
   );
   @override
   Widget build(BuildContext context) {
@@ -210,7 +226,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      3)
+                      maxDaysInactive)
                   .length
                   .toDouble();
 
@@ -225,7 +241,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      3)
+                      maxDaysInactive)
                   .length
                   .toDouble();
               double frustratedStudents = snapshot.data.documents
@@ -239,7 +255,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      3)
+                      maxDaysInactive)
                   .length
                   .toDouble();
               double inactiveStudents = snapshot.data.documents
@@ -251,7 +267,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays >=
-                      3)
+                      maxDaysInactive)
                   .length
                   .toDouble();
 
