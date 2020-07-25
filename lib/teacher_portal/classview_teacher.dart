@@ -266,6 +266,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                             'class name':
                                                 document['class name'],
                                             'class id': document.documentID,
+                                            'max days inactive': document['max days inactive'],
                                           },
                                         );
                                       },
@@ -282,6 +283,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                     classId:
                                                         document.documentID,
                                                         className: document['class name'],
+                                                        maxDaysInactive: document['max days inactive'],
                                                   ),
                                                 ),
                                                 shape: RoundedRectangleBorder(
@@ -318,10 +320,12 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 class DynamicPieChart extends StatelessWidget {
   final String classId;
   final String className;
+  final int maxDaysInactive;
 
   DynamicPieChart({
     this.classId,
     this.className,
+    this.maxDaysInactive,
   });
   @override
   Widget build(BuildContext context) {
@@ -353,7 +357,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      5)
+                      maxDaysInactive)
                   .length
                   .toDouble();
 
@@ -368,7 +372,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      5)
+                      maxDaysInactive)
                   .length
                   .toDouble();
               double frustratedStudents = snapshot.data.documents
@@ -382,7 +386,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      5)
+                      maxDaysInactive)
                   .length
                   .toDouble();
               double inactiveStudents = snapshot.data.documents
@@ -394,7 +398,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays >=
-                      5)
+                      maxDaysInactive)
                   .length
                   .toDouble();
 
