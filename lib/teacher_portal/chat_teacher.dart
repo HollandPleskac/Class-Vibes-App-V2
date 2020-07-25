@@ -201,10 +201,10 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                   //     style: TextStyle(color: Colors.black),
                                   //   ),
                                   // ),
+                                  //SIZE THIS
                                   child: Center(
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
+                                      width: MediaQuery.of(context).size.width * 0.675,
                                       child: TextField(
                                         controller: _controller,
                                       ),

@@ -11,7 +11,10 @@ class ChatStudent extends StatefulWidget {
   static const routeName = 'student-chat';
   final String email;
   final String classId;
-  ChatStudent({this.email,this.classId,});
+  ChatStudent({
+    this.email,
+    this.classId,
+  });
   @override
   _ChatStudentState createState() => _ChatStudentState();
 }
@@ -75,8 +78,7 @@ class _ChatStudentState extends State<ChatStudent> {
         child: Column(
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height * 0.76,
-             
+              height: MediaQuery.of(context).size.height * 0.75,
               child: StreamBuilder(
                 stream: _firestore
                     .collection("Classes")
@@ -147,7 +149,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                   ),
                                   onPressed: () async {
                                     print('pressed the button');
-                                    print('class id ' + widget.classId.toString());
+                                    print('class id ' +
+                                        widget.classId.toString());
                                     print('student uid ' +
                                         widget.email.toString());
 
@@ -166,12 +169,13 @@ class _ChatStudentState extends State<ChatStudent> {
                                     });
                                     _controller.clear();
                                   }),
+                              //SIZE THIS
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 0.7,
+                                        MediaQuery.of(context).size.width * 0.675,
                                     child: TextField(
                                       controller: _controller,
                                     ),
