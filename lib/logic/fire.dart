@@ -224,33 +224,43 @@ class Fire {
         .collection('UserData')
         .document(studentEmail)
         .collection('Classes')
-        .where('class code', isEqualTo: classCode)
+        .where(FieldPath.documentId, isEqualTo: classCode)
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
+
+    bool isAcceptingJoin = await _firestore
+        .collection('Classes')
+        .document(classCode)
+        .get()
+        .then((docSnap) => docSnap.data['allow join']);
     if (isAlreadyInClass == true) {
       return 'You are already in that class.';
     }
     if (isClassCode == true) {
       //put the student in that class
-      _firestore
-          .collection('Classes')
-          .document(classCode)
-          .collection('Students')
-          .document(studentEmail)
-          .setData({
-        'date': DateTime.now(),
-        'email': studentEmail,
-        'name': studentName,
-        'status': 'doing great',
-      });
+      if (isAcceptingJoin) {
+        _firestore
+            .collection('Classes')
+            .document(classCode)
+            .collection('Students')
+            .document(studentEmail)
+            .setData({
+          'date': DateTime.now(),
+          'email': studentEmail,
+          'name': studentName,
+          'status': 'doing great',
+        });
 
-      _firestore
-          .collection('UserData')
-          .document(studentEmail)
-          .collection('Classes')
-          .document(classCode)
-          .setData({});
-      return 'You have joined the class!';
+        _firestore
+            .collection('UserData')
+            .document(studentEmail)
+            .collection('Classes')
+            .document(classCode)
+            .setData({});
+        return 'You have joined the class!';
+      } else {
+        return 'Teacher is not accepting students right now';
+      }
     }
     return 'That code does not exist.';
   }
