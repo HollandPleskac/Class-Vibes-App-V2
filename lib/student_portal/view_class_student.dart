@@ -2,6 +2,7 @@ import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constant.dart';
 import './chat_student.dart';
@@ -66,6 +67,16 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                       backgroundColor: kWetAsphaltColor,
                       title: Text(className),
                       centerTitle: true,
+                      actions: [
+                        IconButton(
+                          icon: FaIcon(
+                            FontAwesomeIcons.trash,
+                            size: 19.5,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
                       bottom: TabBar(
                         isScrollable: true,
                         tabs: [
@@ -73,7 +84,6 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                           Tab(text: 'Chat'),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
-                          
                         ],
                       ),
                     ),
@@ -101,7 +111,6 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                             classId: classId,
                           ),
                         ),
-                        
                       ],
                     ),
                   );
