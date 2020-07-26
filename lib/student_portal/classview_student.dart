@@ -223,8 +223,8 @@ class StudentClass extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.013,
-          right: MediaQuery.of(context).size.width * 0.025,
+          top: MediaQuery.of(context).size.height * 0.01,
+          right: MediaQuery.of(context).size.width * 0.02,
           child: GestureDetector(
             onTap: () async {
               print('tap');
