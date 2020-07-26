@@ -41,17 +41,20 @@ class AllTab extends StatelessWidget {
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
+                    studentEmail: document.documentID,
                   );
                 }).toList(),
               );
             } else {
               return Center(
-                child: Text('There are no students in this class',
-              style: TextStyle(
-                  height: 2,
-                  color: Colors.grey[600],
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600),),
+                child: Text(
+                  'There are no students in this class',
+                  style: TextStyle(
+                      height: 2,
+                      color: Colors.grey[600],
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               );
             }
         }
@@ -102,17 +105,20 @@ class DoingGreatTab extends StatelessWidget {
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
+                    studentEmail: document.documentID,
                   );
                 }).toList(),
               );
             } else {
               return Center(
-                child: Text('No students are doing great',
-              style: TextStyle(
-                  height: 2,
-                  color: Colors.grey[600],
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600),),
+                child: Text(
+                  'No students are doing great',
+                  style: TextStyle(
+                      height: 2,
+                      color: Colors.grey[600],
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               );
             }
         }
@@ -163,17 +169,20 @@ class NeedHelpTab extends StatelessWidget {
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
+                    studentEmail: document.documentID,
                   );
                 }).toList(),
               );
             } else {
               return Center(
-                child: Text('No students need help',
-              style: TextStyle(
-                  height: 2,
-                  color: Colors.grey[600],
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600),),
+                child: Text(
+                  'No students need help',
+                  style: TextStyle(
+                      height: 2,
+                      color: Colors.grey[600],
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               );
             }
         }
@@ -224,17 +233,20 @@ class FrustratedTab extends StatelessWidget {
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
+                    studentEmail: document.documentID,
                   );
                 }).toList(),
               );
             } else {
               return Center(
-                child: Text('No students are frustrated',
-              style: TextStyle(
-                  height: 2,
-                  color: Colors.grey[600],
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600),),
+                child: Text(
+                  'No students are frustrated',
+                  style: TextStyle(
+                      height: 2,
+                      color: Colors.grey[600],
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               );
             }
         }
@@ -284,17 +296,20 @@ class InactiveTab extends StatelessWidget {
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
+                    studentEmail: document.documentID,
                   );
                 }).toList(),
               );
             } else {
               return Center(
-                child: Text('No students are inactive',
-              style: TextStyle(
-                  height: 2,
-                  color: Colors.grey[600],
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600),),
+                child: Text(
+                  'No students are inactive',
+                  style: TextStyle(
+                      height: 2,
+                      color: Colors.grey[600],
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600),
+                ),
               );
             }
         }
@@ -310,6 +325,7 @@ class Student extends StatelessWidget {
   final BuildContext context;
   final String classId;
   final String teacherEmail;
+  final String studentEmail;
 
   Student({
     this.name,
@@ -318,6 +334,7 @@ class Student extends StatelessWidget {
     this.context,
     this.classId,
     this.teacherEmail,
+    this.studentEmail,
   });
 
   final TextEditingController _titleController = TextEditingController();
@@ -348,7 +365,7 @@ class Student extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.0125,
+                      height: MediaQuery.of(context).size.height * 0.0125,
                     ),
                     Text(
                       'Setup a Meeting',
@@ -362,11 +379,14 @@ class Student extends StatelessWidget {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: MediaQuery.of(context).size.height*0.0125,
+                            height: MediaQuery.of(context).size.height * 0.0125,
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
                             child: TextFormField(
                               controller: _titleController,
                               // autofocus: true,
@@ -392,7 +412,10 @@ class Student extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
                             child: TextFormField(
                               controller: _dateAndTimeController,
                               validator: (value) {
@@ -417,7 +440,10 @@ class Student extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
                             child: TextFormField(
                               controller: _contentController,
                               validator: (value) {
@@ -442,7 +468,10 @@ class Student extends StatelessWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width*0.05, right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
                             child: TextFormField(
                               validator: (value) {
                                 if (value == null || value == '') {
@@ -466,7 +495,10 @@ class Student extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width*0.05, bottom: MediaQuery.of(context).size.height*0.0125),
+                            padding: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: FlatButton(
@@ -516,19 +548,79 @@ class Student extends StatelessWidget {
     );
   }
 
+  String lastUpdatedStatus(Timestamp lastUpdate) {
+    if (DateTime.now()
+            .difference(
+              DateTime.parse(lastUpdate.toDate().toString()),
+            )
+            .inMinutes <=
+        0) {
+      // date in seconds
+      return 'Last updated: ' +
+          DateTime.now()
+              .difference(
+                DateTime.parse(lastUpdate.toDate().toString()),
+              )
+              .inSeconds
+              .toString() +
+          ' seconds ago';
+    } else if (DateTime.now()
+            .difference(
+              DateTime.parse(lastUpdate.toDate().toString()),
+            )
+            .inHours <=
+        0) {
+      // date in minutes
+      return 'Last updated: ' +
+          DateTime.now()
+              .difference(
+                DateTime.parse(lastUpdate.toDate().toString()),
+              )
+              .inMinutes
+              .toString() +
+          ' minutes ago';
+    } else if (DateTime.now()
+            .difference(
+              DateTime.parse(lastUpdate.toDate().toString()),
+            )
+            .inDays ==
+        0) {
+      // date in hours
+      return 'Last updated: ' +
+          DateTime.now()
+              .difference(
+                DateTime.parse(lastUpdate.toDate().toString()),
+              )
+              .inHours
+              .toString() +
+          ' hours ago';
+    } else {
+      // date in days
+
+      return 'Last updated: ' +
+          DateTime.now()
+              .difference(
+                DateTime.parse(lastUpdate.toDate().toString()),
+              )
+              .inDays
+              .toString() +
+          ' days ago';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height*0.09,
+      height: MediaQuery.of(context).size.height * 0.09,
       child: Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.04,
+            width: MediaQuery.of(context).size.width * 0.04,
           ),
           Container(
-            height: MediaQuery.of(context).size.height*0.075,
-            width: MediaQuery.of(context).size.height*0.075,
+            height: MediaQuery.of(context).size.height * 0.075,
+            width: MediaQuery.of(context).size.height * 0.075,
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(9999),
@@ -551,7 +643,7 @@ class Student extends StatelessWidget {
                   ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.05,
+            width: MediaQuery.of(context).size.width * 0.05,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -563,13 +655,26 @@ class Student extends StatelessWidget {
                 name,
                 style: TextStyle(fontSize: 16.5),
               ),
-              Text(
-                'Last updated: 7 days ago',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
+              StreamBuilder(
+                  stream: _firestore
+                      .collection('Classes')
+                      .document(classId)
+                      .collection('Students')
+                      .document(studentEmail)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    } else {
+                      return Text(
+                        lastUpdatedStatus(snapshot.data['date']),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[600],
+                        ),
+                      );
+                    }
+                  }),
               Container(),
               Container(),
             ],
@@ -584,7 +689,7 @@ class Student extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.075,
+            width: MediaQuery.of(context).size.width * 0.075,
           ),
           GestureDetector(
             onTap: () {
@@ -611,7 +716,7 @@ class Student extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width*0.04,
+            width: MediaQuery.of(context).size.width * 0.04,
           )
         ],
       ),
