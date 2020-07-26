@@ -98,6 +98,13 @@ class _ClassSettingsState extends State<ClassSettings> {
             maxDaysInactive,
             widget.email,
             widget.classId,
+            (int newDaysInactive) {
+              // setState(() {
+                maxDaysInactive = newDaysInactive;
+                print('LOCAL + ' + maxDaysInactive.toString());
+              // });
+              
+            }
           ),
           Spacer(),
           Row(
@@ -193,7 +200,7 @@ class EditClassName extends StatelessWidget {
 
 class IsAcceptingJoin extends StatefulWidget {
   final bool isSwitched;
-  Function updateSwitch;
+  final Function updateSwitch;
   final String classId;
   final String email;
   IsAcceptingJoin({
@@ -279,10 +286,12 @@ class InactiveDaysPicker extends StatefulWidget {
   int maxDaysInactive;
   String email;
   String classId;
+  final Function updateLocalMaxInactive;
   InactiveDaysPicker(
     this.maxDaysInactive,
     this.email,
     this.classId,
+    this.updateLocalMaxInactive,
   );
   @override
   _InactiveDaysPickerState createState() => _InactiveDaysPickerState();
@@ -331,6 +340,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                 ),
               ),
               onTap: () {
+                widget.updateLocalMaxInactive(widget.maxDaysInactive);
                 _fire.updateMaxDaysInactive(
                     widget.email, widget.classId, widget.maxDaysInactive);
               },

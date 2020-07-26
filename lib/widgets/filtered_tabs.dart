@@ -556,14 +556,7 @@ class Student extends StatelessWidget {
             .inMinutes <=
         0) {
       // date in seconds
-      return 'Last updated: ' +
-          DateTime.now()
-              .difference(
-                DateTime.parse(lastUpdate.toDate().toString()),
-              )
-              .inSeconds
-              .toString() +
-          ' seconds ago';
+      return 'Last updated: a few seconds ago';
     } else if (DateTime.now()
             .difference(
               DateTime.parse(lastUpdate.toDate().toString()),
