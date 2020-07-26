@@ -83,8 +83,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                 ),
                                 hintText: 'class name',
                                 icon: FaIcon(
-                                  FontAwesomeIcons.userAlt,
-                                  color: Colors.grey,
+                                  FontAwesomeIcons.chalkboard,
+                                  color: Colors.grey[500],
                                 ),
                               ),
                               validator: (value) {
