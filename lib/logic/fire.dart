@@ -184,7 +184,8 @@ class Fire {
         .document()
         .setData(
       {
-        'content': content,
+        'title': content,
+        'message': 'message place holder',
         'timestamp': DateTime.now(),
         'class name': className,
       },
