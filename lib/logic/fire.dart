@@ -257,9 +257,9 @@ class Fire {
             .collection('Classes')
             .document(classCode)
             .setData({
-              'code': classCode,
-              'class name': 'class name placeholder (take out later)'
-            });
+          'code': classCode,
+          'class name': 'class name placeholder (take out later)'
+        });
         return 'You have joined the class!';
       } else {
         return 'Teacher is not accepting students right now';
@@ -283,6 +283,7 @@ class Fire {
     }
 
     _firestore.collection('Classes').document(classCode).setData({
+      'teacher email': uid,
       'class code': classCode,
       'class name': className,
       'allow join': true,
@@ -295,6 +296,7 @@ class Fire {
         .collection('Classes')
         .document(classCode)
         .setData({
+      'teacher email': uid,
       'class code': classCode,
       'class name': className,
       'allow join': true,
