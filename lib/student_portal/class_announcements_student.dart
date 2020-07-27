@@ -22,7 +22,7 @@ class ClassAnnouncementsStudent extends StatelessWidget {
           .collection("Classes")
           .document(classId)
           .collection('Announcements')
-          .orderBy("timestamp", descending: true)
+          .orderBy("date", descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -44,8 +44,8 @@ class ClassAnnouncementsStudent extends StatelessWidget {
                     padding: EdgeInsets.only(
                         top: 20, left: 40, right: 40, bottom: 20),
                     child: Announcement(
-                      message:document['content'],
-                      timestamp: DateTime.parse(document['timestamp'].toDate().toString()),
+                      message:document['title'],
+                      timestamp: DateTime.parse(document['date'].toDate().toString()),
                       announcementId: document.documentID,
                     ),
                   );

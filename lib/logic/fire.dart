@@ -176,6 +176,7 @@ class Fire {
     String classId,
     String content,
     String className,
+    String title,
   }) {
     _firestore
         .collection('Classes')
@@ -184,9 +185,9 @@ class Fire {
         .document()
         .setData(
       {
-        'title': content,
-        'message': 'message place holder',
-        'timestamp': DateTime.now(),
+        'title':title,
+        'message': content,
+        'date': DateTime.now(),
         'class name': className,
       },
     );

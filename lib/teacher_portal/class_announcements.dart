@@ -27,7 +27,7 @@ class ClassAnnouncements extends StatelessWidget {
                 .collection("Classes")
                 .document(classId)
                 .collection('Announcements')
-                .orderBy("timestamp", descending: true)
+                .orderBy("date", descending: true)
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -50,9 +50,9 @@ class ClassAnnouncements extends StatelessWidget {
                           padding: EdgeInsets.only(
                               top: 20, left: 40, right: 40, bottom: 20),
                           child: Announcement(
-                            message: document['content'],
+                            message: document['title'],
                             timestamp: DateTime.parse(
-                                document['timestamp'].toDate().toString()),
+                                document['date'].toDate().toString()),
                             announcementId: document.documentID,
                             classId: classId,
                           ),
@@ -233,6 +233,32 @@ class PushAnnouncementBtn extends StatelessWidget {
                                 padding: EdgeInsets.only(
                                     left: 20, right: 20, bottom: 10),
                                 child: TextFormField(
+                                  controller: _titleController,
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'announcement has to have a title';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(
+                                      color: Color.fromRGBO(126, 126, 126, 1),
+                                    ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.grey[700],
+                                    ),
+                                    hintText: 'Title',
+                                    icon: FaIcon(FontAwesomeIcons.speakap),
+                                  ),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                child: TextFormField(
                                   controller: _contentController,
                                   validator: (value) {
                                     if (value == null || value == '') {
@@ -268,6 +294,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                       if (_formKey.currentState.validate()) {
                                         _fire.pushAnnouncement(
                                           classId: classId,
+                                          title: _titleController.text,
                                           content: _contentController.text,
                                           className: await getClassName(),
                                         );
