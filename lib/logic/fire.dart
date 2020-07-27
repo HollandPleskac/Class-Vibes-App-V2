@@ -266,7 +266,7 @@ class Fire {
   }
 
   Future<List> addClass({String uid, String className}) async {
-    String classCode = randomAlphaNumeric(4);
+    String classCode = randomNumeric(4);
     // String classCode = '5gUxwD';
 
     int isCodeUnique = await _firestore
