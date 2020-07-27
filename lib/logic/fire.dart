@@ -256,7 +256,10 @@ class Fire {
             .document(studentEmail)
             .collection('Classes')
             .document(classCode)
-            .setData({});
+            .setData({
+              'code': classCode,
+              'class name': 'class name placeholder (take out later)'
+            });
         return 'You have joined the class!';
       } else {
         return 'Teacher is not accepting students right now';

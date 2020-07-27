@@ -104,9 +104,23 @@ class _ProfileStudentState extends State<ProfileStudent> {
                           ),
                           child: FlatButton(
                             color: kPrimaryColor,
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                print('validated');
+                                // FirebaseUser user =
+                                //     await FirebaseAuth.instance.currentUser();
+                                //     print(user.toString());
+
+                                // UserUpdateInfo userUpdateInfo =
+                                //     new UserUpdateInfo();
+                                // userUpdateInfo.displayName =
+                                //     _userNameEditController.text;
+
+                                // user.updateProfile(userUpdateInfo);
+
+                                // print('new display name'+ user.displayName.toString());
+
+                                // user.displayName =
+                                // print('validated');
                                 _fire.editUserName(
                                   newUserName: _userNameEditController.text,
                                   uid: email,
