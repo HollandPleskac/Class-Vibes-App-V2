@@ -216,11 +216,11 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                       color: Colors.grey[800], fontSize: 18),
                                 ),
                                 Spacer(),
-                                Text(
-                                  "Created 16 Classes",
-                                  style: TextStyle(
-                                      color: Colors.grey[400], fontSize: 14),
-                                ),
+                                // Text(
+                                //   "Created 16 Classes",
+                                //   style: TextStyle(
+                                //       color: Colors.grey[400], fontSize: 14),
+                                // ),
                                 SizedBox(
                                   width: 15,
                                 ),

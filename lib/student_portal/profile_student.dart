@@ -228,11 +228,11 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                     color: Colors.grey[800], fontSize: 18),
                               ),
                               Spacer(),
-                              Text(
-                                "Enrolled in 16 Classes",
-                                style: TextStyle(
-                                    color: Colors.grey[400], fontSize: 14),
-                              ),
+                              // Text(
+                              //   "Enrolled in 16 Classes",
+                              //   style: TextStyle(
+                              //       color: Colors.grey[400], fontSize: 14),
+                              // ),
                               SizedBox(
                                 width: 15,
                               ),
