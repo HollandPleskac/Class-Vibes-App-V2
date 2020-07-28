@@ -9,12 +9,16 @@ import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
 import './splash.dart';
 
-// void main() =>  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-//     .then((_) {
-//       runApp(new MyApp());
-//     });
+// void main() => runApp((MyApp()));
 
-void main() => runApp((MyApp()));
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
