@@ -54,7 +54,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
               : Scaffold(
                   drawer: NavTeacher(),
                   appBar: AppBar(
-                    title: Text('Meetings Teacher'),
+                    title: Text('Meetings'),
                     backgroundColor: kWetAsphaltColor,
                     centerTitle: true,
                   ),
@@ -148,6 +148,7 @@ class Meeting extends StatelessWidget {
       children: [
         Text(
           dateAndTime,
+          overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.w700,
@@ -158,6 +159,7 @@ class Meeting extends StatelessWidget {
         ),
         Text(
           className + ' with ' + studentName,
+          overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.w700,
@@ -207,6 +209,7 @@ class Meeting extends StatelessWidget {
                   children: [
                     Text(
                       title,
+                      overflow: TextOverflow.fade,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -238,6 +241,7 @@ class Meeting extends StatelessWidget {
                     ),
                     Text(
                       message,
+                      overflow: TextOverflow.fade,
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.grey[700],

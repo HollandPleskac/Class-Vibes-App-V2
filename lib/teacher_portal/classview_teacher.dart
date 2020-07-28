@@ -199,7 +199,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                   appBar: AppBar(
                     backgroundColor: kWetAsphaltColor,
                     title: Text(
-                      'Teacher Classes',
+                      'Classes',
                       style: TextStyle(color: Colors.white),
                     ),
                     centerTitle: true,

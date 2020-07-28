@@ -37,7 +37,7 @@ class NavTeacher extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Teacher Classes'),
+            title: Text('Classes'),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -50,7 +50,7 @@ class NavTeacher extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Teacher Meetings'),
+            title: Text('Meetings'),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -63,7 +63,7 @@ class NavTeacher extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Teacher Profile'),
+            title: Text('Profile'),
             onTap: () {
               // Update the state of the app.
               // ...

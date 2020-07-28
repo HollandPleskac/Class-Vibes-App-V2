@@ -139,6 +139,7 @@ class Meeting extends StatelessWidget {
       children: [
         Text(
           dateAndTime,
+          overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.w700,
@@ -149,6 +150,7 @@ class Meeting extends StatelessWidget {
         ),
         Text(
           'With ' + studentName,
+          overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.w700,
@@ -198,6 +200,7 @@ class Meeting extends StatelessWidget {
                   children: [
                     Text(
                       title,
+                      overflow: TextOverflow.fade,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -229,6 +232,7 @@ class Meeting extends StatelessWidget {
                     ),
                     Text(
                       message,
+                      overflow: TextOverflow.fade,
                       style: TextStyle(
                         fontSize: 19,
                         color: Colors.grey[700],

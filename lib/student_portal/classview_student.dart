@@ -59,7 +59,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   appBar: AppBar(
                     backgroundColor: kWetAsphaltColor,
                     title: Text(
-                      'Home',
+                      'Classes',
                       style: TextStyle(color: Colors.white),
                     ),
                     centerTitle: true,

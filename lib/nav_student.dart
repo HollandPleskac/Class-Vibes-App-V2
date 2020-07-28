@@ -34,7 +34,7 @@ class NavStudent extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Student Classes'),
+            title: Text('Classes'),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -47,7 +47,7 @@ class NavStudent extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Join Class'),
+            title: Text('Join a Class'),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -60,7 +60,7 @@ class NavStudent extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Student Meetings'),
+            title: Text('Meetings'),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -73,7 +73,7 @@ class NavStudent extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Student Announcements'),
+            title: Text('Announcements'),
             onTap: () {
               // Update the state of the app.
               // ...
@@ -86,7 +86,7 @@ class NavStudent extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Student Profile'),
+            title: Text('Profile'),
             onTap: () {
               // Update the state of the app.
               // ...

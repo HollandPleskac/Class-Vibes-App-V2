@@ -89,7 +89,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
               : Scaffold(
                   drawer: NavStudent(),
                   appBar: AppBar(
-                    title: Text('Student Announcements'),
+                    title: Text('Announcements'),
                     centerTitle: true,
                     backgroundColor: kWetAsphaltColor,
                   ),
