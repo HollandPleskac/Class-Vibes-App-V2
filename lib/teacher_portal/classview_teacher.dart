@@ -204,6 +204,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     ),
                     centerTitle: true,
                     actions: [
+                      //DONT NEED THIS STREAMBUILDER ( TAKE OUT )
                       StreamBuilder(
                         stream: _firestore
                             .collection('Application Management')

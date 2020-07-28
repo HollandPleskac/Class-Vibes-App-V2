@@ -188,7 +188,7 @@ class Fire {
         'title':title,
         'message': content,
         'date': DateTime.now(),
-        'class name': className,
+        'class name': 'TAKE OUT (cant update once sent)',
       },
     );
   }
