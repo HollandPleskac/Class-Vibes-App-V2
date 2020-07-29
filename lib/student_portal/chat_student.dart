@@ -81,51 +81,66 @@ class _ChatStudentState extends State<ChatStudent> {
             Container(
               height: MediaQuery.of(context).size.height * 0.75,
               child: StreamBuilder(
-                  stream: _firestore
-                      .collection("Class-Chats")
-                      .document(widget.classId)
-                      .collection(widget.email)
-                      .orderBy("timestamp", descending: true)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
+                stream: _firestore
+                    .collection("Class-Chats")
+                    .document(widget.classId)
+                    .collection(widget.email)
+                    .orderBy("timestamp", descending: true)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    default:
+                      if (snapshot.data != null &&
+                          snapshot.data.documents.isEmpty == false) {
                         return Center(
-                          child: CircularProgressIndicator(),
+                          //lazy loading
+                          child: ListView.builder(
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) {
+                              return snapshot.data.documents[index]['sent type'] == 'student'
+                                    ? RecievedChat(
+                                        title: snapshot.data.documents[index]['user'],
+                                        content: snapshot.data.documents[index]['message'],
+                                      )
+                                    : SentChat(
+                                        title: snapshot.data.documents[index]['user'],
+                                        content: snapshot.data.documents[index]['message'],
+                                      );
+                            },
+                          ),
+                          // child: ListView(
+                          //   reverse: true,
+                          //   children: snapshot.data.documents.map(
+                          //     (DocumentSnapshot document) {
+                          //       return document['sent type'] == 'student'
+                          //           ? RecievedChat(
+                          //               title: document['user'],
+                          //               content: document['message'],
+                          //             )
+                          //           : SentChat(
+                          //               title: document['user'],
+                          //               content: document['message'],
+                          //             );
+                          //     },
+                          //   ).toList(),
+                          // ),
                         );
-                      default:
-                        if (snapshot.data != null &&
-                            snapshot.data.documents.isEmpty == false) {
-                          return Center(
-                            child: ListView(
-                              reverse: true,
-                              children: snapshot.data.documents.map(
-                                (DocumentSnapshot document) {
-                                  return document['sent type'] == 'student'
-                                      ? RecievedChat(
-                                          title: document['user'],
-                                          content: document['message'],
-                                        )
-                                      : SentChat(
-                                          title: document['user'],
-                                          content: document['message'],
-                                        );
-                                },
-                              ).toList(),
-                            ),
-                          );
-                        } else {
-                          return Center(
-                            child: NoDocsChat(),
-                          );
-                        }
-                    }
-                  },
-                ),
+                      } else {
+                        return Center(
+                          child: NoDocsChat(),
+                        );
+                      }
+                  }
+                },
+              ),
               // child: StreamBuilder(
               //   stream: _firestore
               //       .collection("Class-Chats")

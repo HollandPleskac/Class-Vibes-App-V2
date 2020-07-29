@@ -138,22 +138,38 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         if (snapshot.data != null &&
                             snapshot.data.documents.isEmpty == false) {
                           return Center(
-                            child: ListView(
-                              reverse: true,
-                              children: snapshot.data.documents.map(
-                                (DocumentSnapshot document) {
-                                  return document['sent type'] == 'student'
-                                      ? RecievedChat(
-                                          title: document['user'],
-                                          content: document['message'],
-                                        )
-                                      : SentChat(
-                                          title: document['user'],
-                                          content: document['message'],
-                                        );
-                                },
-                              ).toList(),
-                            ),
+                            //lazy loading
+                          child: ListView.builder(
+                            reverse: true,
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) {
+                              return snapshot.data.documents[index]['sent type'] == 'student'
+                                    ? RecievedChat(
+                                        title: snapshot.data.documents[index]['user'],
+                                        content: snapshot.data.documents[index]['message'],
+                                      )
+                                    : SentChat(
+                                        title: snapshot.data.documents[index]['user'],
+                                        content: snapshot.data.documents[index]['message'],
+                                      );
+                            },
+                          ),
+                            // child: ListView(
+                            //   reverse: true,
+                            //   children: snapshot.data.documents.map(
+                            //     (DocumentSnapshot document) {
+                            //       return document['sent type'] == 'student'
+                            //           ? RecievedChat(
+                            //               title: document['user'],
+                            //               content: document['message'],
+                            //             )
+                            //           : SentChat(
+                            //               title: document['user'],
+                            //               content: document['message'],
+                            //             );
+                            //     },
+                            //   ).toList(),
+                            // ),
                           );
                         } else {
                           return Center(
@@ -209,7 +225,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         'timestamp': DateTime.now(),
                                         'message': _controller.text,
                                         'user': teacherName,
-                                        'sent type': 'teacher'
+                                        'sent type': 'teacher',
                                       });
                                       _controller.clear();
                                     }),
