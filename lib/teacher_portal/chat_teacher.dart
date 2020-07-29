@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
+import '../widgets/no_documents_message.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -117,40 +118,54 @@ class _ChatTeacherState extends State<ChatTeacher> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: StreamBuilder(
-                    stream: _firestore
-                        .collection("Class-Chats")
-                        .document(classId)
-                        .collection(studentEmail)
-                        .orderBy("timestamp", descending: true)
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      //FIX THIS
-                      print('SNAPPP + '+snapshot.data.toString());
-                      if (!snapshot.hasData || snapshot.data.documents == null)
+                  stream: _firestore
+                      .collection("Class-Chats")
+                      .document(classId)
+                      .collection(studentEmail)
+                      .orderBy("timestamp", descending: true)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
                         return Center(
-                          child: Text('No Chat History'),
+                          child: CircularProgressIndicator(),
                         );
-                      return Center(
-                        child: ListView(
-                          reverse: true,
-                          children: snapshot.data.documents.map(
-                            (DocumentSnapshot document) {
-                              return document['sent type'] == 'student'
-                                  ? RecievedChat(
-                                      title: document['user'],
-                                      content: document['message'],
-                                    )
-                                  : SentChat(
-                                      title: document['user'],
-                                      content: document['message'],
-                                    );
-                            },
-                          ).toList(),
-                        ),
-                      );
-                    }),
+                      default:
+                        if (snapshot.data != null &&
+                            snapshot.data.documents.isEmpty == false) {
+                          return Center(
+                            child: ListView(
+                              reverse: true,
+                              children: snapshot.data.documents.map(
+                                (DocumentSnapshot document) {
+                                  return document['sent type'] == 'student'
+                                      ? RecievedChat(
+                                          title: document['user'],
+                                          content: document['message'],
+                                        )
+                                      : SentChat(
+                                          title: document['user'],
+                                          content: document['message'],
+                                        );
+                                },
+                              ).toList(),
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: NoDocsChat(),
+                          );
+                        }
+                    }
+                  },
+                ),
+               
               ),
+            
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,

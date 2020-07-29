@@ -431,3 +431,13 @@ class NoDocsMeetingsClassStudent extends StatelessWidget {
     );
   }
 }
+
+
+class NoDocsChat extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text('no chat be the first !'),
+    );
+  }
+}
