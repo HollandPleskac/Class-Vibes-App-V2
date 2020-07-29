@@ -151,7 +151,6 @@ class Auth {
               .createUserWithEmailAndPassword(email: email, password: password);
           FirebaseUser user = result.user;
 
-          // update the display name
           UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
           userUpdateInfo.displayName = 'a display NAME';
 
