@@ -21,9 +21,10 @@ class ClassMeetings extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.75,
       child: StreamBuilder(
         stream: _firestore
-            .collection("Classes")
-            .document(classId)
+            .collection("UserData")
+            .document(teacherEmail)
             .collection('Meetings')
+            .where('class id', isEqualTo: classId)
             .orderBy("timestamp")
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

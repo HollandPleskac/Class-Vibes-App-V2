@@ -12,17 +12,19 @@ final Firestore _firestore = Firestore.instance;
 
 class ClassMeetingsStudent extends StatelessWidget {
   final String classId;
+  final String email;
 
-  ClassMeetingsStudent({this.classId});
+  ClassMeetingsStudent({this.classId,this.email});
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
       child: StreamBuilder(
         stream: _firestore
-            .collection("Classes")
-            .document(classId)
+            .collection("UserData")
+            .document(email)
             .collection('Meetings')
+            .where('class id', isEqualTo: classId)
             .orderBy("timestamp")
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -42,16 +44,11 @@ class ClassMeetingsStudent extends StatelessWidget {
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return Padding(
-                       padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      top: MediaQuery.of(context).size.height *
-                                          0.035,
-                                      bottom:
-                                          MediaQuery.of(context).size.height *
-                                              0.032),
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.1,
+                          right: MediaQuery.of(context).size.width * 0.1,
+                          top: MediaQuery.of(context).size.height * 0.035,
+                          bottom: MediaQuery.of(context).size.height * 0.032),
                       child: Meeting(
                         className: document['class name'],
                         dateAndTime: document['date and time'],
@@ -72,7 +69,6 @@ class ClassMeetingsStudent extends StatelessWidget {
           }
         },
       ),
-      
     );
   }
 }
@@ -123,11 +119,11 @@ class Meeting extends StatelessWidget {
           height: 15,
         ),
         Container(
-                height: MediaQuery.of(context).size.height * 0.165,
+          height: MediaQuery.of(context).size.height * 0.165,
           child: Row(
             children: [
               Container(
-                 width: MediaQuery.of(context).size.width * 0.125,
+                width: MediaQuery.of(context).size.width * 0.125,
                 height: MediaQuery.of(context).size.height * 0.165,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

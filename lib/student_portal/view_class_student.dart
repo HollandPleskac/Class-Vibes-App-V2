@@ -119,6 +119,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                         Container(
                           child: ClassMeetingsStudent(
                             classId: classId,
+                            email: _email,
                           ),
                         ),
                         Container(
