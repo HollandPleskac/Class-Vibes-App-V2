@@ -56,6 +56,8 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
+      print('THE DISPLAY NAME + '+user.displayName.toString());
+
       if (await checkAccountType(email) == 'Student') {
         return ['failure', 'Account registered as a student'];
       }
@@ -140,7 +142,7 @@ class Auth {
           .where(FieldPath.documentId, isEqualTo: email)
           .getDocuments()
           .then((querySnap) => querySnap.documents.isNotEmpty);
-    
+
       if (isEligibleForJoin) {
         // if so --> sign up the teacher
         print('iseligible');
@@ -148,7 +150,15 @@ class Auth {
           AuthResult result = await _firebaseAuth
               .createUserWithEmailAndPassword(email: email, password: password);
           FirebaseUser user = result.user;
-          print('RES + '+result.toString());
+
+          UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+          userUpdateInfo.displayName = 'a display NAME';
+
+          await user.updateProfile(userUpdateInfo);
+          print(
+            'THE DISPLAY NAME : ' + user.displayName.toString(),
+          );
+          print('RES + ' + result.toString());
           return ['success', email];
         } catch (error) {
           print(error.code);
@@ -157,7 +167,7 @@ class Auth {
               return ['failure', 'Password is not strong enough'];
             case "ERROR_INVALID_EMAIL":
               return ['failure', 'Email address formatted incorrectly'];
-            case "ERROR_EMAIL_ALREADY_IN_USE ":
+            case "ERROR_EMAIL_ALREADY_IN_USE":
               return ['failure', 'Email already in use'];
           }
         }

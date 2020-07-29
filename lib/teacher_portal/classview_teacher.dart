@@ -12,6 +12,7 @@ import 'view_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'class_settings.dart';
 import '../widgets/no_documents_message.dart';
+import '../widgets/server_down.dart';
 import 'package:flutter_svg/svg.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -186,12 +187,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
           return Text('');
         } else {
           return snapshot.data['serversAreUp'] == false
-              ? Center(
-                  child: Text(
-                    'Servers are down',
-                    style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                  ),
-                )
+              ? ServersDown()
               : Scaffold(
                   key: _scaffoldKey,
                   drawer: NavTeacher(),
@@ -267,7 +263,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                             'class name':
                                                 document['class name'],
                                             'class id': document.documentID,
-                                            'max days inactive': document['max days inactive'],
+                                            'max days inactive':
+                                                document['max days inactive'],
                                           },
                                         );
                                       },
@@ -283,8 +280,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                   child: DynamicPieChart(
                                                     classId:
                                                         document.documentID,
-                                                        className: document['class name'],
-                                                        maxDaysInactive: document['max days inactive'],
+                                                    className:
+                                                        document['class name'],
+                                                    maxDaysInactive: document[
+                                                        'max days inactive'],
                                                   ),
                                                 ),
                                                 shape: RoundedRectangleBorder(
@@ -423,11 +422,6 @@ class DynamicPieChart extends StatelessWidget {
                   (inactiveStudents / totalStudents * 100).toStringAsFixed(0) +
                       '%';
 
-              print('doing great : ' + doingGreatStudents.toString());
-              print('need help : ' + needHelpStudents.toString());
-              print('frustrated : ' + frustratedStudents.toString());
-              print('inactive : ' + inactiveStudents.toString());
-              print('totla : ' + totalStudents.toString());
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -439,12 +433,16 @@ class DynamicPieChart extends StatelessWidget {
                     inactiveStudents: inactiveStudents,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.0225,right: 10, left: 10),
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.0225,
+                        right: 10,
+                        left: 10),
                     child: Text(
                       className,
                       overflow: TextOverflow.fade,
                       softWrap: false,
-                      style: kSubTextStyle.copyWith(fontSize:  MediaQuery.of(context).size.width*0.037),
+                      style: kSubTextStyle.copyWith(
+                          fontSize: MediaQuery.of(context).size.width * 0.037),
                     ),
                   ),
                 ],
@@ -470,7 +468,8 @@ class DynamicPieChart extends StatelessWidget {
                       className,
                       overflow: TextOverflow.fade,
                       softWrap: false,
-                      style: kSubTextStyle.copyWith(fontSize: MediaQuery.of(context).size.width*0.037),
+                      style: kSubTextStyle.copyWith(
+                          fontSize: MediaQuery.of(context).size.width * 0.037),
                     ),
                   ),
                 ],
