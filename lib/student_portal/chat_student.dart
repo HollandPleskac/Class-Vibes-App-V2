@@ -81,7 +81,7 @@ class _ChatStudentState extends State<ChatStudent> {
               height: MediaQuery.of(context).size.height * 0.75,
               child: StreamBuilder(
                 stream: _firestore
-                    .collection("Classes-Chats")
+                    .collection("Class-Chats")
                     .document(widget.classId)
                     .collection(widget.email)
                     .orderBy("date", descending: true)
@@ -160,7 +160,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                     //   'sent type': 'student'
                                     // });
                                     await _firestore
-                                        .collection('Classes-Chats')
+                                        .collection('Class-Chats')
                                         .document(widget.classId)
                                         .collection(widget.email)
                                         .document()

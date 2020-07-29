@@ -118,12 +118,10 @@ class _ChatTeacherState extends State<ChatTeacher> {
                 height: MediaQuery.of(context).size.height * 0.8,
                 child: StreamBuilder(
                     stream: _firestore
-                        .collection("Classes")
-                        .document(classId)
-                        .collection('Students')
-                        .document(studentEmail)
-                        .collection("Chats")
-                        .orderBy("date", descending: true)
+                        .collection("Class-Chats")
+                    .document(classId)
+                    .collection(studentEmail)
+                    .orderBy("date", descending: true)
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -188,7 +186,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       // });
 
                                       await _firestore
-                                          .collection('Classes-Chats')
+                                          .collection('Class-Chats')
                                           .document(classId)
                                           .collection(studentEmail)
                                           .document()
