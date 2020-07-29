@@ -56,8 +56,6 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
-      print('THE DISPLAY NAME + '+user.displayName.toString());
-
       if (await checkAccountType(email) == 'Student') {
         return ['failure', 'Account registered as a student'];
       }
@@ -107,6 +105,11 @@ class Auth {
           email: email, password: password);
       FirebaseUser user = result.user;
 
+      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+      userUpdateInfo.displayName = username;
+
+      await user.updateProfile(userUpdateInfo);
+
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -152,10 +155,10 @@ class Auth {
           FirebaseUser user = result.user;
 
           UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-          userUpdateInfo.displayName = 'a display NAME';
+          userUpdateInfo.displayName = username;
 
           await user.updateProfile(userUpdateInfo);
-          
+
           return ['success', email];
         } catch (error) {
           print(error.code);
