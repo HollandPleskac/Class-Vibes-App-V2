@@ -305,23 +305,35 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 SizedBox(
                                   width: 15,
                                 ),
-                                StreamBuilder(
-                                    stream: _firestore
-                                        .collection('UserData')
-                                        .document(_email)
-                                        .snapshots(),
+                                FutureBuilder(
+                                    future: _firebaseAuth.currentUser(),
                                     builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return Text('');
-                                      } else {
-                                        return Text(
-                                          snapshot.data['display name'],
-                                          style: TextStyle(
-                                              color: Colors.grey[800],
-                                              fontSize: 18),
-                                        );
-                                      }
-                                    }),
+                                      print(snapshot.data.toString());
+                                      return Text(
+                                        snapshot.data.displayName,
+                                        style: TextStyle(
+                                            color: Colors.grey[800],
+                                            fontSize: 18),
+                                      );
+                                    },
+                                  ),
+                                // StreamBuilder(
+                                //     stream: _firestore
+                                //         .collection('UserData')
+                                //         .document(_email)
+                                //         .snapshots(),
+                                //     builder: (context, snapshot) {
+                                //       if (!snapshot.hasData) {
+                                //         return Text('');
+                                //       } else {
+                                //         return Text(
+                                //           snapshot.data['display name'],
+                                //           style: TextStyle(
+                                //               color: Colors.grey[800],
+                                //               fontSize: 18),
+                                //         );
+                                //       }
+                                //     }),
                                 Spacer(),
                                 Text(
                                   "UserName",

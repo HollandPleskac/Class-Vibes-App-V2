@@ -153,11 +153,6 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
     _email = email;
   }
 
-  Future<String> getDisplayName() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
-    return user.displayName;
-  }
-
   @override
   void initState() {
     getTeacherEmail().then((_) {
@@ -306,28 +301,36 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                   SizedBox(
                                     width: 15,
                                   ),
-                                  // FutureBuilder(
-                                  //   future: getDisplayName(),
-                                  //   builder: return Text(),
-                                  // ),
+                                  FutureBuilder(
+                                    future: _firebaseAuth.currentUser(),
+                                    builder: (context, snapshot) {
+                                      print(snapshot.data.toString());
+                                      return Text(
+                                        snapshot.data.displayName,
+                                        style: TextStyle(
+                                            color: Colors.grey[800],
+                                            fontSize: 18),
+                                      );
+                                    },
+                                  ),
                                   // Text(getDisplayName().toString()),
-                                  StreamBuilder(
-                                      stream: _firestore
-                                          .collection('UserData')
-                                          .document(_email)
-                                          .snapshots(),
-                                      builder: (context, snapshot) {
-                                        if (!snapshot.hasData) {
-                                          return Text('');
-                                        } else {
-                                          return Text(
-                                            snapshot.data['display name'],
-                                            style: TextStyle(
-                                                color: Colors.grey[800],
-                                                fontSize: 18),
-                                          );
-                                        }
-                                      }),
+                                  // StreamBuilder(
+                                  //     stream: _firestore
+                                  //         .collection('UserData')
+                                  //         .document(_email)
+                                  //         .snapshots(),
+                                  //     builder: (context, snapshot) {
+                                  //       if (!snapshot.hasData) {
+                                  //         return Text('');
+                                  //       } else {
+                                  //         return Text(
+                                  //           snapshot.data['display name'],
+                                  //           style: TextStyle(
+                                  //               color: Colors.grey[800],
+                                  //               fontSize: 18),
+                                  //         );
+                                  //       }
+                                  //     }),
                                   Spacer(),
                                   Text(
                                     "UserName",
