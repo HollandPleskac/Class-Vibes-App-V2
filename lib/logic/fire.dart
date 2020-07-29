@@ -96,22 +96,7 @@ class Fire {
     String teacherName,
     DateTime timestampId,
   }) {
-    _firestore
-        .collection('Classes')
-        .document(classId)
-        .collection('Meetings')
-        .document(timestampId.toString())
-        .setData({
-      'time': length,
-      'title': title,
-      'content': content,
-      'class name': className,
-      'date and time': dateAndTime,
-      'student name': studentName,
-      'timestamp': DateTime.now(),
-      'teacher name': teacherName,
-      'class id': classId,
-    });
+
     _firestore
         .collection('UserData')
         .document(studentUid)
