@@ -81,11 +81,9 @@ class _ChatStudentState extends State<ChatStudent> {
               height: MediaQuery.of(context).size.height * 0.75,
               child: StreamBuilder(
                 stream: _firestore
-                    .collection("Classes")
+                    .collection("Classes-Chats")
                     .document(widget.classId)
-                    .collection('Students')
-                    .document(widget.email)
-                    .collection("Chats")
+                    .collection(widget.email)
                     .orderBy("date", descending: true)
                     .snapshots(),
                 builder: (BuildContext context,
@@ -148,7 +146,6 @@ class _ChatStudentState extends State<ChatStudent> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
-                                  
                                     // await _firestore
                                     //     .collection('Classes')
                                     //     .document(widget.classId)
@@ -163,16 +160,16 @@ class _ChatStudentState extends State<ChatStudent> {
                                     //   'sent type': 'student'
                                     // });
                                     await _firestore
-                                          .collection('Classes-Chats')
-                                          .document(widget.classId)
-                                          .collection(widget.email)
-                                          .document()
-                                          .setData({
-                                        'date': DateTime.now(),
-                                        'content': _controller.text,
-                                        'title': studentName,
-                                        'sent type': 'teacher'
-                                      });
+                                        .collection('Classes-Chats')
+                                        .document(widget.classId)
+                                        .collection(widget.email)
+                                        .document()
+                                        .setData({
+                                      'date': DateTime.now(),
+                                      'content': _controller.text,
+                                      'title': studentName,
+                                      'sent type': 'teacher'
+                                    });
                                     _controller.clear();
                                   }),
                               //SIZE THIS
@@ -180,8 +177,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                   child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.675,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.675,
                                     child: TextField(
                                       controller: _controller,
                                     ),
