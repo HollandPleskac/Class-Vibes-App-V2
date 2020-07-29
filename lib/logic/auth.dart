@@ -151,14 +151,12 @@ class Auth {
               .createUserWithEmailAndPassword(email: email, password: password);
           FirebaseUser user = result.user;
 
+          // update the display name
           UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
           userUpdateInfo.displayName = 'a display NAME';
 
           await user.updateProfile(userUpdateInfo);
-          print(
-            'THE DISPLAY NAME : ' + user.displayName.toString(),
-          );
-          print('RES + ' + result.toString());
+          
           return ['success', email];
         } catch (error) {
           print(error.code);
