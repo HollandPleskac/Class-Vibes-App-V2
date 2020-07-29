@@ -173,17 +173,24 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       color: Colors.black,
                                     ),
                                     onPressed: () async {
-                                      print('pressed the button');
-                                      print('class id ' + classId.toString());
-                                      print('student uid ' +
-                                          studentEmail.toString());
+                                      // await _firestore
+                                      //     .collection('Classes')
+                                      //     .document(classId)
+                                      //     .collection('Students')
+                                      //     .document(studentEmail)
+                                      //     .collection("Chats")
+                                      //     .document()
+                                      //     .setData({
+                                      //   'date': DateTime.now(),
+                                      //   'content': _controller.text,
+                                      //   'title': teacherName,
+                                      //   'sent type': 'teacher'
+                                      // });
 
                                       await _firestore
-                                          .collection('Classes')
+                                          .collection('Classes-Chats')
                                           .document(classId)
-                                          .collection('Students')
-                                          .document(studentEmail)
-                                          .collection("Chats")
+                                          .collection(studentEmail)
                                           .document()
                                           .setData({
                                         'date': DateTime.now(),
@@ -204,7 +211,8 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                   //SIZE THIS
                                   child: Center(
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width * 0.675,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.675,
                                       child: TextField(
                                         controller: _controller,
                                       ),

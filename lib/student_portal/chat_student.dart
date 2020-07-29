@@ -148,25 +148,31 @@ class _ChatStudentState extends State<ChatStudent> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
-                                    print('pressed the button');
-                                    print('class id ' +
-                                        widget.classId.toString());
-                                    print('student uid ' +
-                                        widget.email.toString());
-
+                                  
+                                    // await _firestore
+                                    //     .collection('Classes')
+                                    //     .document(widget.classId)
+                                    //     .collection('Students')
+                                    //     .document(widget.email)
+                                    //     .collection("Chats")
+                                    //     .document()
+                                    //     .setData({
+                                    //   'date': DateTime.now(),
+                                    //   'content': _controller.text,
+                                    //   'title': studentName,
+                                    //   'sent type': 'student'
+                                    // });
                                     await _firestore
-                                        .collection('Classes')
-                                        .document(widget.classId)
-                                        .collection('Students')
-                                        .document(widget.email)
-                                        .collection("Chats")
-                                        .document()
-                                        .setData({
-                                      'date': DateTime.now(),
-                                      'content': _controller.text,
-                                      'title': studentName,
-                                      'sent type': 'student'
-                                    });
+                                          .collection('Classes-Chats')
+                                          .document(widget.classId)
+                                          .collection(widget.email)
+                                          .document()
+                                          .setData({
+                                        'date': DateTime.now(),
+                                        'content': _controller.text,
+                                        'title': studentName,
+                                        'sent type': 'teacher'
+                                      });
                                     _controller.clear();
                                   }),
                               //SIZE THIS
