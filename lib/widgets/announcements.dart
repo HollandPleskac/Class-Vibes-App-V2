@@ -13,12 +13,14 @@ class TeacherAnnouncement extends StatelessWidget {
   final DateTime timestamp;
   final String announcementId;
   final String classId;
+  final String title;
 
   TeacherAnnouncement({
     this.message,
     this.timestamp,
     this.announcementId,
     this.classId,
+    this.title,
   });
   @override
   Widget build(BuildContext context) {
@@ -48,12 +50,18 @@ class TeacherAnnouncement extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  message,
+                  title,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  message,
                 ),
                 SizedBox(
                   height: 7.5,
@@ -97,14 +105,20 @@ class TeacherAnnouncement extends StatelessWidget {
 
 class StudentAnnouncement extends StatelessWidget {
   final String message;
+  final String title;
   final DateTime timestamp;
   final String announcementId;
 
-  StudentAnnouncement({this.message, this.timestamp,this.announcementId});
+  StudentAnnouncement({
+    this.message,
+    this.timestamp,
+    this.announcementId,
+    this.title,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:MediaQuery.of(context).size.height*0.15,
+      height: MediaQuery.of(context).size.height * 0.15,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color.fromRGBO(235, 235, 235, 1),
@@ -112,7 +126,7 @@ class StudentAnnouncement extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height:MediaQuery.of(context).size.height*0.15,
+            height: MediaQuery.of(context).size.height * 0.15,
             width: 8,
             decoration: BoxDecoration(
               color: kPrimaryColor,
@@ -129,13 +143,15 @@ class StudentAnnouncement extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  message,
+                  title,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                SizedBox(height: 5,),
+                Text(message),
                 SizedBox(
                   height: 7.5,
                 ),
@@ -153,7 +169,6 @@ class StudentAnnouncement extends StatelessWidget {
               ],
             ),
           ),
-          
         ],
       ),
     );

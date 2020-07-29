@@ -96,7 +96,6 @@ class Fire {
     String teacherName,
     DateTime timestampId,
   }) {
-
     _firestore
         .collection('UserData')
         .document(studentUid)
@@ -129,7 +128,7 @@ class Fire {
       'timestamp': DateTime.now(),
       'teacher name': teacherName,
       'class id': classId,
-      'student email':studentUid,
+      'student email': studentUid,
     });
   }
 
@@ -139,12 +138,6 @@ class Fire {
     String meetingId,
     String classId,
   }) {
-    _firestore
-        .collection('Classes')
-        .document(classId)
-        .collection('Meetings')
-        .document(meetingId)
-        .delete();
     _firestore
         .collection("UserData")
         .document(studentUid)
@@ -172,7 +165,7 @@ class Fire {
         .document()
         .setData(
       {
-        'title':title,
+        'title': title,
         'message': content,
         'date': DateTime.now(),
         'class name': 'TAKE OUT (cant update once sent)',

@@ -110,7 +110,8 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                                             right: 40,
                                             bottom: 20),
                                         child: StudentAnnouncement(
-                                          message: announcement['title'],
+                                          message: announcement['message'],
+                                          title: announcement['title'],
                                           timestamp: DateTime.parse(
                                               announcement['date']
                                                   .toDate()

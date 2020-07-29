@@ -51,7 +51,8 @@ class ClassAnnouncements extends StatelessWidget {
                           padding: EdgeInsets.only(
                               top: 20, left: 40, right: 40, bottom: 20),
                           child: TeacherAnnouncement(
-                            message: document['title'],
+                            message: document['message'],
+                            title: document['title'],
                             timestamp: DateTime.parse(
                                 document['date'].toDate().toString()),
                             announcementId: document.documentID,
