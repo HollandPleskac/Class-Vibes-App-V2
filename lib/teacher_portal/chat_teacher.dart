@@ -126,18 +126,16 @@ class _ChatTeacherState extends State<ChatTeacher> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       //FIX THIS
-                      if (!snapshot.hasData)
+                      print('SNAPPP + '+snapshot.data.toString());
+                      if (!snapshot.hasData || snapshot.data.documents == null)
                         return Center(
                           child: Text('No Chat History'),
                         );
-                      print('SNAPPPP : '+snapshot.data.toString());
-                      print('SOMEHTING : '+snapshot.data.documents[0].data.toString());
                       return Center(
                         child: ListView(
                           reverse: true,
                           children: snapshot.data.documents.map(
                             (DocumentSnapshot document) {
-                              print('THIS DOC + ' + document.toString());
                               return document['sent type'] == 'student'
                                   ? RecievedChat(
                                       title: document['user'],

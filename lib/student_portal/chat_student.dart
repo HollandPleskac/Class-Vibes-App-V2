@@ -97,8 +97,7 @@ class _ChatStudentState extends State<ChatStudent> {
                         child: Container(),
                       );
                     default:
-                      if (snapshot.data != null &&
-                          snapshot.data.documents.isEmpty == false) {
+                      if (!snapshot.hasData || snapshot.data.documents == null) {
                         return Center(
                           child: ListView(
                             reverse: true,
