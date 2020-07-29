@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav_teacher.dart';
 import '../constant.dart';
@@ -13,10 +14,9 @@ import '../logic/auth.dart';
 import '../auth/welcome.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 final _auth = Auth();
-
-final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class ProfileTeacher extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: MediaQuery.of(context).size.height*0.02,
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       Text(
                         'Edit Username',
@@ -60,15 +60,15 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             fontWeight: FontWeight.w800),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height*0.01,
+                        height: MediaQuery.of(context).size.height * 0.01,
                       ),
                       Form(
                         key: _formKey,
                         child: Container(
                           child: Padding(
                             padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width*0.05,
-                              right: MediaQuery.of(context).size.width*0.05,
+                              left: MediaQuery.of(context).size.width * 0.05,
+                              right: MediaQuery.of(context).size.width * 0.05,
                             ),
                             child: TextFormField(
                               controller: _userNameEditController,
@@ -101,13 +101,21 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: EdgeInsets.only(
-                            right: MediaQuery.of(context).size.width*0.05,
+                            right: MediaQuery.of(context).size.width * 0.05,
                           ),
                           child: FlatButton(
                             color: kPrimaryColor,
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                print('validated');
+                                FirebaseUser user =
+                                    await _firebaseAuth.currentUser();
+                                UserUpdateInfo userUpdateInfo =
+                                    new UserUpdateInfo();
+                                userUpdateInfo.displayName =
+                                    _userNameEditController.text;
+
+                                await user.updateProfile(userUpdateInfo);
+
                                 _fire.editUserName(
                                   newUserName: _userNameEditController.text,
                                   uid: email,
@@ -145,6 +153,11 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
     _email = email;
   }
 
+  Future<String> getDisplayName() async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    return user.displayName;
+  }
+
   @override
   void initState() {
     getTeacherEmail().then((_) {
@@ -163,7 +176,6 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            
             return Text('');
           } else {
             return snapshot.data['serversAreUp'] == false
@@ -179,7 +191,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                     body: ListView(
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.width*0.145,
+                          height: MediaQuery.of(context).size.width * 0.145,
                         ),
                         Center(
                           child: Container(
@@ -199,11 +211,11 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.width*0.2,
+                          height: MediaQuery.of(context).size.width * 0.2,
                         ),
                         Center(
                           child: Container(
-                            height: MediaQuery.of(context).size.height*0.0525,
+                            height: MediaQuery.of(context).size.height * 0.0525,
                             width: MediaQuery.of(context).size.width - 50,
                             child: Row(
                               children: [
@@ -236,7 +248,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                         ),
                         Center(
                           child: Container(
-                            height:  MediaQuery.of(context).size.height*0.0525,
+                            height: MediaQuery.of(context).size.height * 0.0525,
                             width: MediaQuery.of(context).size.width - 50,
                             child: Row(
                               children: [
@@ -286,13 +298,19 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           },
                           child: Center(
                             child: Container(
-                              height:  MediaQuery.of(context).size.height*0.0525,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.0525,
                               width: MediaQuery.of(context).size.width - 50,
                               child: Row(
                                 children: [
                                   SizedBox(
                                     width: 15,
                                   ),
+                                  // FutureBuilder(
+                                  //   future: getDisplayName(),
+                                  //   builder: return Text(),
+                                  // ),
+                                  // Text(getDisplayName().toString()),
                                   StreamBuilder(
                                       stream: _firestore
                                           .collection('UserData')
@@ -358,4 +376,3 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
         });
   }
 }
-
