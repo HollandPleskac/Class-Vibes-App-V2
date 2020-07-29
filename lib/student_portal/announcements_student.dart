@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../nav_student.dart';
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
-import '../widgets/extra_features.dart';
+import '../widgets/announcements.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

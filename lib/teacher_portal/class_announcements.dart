@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import '../constant.dart';
 import '../logic/fire.dart';
 import './class_announcements.dart';
-import '../widgets/extra_features.dart';
+import '../widgets/announcements.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
