@@ -17,6 +17,8 @@ class TeacherMeeting extends StatelessWidget {
   String studentName;
   final String teacherEmail;
   final String classId;
+  final String studentEmail;
+  final String meetingId;
 
   TeacherMeeting({
     this.dateAndTime,
@@ -27,6 +29,8 @@ class TeacherMeeting extends StatelessWidget {
     this.studentName,
     this.teacherEmail,
     this.classId,
+    this.studentEmail,
+    this.meetingId,
   });
   @override
   Widget build(BuildContext context) {
@@ -142,9 +146,9 @@ class TeacherMeeting extends StatelessWidget {
                 onTap: () {
                   print('delete meeting');
                   _fire.deleteMeeting(
-                    studentUid: 'new@gmail.com',
+                    studentUid: studentEmail,
                     teacherUid: teacherEmail,
-                    meetingId: 'random meeting id',
+                    meetingId: meetingId,
                     classId: classId,
                   );
                 },

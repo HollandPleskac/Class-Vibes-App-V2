@@ -103,6 +103,8 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                                     title: document['title'],
                                     teacherEmail: _teacherEmail,
                                     classId: document['class id'],
+                                    meetingId: document.documentID,
+                                    studentEmail: document['student email'],
                                   ),
                                 );
                               }).toList(),

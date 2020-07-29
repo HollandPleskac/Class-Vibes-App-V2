@@ -59,6 +59,8 @@ class ClassMeetings extends StatelessWidget {
                         title: document['title'],
                         teacherEmail: teacherEmail,
                         classId: classId,
+                        meetingId: document.documentID,
+                        studentEmail: document['student email'],
                       ),
                     );
                   }).toList(),
@@ -71,9 +73,6 @@ class ClassMeetings extends StatelessWidget {
           }
         },
       ),
-
-   
     );
   }
 }
-
