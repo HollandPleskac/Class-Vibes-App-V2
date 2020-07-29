@@ -119,9 +119,9 @@ class _ChatTeacherState extends State<ChatTeacher> {
                 child: StreamBuilder(
                     stream: _firestore
                         .collection("Class-Chats")
-                    .document(classId)
-                    .collection(studentEmail)
-                    .orderBy("date", descending: true)
+                        .document(classId)
+                        .collection(studentEmail)
+                        .orderBy("timestamp", descending: true)
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -130,20 +130,22 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         return Center(
                           child: Text('No Chat History'),
                         );
-
+                      print('SNAPPPP : '+snapshot.data.toString());
+                      print('SOMEHTING : '+snapshot.data.documents[0].data.toString());
                       return Center(
                         child: ListView(
                           reverse: true,
                           children: snapshot.data.documents.map(
                             (DocumentSnapshot document) {
+                              print('THIS DOC + ' + document.toString());
                               return document['sent type'] == 'student'
                                   ? RecievedChat(
-                                      title: document['title'],
-                                      content: document['content'],
+                                      title: document['user'],
+                                      content: document['message'],
                                     )
                                   : SentChat(
-                                      title: document['title'],
-                                      content: document['content'],
+                                      title: document['user'],
+                                      content: document['message'],
                                     );
                             },
                           ).toList(),
@@ -191,9 +193,9 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                           .collection(studentEmail)
                                           .document()
                                           .setData({
-                                        'date': DateTime.now(),
-                                        'content': _controller.text,
-                                        'title': teacherName,
+                                        'timestamp': DateTime.now(),
+                                        'message': _controller.text,
+                                        'user': teacherName,
                                         'sent type': 'teacher'
                                       });
                                       _controller.clear();

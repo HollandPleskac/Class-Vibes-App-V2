@@ -84,7 +84,7 @@ class _ChatStudentState extends State<ChatStudent> {
                     .collection("Class-Chats")
                     .document(widget.classId)
                     .collection(widget.email)
-                    .orderBy("date", descending: true)
+                    .orderBy("timestamp", descending: true)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -106,12 +106,12 @@ class _ChatStudentState extends State<ChatStudent> {
                               (DocumentSnapshot document) {
                                 return document['sent type'] == 'teacher'
                                     ? RecievedChat(
-                                        title: document['title'],
-                                        content: document['content'],
+                                        title: document['user'],
+                                        content: document['message'],
                                       )
                                     : SentChat(
-                                        title: document['title'],
-                                        content: document['content'],
+                                        title: document['user'],
+                                        content: document['message'],
                                       );
                               },
                             ).toList(),
@@ -165,9 +165,9 @@ class _ChatStudentState extends State<ChatStudent> {
                                         .collection(widget.email)
                                         .document()
                                         .setData({
-                                      'date': DateTime.now(),
-                                      'content': _controller.text,
-                                      'title': studentName,
+                                      'timestamp': DateTime.now(),
+                                      'message': _controller.text,
+                                      'user': studentName,
                                       'sent type': 'teacher'
                                     });
                                     _controller.clear();
