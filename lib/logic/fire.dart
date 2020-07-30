@@ -88,12 +88,9 @@ class Fire {
     String length,
     String title,
     String content,
-    String studentName,
     String teacherUid,
     String dateAndTime,
-    String className,
     String classId,
-    String teacherName,
     DateTime timestampId,
   }) {
     _firestore
@@ -105,11 +102,8 @@ class Fire {
       'time': length,
       'title': title,
       'content': content,
-      'class name': className,
       'date and time': dateAndTime,
-      'student name': studentName,
       'timestamp': DateTime.now(),
-      'teacher name': teacherName,
       'class id': classId,
       'student email': studentUid,
     });
@@ -121,12 +115,9 @@ class Fire {
         .setData({
       'time': length,
       'title': title,
-      'class name': className,
       'content': content,
-      'student name': studentName,
       'date and time': dateAndTime,
       'timestamp': DateTime.now(),
-      'teacher name': teacherName,
       'class id': classId,
       'student email': studentUid,
     });

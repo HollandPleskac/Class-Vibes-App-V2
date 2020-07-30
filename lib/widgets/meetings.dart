@@ -10,11 +10,9 @@ final _fire = Fire();
 
 class TeacherMeeting extends StatelessWidget {
   final String dateAndTime;
-  final String className;
   final String title;
   final String length;
   final String message;
-  String studentName;
   final String teacherEmail;
   final String classId;
   final String studentEmail;
@@ -22,11 +20,9 @@ class TeacherMeeting extends StatelessWidget {
 
   TeacherMeeting({
     this.dateAndTime,
-    this.className,
     this.title,
     this.length,
     this.message,
-    this.studentName,
     this.teacherEmail,
     this.classId,
     this.studentEmail,
@@ -49,7 +45,7 @@ class TeacherMeeting extends StatelessWidget {
           height: 15,
         ),
         Text(
-          className + ' with ' + studentName,
+          title,
           overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,
@@ -168,21 +164,15 @@ class TeacherMeeting extends StatelessWidget {
 
 class StudentMeeting extends StatelessWidget {
   final String dateAndTime;
-  final String className;
   final String title;
   final String length;
   final String message;
-  final String studentName;
-  final String teacherName;
 
   StudentMeeting({
     this.dateAndTime,
-    this.className,
     this.title,
     this.length,
     this.message,
-    this.studentName,
-    this.teacherName,
   });
   @override
   Widget build(BuildContext context) {
@@ -201,7 +191,7 @@ class StudentMeeting extends StatelessWidget {
           height: 15,
         ),
         Text(
-          'With ' + teacherName,
+          'With ??',
           overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,

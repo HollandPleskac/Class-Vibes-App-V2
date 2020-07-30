@@ -95,11 +95,9 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                                           MediaQuery.of(context).size.height *
                                               0.032),
                                   child: TeacherMeeting(
-                                    className: document['class name'],
                                     dateAndTime: document['date and time'],
                                     length: document['time'],
                                     message: document['content'],
-                                    studentName: document['student name'],
                                     title: document['title'],
                                     teacherEmail: _teacherEmail,
                                     classId: document['class id'],

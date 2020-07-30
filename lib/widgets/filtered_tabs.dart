@@ -258,6 +258,7 @@ class FrustratedTab extends StatelessWidget {
 class InactiveTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
+
   InactiveTab(this.classId, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
@@ -509,16 +510,13 @@ class Student extends StatelessWidget {
                                 onPressed: () {
                                   if (_formKey.currentState.validate()) {
                                     _fire.setupMeeting(
-                                      studentUid: 'new@gmail.com',
+                                      studentUid: studentEmail,
                                       length: _lengthController.text,
                                       title: _titleController.text,
                                       content: _contentController.text,
                                       dateAndTime: _dateAndTimeController.text,
-                                      studentName: 'student name',
                                       teacherUid: teacherEmail,
-                                      className: 'AP Physics',
                                       classId: classId,
-                                      teacherName: 'teacher name',
                                       timestampId: DateTime.now(),
                                     );
                                     Navigator.pop(context);
