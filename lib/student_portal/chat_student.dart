@@ -68,7 +68,6 @@ class _ChatStudentState extends State<ChatStudent> {
         });
   }
 
-  var studentName = 'Place holder student name! change';
 
   @override
   Widget build(BuildContext context) {
@@ -117,22 +116,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                       );
                             },
                           ),
-                          // child: ListView(
-                          //   reverse: true,
-                          //   children: snapshot.data.documents.map(
-                          //     (DocumentSnapshot document) {
-                          //       return document['sent type'] == 'student'
-                          //           ? RecievedChat(
-                          //               title: document['user'],
-                          //               content: document['message'],
-                          //             )
-                          //           : SentChat(
-                          //               title: document['user'],
-                          //               content: document['message'],
-                          //             );
-                          //     },
-                          //   ).toList(),
-                          // ),
+                         
                         );
                       } else {
                         return Center(
@@ -142,51 +126,7 @@ class _ChatStudentState extends State<ChatStudent> {
                   }
                 },
               ),
-              // child: StreamBuilder(
-              //   stream: _firestore
-              //       .collection("Class-Chats")
-              //       .document(widget.classId)
-              //       .collection(widget.email)
-              //       .orderBy("timestamp", descending: true)
-              //       .snapshots(),
-              //   builder: (BuildContext context,
-              //       AsyncSnapshot<QuerySnapshot> snapshot) {
-              //     if (snapshot.hasError) {
-              //       return Text('Error: ${snapshot.error}');
-              //     }
-              //     switch (snapshot.connectionState) {
-              //       case ConnectionState.waiting:
-              //         return Center(
-              //           child: Container(),
-              //         );
-              //       default:
-              //         if (!snapshot.hasData || snapshot.data.documents == null) {
-              //           return Center(
-              //             child: ListView(
-              //               reverse: true,
-              //               children: snapshot.data.documents.map(
-              //                 (DocumentSnapshot document) {
-              //                   return document['sent type'] == 'teacher'
-              //                       ? RecievedChat(
-              //                           title: document['user'],
-              //                           content: document['message'],
-              //                         )
-              //                       : SentChat(
-              //                           title: document['user'],
-              //                           content: document['message'],
-              //                         );
-              //                 },
-              //               ).toList(),
-              //             ),
-              //           );
-              //         } else {
-              //           return Center(
-              //             child: Text('no chat history'),
-              //           );
-              //         }
-              //     }
-              //   },
-              // ),
+            
             ),
             Center(
               child: Column(
@@ -229,7 +169,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                         .setData({
                                       'timestamp': DateTime.now(),
                                       'message': _controller.text,
-                                      'user': studentName,
+                                      'user': 'studentName',
                                       'sent type': 'student'
                                     });
                                     _controller.clear();

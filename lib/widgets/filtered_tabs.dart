@@ -259,7 +259,10 @@ class InactiveTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
 
-  InactiveTab(this.classId, this.teacherEmail);
+  InactiveTab(
+    this.classId,
+    this.teacherEmail,
+  );
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -694,8 +697,8 @@ class Student extends StatelessWidget {
                 ChatTeacher.routeName,
                 arguments: {
                   'class id': classId,
-                  'teacher name': 'PLACEHOLDER TEACHER NAME! CHANGE',
                   'student uid': studentEmail,
+                  'teacher name': 'teacherName',
                   'student name': name
                 },
               );

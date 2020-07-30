@@ -113,13 +113,13 @@ class Fire {
         .collection('Meetings')
         .document(timestampId.toString())
         .setData({
-      'time': length,
+      'length': length,
       'title': title,
-      'content': content,
+      'message': content,
       'date and time': dateAndTime,
       'timestamp': DateTime.now(),
       'class id': classId,
-      'student email': studentUid,
+      'recipient': studentUid,
     });
   }
 
