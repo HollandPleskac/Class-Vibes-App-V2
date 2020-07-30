@@ -96,13 +96,13 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                                               0.032),
                                   child: TeacherMeeting(
                                     dateAndTime: document['date and time'],
-                                    length: document['time'],
-                                    message: document['content'],
+                                    length: document['length'],
+                                    message: document['message'],
                                     title: document['title'],
                                     teacherEmail: _teacherEmail,
                                     classId: document['class id'],
                                     meetingId: document.documentID,
-                                    studentEmail: document['student email'],
+                                    studentEmail: document['recipient'],
                                   ),
                                 );
                               }).toList(),

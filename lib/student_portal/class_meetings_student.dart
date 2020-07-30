@@ -52,8 +52,8 @@ class ClassMeetingsStudent extends StatelessWidget {
                           bottom: MediaQuery.of(context).size.height * 0.032),
                       child: StudentMeeting(
                         dateAndTime: document['date and time'],
-                        length: document['time'],
-                        message: document['content'],
+                        length: document['length'],
+                        message: document['message'],
                         title: document['title'],
                       ),
                     );
