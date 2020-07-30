@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class ChatStudent extends StatefulWidget {
   static const routeName = 'student-chat';
@@ -66,6 +68,23 @@ class _ChatStudentState extends State<ChatStudent> {
             ),
           );
         });
+  }
+
+  String _studentName;
+
+  Future getStudentName() async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final name = user.displayName;
+
+    _studentName = name;
+  }
+
+  @override
+  void initState() {
+    getStudentName().then((_) {
+      setState(() {});
+    });
+    super.initState();
   }
 
 
@@ -169,7 +188,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                         .setData({
                                       'timestamp': DateTime.now(),
                                       'message': _controller.text,
-                                      'user': 'studentName',
+                                      'user': _studentName,
                                       'sent type': 'student'
                                     });
                                     _controller.clear();

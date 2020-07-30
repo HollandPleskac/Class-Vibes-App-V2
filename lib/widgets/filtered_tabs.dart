@@ -698,7 +698,6 @@ class Student extends StatelessWidget {
                 arguments: {
                   'class id': classId,
                   'student uid': studentEmail,
-                  'teacher name': 'teacherName',
                   'student name': name
                 },
               );

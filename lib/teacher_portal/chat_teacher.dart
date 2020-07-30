@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class ChatTeacher extends StatefulWidget {
   static const routeName = 'teacher-chat';
@@ -63,11 +65,27 @@ class _ChatTeacherState extends State<ChatTeacher> {
         });
   }
 
+  String _teacherName;
+
+  Future getTeacherName() async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final name = user.displayName;
+
+    _teacherName = name;
+  }
+
+  @override
+  void initState() {
+    getTeacherName().then((_) {
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String classId = routeArguments['class id'];
-    final String teacherName = routeArguments['teacher name'];
     final String studentEmail = routeArguments['student uid'];
     final String studentName = routeArguments['student name'];
     return Scaffold(
@@ -224,7 +242,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                           .setData({
                                         'timestamp': DateTime.now(),
                                         'message': _controller.text,
-                                        'user': teacherName,
+                                        'user': _teacherName,
                                         'sent type': 'teacher',
                                       });
                                       _controller.clear();
