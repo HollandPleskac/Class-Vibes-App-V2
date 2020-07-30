@@ -35,7 +35,6 @@ class AllTab extends StatelessWidget {
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return Student(
-                    name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
@@ -99,7 +98,6 @@ class DoingGreatTab extends StatelessWidget {
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return Student(
-                    name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
@@ -163,7 +161,6 @@ class NeedHelpTab extends StatelessWidget {
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return Student(
-                    name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
@@ -227,7 +224,6 @@ class FrustratedTab extends StatelessWidget {
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return Student(
-                    name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
@@ -294,7 +290,6 @@ class InactiveTab extends StatelessWidget {
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return Student(
-                    name: document['name'],
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
@@ -323,7 +318,6 @@ class InactiveTab extends StatelessWidget {
 }
 
 class Student extends StatelessWidget {
-  final String name;
   final String status;
   final String profilePictureLink;
   final BuildContext context;
@@ -332,7 +326,6 @@ class Student extends StatelessWidget {
   final String studentEmail;
 
   Student({
-    this.name,
     this.status,
     this.profilePictureLink,
     this.context,
@@ -645,10 +638,21 @@ class Student extends StatelessWidget {
             children: [
               Container(),
               Container(),
-              Text(
-                name,
-                style: TextStyle(fontSize: 16.5),
-              ),
+              StreamBuilder(
+                  stream: _firestore
+                      .collection('UserData')
+                      .document(studentEmail)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('');
+                    } else {
+                      return Text(
+                        snapshot.data['display name'],
+                        style: TextStyle(fontSize: 16.5),
+                      );
+                    }
+                  }),
               StreamBuilder(
                   stream: _firestore
                       .collection('Classes')
@@ -698,7 +702,6 @@ class Student extends StatelessWidget {
                 arguments: {
                   'class id': classId,
                   'student uid': studentEmail,
-                  'student name': name
                 },
               );
             },

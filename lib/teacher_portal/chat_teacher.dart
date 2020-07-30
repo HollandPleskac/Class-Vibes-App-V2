@@ -87,7 +87,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
     final String classId = routeArguments['class id'];
     final String studentEmail = routeArguments['student uid'];
-    final String studentName = routeArguments['student name'];
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
@@ -104,10 +103,23 @@ class _ChatTeacherState extends State<ChatTeacher> {
               Navigator.pop(context);
             }),
         centerTitle: true,
-        title: Text(
-          'Chat with ' + studentName,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
-        ),
+        title: StreamBuilder(
+            stream: _firestore
+                .collection('UserData')
+                .document(studentEmail)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('');
+              } else {
+                return Text(
+                  'Chat with ' + snapshot.data['display name'],
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w400),
+                );
+              }
+            }),
+        // title:
         actions: <Widget>[
           GestureDetector(
             onTap: _showModalSheet,
@@ -157,21 +169,27 @@ class _ChatTeacherState extends State<ChatTeacher> {
                             snapshot.data.documents.isEmpty == false) {
                           return Center(
                             //lazy loading
-                          child: ListView.builder(
-                            reverse: true,
-                            itemCount: snapshot.data.documents.length,
-                            itemBuilder: (context, index) {
-                              return snapshot.data.documents[index]['sent type'] == 'student'
+                            child: ListView.builder(
+                              reverse: true,
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (context, index) {
+                                return snapshot.data.documents[index]
+                                            ['sent type'] ==
+                                        'student'
                                     ? RecievedChat(
-                                        title: snapshot.data.documents[index]['user'],
-                                        content: snapshot.data.documents[index]['message'],
+                                        title: snapshot.data.documents[index]
+                                            ['user'],
+                                        content: snapshot.data.documents[index]
+                                            ['message'],
                                       )
                                     : SentChat(
-                                        title: snapshot.data.documents[index]['user'],
-                                        content: snapshot.data.documents[index]['message'],
+                                        title: snapshot.data.documents[index]
+                                            ['user'],
+                                        content: snapshot.data.documents[index]
+                                            ['message'],
                                       );
-                            },
-                          ),
+                              },
+                            ),
                             // child: ListView(
                             //   reverse: true,
                             //   children: snapshot.data.documents.map(
@@ -197,9 +215,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                     }
                   },
                 ),
-               
               ),
-            
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
