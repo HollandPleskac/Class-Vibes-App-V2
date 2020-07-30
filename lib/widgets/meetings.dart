@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../logic/fire.dart';
 import '../constant.dart';
 
-
 final _fire = Fire();
 
 class TeacherMeeting extends StatelessWidget {
@@ -41,17 +40,7 @@ class TeacherMeeting extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          title,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+       
         SizedBox(
           height: 15,
         ),
@@ -161,7 +150,6 @@ class TeacherMeeting extends StatelessWidget {
   }
 }
 
-
 class StudentMeeting extends StatelessWidget {
   final String dateAndTime;
   final String title;
@@ -181,17 +169,6 @@ class StudentMeeting extends StatelessWidget {
       children: [
         Text(
           dateAndTime,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Text(
-          'With ??',
           overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 21,

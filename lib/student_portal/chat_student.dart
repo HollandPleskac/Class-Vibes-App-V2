@@ -68,7 +68,7 @@ class _ChatStudentState extends State<ChatStudent> {
         });
   }
 
-  var studentName = 'Kushagra';
+  var studentName = 'Place holder student name! change';
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +103,10 @@ class _ChatStudentState extends State<ChatStudent> {
                         return Center(
                           //lazy loading
                           child: ListView.builder(
+                            reverse: true,
                             itemCount: snapshot.data.documents.length,
                             itemBuilder: (context, index) {
-                              return snapshot.data.documents[index]['sent type'] == 'student'
+                              return snapshot.data.documents[index]['sent type'] == 'teacher'
                                     ? RecievedChat(
                                         title: snapshot.data.documents[index]['user'],
                                         content: snapshot.data.documents[index]['message'],
@@ -229,7 +230,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                       'timestamp': DateTime.now(),
                                       'message': _controller.text,
                                       'user': studentName,
-                                      'sent type': 'teacher'
+                                      'sent type': 'student'
                                     });
                                     _controller.clear();
                                   }),
@@ -286,7 +287,7 @@ class SentChat extends StatelessWidget {
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15)),
           color: kPrimaryColor.withOpacity(0.5),
-          //color: Colors.redAccent.shade400.withOpacity(0.3),
+          // color: Colors.redAccent.shade400.withOpacity(0.3),
         ),
         width: 100,
         child: Padding(

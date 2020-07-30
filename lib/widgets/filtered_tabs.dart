@@ -694,8 +694,8 @@ class Student extends StatelessWidget {
                 ChatTeacher.routeName,
                 arguments: {
                   'class id': classId,
-                  'teacher name': 'Mr.Shea',
-                  'student uid': 'new@gmail.com',
+                  'teacher name': 'PLACEHOLDER TEACHER NAME! CHANGE',
+                  'student uid': studentEmail,
                   'student name': name
                 },
               );
