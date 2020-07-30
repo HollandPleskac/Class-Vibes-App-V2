@@ -106,21 +106,16 @@ class _ProfileStudentState extends State<ProfileStudent> {
                             color: kPrimaryColor,
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                // FirebaseUser user =
-                                //     await FirebaseAuth.instance.currentUser();
-                                //     print(user.toString());
+                                
+                                FirebaseUser user =
+                                    await _firebaseAuth.currentUser();
+                                UserUpdateInfo userUpdateInfo =
+                                    new UserUpdateInfo();
+                                userUpdateInfo.displayName =
+                                    _userNameEditController.text;
 
-                                // UserUpdateInfo userUpdateInfo =
-                                //     new UserUpdateInfo();
-                                // userUpdateInfo.displayName =
-                                //     _userNameEditController.text;
-
-                                // user.updateProfile(userUpdateInfo);
-
-                                // print('new display name'+ user.displayName.toString());
-
-                                // user.displayName =
-                                // print('validated');
+                                await user.updateProfile(userUpdateInfo);
+                                
                                 _fire.editUserName(
                                   newUserName: _userNameEditController.text,
                                   uid: email,
@@ -308,7 +303,6 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 FutureBuilder(
                                     future: _firebaseAuth.currentUser(),
                                     builder: (context, snapshot) {
-                                      print(snapshot.data.toString());
                                       return Text(
                                         snapshot.data.displayName,
                                         style: TextStyle(
