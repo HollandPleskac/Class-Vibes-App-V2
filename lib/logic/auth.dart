@@ -110,6 +110,8 @@ class Auth {
 
       await user.updateProfile(userUpdateInfo);
 
+      logMobileSignUp();
+
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -158,6 +160,8 @@ class Auth {
           userUpdateInfo.displayName = username;
 
           await user.updateProfile(userUpdateInfo);
+
+          logMobileSignUp();
 
           return ['success', email];
         } catch (error) {
@@ -227,5 +231,16 @@ class Auth {
 
   void signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  void logMobileSignUp() {
+    Firestore.instance
+        .collection('Application Management')
+        .document('Statistics')
+        .updateData(
+      {
+        "mobileUsers": FieldValue.increment(1),
+      },
+    );
   }
 }
