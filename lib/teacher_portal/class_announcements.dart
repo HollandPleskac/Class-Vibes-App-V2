@@ -49,7 +49,7 @@ class ClassAnnouncements extends StatelessWidget {
                           .map((DocumentSnapshot document) {
                         return Padding(
                           padding: EdgeInsets.only(
-                              top: 20, left: 40, right: 40, bottom: 20),
+                              top: 20, left: 30, right: 30, bottom: 20),
                           child: TeacherAnnouncement(
                             message: document['message'],
                             title: document['title'],
@@ -72,7 +72,7 @@ class ClassAnnouncements extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: EdgeInsets.only(right: 20,bottom: 20),
+              padding: EdgeInsets.only(right: 20, bottom: 20),
               child: PushAnnouncementBtn(
                 classId: classId,
                 getClassName: () async => await _firestore
@@ -88,7 +88,6 @@ class ClassAnnouncements extends StatelessWidget {
     );
   }
 }
-
 
 class PushAnnouncementBtn extends StatelessWidget {
   String classId;

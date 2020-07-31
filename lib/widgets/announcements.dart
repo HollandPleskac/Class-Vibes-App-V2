@@ -25,81 +25,141 @@ class TeacherAnnouncement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.15,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Color.fromRGBO(235, 235, 235, 1),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: 8,
-            decoration: BoxDecoration(
-              color: kPrimaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-              ),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
+              Flexible(
+                child: Text(
                   message,
+                  softWrap: true,
                 ),
-                SizedBox(
-                  height: 7.5,
-                ),
-                Text(
-                  DateFormat.yMMMMd('en_US')
-                      .add_jm()
-                      .format(timestamp)
-                      .toString(),
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          Text(
+            DateFormat.yMMMMd('en_US').add_jm().format(timestamp).toString(),
+            style: TextStyle(
+              color: Colors.grey[700],
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          Spacer(),
-          Padding(
-            padding: EdgeInsets.only(right: 30),
-            child: GestureDetector(
-              onTap: () {
-                print('delet');
-                _fire.deleteAnnouncement(
-                  classId: classId,
-                  announcementId: announcementId,
-                );
-              },
-              child: FaIcon(
-                FontAwesomeIcons.trash,
-                color: Colors.grey,
-              ),
+          GestureDetector(
+            onTap: () {
+              print('delete');
+              _fire.deleteAnnouncement(
+                classId: classId,
+                announcementId: announcementId,
+              );
+            },
+            child: FaIcon(
+              FontAwesomeIcons.trash,
+              color: Colors.grey,
             ),
           ),
         ],
       ),
     );
+    // return Container(
+    //   // height: MediaQuery.of(context).size.height * 0.15,
+    //   // width: 250,
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.circular(10),
+    //     color: Color.fromRGBO(235, 235, 235, 1),
+    //   ),
+    //   child: Row(
+    //     children: [
+    //       // Container(
+    //       //   height: MediaQuery.of(context).size.height * 0.15,
+    //       //   width: 8,
+    //       //   decoration: BoxDecoration(
+    //       //     color: kPrimaryColor,
+    //       //     borderRadius: BorderRadius.only(
+    //       //       topLeft: Radius.circular(10),
+    //       //       bottomLeft: Radius.circular(10),
+    //       //     ),
+    //       //   ),
+    //       // ),
+    //       Padding(
+    //         padding: EdgeInsets.only(left: 20),
+    //         child: Column(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: [
+    //             Text(
+    //               title,
+    //               style: TextStyle(
+    //                 color: Colors.black,
+    //                 fontSize: 20,
+    //                 fontWeight: FontWeight.w600,
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               height: 5,
+    //             ),
+    //             Padding(
+    //               padding: EdgeInsets.only(right: 20),
+    //               child: Text(
+
+    //                 message,
+    //                 overflow: TextOverflow.fade,
+    //                 style: TextStyle(fontWeight: FontWeight.normal),
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               height: 7.5,
+    //             ),
+    //             Text(
+    //               DateFormat.yMMMMd('en_US')
+    //                   .add_jm()
+    //                   .format(timestamp)
+    //                   .toString(),
+    //               style: TextStyle(
+    //                 color: Colors.grey[700],
+    //                 fontSize: 16,
+    //                 fontWeight: FontWeight.w600,
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //       // Spacer(),
+    //       Padding(
+    //         padding: EdgeInsets.only(right: 30),
+    //         child: GestureDetector(
+    //           onTap: () {
+    //             print('delet');
+    //             _fire.deleteAnnouncement(
+    //               classId: classId,
+    //               announcementId: announcementId,
+    //             );
+    //           },
+    //           child: FaIcon(
+    //             FontAwesomeIcons.trash,
+    //             color: Colors.grey,
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
 
@@ -150,7 +210,9 @@ class StudentAnnouncement extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(message),
                 SizedBox(
                   height: 7.5,
