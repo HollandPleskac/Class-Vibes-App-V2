@@ -107,12 +107,10 @@ class StudentAnnouncement extends StatelessWidget {
   final String message;
   final String title;
   final DateTime timestamp;
-  final String announcementId;
 
   StudentAnnouncement({
     this.message,
     this.timestamp,
-    this.announcementId,
     this.title,
   });
   @override

@@ -48,7 +48,6 @@ class ClassAnnouncementsStudent extends StatelessWidget {
                       message:document['message'],
                       title: document['title'],
                       timestamp: DateTime.parse(document['date'].toDate().toString()),
-                      announcementId: document.documentID,
                     ),
                   );
                 }).toList(),

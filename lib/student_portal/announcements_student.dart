@@ -116,8 +116,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                                               announcement['date']
                                                   .toDate()
                                                   .toString()),
-                                          announcementId:
-                                              announcement['id'],
+                                        
                                         ),
                                       );
                                     },
