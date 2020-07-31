@@ -510,7 +510,6 @@ class Student extends StatelessWidget {
                                       .get()
                                       .then((docSnap) =>
                                           docSnap.data['class name']);
-                                  print('COURSE NAME ::::::: ' + courseName);
                                   if (_formKey.currentState.validate()) {
                                     _fire.setupMeeting(
                                       studentUid: studentEmail,
