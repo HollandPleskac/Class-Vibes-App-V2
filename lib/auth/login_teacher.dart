@@ -148,7 +148,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () async {
                               if (_formKey.currentState.validate()) {
                                 List result = await _auth.loginAsTeacher(
@@ -158,7 +158,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
 
                                 if (result[0] == 'success') {
                                   //push to next screen
-                                  Navigator.pushReplacement(
+                                  Navigator. pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ClassViewTeacher(),
