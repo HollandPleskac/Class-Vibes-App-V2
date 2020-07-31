@@ -101,6 +101,7 @@ class PushAnnouncementBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       icon: FaIcon(FontAwesomeIcons.bullhorn),
+      backgroundColor: kPrimaryColor,
       label: Text(
         'Push Announcement',
         style: TextStyle(fontSize: 15),
