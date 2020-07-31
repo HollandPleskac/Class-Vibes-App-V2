@@ -239,7 +239,7 @@ class Auth {
         .document('Statistics')
         .updateData(
       {
-        "mobileUsers": FieldValue.increment(1),
+        "mobileSignups": FieldValue.increment(1),
       },
     );
   }
