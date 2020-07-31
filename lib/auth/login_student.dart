@@ -25,6 +25,18 @@ class _StudentLoginState extends State<StudentLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ),
       backgroundColor: Colors.white,
       body: StreamBuilder(
           stream: _firestore
@@ -147,7 +159,7 @@ class _StudentLoginState extends State<StudentLogin> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () async {
                               if (_formKey.currentState.validate()) {
                                 List result = await _auth.loginAsStudent(
@@ -199,15 +211,16 @@ class _StudentLoginState extends State<StudentLogin> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.025,
+                          height: MediaQuery.of(context).size.height * 0.025,
                         ),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.only(left:15,right:15),
+                            padding: EdgeInsets.only(left: 15, right: 15),
                             child: Text(
                               _feedback,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.red, fontSize: 15.5),
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 15.5),
                             ),
                           ),
                         ),

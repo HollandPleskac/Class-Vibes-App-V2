@@ -30,6 +30,18 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ),
       backgroundColor: Colors.white,
       body: StreamBuilder(
           stream: _firestore
@@ -274,7 +286,7 @@ class _SignUpState extends State<SignUp> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () async {
                               if (isSwitched == true) {
                                 //sign up as a student

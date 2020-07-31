@@ -47,7 +47,7 @@ class _WelcomeState extends State<Welcome> {
                           height: MediaQuery.of(context).size.height * 0.15,
                         ),
                         Center(
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -77,7 +77,7 @@ class _WelcomeState extends State<Welcome> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -107,7 +107,7 @@ class _WelcomeState extends State<Welcome> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: GestureDetector(
+                          child: InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
