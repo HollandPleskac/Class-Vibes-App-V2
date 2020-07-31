@@ -55,6 +55,8 @@ class ClassMeetingsStudent extends StatelessWidget {
                         length: document['length'],
                         message: document['message'],
                         title: document['title'],
+                        courseName: document['course'],
+                        isAllDisplay: false,
                       ),
                     );
                   }).toList(),

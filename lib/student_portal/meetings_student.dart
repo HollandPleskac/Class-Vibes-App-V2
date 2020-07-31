@@ -95,6 +95,8 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
                                     length: document['length'],
                                     message: document['message'],
                                     title: document['title'],
+                                    courseName: document['course'],
+                                    isAllDisplay: true,
                                   ),
                                 );
                               }).toList(),

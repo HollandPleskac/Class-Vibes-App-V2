@@ -59,6 +59,8 @@ class ClassMeetings extends StatelessWidget {
                         classId: classId,
                         meetingId: document.documentID,
                         studentEmail: document['recipient'],
+                        courseName: document['course'],
+                        isAllDisplay: false,
                       ),
                     );
                   }).toList(),

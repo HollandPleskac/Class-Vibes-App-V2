@@ -16,6 +16,8 @@ class TeacherMeeting extends StatelessWidget {
   final String classId;
   final String studentEmail;
   final String meetingId;
+  final String courseName;
+  final bool isAllDisplay;
 
   TeacherMeeting({
     this.dateAndTime,
@@ -26,11 +28,25 @@ class TeacherMeeting extends StatelessWidget {
     this.classId,
     this.studentEmail,
     this.meetingId,
+    this.courseName,
+    this.isAllDisplay,
   });
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        isAllDisplay == true
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    courseName,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              )
+            : Container(),
         Row(
           children: [
             Column(
@@ -63,31 +79,31 @@ class TeacherMeeting extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-          onTap: () {
-            print('delete meeting');
-               _fire.deleteMeeting(
-                 studentUid: studentEmail,
-                 teacherUid: teacherEmail,
-                 meetingId: meetingId,
-                 classId: classId,
-               );
-          },
-          child: Container(
-            decoration:
-                BoxDecoration(color: Colors.red[600], shape: BoxShape.circle),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'X',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey[100]),
-                softWrap: true,
-              ),
-            ),
-          ),
-        ),
+                          onTap: () {
+                            print('delete meeting');
+                            _fire.deleteMeeting(
+                              studentUid: studentEmail,
+                              teacherUid: teacherEmail,
+                              meetingId: meetingId,
+                              classId: classId,
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.red[600], shape: BoxShape.circle),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'X',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey[100]),
+                                softWrap: true,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -122,124 +138,7 @@ class TeacherMeeting extends StatelessWidget {
         ),
       ],
     );
-    // return Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Text(
-    //       dateAndTime,
-    //       overflow: TextOverflow.fade,
-    //       style: TextStyle(
-    //         fontSize: 21,
-    //         fontWeight: FontWeight.w700,
-    //       ),
-    //     ),
-
-    //     SizedBox(
-    //       height: 15,
-    //     ),
-    //     Container(
-    //       height: MediaQuery.of(context).size.height * 0.165,
-    //       child: Row(
-    //         children: [
-    //           Container(
-    //             width: MediaQuery.of(context).size.width * 0.125,
-    //             height: MediaQuery.of(context).size.height * 0.165,
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.center,
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: [
-    //                 Stack(
-    //                   alignment: Alignment.center,
-    //                   children: [
-    //                     CircleAvatar(
-    //                       radius: 11,
-    //                     ),
-    //                     CircleAvatar(
-    //                       radius: 7.5,
-    //                       backgroundColor: Colors.white,
-    //                     ),
-    //                   ],
-    //                 ),
-    //                 Container(
-    //                   color: kPrimaryColor,
-    //                   height: MediaQuery.of(context).size.height * 0.115,
-    //                   width: 3.5,
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           SizedBox(
-    //             width: 20,
-    //           ),
-    //           Container(
-    //             height: MediaQuery.of(context).size.height * 0.165,
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 Text(
-    //                   title,
-    //                   overflow: TextOverflow.fade,
-    //                   style: TextStyle(
-    //                     fontSize: 20,
-    //                     fontWeight: FontWeight.w600,
-    //                   ),
-    //                 ),
-    //                 SizedBox(
-    //                   height: 10,
-    //                 ),
-    //                 Container(
-    //                   height: MediaQuery.of(context).size.height * 0.05,
-    //                   width: MediaQuery.of(context).size.width * 0.225,
-    //                   color: kPrimaryColor.withOpacity(0.5),
-    //                   child: Center(
-    //                     child: Padding(
-    //                       padding: EdgeInsets.only(left: 7.5, right: 7.5),
-    //                       child: Text(
-    //                         length,
-    //                         overflow: TextOverflow.ellipsis,
-    //                         style: TextStyle(
-    //                           color: Colors.grey[700],
-    //                           fontSize: 19,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //                 SizedBox(
-    //                   height: 10,
-    //                 ),
-    //                 Text(
-    //                   message,
-    //                   overflow: TextOverflow.ellipsis,
-    //                   style: TextStyle(
-    //                     fontSize: 19,
-    //                     color: Colors.grey[700],
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           Spacer(),
-    //           GestureDetector(
-    //             onTap: () {
-    //               print('delete meeting');
-    //               _fire.deleteMeeting(
-    //                 studentUid: studentEmail,
-    //                 teacherUid: teacherEmail,
-    //                 meetingId: meetingId,
-    //                 classId: classId,
-    //               );
-    //             },
-    //             child: FaIcon(
-    //               FontAwesomeIcons.trash,
-    //               color: Colors.grey,
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ],
-    // );
+ 
   }
 }
 
@@ -248,17 +147,33 @@ class StudentMeeting extends StatelessWidget {
   final String title;
   final String length;
   final String message;
+  final String courseName;
+  final bool isAllDisplay;
 
   StudentMeeting({
     this.dateAndTime,
     this.title,
     this.length,
     this.message,
+    this.courseName,
+    this.isAllDisplay,
   });
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        isAllDisplay == true
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    courseName,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              )
+            : Container(),
         Row(
           children: [
             Column(

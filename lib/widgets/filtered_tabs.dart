@@ -503,7 +503,14 @@ class Student extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 color: kPrimaryColor,
-                                onPressed: () {
+                                onPressed: () async {
+                                  String courseName = await _firestore
+                                      .collection('Classes')
+                                      .document(classId)
+                                      .get()
+                                      .then((docSnap) =>
+                                          docSnap.data['class name']);
+                                  print('COURSE NAME ::::::: ' + courseName);
                                   if (_formKey.currentState.validate()) {
                                     _fire.setupMeeting(
                                       studentUid: studentEmail,
@@ -514,6 +521,7 @@ class Student extends StatelessWidget {
                                       teacherUid: teacherEmail,
                                       classId: classId,
                                       timestampId: DateTime.now(),
+                                      courseName: courseName,
                                     );
                                     Navigator.pop(context);
                                   }

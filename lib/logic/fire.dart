@@ -92,6 +92,7 @@ class Fire {
     String dateAndTime,
     String classId,
     DateTime timestampId,
+    String courseName,
   }) {
     _firestore
         .collection('UserData')
@@ -106,6 +107,7 @@ class Fire {
       'timestamp': DateTime.now(),
       'class id': classId,
       'recipient': studentUid,
+      'course': courseName,
     });
     _firestore
         .collection('UserData')
@@ -120,6 +122,7 @@ class Fire {
       'timestamp': DateTime.now(),
       'class id': classId,
       'recipient': studentUid,
+      'course': courseName,
     });
   }
 
