@@ -38,6 +38,10 @@ dependencies:
   firebase_auth: ^0.16.1
   pin_code_fields: ^4.0.0
   flutter_svg: ^0.18.0
+  http: ^0.12.2
+  googleapis: any
+  googleapis_auth: any
+
 
   
 

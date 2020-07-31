@@ -8,6 +8,7 @@ import 'teacher_portal/class_settings.dart';
 import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
 import './splash.dart';
+import './testing.dart';
 
 // void main() => runApp((MyApp()));
 
