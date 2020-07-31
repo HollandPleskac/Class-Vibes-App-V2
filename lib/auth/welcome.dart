@@ -46,93 +46,132 @@ class _WelcomeState extends State<Welcome> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.15,
                         ),
-                        Center(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => StudentLogin()),
-                              );
-                            },
+                         Center(
                             child: Container(
-                              child: Center(
-                                child: Text(
-                                  'Student',
-                                  style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                              child: new Material(
+                                child: new InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => StudentLogin()),
+                                    );
+                                  },
+                                  child: new Container(
+                                    child: Center(
+                                      child: Text(
+                                        'Student',
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
                                 ),
+                                color: Colors.transparent,
                               ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(10)),
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
                         ),
+                         Center(
+                            child: Container(
+                              child: new Material(
+                                child: new InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => TeacherLogin()),
+                                    );
+                                  },
+                                  child: new Container(
+                                    child: Center(
+                                      child: Text(
+                                        'Teacher',
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                                color: Colors.transparent,
+                              ),
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TeacherLogin()),
-                              );
-                            },
                             child: Container(
-                              child: Center(
-                                child: Text(
-                                  'Teacher',
-                                  style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                              child: new Material(
+                                child: new InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SignUp()),
+                                    );
+                                  },
+                                  child: new Container(
+                                    child: Center(
+                                      child: Text(
+                                        'Register',
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
                                 ),
+                                color: Colors.transparent,
                               ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Center(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUp()),
-                              );
-                            },
-                            child: Container(
-                              child: Center(
-                                child: Text(
-                                  'Register',
-                                  style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
-                                ),
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(10)),
                             ),
                           ),
-                        )
                       ],
                     );
             }

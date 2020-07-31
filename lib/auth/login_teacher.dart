@@ -160,70 +160,84 @@ class _TeacherLoginState extends State<TeacherLogin> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: InkWell(
-                            onTap: () async {
-                              if (_formKey.currentState.validate()) {
-                                List result = await _auth.loginAsTeacher(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                );
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    List result = await _auth.loginAsTeacher(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    );
 
-                                if (result[0] == 'success') {
-                                  //push to next screen
-                                  Navigator. pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ClassViewTeacher(),
+                                    if (result[0] == 'success') {
+                                      //push to next screen
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ClassViewTeacher(),
+                                        ),
+                                      );
+                                    } else {
+                                      setState(() {
+                                        isEmailValidate = false;
+                                        isPasswordValidate = false;
+                                        _feedback = result[1];
+                                      });
+                                    }
+                                  } else {
+                                    // determines if the textfield is big to accomodate a validator message
+                                    setState(() {
+                                      isEmailValidate == true
+                                          ? isEmailValidate = true
+                                          : isEmailValidate = false;
+                                      isPasswordValidate == true
+                                          ? isPasswordValidate = true
+                                          : isPasswordValidate = false;
+                                    });
+                                  }
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w400),
                                     ),
-                                  );
-                                } else {
-                                  setState(() {
-                                    isEmailValidate = false;
-                                    isPasswordValidate = false;
-                                    _feedback = result[1];
-                                  });
-                                }
-                              } else {
-                                // determines if the textfield is big to accomodate a validator message
-                                setState(() {
-                                  isEmailValidate == true
-                                      ? isEmailValidate = true
-                                      : isEmailValidate = false;
-                                  isPasswordValidate == true
-                                      ? isPasswordValidate = true
-                                      : isPasswordValidate = false;
-                                });
-                              }
-                            },
-                            child: Container(
-                              child: Center(
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                                  ),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
                               ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.025,
+                          height: MediaQuery.of(context).size.height * 0.025,
                         ),
                         Center(
                           child: Padding(
-                            padding: EdgeInsets.only(left:15,right:15),
+                            padding: EdgeInsets.only(left: 15, right: 15),
                             child: Text(
                               _feedback,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.red, fontSize: 15.5),
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 15.5),
                             ),
                           ),
                         ),

@@ -159,54 +159,68 @@ class _StudentLoginState extends State<StudentLogin> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: InkWell(
-                            onTap: () async {
-                              if (_formKey.currentState.validate()) {
-                                List result = await _auth.loginAsStudent(
-                                    email: _emailController.text,
-                                    password: _passwordController.text);
-                                if (result[0] == 'success') {
-                                  //push next screen
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ClassViewStudent(),
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    List result = await _auth.loginAsStudent(
+                                        email: _emailController.text,
+                                        password: _passwordController.text);
+                                    if (result[0] == 'success') {
+                                      //push next screen
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ClassViewStudent(),
+                                        ),
+                                      );
+                                    } else {
+                                      setState(() {
+                                        isEmailValidate = false;
+                                        isPasswordValidate = false;
+                                        _feedback = result[1];
+                                      });
+                                    }
+                                  } else {
+                                    //determines if you need a big textfield box to display a validator message
+                                    setState(() {
+                                      isEmailValidate == true
+                                          ? isEmailValidate = true
+                                          : isEmailValidate = false;
+                                      isPasswordValidate == true
+                                          ? isPasswordValidate = true
+                                          : isPasswordValidate = false;
+                                    });
+                                  }
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w400),
                                     ),
-                                  );
-                                } else {
-                                  setState(() {
-                                    isEmailValidate = false;
-                                    isPasswordValidate = false;
-                                    _feedback = result[1];
-                                  });
-                                }
-                              } else {
-                                //determines if you need a big textfield box to display a validator message
-                                setState(() {
-                                  isEmailValidate == true
-                                      ? isEmailValidate = true
-                                      : isEmailValidate = false;
-                                  isPasswordValidate == true
-                                      ? isPasswordValidate = true
-                                      : isPasswordValidate = false;
-                                });
-                              }
-                            },
-                            child: Container(
-                              child: Center(
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.grey[100],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                                  ),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
                               ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                  color: Colors.blue[200],
-                                  borderRadius: BorderRadius.circular(10)),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),

@@ -286,8 +286,10 @@ class _SignUpState extends State<SignUp> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                          child: InkWell(
-                            onTap: () async {
+                            child: Container(
+                              child: new Material(
+                                child: new InkWell(
+                                 onTap: () async {
                               if (isSwitched == true) {
                                 //sign up as a student
                                 if (_formKey.currentState.validate()) {
@@ -392,24 +394,35 @@ class _SignUpState extends State<SignUp> {
                                 }
                               }
                             },
-                            child: Container(
-                              child: Center(
-                                child: Text(
-                                  'Create Account',
-                                  style: TextStyle(
-                                      color: Colors.grey[100],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400),
+                                  child: new Container(
+                                    child: Center(
+                                      child: Text(
+                                        'Register',
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
                                 ),
+                                color: Colors.transparent,
                               ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                  color: Colors.blue[200],
-                                  borderRadius: BorderRadius.circular(10)),
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
                           ),
-                        ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.025,
                         ),
