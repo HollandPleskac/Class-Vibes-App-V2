@@ -149,17 +149,19 @@ class Fire {
     String className,
     String title,
   }) {
+    final String now = DateTime.now().toString();
     _firestore
         .collection('Classes')
         .document(classId)
         .collection('Announcements')
-        .document()
+        .document(now)
         .setData(
       {
         'title': title,
         'message': content,
         'date': DateTime.now(),
         'class name': 'TAKE OUT (cant update once sent)',
+        'id': now,
       },
     );
   }

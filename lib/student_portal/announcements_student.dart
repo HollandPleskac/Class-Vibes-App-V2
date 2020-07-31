@@ -56,7 +56,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
       });
 
       announcements.sort((a, b) {
-        return b['timestamp'].compareTo(a['timestamp']);
+        return b['date'].compareTo(a['date']);
       });
     }
     waiting = false;
@@ -117,7 +117,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                                                   .toDate()
                                                   .toString()),
                                           announcementId:
-                                              announcement.documentID,
+                                              announcement['id'],
                                         ),
                                       );
                                     },
