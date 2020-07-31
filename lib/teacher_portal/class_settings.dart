@@ -94,18 +94,13 @@ class _ClassSettingsState extends State<ClassSettings> {
           SizedBox(
             height: 25,
           ),
-          InactiveDaysPicker(
-            maxDaysInactive,
-            widget.email,
-            widget.classId,
-            (int newDaysInactive) {
-              // setState(() {
-                maxDaysInactive = newDaysInactive;
-                print('LOCAL + ' + maxDaysInactive.toString());
-              // });
-              
-            }
-          ),
+          InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
+              (int newDaysInactive) {
+            // setState(() {
+            maxDaysInactive = newDaysInactive;
+            print('LOCAL + ' + maxDaysInactive.toString());
+            // });
+          }),
           Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -257,6 +252,52 @@ class DeleteClass extends StatefulWidget {
 }
 
 class _DeleteClassState extends State<DeleteClass> {
+  Future<void> _showAlert() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you wish to proceed?'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Deleting the class is final.'),
+                Text(
+                    'There is no way to recover your class after it has been deleted.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Go Back'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                'Delete Class',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () async {
+                await _fire.deleteClass(
+                    classId: widget.classId, teacherEmail: widget.teacherEmail);
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClassViewTeacher(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -268,14 +309,7 @@ class _DeleteClassState extends State<DeleteClass> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: Colors.grey[300],
         onPressed: () async {
-          await _fire.deleteClass(
-              classId: widget.classId, teacherEmail: widget.teacherEmail);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ClassViewTeacher(),
-            ),
-          );
+          _showAlert();
         },
       ),
     );
@@ -380,8 +414,8 @@ class _ClassCodeState extends State<ClassCode> {
         ),
         Spacer(),
         Padding(
-          padding: EdgeInsets.only(right:15),
-                  child: Row(
+          padding: EdgeInsets.only(right: 15),
+          child: Row(
             children: widget.classId.split("").map((letter) {
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
