@@ -43,7 +43,7 @@ class ClassAnnouncementsStudent extends StatelessWidget {
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return Padding(
                     padding: EdgeInsets.only(
-                        top: 20, left: 40, right: 40, bottom: 20),
+                        top: 20, left: 20, right: 20, bottom: 20),
                     child: StudentAnnouncement(
                       message:document['message'],
                       title: document['title'],

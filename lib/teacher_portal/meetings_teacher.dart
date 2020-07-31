@@ -86,9 +86,9 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                                 return Padding(
                                   padding: EdgeInsets.only(
                                       left: MediaQuery.of(context).size.width *
-                                          0.1,
+                                          0.05,
                                       right: MediaQuery.of(context).size.width *
-                                          0.1,
+                                          0.05,
                                       top: MediaQuery.of(context).size.height *
                                           0.035,
                                       bottom:

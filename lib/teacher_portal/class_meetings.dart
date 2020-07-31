@@ -46,8 +46,8 @@ class ClassMeetings extends StatelessWidget {
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return Padding(
                       padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.1,
-                          right: MediaQuery.of(context).size.width * 0.1,
+                          left: MediaQuery.of(context).size.width * 0.05,
+                          right: MediaQuery.of(context).size.width * 0.05,
                           top: MediaQuery.of(context).size.height * 0.035,
                           bottom: MediaQuery.of(context).size.height * 0.032),
                       child: TeacherMeeting(

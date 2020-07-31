@@ -31,46 +31,90 @@ class TeacherMeeting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          dateAndTime,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-
-        SizedBox(
-          height: 15,
-        ),
         Row(
           children: [
             Column(
               children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 11,
-                    ),
-                    CircleAvatar(
-                      radius: 7.5,
-                      backgroundColor: Colors.white,
-                    ),
-                  ],
-                ),
                 Container(
-                  color: kPrimaryColor,
-                  height: MediaQuery.of(context).size.height * 0.115,
-                  width: 3.5,
+                  height: MediaQuery.of(context).size.height * 0.135,
+                  decoration: BoxDecoration(
+                      color: kPrimaryColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10)),
+                  width: 7,
                 ),
               ],
             ),
             Flexible(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title),
-                  Text(message),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          dateAndTime,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[400],
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        GestureDetector(
+          onTap: () {
+            print('delete meeting');
+               _fire.deleteMeeting(
+                 studentUid: studentEmail,
+                 teacherUid: teacherEmail,
+                 meetingId: meetingId,
+                 classId: classId,
+               );
+          },
+          child: Container(
+            decoration:
+                BoxDecoration(color: Colors.red[600], shape: BoxShape.circle),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'X',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey[100]),
+                softWrap: true,
+              ),
+            ),
+          ),
+        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    child: Text(
+                      title,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      message,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                        fontSize: 19,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -214,103 +258,64 @@ class StudentMeeting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          dateAndTime,
-          overflow: TextOverflow.fade,
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.165,
-          child: Row(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.125,
-                height: MediaQuery.of(context).size.height * 0.165,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 11,
-                        ),
-                        CircleAvatar(
-                          radius: 7.5,
-                          backgroundColor: Colors.white,
-                        ),
-                      ],
-                    ),
-                    Container(
-                      color: kPrimaryColor,
-                      height: MediaQuery.of(context).size.height * 0.115,
-                      width: 3.5,
-                    ),
-                  ],
+        Row(
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.115,
+                  decoration: BoxDecoration(
+                      color: kPrimaryColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(10)),
+                  width: 7,
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.165,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+              ],
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      dateAndTime,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[400],
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Text(
                       title,
                       overflow: TextOverflow.fade,
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 21,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      width: MediaQuery.of(context).size.width * 0.225,
-                      color: kPrimaryColor.withOpacity(0.5),
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 7.5, right: 7.5),
-                          child: Text(
-                            length,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.grey[700],
-                              fontSize: 19,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
                       message,
                       overflow: TextOverflow.fade,
                       style: TextStyle(
-                        fontSize: 19,
-                        color: Colors.grey[700],
+                        fontSize: 21,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );
