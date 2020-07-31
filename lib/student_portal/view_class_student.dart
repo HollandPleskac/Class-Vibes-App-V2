@@ -25,6 +25,54 @@ class ViewClassStudent extends StatefulWidget {
 }
 
 class _ViewClassStudentState extends State<ViewClassStudent> {
+  Future<void> _showAlert(String classId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you wish to proceed?'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Chat History, Announcements, and Meetings will all be deleted.',
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Go Back'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                'Leave Class',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () async {
+                _fire.leaveClass(
+                  classId: classId,
+                  studentEmail: _email,
+                );
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClassViewStudent(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   String _email;
 
   Future getStudentEmail() async {
@@ -79,16 +127,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            _fire.leaveClass(
-                              classId: classId,
-                              studentEmail: _email,
-                            );
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ClassViewStudent(),
-                              ),
-                            );
+                            _showAlert(classId);
                           },
                         ),
                       ],
