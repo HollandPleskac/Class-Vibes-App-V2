@@ -152,7 +152,6 @@ class Fire {
     String className,
     String title,
   }) {
-    
     _firestore
         .collection('Classes')
         .document(classId)
@@ -164,7 +163,6 @@ class Fire {
         'message': content,
         'date': DateTime.now(),
         // 'class name': 'TAKE OUT (cant update once sent)',
-        
       },
     );
   }
@@ -300,8 +298,6 @@ class Fire {
     //delete class from Students
 
     List<DocumentSnapshot> studentDocuments = await _firestore
-        .collection('UserData')
-        .document(teacherEmail)
         .collection('Classes')
         .document(classId)
         .collection('Students')
