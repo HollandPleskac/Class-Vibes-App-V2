@@ -22,8 +22,51 @@ class TeacherAnnouncement extends StatelessWidget {
     this.classId,
     this.title,
   });
+
   @override
   Widget build(BuildContext context) {
+    Future<void> _showAlert() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Do you wish to proceed?'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('This announcement will be deleted permanently.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () async {
+                  print('delete');
+                  _fire.deleteAnnouncement(
+                    classId: classId,
+                    announcementId: announcementId,
+                  );
+                  Navigator.pop(context);
+                  
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Stack(
       alignment: Alignment.centerRight,
       children: [
@@ -76,11 +119,7 @@ class TeacherAnnouncement extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            print('delete');
-            _fire.deleteAnnouncement(
-              classId: classId,
-              announcementId: announcementId,
-            );
+            _showAlert();
           },
           child: Container(
             decoration:

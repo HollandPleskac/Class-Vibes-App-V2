@@ -33,6 +33,50 @@ class TeacherMeeting extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    Future<void> _showAlert() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Do you wish to proceed?'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('This meeting will be deleted.'),
+                  Text('Meetings can\'t be recovered once deleted.')
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () async {
+                  print('delete meeting');
+                  _fire.deleteMeeting(
+                    studentUid: studentEmail,
+                    teacherUid: teacherEmail,
+                    meetingId: meetingId,
+                    classId: classId,
+                  );
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Column(
       children: [
         isAllDisplay == true
@@ -80,13 +124,7 @@ class TeacherMeeting extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print('delete meeting');
-                            _fire.deleteMeeting(
-                              studentUid: studentEmail,
-                              teacherUid: teacherEmail,
-                              meetingId: meetingId,
-                              classId: classId,
-                            );
+                            _showAlert();
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -138,7 +176,6 @@ class TeacherMeeting extends StatelessWidget {
         ),
       ],
     );
- 
   }
 }
 
