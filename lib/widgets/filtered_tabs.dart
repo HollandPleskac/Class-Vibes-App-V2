@@ -564,7 +564,7 @@ class Student extends StatelessWidget {
             .inMinutes <=
         0) {
       // date in seconds
-      return 'Last updated: a few seconds ago';
+      return 'Updated a few seconds ago';
     } else if (DateTime.now()
             .difference(
               DateTime.parse(lastUpdate.toDate().toString()),
@@ -572,7 +572,7 @@ class Student extends StatelessWidget {
             .inHours <=
         0) {
       // date in minutes
-      return 'Last updated: ' +
+      return 'Updated ' +
           DateTime.now()
               .difference(
                 DateTime.parse(lastUpdate.toDate().toString()),
@@ -587,7 +587,7 @@ class Student extends StatelessWidget {
             .inDays ==
         0) {
       // date in hours
-      return 'Last updated: ' +
+      return 'Updated ' +
           DateTime.now()
               .difference(
                 DateTime.parse(lastUpdate.toDate().toString()),
@@ -598,7 +598,7 @@ class Student extends StatelessWidget {
     } else {
       // date in days
 
-      return 'Last updated: ' +
+      return 'Updated ' +
           DateTime.now()
               .difference(
                 DateTime.parse(lastUpdate.toDate().toString()),
@@ -734,7 +734,7 @@ class Student extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.paperPlane,
                 color: kPrimaryColor,
-                size: 35,
+                size: MediaQuery.of(context).size.width*0.0825,
               ),
             ),
             SizedBox(
@@ -759,7 +759,7 @@ class Student extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.solidComments,
                 color: kPrimaryColor,
-                size: 35,
+                size: MediaQuery.of(context).size.width*0.0825,
               ),
             ),
             SizedBox(
