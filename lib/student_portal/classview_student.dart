@@ -389,6 +389,10 @@ class SelectStatusRow extends StatefulWidget {
 }
 
 class _SelectStatusRowState extends State<SelectStatusRow> {
+
+  Future<int> getMaxDaysInactive() {
+    final daysInactive = 
+  }
   @override
   Widget build(BuildContext context) {
     return Row(

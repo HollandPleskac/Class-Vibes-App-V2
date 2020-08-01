@@ -110,7 +110,6 @@ class Auth {
 
       await user.updateProfile(userUpdateInfo);
 
-      logMobileSignUp();
 
       return ['success', email];
     } catch (error) {
@@ -161,7 +160,6 @@ class Auth {
 
           await user.updateProfile(userUpdateInfo);
 
-          logMobileSignUp();
 
           return ['success', email];
         } catch (error) {
@@ -233,14 +231,5 @@ class Auth {
     await _firebaseAuth.signOut();
   }
 
-  void logMobileSignUp() {
-    Firestore.instance
-        .collection('Application Management')
-        .document('Statistics')
-        .updateData(
-      {
-        "mobileSignups": FieldValue.increment(1),
-      },
-    );
-  }
+
 }
