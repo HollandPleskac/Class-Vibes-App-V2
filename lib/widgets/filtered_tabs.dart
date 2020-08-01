@@ -41,6 +41,7 @@ class AllTab extends StatelessWidget {
                     classId: classId,
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
+                    lastChangedStatus: document['date'],
                   );
                 }).toList(),
               );
@@ -104,6 +105,7 @@ class DoingGreatTab extends StatelessWidget {
                     classId: classId,
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
+                    lastChangedStatus: document['date'],
                   );
                 }).toList(),
               );
@@ -167,6 +169,7 @@ class NeedHelpTab extends StatelessWidget {
                     classId: classId,
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
+                    lastChangedStatus: document['date'],
                   );
                 }).toList(),
               );
@@ -230,6 +233,7 @@ class FrustratedTab extends StatelessWidget {
                     classId: classId,
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
+                    lastChangedStatus: document['date'],
                   );
                 }).toList(),
               );
@@ -296,6 +300,7 @@ class InactiveTab extends StatelessWidget {
                     classId: classId,
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
+                    lastChangedStatus: document['date'],
                   );
                 }).toList(),
               );
@@ -324,6 +329,7 @@ class Student extends StatelessWidget {
   final String classId;
   final String teacherEmail;
   final String studentEmail;
+  final Timestamp lastChangedStatus;
 
   Student({
     this.status,
@@ -332,6 +338,7 @@ class Student extends StatelessWidget {
     this.classId,
     this.teacherEmail,
     this.studentEmail,
+    this.lastChangedStatus,
   });
 
   final TextEditingController _titleController = TextEditingController();
@@ -619,22 +626,54 @@ class Student extends StatelessWidget {
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(9999),
             ),
-            child: profilePictureLink == null
+            // child: profilePictureLink == null
+            //     ? Center(
+            //         child: FaIcon(
+            //           FontAwesomeIcons.userAlt,
+            //           color: kPrimaryColor,
+            //         ),
+            //       )
+            //     : ClipRRect(
+            //         borderRadius: BorderRadius.circular(9999),
+            //         child: FittedBox(
+            //           fit: BoxFit.cover,
+            //           child: Image.network(
+            //             profilePictureLink,
+            //           ),
+            //         ),
+            //       ),
+            child: DateTime.now()
+                        .difference(
+                          DateTime.parse(lastChangedStatus.toDate().toString()),
+                        )
+                        .inDays >=
+                    5
                 ? Center(
                     child: FaIcon(
                       FontAwesomeIcons.userAlt,
-                      color: kPrimaryColor,
+                      color: Colors.grey,
                     ),
                   )
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(9999),
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: Image.network(
-                        profilePictureLink,
-                      ),
-                    ),
-                  ),
+                : status == 'doing great'
+                    ? Center(
+                        child: FaIcon(
+                          FontAwesomeIcons.userAlt,
+                          color: Colors.green,
+                        ),
+                      )
+                    : status == 'need help'
+                        ? Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.userAlt,
+                              color: Colors.yellow,
+                            ),
+                          )
+                        : Center(
+                            child: FaIcon(
+                              FontAwesomeIcons.userAlt,
+                              color: Colors.red,
+                            ),
+                          ),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.05,
