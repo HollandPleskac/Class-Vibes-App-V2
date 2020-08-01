@@ -216,6 +216,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               color: Colors.transparent,
                             ),

@@ -213,6 +213,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
                               color: Colors.transparent,
                             ),
