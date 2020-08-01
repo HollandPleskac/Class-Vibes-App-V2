@@ -753,11 +753,11 @@ class Student extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.paperPlane,
                 color: kPrimaryColor,
-                size: MediaQuery.of(context).size.width * 0.0825,
+                size: MediaQuery.of(context).size.width * 0.075,
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.075,
+              width: MediaQuery.of(context).size.width * 0.055,
             ),
             GestureDetector(
               onTap: () {
@@ -778,7 +778,7 @@ class Student extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.solidComments,
                 color: kPrimaryColor,
-                size: MediaQuery.of(context).size.width * 0.0825,
+                size: MediaQuery.of(context).size.width * 0.075,
               ),
             ),
             SizedBox(

@@ -190,14 +190,15 @@ class DynamicPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Future<int> getMaxDaysInactive(String classId) async {
-    //   int inactiveDays = await _firestore
+    //   return await _firestore
     //       .collection('Classes')
     //       .document(classId)
     //       .get()
     //       .then((docSnap) => docSnap.data['max days inactive']);
 
-    //   return inactiveDays;
     // }
+
+    
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
