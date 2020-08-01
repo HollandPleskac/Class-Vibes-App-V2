@@ -13,8 +13,9 @@ class FilterAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       padding: EdgeInsets.all(2),
-      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      color: isTouched == true ? Color.fromRGBO(241, 242, 246, 1) : Color.fromRGBO(231, 232, 236, 1),
       onPressed: () {
         onClick();
       },
@@ -37,8 +38,9 @@ class FilterDoingGreat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
-      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      color: isTouched == true ? Color.fromRGBO(241, 242, 246, 1) : Color.fromRGBO(231, 232, 236, 1),
       onPressed: () {
         onClick();
       },
@@ -61,8 +63,9 @@ class FilterNeedHelp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
-      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      color: isTouched == true ? Color.fromRGBO(241, 242, 246, 1) : Color.fromRGBO(231, 232, 236, 1),
       onPressed: () {
         onClick();
       },
@@ -85,8 +88,9 @@ class FilterFrustrated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
-      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      color: isTouched == true ? Color.fromRGBO(241, 242, 246, 1) : Color.fromRGBO(231, 232, 236, 1),
       onPressed: () {
         onClick();
       },
@@ -109,8 +113,9 @@ class FilterInactive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       padding: EdgeInsets.only(top: 2, bottom: 2, left: 12.5, right: 12.5),
-      color: isTouched == true ? Colors.grey[300] : Colors.grey[200],
+      color: isTouched == true ? Color.fromRGBO(241, 242, 246, 1) :  Color.fromRGBO(231, 232, 236, 1),
       onPressed: () {
         onClick();
       },

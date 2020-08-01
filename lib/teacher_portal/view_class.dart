@@ -348,7 +348,7 @@ class _FilterViewState extends State<FilterView> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.02),
+                    left: MediaQuery.of(context).size.width * 0.05),
                 child: FilterAll(
                   isTouched: _isTouchedAll,
                   onClick: () => setState(() {
@@ -362,7 +362,7 @@ class _FilterViewState extends State<FilterView> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.018),
+                    left: MediaQuery.of(context).size.width * 0.025),
                 child: FilterDoingGreat(
                   isTouched: _isTouchedDoingGreat,
                   onClick: () => setState(() {
@@ -376,7 +376,7 @@ class _FilterViewState extends State<FilterView> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.018),
+                    left: MediaQuery.of(context).size.width * 0.025),
                 child: FilterNeedHelp(
                   isTouched: _isTouchedNeedHelp,
                   onClick: () => setState(() {
@@ -390,7 +390,7 @@ class _FilterViewState extends State<FilterView> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.018),
+                    left: MediaQuery.of(context).size.width * 0.025),
                 child: FilterFrustrated(
                   isTouched: _isTouchedFrustrated,
                   onClick: () => setState(() {
@@ -404,8 +404,8 @@ class _FilterViewState extends State<FilterView> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.018,
-                    right: MediaQuery.of(context).size.width * 0.02),
+                    left: MediaQuery.of(context).size.width * 0.025,
+                    right: MediaQuery.of(context).size.width * 0.05),
                 child: FilterInactive(
                   isTouched: _isTouchedInactive,
                   onClick: () => setState(() {
