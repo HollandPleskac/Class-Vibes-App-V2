@@ -609,11 +609,30 @@ class Student extends StatelessWidget {
     }
   }
 
+  Future<void> _showInfo() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Information'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Email : ' + studentEmail),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print('press');
+        _showInfo();
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -734,7 +753,7 @@ class Student extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.paperPlane,
                 color: kPrimaryColor,
-                size: MediaQuery.of(context).size.width*0.0825,
+                size: MediaQuery.of(context).size.width * 0.0825,
               ),
             ),
             SizedBox(
@@ -759,7 +778,7 @@ class Student extends StatelessWidget {
               child: FaIcon(
                 FontAwesomeIcons.solidComments,
                 color: kPrimaryColor,
-                size: MediaQuery.of(context).size.width*0.0825,
+                size: MediaQuery.of(context).size.width * 0.0825,
               ),
             ),
             SizedBox(

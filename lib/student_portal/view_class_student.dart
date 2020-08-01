@@ -8,7 +8,7 @@ import '../constant.dart';
 import './chat_student.dart';
 import './class_meetings_student.dart';
 import './class_announcements_student.dart';
-import './class_overview.dart';
+import '../archived/class_overview.dart';
 import '../logic/fire.dart';
 import '../student_portal/classview_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
