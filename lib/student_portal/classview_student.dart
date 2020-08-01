@@ -170,14 +170,14 @@ class StudentClass extends StatelessWidget {
                             .collection('Classes')
                             .document(classId)
                             .snapshots(),
-                        builder: (BuildContext context, snapshot) {
-                          if (snapshot.data == null) {
+                        builder: (BuildContext context, classSnapshot) {
+                          if (classSnapshot.data == null) {
                             return Center(
                               child: Container(),
                             );
                           }
                           return Text(
-                            snapshot.data['class name'],
+                            classSnapshot.data['class name'],
                             overflow: TextOverflow.fade,
                             softWrap: false,
                             style: TextStyle(
@@ -189,25 +189,41 @@ class StudentClass extends StatelessWidget {
                         }),
                     Spacer(),
                     StreamBuilder(
-                        stream: _firestore
-                            .collection('Classes')
-                            .document(classId)
-                            .collection('Students')
-                            .document(email)
-                            .snapshots(),
-                        builder: (BuildContext context, snapshot) {
-                          if (snapshot.data == null) {
-                            return Center(
-                              child: Container(),
-                            );
-                          }
-                          return SelectStatusRow(
-                            classId: classId,
-                            lastChangedStatus: snapshot.data['date'],
-                            status: snapshot.data['status'],
-                            email: email,
+                      stream: _firestore
+                          .collection('Classes')
+                          .document(classId)
+                          .snapshots(),
+                      builder: (BuildContext context, classSnapshot) {
+                        if (classSnapshot.data == null) {
+                          return Center(
+                            child: Container(),
                           );
-                        }),
+                        }
+                        //purpose of this classSnapshot is to get the max days inactive
+                        return StreamBuilder(
+                          stream: _firestore
+                              .collection('Classes')
+                              .document(classId)
+                              .collection('Students')
+                              .document(email)
+                              .snapshots(),
+                          builder: (BuildContext context, snapshot) {
+                            if (snapshot.data == null) {
+                              return Center(
+                                child: Container(),
+                              );
+                            }
+                            return SelectStatusRow(
+                              classId: classId,
+                              lastChangedStatus: snapshot.data['date'],
+                              status: snapshot.data['status'],
+                              email: email,
+                              maxDaysInactive: classSnapshot.data['max days inactive'],
+                            );
+                          },
+                        );
+                      },
+                    ),
                     SizedBox(
                       width: 20,
                     ),
@@ -377,22 +393,19 @@ class SelectStatusRow extends StatefulWidget {
   final Timestamp lastChangedStatus;
   final String status;
   final String email;
+  final int maxDaysInactive;
 
-  SelectStatusRow({
-    this.classId,
-    this.lastChangedStatus,
-    this.status,
-    this.email,
-  });
+  SelectStatusRow(
+      {this.classId,
+      this.lastChangedStatus,
+      this.status,
+      this.email,
+      this.maxDaysInactive});
   @override
   _SelectStatusRowState createState() => _SelectStatusRowState();
 }
 
 class _SelectStatusRowState extends State<SelectStatusRow> {
-
-  Future<int> getMaxDaysInactive() {
-    final daysInactive = 
-  }
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -411,7 +424,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                             widget.lastChangedStatus.toDate().toString()),
                       )
                       .inDays >=
-                  5
+                  widget.maxDaysInactive
               ? FaIcon(
                   FontAwesomeIcons.smile,
                   color: Colors.grey,
@@ -449,7 +462,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                             widget.lastChangedStatus.toDate().toString()),
                       )
                       .inDays >=
-                  5
+                  widget.maxDaysInactive
               ? FaIcon(
                   FontAwesomeIcons.meh,
                   color: Colors.grey,
@@ -487,7 +500,7 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                             widget.lastChangedStatus.toDate().toString()),
                       )
                       .inDays >=
-                  5
+                  widget.maxDaysInactive
               ? FaIcon(
                   FontAwesomeIcons.frown,
                   color: Colors.grey,
