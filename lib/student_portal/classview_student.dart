@@ -218,7 +218,8 @@ class StudentClass extends StatelessWidget {
                               lastChangedStatus: snapshot.data['date'],
                               status: snapshot.data['status'],
                               email: email,
-                              maxDaysInactive: classSnapshot.data['max days inactive'],
+                              maxDaysInactive:
+                                  classSnapshot.data['max days inactive'],
                             );
                           },
                         );
@@ -241,23 +242,51 @@ class StudentClass extends StatelessWidget {
         Positioned(
           top: MediaQuery.of(context).size.height * 0.01,
           right: MediaQuery.of(context).size.width * 0.02,
-          child: GestureDetector(
-            onTap: () async {
-              print('tap');
+          child: StreamBuilder(
+                    stream: _firestore
+                        .collection('Class-Chats')
+                        .document(classId)
+                        .collection('new@gmail.com').where('sent type',isEqualTo: 'teacher').where('isRead',isEqualTo: false)
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                          print(snapshot.data);
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(
+                            child: Container(),
+                          );
+                        default:
+                          if (snapshot.data != null &&
+                              snapshot.data.documents.isEmpty == false) {
+                            return Text(snapshot.data.documents.length.toString());
+                          } else {
+                            return Container();
+                          }
+                      }
+                    },
+                  ),
 
-              Navigator.pushNamed(context, ViewClassStudent.routename,
-                  arguments: {
-                    'class id': classId,
-                    'class name': await getClassName(),
-                    'initial index': 0,
-                  });
-            },
-            child: FaIcon(
-              FontAwesomeIcons.solidComments,
-              size: 35,
-              color: kPrimaryColor,
-            ),
-          ),
+          // child: GestureDetector(
+          //   onTap: () async {
+          //     print('tap');
+
+          //     Navigator.pushNamed(context, ViewClassStudent.routename,
+          //         arguments: {
+          //           'class id': classId,
+          //           'class name': await getClassName(),
+          //           'initial index': 0,
+          //         });
+          //   },
+          //   child: FaIcon(
+          //     FontAwesomeIcons.solidComments,
+          //     size: 35,
+          //     color: kPrimaryColor,
+          //   ),
+          // ),
         ),
       ],
     );
