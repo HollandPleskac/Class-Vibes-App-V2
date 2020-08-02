@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -100,14 +102,189 @@ class PushAnnouncementBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      icon: FaIcon(FontAwesomeIcons.bullhorn),
-      backgroundColor: kPrimaryColor,
-      label: Text(
-        'Push Announcement',
-        style: TextStyle(fontSize: 15),
-      ),
-      onPressed: () {
-        showModalBottomSheet(
+        icon: FaIcon(FontAwesomeIcons.bullhorn),
+        backgroundColor: kPrimaryColor,
+        label: Text(
+          'Push Announcement',
+          style: TextStyle(fontSize: 15),
+        ),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (builder) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.31,
+                      decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30))),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Push Announcment',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03,
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 14),
+                                      child: TextFormField(
+                                        controller: _titleController,
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'announcement has to have a title';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontSize: 18),
+                                          labelStyle: TextStyle(),
+                                          hintText: 'Title',
+                                        ),
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black26,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.015,
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 14),
+                                      child: TextFormField(
+                                        controller: _contentController,
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'announcement has to have a message';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintStyle: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontSize: 18),
+                                          labelStyle: TextStyle(),
+                                          hintText: 'Message',
+                                        ),
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black26,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  ),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.015,
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      child: new Material(
+                                        child: new InkWell(
+                                          onTap: () async {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _fire.pushAnnouncement(
+                                                classId: classId,
+                                                title: _titleController.text,
+                                                content:
+                                                    _contentController.text,
+                                                className: await getClassName(),
+                                              );
+                                              Navigator.pop(context);
+                                            }
+                                          },
+                                          child: new Container(
+                                            child: Center(
+                                              child: Text(
+                                                'Push',
+                                                style: TextStyle(
+                                                    color: Colors.grey[100],
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        color: Colors.transparent,
+                                      ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.1,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blueAccent[400],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+        });
+  }
+}
+
+/*showModalBottomSheet(
           barrierColor: Colors.white.withOpacity(0),
           elevation: 0,
           isScrollControlled: true,
@@ -239,7 +416,4 @@ class PushAnnouncementBtn extends StatelessWidget {
             );
           },
         );
-      },
-    );
-  }
-}
+        */

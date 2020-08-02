@@ -96,32 +96,39 @@ class _ViewClassState extends State<ViewClass> {
                         ],
                       ),
                     ),
-                    body: TabBarView(
-                      children: [
-                        Container(
-                          child: StudentsTab(
-                            teacherEmail: _email,
-                            classId: classId,
+                    body: Theme(
+                      data: ThemeData(
+                        backgroundColor: Colors.white,
+                         canvasColor: Colors.transparent,
+                  
+                      ),
+                      child: TabBarView(
+                        children: [
+                          Container(
+                            child: StudentsTab(
+                              teacherEmail: _email,
+                              classId: classId,
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: ClassMeetings(
-                            teacherEmail: _email,
-                            classId: classId,
+                          Container(
+                            child: ClassMeetings(
+                              teacherEmail: _email,
+                              classId: classId,
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: ClassAnnouncements(
-                            classId: classId,
+                          Container(
+                            child: ClassAnnouncements(
+                              classId: classId,
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: ClassSettings(
-                            classId: classId,
-                            email: _email,
+                          Container(
+                            child: ClassSettings(
+                              classId: classId,
+                              email: _email,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
           }
