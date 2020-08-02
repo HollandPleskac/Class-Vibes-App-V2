@@ -260,6 +260,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         'message': _controller.text,
                                         'user': _teacherName,
                                         'sent type': 'teacher',
+                                        'isRead':false,
                                       });
                                       _controller.clear();
                                     }),

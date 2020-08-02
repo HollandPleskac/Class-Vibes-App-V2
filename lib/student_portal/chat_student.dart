@@ -189,7 +189,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                       'timestamp': DateTime.now(),
                                       'message': _controller.text,
                                       'user': _studentName,
-                                      'sent type': 'student'
+                                      'sent type': 'student',
+                                      'isRead':false,
                                     });
                                     _controller.clear();
                                   }),

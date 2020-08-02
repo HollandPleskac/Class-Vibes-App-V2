@@ -18,15 +18,19 @@ class _TestingState extends State<Testing> {
 
     _firebaseMessaging.configure(
       onMessage: (message) async {
+        // in app
         setState(() {
           title = message["notification"]["title"];
           helper = "You have recieved a new notification";
         });
       },
       onResume: (message) async {
+        // app open but on home screen or something
         setState(() {
           title = message["data"]["title"];
           helper = "You have open the application from notification";
+          print('TITLE : '+title);
+          print('HELPER : '+helper);
         });
       },
     );
@@ -44,9 +48,12 @@ class _TestingState extends State<Testing> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        setState(() {});
-      }),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Set State'),
+        onPressed: () {
+          setState(() {});
+        },
+      ),
     );
   }
 }
