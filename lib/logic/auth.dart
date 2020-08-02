@@ -110,7 +110,6 @@ class Auth {
 
       await user.updateProfile(userUpdateInfo);
 
-
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -159,7 +158,6 @@ class Auth {
           userUpdateInfo.displayName = username;
 
           await user.updateProfile(userUpdateInfo);
-
 
           return ['success', email];
         } catch (error) {
@@ -230,6 +228,4 @@ class Auth {
   void signOut() async {
     await _firebaseAuth.signOut();
   }
-
-
 }
