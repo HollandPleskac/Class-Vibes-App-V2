@@ -99,7 +99,8 @@ class _ChatStudentState extends State<ChatStudent> {
         child: Column(
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height * 0.75,
+              height: MediaQuery.of(context).size.height * 0.7,
+              color: Colors.brown,
               child: StreamBuilder(
                 stream: _firestore
                     .collection("Class-Chats")
