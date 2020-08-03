@@ -154,7 +154,7 @@ class StudentClass extends StatelessWidget {
                 arguments: {
                   'class id': classId,
                   'class name': await getClassName(),
-                  'initial index': 1,
+                  'initial index': 0,
                 });
           },
           child: Container(
