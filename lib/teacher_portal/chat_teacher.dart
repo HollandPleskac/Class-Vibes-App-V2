@@ -7,9 +7,11 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
+import '../logic/fire.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+final _fire = Fire();
 
 class ChatTeacher extends StatefulWidget {
   static const routeName = 'teacher-chat';
@@ -91,6 +93,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
+      
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white.withOpacity(0.9),
@@ -101,7 +104,13 @@ class _ChatTeacherState extends State<ChatTeacher> {
               size: 20,
             ),
             onPressed: () {
+              _fire.resetUnreadCount(
+                  classId: classId,
+                  studentEmail: studentEmail,
+                  unreadType: 'teacher unread',
+                );
               Navigator.pop(context);
+              
             }),
         centerTitle: true,
         title: StreamBuilder(

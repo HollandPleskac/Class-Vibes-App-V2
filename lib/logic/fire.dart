@@ -333,4 +333,20 @@ class Fire {
         .document(studentEmail)
         .delete();
   }
+
+  void incrementUnreadCount() {}
+
+  void resetUnreadCount(
+      {String classId, String studentEmail, String unreadType}) {
+    //unreadType is "teacher unread" or "student unread" - this is literally a field in the db
+
+    _firestore
+        .collection('Class-Chats')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .updateData({
+      unreadType: 0,
+    });
+  }
 }

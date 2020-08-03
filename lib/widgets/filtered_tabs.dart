@@ -761,11 +761,12 @@ class Student extends StatelessWidget {
             // ),
             GestureDetector(
               onTap: () {
-                // final String classId = routeArguments['class id'];
-                // final String teacherName = routeArguments['teacher name'];
-                // final String teacherUid = routeArguments['student uid'];
-                // final String studentName = routeArguments['student name'];
-                print('press');
+                _fire.resetUnreadCount(
+                  classId: classId,
+                  studentEmail: studentEmail,
+                  unreadType: 'teacher unread',
+                );
+                print('going to chat as a teacher');
                 Navigator.pushNamed(
                   context,
                   ChatTeacher.routeName,
