@@ -161,7 +161,9 @@ class _ChatTeacherState extends State<ChatTeacher> {
                     stream: _firestore
                         .collection("Class-Chats")
                         .document(classId)
-                        .collection(studentEmail)
+                        .collection('Students')
+                        .document(studentEmail)
+                        .collection('Messages')
                         .orderBy("timestamp", descending: true)
                         .snapshots(),
                     builder: (BuildContext context,
@@ -233,14 +235,13 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         await _firestore
                                             .collection('Class-Chats')
                                             .document(classId)
-                                            .collection(studentEmail)
+                                            .collection('Students').document(studentEmail).collection('Messages')
                                             .document()
                                             .setData({
                                           'timestamp': DateTime.now(),
                                           'message': _controller.text,
                                           'user': _teacherName,
                                           'sent type': 'teacher',
-                                          'isRead': false,
                                         });
                                         _controller.clear();
                                       }),

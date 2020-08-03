@@ -87,7 +87,6 @@ class _ChatStudentState extends State<ChatStudent> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -102,7 +101,9 @@ class _ChatStudentState extends State<ChatStudent> {
                 stream: _firestore
                     .collection("Class-Chats")
                     .document(widget.classId)
-                    .collection(widget.email)
+                    .collection('Students')
+                    .document(widget.email)
+                    .collection('Messages')
                     .orderBy("timestamp", descending: true)
                     .snapshots(),
                 builder: (BuildContext context,
@@ -124,18 +125,23 @@ class _ChatStudentState extends State<ChatStudent> {
                             reverse: true,
                             itemCount: snapshot.data.documents.length,
                             itemBuilder: (context, index) {
-                              return snapshot.data.documents[index]['sent type'] == 'teacher'
-                                    ? RecievedChat(
-                                        title: snapshot.data.documents[index]['user'],
-                                        content: snapshot.data.documents[index]['message'],
-                                      )
-                                    : SentChat(
-                                        title: snapshot.data.documents[index]['user'],
-                                        content: snapshot.data.documents[index]['message'],
-                                      );
+                              return snapshot.data.documents[index]
+                                          ['sent type'] ==
+                                      'teacher'
+                                  ? RecievedChat(
+                                      title: snapshot.data.documents[index]
+                                          ['user'],
+                                      content: snapshot.data.documents[index]
+                                          ['message'],
+                                    )
+                                  : SentChat(
+                                      title: snapshot.data.documents[index]
+                                          ['user'],
+                                      content: snapshot.data.documents[index]
+                                          ['message'],
+                                    );
                             },
                           ),
-                         
                         );
                       } else {
                         return Center(
@@ -145,7 +151,6 @@ class _ChatStudentState extends State<ChatStudent> {
                   }
                 },
               ),
-            
             ),
             Center(
               child: Column(
@@ -167,30 +172,18 @@ class _ChatStudentState extends State<ChatStudent> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
-                                    // await _firestore
-                                    //     .collection('Classes')
-                                    //     .document(widget.classId)
-                                    //     .collection('Students')
-                                    //     .document(widget.email)
-                                    //     .collection("Chats")
-                                    //     .document()
-                                    //     .setData({
-                                    //   'date': DateTime.now(),
-                                    //   'content': _controller.text,
-                                    //   'title': studentName,
-                                    //   'sent type': 'student'
-                                    // });
                                     await _firestore
                                         .collection('Class-Chats')
                                         .document(widget.classId)
-                                        .collection(widget.email)
+                                        .collection('Students')
+                                        .document(widget.email)
+                                        .collection('Messages')
                                         .document()
                                         .setData({
                                       'timestamp': DateTime.now(),
                                       'message': _controller.text,
                                       'user': _studentName,
                                       'sent type': 'student',
-                                      'isRead':false,
                                     });
                                     _controller.clear();
                                   }),
