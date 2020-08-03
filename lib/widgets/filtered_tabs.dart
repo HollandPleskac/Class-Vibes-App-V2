@@ -43,6 +43,7 @@ class AllTab extends StatelessWidget {
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
+                    teacherUnread: document['teacher unread'],
                   );
                 }).toList(),
               );
@@ -331,6 +332,7 @@ class Student extends StatelessWidget {
   final String teacherEmail;
   final String studentEmail;
   final Timestamp lastChangedStatus;
+  final int teacherUnread;
 
   Student({
     this.status,
@@ -340,6 +342,7 @@ class Student extends StatelessWidget {
     this.teacherEmail,
     this.studentEmail,
     this.lastChangedStatus,
+    this.teacherUnread,
   });
 
   // final TextEditingController _titleController = TextEditingController();
@@ -641,23 +644,10 @@ class Student extends StatelessWidget {
           Positioned(
             top: MediaQuery.of(context).size.height * 0.01,
             right: MediaQuery.of(context).size.width * 0.02,
-            child: StreamBuilder(
-              stream: _firestore
-                  .collection('Classes')
-                  .document(classId)
-                  .collection('Students')
-                  .document(studentEmail)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                print(classId);
-                print(studentEmail);
-                if (!snapshot.hasData) {
-                  return Text('');
-                } else {
-                  return UnreadMessageBadge(snapshot.data['teacher unread']);
-                }
-              },
-            ),
+            child: UnreadMessageBadge(teacherUnread),
+         
+          
+         
           ),
           Container(
             width: MediaQuery.of(context).size.width,
