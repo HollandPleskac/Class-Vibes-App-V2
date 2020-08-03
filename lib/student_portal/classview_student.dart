@@ -247,8 +247,8 @@ class StudentClass extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.01,
-          right: MediaQuery.of(context).size.width * 0.02,
+          top: MediaQuery.of(context).size.height * 0.03,
+          right: MediaQuery.of(context).size.width * 0.03,
           child: StreamBuilder(
             stream: _firestore
                 .collection('Class-Chats')
