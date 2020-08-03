@@ -6,9 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
+import '../logic/fire.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+final _fire = Fire();
 
 class ChatStudent extends StatefulWidget {
   static const routeName = 'student-chat';
@@ -172,6 +175,10 @@ class _ChatStudentState extends State<ChatStudent> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
+                                    _fire.incrementUnreadCount(
+                                        classId: widget.classId,
+                                        studentEmail: widget.email,
+                                        unreadType: "teacher unread");
                                     await _firestore
                                         .collection('Class-Chats')
                                         .document(widget.classId)

@@ -334,7 +334,17 @@ class Fire {
         .delete();
   }
 
-  void incrementUnreadCount() {}
+  void incrementUnreadCount(
+      {String classId, String studentEmail, String unreadType}) {
+    _firestore
+        .collection('Class-Chats')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .updateData({
+      unreadType: FieldValue.increment(1),
+    });
+  }
 
   void resetUnreadCount(
       {String classId, String studentEmail, String unreadType}) {

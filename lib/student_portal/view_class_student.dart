@@ -116,6 +116,21 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                 ? ServersDown()
                 : Scaffold(
                     appBar: AppBar(
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          print(_email);
+                          _fire.resetUnreadCount(
+                            classId: classId,
+                            studentEmail: _email,
+                            unreadType: 'student unread',
+                          );
+                          Navigator.pop(context);
+                        },
+                      ),
                       backgroundColor: kWetAsphaltColor,
                       title: Text(className),
                       centerTitle: true,

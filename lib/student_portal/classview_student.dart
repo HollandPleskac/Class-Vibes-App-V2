@@ -143,13 +143,19 @@ class StudentClass extends StatelessWidget {
     return Stack(
       children: [
         GestureDetector(
-          onTap: () async => Navigator.pushNamed(
-              context, ViewClassStudent.routename,
-              arguments: {
-                'class id': classId,
-                'class name': await getClassName(),
-                'initial index': 1,
-              }),
+          onTap: () async {
+            _fire.resetUnreadCount(
+                  classId: classId,
+                  studentEmail: email,
+                  unreadType: 'student unread',
+                );
+            Navigator.pushNamed(context, ViewClassStudent.routename,
+                arguments: {
+                  'class id': classId,
+                  'class name': await getClassName(),
+                  'initial index': 1,
+                });
+          },
           child: Container(
             height: MediaQuery.of(context).size.height * 0.14,
             width: double.infinity,
