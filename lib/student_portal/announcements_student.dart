@@ -100,28 +100,49 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                         )
                       : Center(
                           child: announcements.length != 0
-                              ? ListView(
-                                  children: announcements.map(
-                                    (announcement) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 20,
-                                            left: 40,
-                                            right: 40,
-                                            bottom: 20),
-                                        child: StudentAnnouncement(
-                                          message: announcement['message'],
-                                          title: announcement['title'],
-                                          timestamp: DateTime.parse(
-                                              announcement['date']
-                                                  .toDate()
-                                                  .toString()),
-                                        
-                                        ),
-                                      );
-                                    },
-                                  ).toList(),
+                              ? ListView.builder(
+                                  itemCount: announcements.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 20,
+                                          left: 40,
+                                          right: 40,
+                                          bottom: 20),
+                                      child: StudentAnnouncement(
+                                        message: announcements[index]
+                                            ['message'],
+                                        title: announcements[index]['title'],
+                                        timestamp: DateTime.parse(
+                                            announcements[index]['date']
+                                                .toDate()
+                                                .toString()),
+                                      ),
+                                    );
+                                  },
                                 )
+                              // ? ListView(
+                              //     children: announcements.map(
+                              //       (announcement) {
+                              //         return Padding(
+                              //           padding: EdgeInsets.only(
+                              //               top: 20,
+                              //               left: 40,
+                              //               right: 40,
+                              //               bottom: 20),
+                              //           child: StudentAnnouncement(
+                              //             message: announcement['message'],
+                              //             title: announcement['title'],
+                              //             timestamp: DateTime.parse(
+                              //                 announcement['date']
+                              //                     .toDate()
+                              //                     .toString()),
+
+                              //           ),
+                              //         );
+                              //       },
+                              //     ).toList(),
+                              //   )
                               : Center(
                                   child: NoDocsAnnouncementsStudent(),
                                 ),

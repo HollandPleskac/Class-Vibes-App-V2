@@ -637,6 +637,7 @@ class Student extends StatelessWidget {
       },
       child: Stack(
         children: [
+          // testing git commit
           Positioned(
             top: MediaQuery.of(context).size.height * 0.01,
             right: MediaQuery.of(context).size.width * 0.02,
@@ -648,6 +649,8 @@ class Student extends StatelessWidget {
                   .document(studentEmail)
                   .snapshots(),
               builder: (context, snapshot) {
+                print(classId);
+                print(studentEmail);
                 if (!snapshot.hasData) {
                   return Text('');
                 } else {
