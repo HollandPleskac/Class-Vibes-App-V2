@@ -301,11 +301,11 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                             top: MediaQuery.of(context)
                                                     .size
                                                     .height *
-                                                0.01,
+                                                0.03,
                                             right: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                0.02,
+                                                0.03,
                                             child: FutureBuilder(
                                               future: _firestore
                                                   .collection('Classes')
