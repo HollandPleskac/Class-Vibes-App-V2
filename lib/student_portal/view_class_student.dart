@@ -100,6 +100,48 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
     final String className = routeArguments['class name'];
     final int initialIndex = routeArguments['initial index'];
 
+    Widget _appBar = AppBar(
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          print(_email);
+          _fire.resetUnreadCount(
+            classId: classId,
+            studentEmail: _email,
+            unreadType: 'student unread',
+          );
+          Navigator.pop(context);
+        },
+      ),
+      backgroundColor: kWetAsphaltColor,
+      title: Text(className),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          icon: FaIcon(
+            FontAwesomeIcons.trash,
+            size: 19.5,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _showAlert(classId);
+          },
+        ),
+      ],
+      bottom: TabBar(
+        isScrollable: true,
+        tabs: [
+          // Tab(text: 'Overview'),
+          Tab(text: 'Live Chat'),
+          Tab(text: 'Meetings'),
+          Tab(text: 'Announcements'),
+        ],
+      ),
+    );
+
     return DefaultTabController(
       length: 3,
       initialIndex: initialIndex,
@@ -115,47 +157,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
             return snapshot.data['serversAreUp'] == false
                 ? ServersDown()
                 : Scaffold(
-                    appBar: AppBar(
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          print(_email);
-                          _fire.resetUnreadCount(
-                            classId: classId,
-                            studentEmail: _email,
-                            unreadType: 'student unread',
-                          );
-                          Navigator.pop(context);
-                        },
-                      ),
-                      backgroundColor: kWetAsphaltColor,
-                      title: Text(className),
-                      centerTitle: true,
-                      actions: [
-                        IconButton(
-                          icon: FaIcon(
-                            FontAwesomeIcons.trash,
-                            size: 19.5,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            _showAlert(classId);
-                          },
-                        ),
-                      ],
-                      bottom: TabBar(
-                        isScrollable: true,
-                        tabs: [
-                          // Tab(text: 'Overview'),
-                          Tab(text: 'Live Chat'),
-                          Tab(text: 'Meetings'),
-                          Tab(text: 'Announcements'),
-                        ],
-                      ),
-                    ),
+                    appBar: _appBar,
                     body: TabBarView(
                       children: [
                         // Container(
