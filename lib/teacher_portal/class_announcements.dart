@@ -111,170 +111,190 @@ class PushAnnouncementBtn extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
               context: context,
-              builder: (builder) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.31,
-                      decoration: BoxDecoration(
-                          color: Colors.black54,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30))),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Push Announcment',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03,
-                                  ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 14),
-                                      child: TextFormField(
-                                        controller: _titleController,
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                            return 'announcement has to have a title';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 18),
-                                          labelStyle: TextStyle(),
-                                          hintText: 'Title',
-                                        ),
-                                      ),
+              isScrollControlled: true,
+              builder: (context) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black54,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30))),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'Push Announcment',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.03,
                                     ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.black26,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.015,
-                                  ),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 14),
-                                      child: TextFormField(
-                                        controller: _contentController,
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                            return 'announcement has to have a message';
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 18),
-                                          labelStyle: TextStyle(),
-                                          hintText: 'Message',
-                                        ),
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.black26,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.015,
-                                  ),
-                                  Center(
-                                    child: Container(
-                                      child: new Material(
-                                        child: new InkWell(
-                                          onTap: () async {
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              _fire.pushAnnouncement(
-                                                classId: classId,
-                                                title: _titleController.text,
-                                                content:
-                                                    _contentController.text,
-                                                className: await getClassName(),
-                                              );
-                                              Navigator.pop(context);
-                                            }
-                                          },
-                                          child: new Container(
-                                            child: Center(
-                                              child: Text(
-                                                'Push',
-                                                style: TextStyle(
-                                                    color: Colors.grey[100],
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.9,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.1,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        color: Colors.transparent,
-                                      ),
+                                    Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
                                       height:
                                           MediaQuery.of(context).size.width *
                                               0.1,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 14),
+                                        child: TextFormField(
+                                          controller: _titleController,
+                                          validator: (value) {
+                                            if (value == null || value == '') {
+                                              return 'announcement has to have a title';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 18),
+                                            labelStyle: TextStyle(),
+                                            hintText: 'Title',
+                                          ),
+                                        ),
+                                      ),
                                       decoration: BoxDecoration(
-                                        color: Colors.blueAccent[400],
-                                        borderRadius: BorderRadius.circular(10),
+                                          color: Colors.black26,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.015,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.1,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 14),
+                                        child: TextFormField(
+                                          controller: _contentController,
+                                          validator: (value) {
+                                            if (value == null || value == '') {
+                                              return 'announcement has to have a message';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 18),
+                                            labelStyle: TextStyle(),
+                                            hintText: 'Message',
+                                          ),
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: Colors.black26,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.015,
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        child: new Material(
+                                          child: new InkWell(
+                                            onTap: () async {
+                                              if (_formKey.currentState
+                                                  .validate()) {
+                                                _fire.pushAnnouncement(
+                                                  classId: classId,
+                                                  title: _titleController.text,
+                                                  content:
+                                                      _contentController.text,
+                                                  className:
+                                                      await getClassName(),
+                                                );
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                            child: new Container(
+                                              child: Center(
+                                                child: Text(
+                                                  'Push',
+                                                  style: TextStyle(
+                                                      color: Colors.grey[100],
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.9,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.1,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          color: Colors.transparent,
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.1,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blueAccent[400],
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              )),
-                        ],
+                                    SizedBox(height: MediaQuery.of(context).size.height*0.02,)
+                                  ],
+                                  
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
