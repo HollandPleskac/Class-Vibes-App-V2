@@ -640,14 +640,10 @@ class Student extends StatelessWidget {
       },
       child: Stack(
         children: [
-          // testing git commit
           Positioned(
             top: MediaQuery.of(context).size.height * 0.01,
             right: MediaQuery.of(context).size.width * 0.02,
             child: UnreadMessageBadge(teacherUnread),
-         
-          
-         
           ),
           Container(
             width: MediaQuery.of(context).size.width,
