@@ -643,7 +643,7 @@ class Student extends StatelessWidget {
             right: MediaQuery.of(context).size.width * 0.02,
             child: StreamBuilder(
               stream: _firestore
-                  .collection('Class-Chats')
+                  .collection('Classes')
                   .document(classId)
                   .collection('Students')
                   .document(studentEmail)

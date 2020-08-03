@@ -308,7 +308,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                 0.02,
                                             child: FutureBuilder(
                                               future: _firestore
-                                                  .collection('Class-Chats')
+                                                  .collection('Classes')
                                                   .document(document.documentID)
                                                   .collection('Students')
                                                   .getDocuments(),

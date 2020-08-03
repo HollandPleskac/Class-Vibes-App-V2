@@ -234,7 +234,8 @@ class Fire {
             .document(classCode)
             .setData({
           'code': classCode,
-          'class name': 'class name placeholder (take out later)'
+          'student unread': 0,
+          'teacher unread': 0,
         });
         return 'You have joined the class!';
       } else {
@@ -336,34 +337,14 @@ class Fire {
 
   void incrementUnreadCount(
       {String classId, String studentEmail, String unreadType}) async {
-    try {
-      int unread = await _firestore
-          .collection('Class-Chats')
-          .document(classId)
-          .collection('Students')
-          .document(studentEmail)
-          .get()
-          .then((docSnap) => docSnap.data[unreadType]);
-      // the field for unread type is there - increment the value
-      _firestore
-          .collection('Class-Chats')
-          .document(classId)
-          .collection('Students')
-          .document(studentEmail)
-          .updateData({
-        unreadType: FieldValue.increment(1),
-      });
-    } catch (_) {
-      //no field for unread type - set it to zero
-      _firestore
-          .collection('Class-Chats')
-          .document(classId)
-          .collection('Students')
-          .document(studentEmail)
-          .setData({
-        unreadType: 0,
-      }, merge: true);
-    }
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .updateData({
+      unreadType: FieldValue.increment(1),
+    });
   }
 
   void resetUnreadCount(
@@ -380,16 +361,16 @@ class Fire {
     });
   }
 
-  void updateIsReadAnnouncements(
-      String classId, String studentEmail, String announcementId) {
-    _firestore
-        .collection('Classes')
-        .document(classId)
-        .collection('Announcements')
-        .document(announcementId)
-        .updateData({
-      'isRead': true,
-      'saw announcement': DateTime.now(),
-    });
-  }
+  // void updateIsReadAnnouncements(
+  //     String classId, String studentEmail, String announcementId) {
+  //   _firestore
+  //       .collection('Classes')
+  //       .document(classId)
+  //       .collection('Announcements')
+  //       .document(announcementId)
+  //       .updateData({
+  //     'isRead': true,
+  //     'saw announcement': DateTime.now(),
+  //   });
+  // }
 }
