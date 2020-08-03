@@ -39,6 +39,7 @@ dependencies:
   pin_code_fields: ^4.0.0
   flutter_svg: ^0.18.0
   firebase_messaging: ^6.0.16
+  visibility_detector: ^0.1.5
 
   
 

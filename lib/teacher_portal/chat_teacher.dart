@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
@@ -139,164 +140,140 @@ class _ChatTeacherState extends State<ChatTeacher> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        reverse: true,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height * 0.8,
-                child: StreamBuilder(
-                  stream: _firestore
-                      .collection("Class-Chats")
-                      .document(classId)
-                      .collection(studentEmail)
-                      .orderBy("timestamp", descending: true)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      default:
-                        if (snapshot.data != null &&
-                            snapshot.data.documents.isEmpty == false) {
+      body: VisibilityDetector(
+        key: Key("1"),
+        onVisibilityChanged: ((visibility) {
+          print(visibility.visibleFraction);
+          if (visibility.visibleFraction == 1.0) {
+            // _fire.updateUnreadMessages() {};
+            print('visibility detector says that u can see this stuff');
+          }
+        }),
+        child: SingleChildScrollView(
+          reverse: true,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: StreamBuilder(
+                    stream: _firestore
+                        .collection("Class-Chats")
+                        .document(classId)
+                        .collection(studentEmail)
+                        .orderBy("timestamp", descending: true)
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
                           return Center(
-                            //lazy loading
-                            child: ListView.builder(
-                              reverse: true,
-                              itemCount: snapshot.data.documents.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data.documents[index]
-                                            ['sent type'] ==
-                                        'student'
-                                    ? RecievedChat(
-                                        title: snapshot.data.documents[index]
-                                            ['user'],
-                                        content: snapshot.data.documents[index]
-                                            ['message'],
-                                      )
-                                    : SentChat(
-                                        title: snapshot.data.documents[index]
-                                            ['user'],
-                                        content: snapshot.data.documents[index]
-                                            ['message'],
-                                      );
-                              },
-                            ),
-                            // child: ListView(
-                            //   reverse: true,
-                            //   children: snapshot.data.documents.map(
-                            //     (DocumentSnapshot document) {
-                            //       return document['sent type'] == 'student'
-                            //           ? RecievedChat(
-                            //               title: document['user'],
-                            //               content: document['message'],
-                            //             )
-                            //           : SentChat(
-                            //               title: document['user'],
-                            //               content: document['message'],
-                            //             );
-                            //     },
-                            //   ).toList(),
-                            // ),
+                            child: CircularProgressIndicator(),
                           );
-                        } else {
-                          return Center(
-                            child: NoDocsChat(),
-                          );
-                        }
-                    }
-                  },
+                        default:
+                          if (snapshot.data != null &&
+                              snapshot.data.documents.isEmpty == false) {
+                            return Center(
+                              //lazy loading
+                              child: ListView.builder(
+                                reverse: true,
+                                itemCount: snapshot.data.documents.length,
+                                itemBuilder: (context, index) {
+                                  return snapshot.data.documents[index]
+                                              ['sent type'] ==
+                                          'student'
+                                      ? RecievedChat(
+                                          title: snapshot.data.documents[index]
+                                              ['user'],
+                                          content: snapshot
+                                              .data.documents[index]['message'],
+                                        )
+                                      : SentChat(
+                                          title: snapshot.data.documents[index]
+                                              ['user'],
+                                          content: snapshot
+                                              .data.documents[index]['message'],
+                                        );
+                                },
+                              ),
+                            );
+                          } else {
+                            return Center(
+                              child: NoDocsChat(),
+                            );
+                          }
+                      }
+                    },
+                  ),
                 ),
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 50,
-                            height: 50,
-                            child: Row(
-                              children: <Widget>[
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.send,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () async {
-                                      // await _firestore
-                                      //     .collection('Classes')
-                                      //     .document(classId)
-                                      //     .collection('Students')
-                                      //     .document(studentEmail)
-                                      //     .collection("Chats")
-                                      //     .document()
-                                      //     .setData({
-                                      //   'date': DateTime.now(),
-                                      //   'content': _controller.text,
-                                      //   'title': teacherName,
-                                      //   'sent type': 'teacher'
-                                      // });
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: ClipRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 50,
+                              height: 50,
+                              child: Row(
+                                children: <Widget>[
+                                  IconButton(
+                                      icon: Icon(
+                                        Icons.send,
+                                        color: Colors.black,
+                                      ),
+                                      onPressed: () async {
+                                        await _firestore
+                                            .collection('Class-Chats')
+                                            .document(classId)
+                                            .collection(studentEmail)
+                                            .document()
+                                            .setData({
+                                          'timestamp': DateTime.now(),
+                                          'message': _controller.text,
+                                          'user': _teacherName,
+                                          'sent type': 'teacher',
+                                          'isRead': false,
+                                        });
+                                        _controller.clear();
+                                      }),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
 
-                                      await _firestore
-                                          .collection('Class-Chats')
-                                          .document(classId)
-                                          .collection(studentEmail)
-                                          .document()
-                                          .setData({
-                                        'timestamp': DateTime.now(),
-                                        'message': _controller.text,
-                                        'user': _teacherName,
-                                        'sent type': 'teacher',
-                                        'isRead':false,
-                                      });
-                                      _controller.clear();
-                                    }),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // child: Center(
-                                  //   child: Text(
-                                  //     'Hello Mr. Shea I need help with math',
-                                  //     style: TextStyle(color: Colors.black),
-                                  //   ),
-                                  // ),
-                                  //SIZE THIS
-                                  child: Center(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.675,
-                                      child: TextField(
-                                        controller: _controller,
+                                    //SIZE THIS
+                                    child: Center(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.675,
+                                        child: TextField(
+                                          controller: _controller,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.withOpacity(0.1),
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey.withOpacity(0.1),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
