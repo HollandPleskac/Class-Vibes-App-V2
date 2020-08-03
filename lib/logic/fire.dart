@@ -338,10 +338,10 @@ class Fire {
   void incrementUnreadCount(
       {String classId, String studentEmail, String unreadType}) async {
     _firestore
+        .collection('UserData')
+        .document(studentEmail)
         .collection('Classes')
         .document(classId)
-        .collection('Students')
-        .document(studentEmail)
         .updateData({
       unreadType: FieldValue.increment(1),
     });
@@ -352,25 +352,13 @@ class Fire {
     //unreadType is "teacher unread" or "student unread" - this is literally a field in the db
 
     _firestore
-        .collection('Class-Chats')
-        .document(classId)
-        .collection('Students')
+        .collection('UserData')
         .document(studentEmail)
+        .collection('Classes')
+        .document(classId)
         .updateData({
       unreadType: 0,
     });
   }
 
-  // void updateIsReadAnnouncements(
-  //     String classId, String studentEmail, String announcementId) {
-  //   _firestore
-  //       .collection('Classes')
-  //       .document(classId)
-  //       .collection('Announcements')
-  //       .document(announcementId)
-  //       .updateData({
-  //     'isRead': true,
-  //     'saw announcement': DateTime.now(),
-  //   });
-  // }
 }
