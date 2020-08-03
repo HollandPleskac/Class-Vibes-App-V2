@@ -17,7 +17,6 @@ class ClassAnnouncementsStudent extends StatelessWidget {
   ClassAnnouncementsStudent({this.classId});
   @override
   Widget build(BuildContext context) {
-    
     return StreamBuilder(
       stream: _firestore
           .collection("Classes")
@@ -37,21 +36,39 @@ class ClassAnnouncementsStudent extends StatelessWidget {
           default:
             if (snapshot.data != null &&
                 snapshot.data.documents.isEmpty == false) {
-              return ListView(
+              return ListView.builder(
                 physics: BouncingScrollPhysics(),
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(
                         top: 20, left: 20, right: 20, bottom: 20),
                     child: StudentAnnouncement(
-                      message:document['message'],
-                      title: document['title'],
-                      timestamp: DateTime.parse(document['date'].toDate().toString()),
+                      message: snapshot.data.documents[index]['message'],
+                      title: snapshot.data.documents[index]['title'],
+                      timestamp: DateTime.parse(snapshot
+                          .data.documents[index]['date']
+                          .toDate()
+                          .toString()),
                     ),
                   );
-                }).toList(),
+                },
               );
+              // return ListView(
+              //   physics: BouncingScrollPhysics(),
+              //   children:
+              //       snapshot.data.documents.map((DocumentSnapshot document) {
+              //     return Padding(
+              //       padding: EdgeInsets.only(
+              //           top: 20, left: 20, right: 20, bottom: 20),
+              //       child: StudentAnnouncement(
+              //         message:document['message'],
+              //         title: document['title'],
+              //         timestamp: DateTime.parse(document['date'].toDate().toString()),
+              //       ),
+              //     );
+              //   }).toList(),
+              // );
             } else {
               return Center(
                 child: NoDocsAnnouncementsClassStudent(),
@@ -62,5 +79,3 @@ class ClassAnnouncementsStudent extends StatelessWidget {
     );
   }
 }
-
-
