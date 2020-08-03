@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:random_string/random_string.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -265,6 +266,7 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
+      'total unread':0,
     });
 
     _firestore
@@ -347,7 +349,7 @@ class Fire {
     });
   }
 
-    void incrementTeacherUnreadCount(
+  void incrementTeacherUnreadCount(
       {String classId, String studentEmail}) async {
     _firestore
         .collection('Classes')
@@ -357,11 +359,13 @@ class Fire {
         .updateData({
       'teacher unread': FieldValue.increment(1),
     });
+
+    _firestore.collection('Classes').document(classId).updateData({
+      'total unread': FieldValue.increment(1),
+    });
   }
 
-  void resetStudentUnreadCount(
-      {String classId, String studentEmail}) {
-
+  void resetStudentUnreadCount({String classId, String studentEmail}) {
     _firestore
         .collection('UserData')
         .document(studentEmail)
@@ -372,8 +376,8 @@ class Fire {
     });
   }
 
-  resetTeacherUnreadCount({String classId, String studentEmail}) {
-_firestore
+  void resetTeacherUnreadCount({String classId, String studentEmail}) {
+    _firestore
         .collection('Classes')
         .document(classId)
         .collection('Students')
@@ -381,6 +385,10 @@ _firestore
         .updateData({
       'teacher unread': 0,
     });
-  }
 
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .updateData({'total unread': 0});
+  }
 }

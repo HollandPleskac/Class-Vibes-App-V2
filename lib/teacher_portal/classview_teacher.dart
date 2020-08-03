@@ -306,31 +306,17 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                     .size
                                                     .width *
                                                 0.03,
-                                            child: FutureBuilder(
-                                              future: _firestore
+                                            child: StreamBuilder(
+                                              stream: _firestore
                                                   .collection('Classes')
                                                   .document(document.documentID)
-                                                  .collection('Students')
-                                                  .getDocuments(),
-                                                  
-                                              builder: (context,
-                                                  AsyncSnapshot<QuerySnapshot>
-                                                      snapshot) {
-                                                int allUnread = 0;
-                                                if (!snapshot.hasData){
-                                                  return Container();
+                                                  .snapshots(),
+                                              builder: (context, snapshot) {
+                                                if (!snapshot.hasData) {
+                                                  return Text('');
+                                                } else {
+                                                  return UnreadMessageBadge(snapshot.data['total unread']);
                                                 }
-                                                for (int i = 0;
-                                                    i <
-                                                        snapshot.data.documents
-                                                            .length;
-                                                    i++) {
-                                                  allUnread = allUnread +
-                                                      snapshot.data.documents[i]
-                                                          ['teacher unread'];
-                                                }
-                                                
-                                                return UnreadMessageBadge(allUnread);
                                               },
                                             ),
                                           ),
