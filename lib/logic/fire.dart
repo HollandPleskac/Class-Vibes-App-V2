@@ -334,6 +334,7 @@ class Fire {
         .delete();
   }
 
+  // if there is no field to increment make sure the make a field
   void incrementUnreadCount(
       {String classId, String studentEmail, String unreadType}) {
     _firestore
@@ -343,6 +344,7 @@ class Fire {
         .document(studentEmail)
         .updateData({
       unreadType: FieldValue.increment(1),
+      
     });
   }
 

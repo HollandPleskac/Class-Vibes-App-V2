@@ -649,6 +649,8 @@ class Student extends StatelessWidget {
                   .document(studentEmail)
                   .snapshots(),
               builder: (context, snapshot) {
+                print(classId);
+                print(studentEmail);
                 if (!snapshot.hasData) {
                   return Text('');
                 } else {
