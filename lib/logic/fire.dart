@@ -379,4 +379,17 @@ class Fire {
       unreadType: 0,
     });
   }
+
+  void updateIsReadAnnouncements(
+      String classId, String studentEmail, String announcementId) {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Announcements')
+        .document(announcementId)
+        .updateData({
+      'isRead': true,
+      'saw announcement': DateTime.now(),
+    });
+  }
 }
