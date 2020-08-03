@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
@@ -149,16 +148,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
           )
         ],
       ),
-      body: VisibilityDetector(
-        key: Key("1"),
-        onVisibilityChanged: ((visibility) {
-          print(visibility.visibleFraction);
-          if (visibility.visibleFraction == 1.0) {
-            // _fire.updateUnreadMessages() {};
-            print('visibility detector says that u can see this stuff');
-          }
-        }),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
           reverse: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -290,7 +280,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 }
