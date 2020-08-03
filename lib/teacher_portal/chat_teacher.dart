@@ -231,10 +231,10 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         color: Colors.black,
                                       ),
                                       onPressed: () async {
-                                        _fire.incrementUnreadCount(
+                                        _fire.incrementStudentUnreadCount(
                                         classId: classId,
                                         studentEmail: studentEmail,
-                                        unreadType: "student unread");
+                                        );
                                         await _firestore
                                             .collection('Class-Chats')
                                             .document(classId)

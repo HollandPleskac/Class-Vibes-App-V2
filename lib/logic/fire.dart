@@ -335,21 +335,32 @@ class Fire {
         .delete();
   }
 
-  void incrementUnreadCount(
-      {String classId, String studentEmail, String unreadType}) async {
+  void incrementStudentUnreadCount(
+      {String classId, String studentEmail}) async {
     _firestore
         .collection('UserData')
         .document(studentEmail)
         .collection('Classes')
         .document(classId)
         .updateData({
-      unreadType: FieldValue.increment(1),
+      'student unread': FieldValue.increment(1),
+    });
+  }
+
+    void incrementTeacherUnreadCount(
+      {String classId, String studentEmail}) async {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .updateData({
+      'teacher unread': FieldValue.increment(1),
     });
   }
 
   void resetUnreadCount(
       {String classId, String studentEmail, String unreadType}) {
-    //unreadType is "teacher unread" or "student unread" - this is literally a field in the db
 
     _firestore
         .collection('UserData')
@@ -357,7 +368,7 @@ class Fire {
         .collection('Classes')
         .document(classId)
         .updateData({
-      unreadType: 0,
+      'student unread': 0,
     });
   }
 

@@ -175,10 +175,10 @@ class _ChatStudentState extends State<ChatStudent> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
-                                    _fire.incrementUnreadCount(
+                                    _fire.incrementTeacherUnreadCount(
                                         classId: widget.classId,
                                         studentEmail: widget.email,
-                                        unreadType: "teacher unread");
+                                       );
                                     await _firestore
                                         .collection('Class-Chats')
                                         .document(widget.classId)
