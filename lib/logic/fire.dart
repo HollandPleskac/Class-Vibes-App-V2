@@ -266,7 +266,6 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
-      'total unread':0,
     });
 
     _firestore
@@ -360,9 +359,7 @@ class Fire {
       'teacher unread': FieldValue.increment(1),
     });
 
-    _firestore.collection('Classes').document(classId).updateData({
-      'total unread': FieldValue.increment(1),
-    });
+
   }
 
   void resetStudentUnreadCount({String classId, String studentEmail}) {
@@ -377,6 +374,7 @@ class Fire {
   }
 
   void resetTeacherUnreadCount({String classId, String studentEmail}) {
+
     _firestore
         .collection('Classes')
         .document(classId)
@@ -386,9 +384,6 @@ class Fire {
       'teacher unread': 0,
     });
 
-    _firestore
-        .collection('Classes')
-        .document(classId)
-        .updateData({'total unread': 0});
+
   }
 }
