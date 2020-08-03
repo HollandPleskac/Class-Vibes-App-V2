@@ -634,159 +634,184 @@ class Student extends StatelessWidget {
       onTap: () {
         _showInfo();
       },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.09,
-        child: Row(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.04,
+      child: Stack(
+        children: [
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.01,
+            right: MediaQuery.of(context).size.width * 0.02,
+            child: StreamBuilder(
+              stream: _firestore
+                  .collection('Class-Chats')
+                  .document(classId)
+                  .collection('Students')
+                  .document(studentEmail)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text('');
+                } else {
+                  return Text(
+                    snapshot.data['student unread'].toString(),
+                  );
+                }
+              },
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.075,
-              width: MediaQuery.of(context).size.height * 0.075,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(9999),
-              ),
-              // child: profilePictureLink == null
-              //     ? Center(
-              //         child: FaIcon(
-              //           FontAwesomeIcons.userAlt,
-              //           color: kPrimaryColor,
-              //         ),
-              //       )
-              //     : ClipRRect(
-              //         borderRadius: BorderRadius.circular(9999),
-              //         child: FittedBox(
-              //           fit: BoxFit.cover,
-              //           child: Image.network(
-              //             profilePictureLink,
-              //           ),
-              //         ),
-              //       ),
-              child: DateTime.now()
-                          .difference(
-                            DateTime.parse(
-                                lastChangedStatus.toDate().toString()),
-                          )
-                          .inDays >=
-                      5
-                  ? Center(
-                      child: FaIcon(
-                        FontAwesomeIcons.userAlt,
-                        color: Colors.grey,
-                      ),
-                    )
-                  : status == 'doing great'
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.09,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.04,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.075,
+                  width: MediaQuery.of(context).size.height * 0.075,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(9999),
+                  ),
+                  // child: profilePictureLink == null
+                  //     ? Center(
+                  //         child: FaIcon(
+                  //           FontAwesomeIcons.userAlt,
+                  //           color: kPrimaryColor,
+                  //         ),
+                  //       )
+                  //     : ClipRRect(
+                  //         borderRadius: BorderRadius.circular(9999),
+                  //         child: FittedBox(
+                  //           fit: BoxFit.cover,
+                  //           child: Image.network(
+                  //             profilePictureLink,
+                  //           ),
+                  //         ),
+                  //       ),
+                  child: DateTime.now()
+                              .difference(
+                                DateTime.parse(
+                                    lastChangedStatus.toDate().toString()),
+                              )
+                              .inDays >=
+                          5
                       ? Center(
                           child: FaIcon(
                             FontAwesomeIcons.userAlt,
-                            color: Colors.green,
+                            color: Colors.grey,
                           ),
                         )
-                      : status == 'need help'
+                      : status == 'doing great'
                           ? Center(
                               child: FaIcon(
                                 FontAwesomeIcons.userAlt,
-                                color: Colors.yellow[800],
+                                color: Colors.green,
                               ),
                             )
-                          : Center(
-                              child: FaIcon(
-                                FontAwesomeIcons.userAlt,
-                                color: Colors.red,
+                          : status == 'need help'
+                              ? Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.userAlt,
+                                    color: Colors.yellow[800],
+                                  ),
+                                )
+                              : Center(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.userAlt,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(),
+                    Container(),
+                    StreamBuilder(
+                        stream: _firestore
+                            .collection('UserData')
+                            .document(studentEmail)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          } else {
+                            return Text(
+                              snapshot.data['display name'],
+                              style: TextStyle(fontSize: 16.5),
+                            );
+                          }
+                        }),
+                    StreamBuilder(
+                        stream: _firestore
+                            .collection('Classes')
+                            .document(classId)
+                            .collection('Students')
+                            .document(studentEmail)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          } else {
+                            return Text(
+                              lastUpdatedStatus(snapshot.data['date']),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
                               ),
-                            ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.05,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(),
-                Container(),
-                StreamBuilder(
-                    stream: _firestore
-                        .collection('UserData')
-                        .document(studentEmail)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Text('');
-                      } else {
-                        return Text(
-                          snapshot.data['display name'],
-                          style: TextStyle(fontSize: 16.5),
-                        );
-                      }
-                    }),
-                StreamBuilder(
-                    stream: _firestore
-                        .collection('Classes')
-                        .document(classId)
-                        .collection('Students')
-                        .document(studentEmail)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Text('');
-                      } else {
-                        return Text(
-                          lastUpdatedStatus(snapshot.data['date']),
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        );
-                      }
-                    }),
-                Container(),
-                Container(),
+                            );
+                          }
+                        }),
+                    Container(),
+                    Container(),
+                  ],
+                ),
+                Spacer(),
+                // GestureDetector(
+                //   onTap: () => showModalSheet(),
+                //   child: FaIcon(
+                //     FontAwesomeIcons.paperPlane,
+                //     color: kPrimaryColor,
+                //     size: MediaQuery.of(context).size.width * 0.075,
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: MediaQuery.of(context).size.width * 0.055,
+                // ),
+                GestureDetector(
+                  onTap: () {
+                    _fire.resetUnreadCount(
+                      classId: classId,
+                      studentEmail: studentEmail,
+                      unreadType: 'teacher unread',
+                    );
+                    print('going to chat as a teacher');
+                    Navigator.pushNamed(
+                      context,
+                      ChatTeacher.routeName,
+                      arguments: {
+                        'class id': classId,
+                        'student uid': studentEmail,
+                      },
+                    );
+                  },
+                  child: FaIcon(
+                    FontAwesomeIcons.solidComments,
+                    color: kPrimaryColor,
+                    size: MediaQuery.of(context).size.width * 0.075,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.07,
+                )
               ],
             ),
-            Spacer(),
-            // GestureDetector(
-            //   onTap: () => showModalSheet(),
-            //   child: FaIcon(
-            //     FontAwesomeIcons.paperPlane,
-            //     color: kPrimaryColor,
-            //     size: MediaQuery.of(context).size.width * 0.075,
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: MediaQuery.of(context).size.width * 0.055,
-            // ),
-            GestureDetector(
-              onTap: () {
-                _fire.resetUnreadCount(
-                  classId: classId,
-                  studentEmail: studentEmail,
-                  unreadType: 'teacher unread',
-                );
-                print('going to chat as a teacher');
-                Navigator.pushNamed(
-                  context,
-                  ChatTeacher.routeName,
-                  arguments: {
-                    'class id': classId,
-                    'student uid': studentEmail,
-                  },
-                );
-              },
-              child: FaIcon(
-                FontAwesomeIcons.solidComments,
-                color: kPrimaryColor,
-                size: MediaQuery.of(context).size.width * 0.075,
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.06,
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
