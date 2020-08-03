@@ -786,10 +786,9 @@ class Student extends StatelessWidget {
                 // ),
                 GestureDetector(
                   onTap: () {
-                    _fire.resetUnreadCount(
+                    _fire.resetTeacherUnreadCount(
                       classId: classId,
                       studentEmail: studentEmail,
-                      unreadType: 'teacher unread',
                     );
                     print('going to chat as a teacher');
                     Navigator.pushNamed(

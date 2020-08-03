@@ -359,8 +359,8 @@ class Fire {
     });
   }
 
-  void resetUnreadCount(
-      {String classId, String studentEmail, String unreadType}) {
+  void resetStudentUnreadCount(
+      {String classId, String studentEmail}) {
 
     _firestore
         .collection('UserData')
@@ -369,6 +369,17 @@ class Fire {
         .document(classId)
         .updateData({
       'student unread': 0,
+    });
+  }
+
+  resetTeacherUnreadCount({String classId, String studentEmail}) {
+_firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .updateData({
+      'teacher unread': 0,
     });
   }
 

@@ -123,10 +123,10 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                         ),
                         onPressed: () {
                           print(_email);
-                          _fire.resetUnreadCount(
+                          _fire.resetStudentUnreadCount(
                             classId: classId,
                             studentEmail: _email,
-                            unreadType: 'student unread',
+                            
                           );
                           Navigator.pop(context);
                         },

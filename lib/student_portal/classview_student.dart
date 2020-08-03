@@ -148,10 +148,10 @@ class StudentClass extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () async {
-            _fire.resetUnreadCount(
+            _fire.resetStudentUnreadCount(
               classId: classId,
               studentEmail: email,
-              unreadType: 'student unread',
+              
             );
             Navigator.pushNamed(context, ViewClassStudent.routename,
                 arguments: {

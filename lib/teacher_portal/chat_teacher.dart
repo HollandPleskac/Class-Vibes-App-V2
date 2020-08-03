@@ -103,10 +103,10 @@ class _ChatTeacherState extends State<ChatTeacher> {
               size: 20,
             ),
             onPressed: () {
-              _fire.resetUnreadCount(
+              _fire.resetTeacherUnreadCount(
                   classId: classId,
                   studentEmail: studentEmail,
-                  unreadType: 'teacher unread',
+        
                 );
               Navigator.pop(context);
               
