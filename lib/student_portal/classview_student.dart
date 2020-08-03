@@ -260,7 +260,7 @@ class StudentClass extends StatelessWidget {
               if (!snapshot.hasData) {
                 return Text('');
               } else {
-                return UnreadMessageBadge(snapshot.data['teacher unread']);;
+                return UnreadMessageBadge(snapshot.data['student unread']);
               }
             },
           ),
