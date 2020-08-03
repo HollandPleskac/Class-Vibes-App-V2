@@ -15,6 +15,8 @@ import '../widgets/no_documents_message.dart';
 import '../widgets/server_down.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../widgets/badges.dart';
+
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
@@ -328,9 +330,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                           ['teacher unread'];
                                                 }
                                                 
-                                                return Text(
-                                                  allUnread.toString(),
-                                                );
+                                                return UnreadMessageBadge(allUnread);
                                               },
                                             ),
                                           ),

@@ -11,6 +11,7 @@ import '../nav_student.dart';
 import './view_class_student.dart';
 import './chat_student.dart';
 import '../widgets/no_documents_message.dart';
+import '../widgets/badges.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -259,9 +260,7 @@ class StudentClass extends StatelessWidget {
               if (!snapshot.hasData) {
                 return Text('');
               } else {
-                return Text(
-                  snapshot.data['student unread'].toString(),
-                );
+                return UnreadMessageBadge(snapshot.data['teacher unread']);;
               }
             },
           ),

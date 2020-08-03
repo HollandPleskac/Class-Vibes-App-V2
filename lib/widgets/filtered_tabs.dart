@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../teacher_portal/chat_teacher.dart';
 import '../logic/fire.dart';
+import './badges.dart';
 import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -650,9 +651,7 @@ class Student extends StatelessWidget {
                 if (!snapshot.hasData) {
                   return Text('');
                 } else {
-                  return Text(
-                    snapshot.data['teacher unread'].toString(),
-                  );
+                  return UnreadMessageBadge(snapshot.data['teacher unread']);
                 }
               },
             ),
