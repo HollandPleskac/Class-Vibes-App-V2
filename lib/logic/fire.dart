@@ -334,18 +334,36 @@ class Fire {
         .delete();
   }
 
-  // if there is no field to increment make sure the make a field
   void incrementUnreadCount(
-      {String classId, String studentEmail, String unreadType}) {
-    _firestore
-        .collection('Class-Chats')
-        .document(classId)
-        .collection('Students')
-        .document(studentEmail)
-        .updateData({
-      unreadType: FieldValue.increment(1),
-      
-    });
+      {String classId, String studentEmail, String unreadType}) async {
+    try {
+      int unread = await _firestore
+          .collection('Class-Chats')
+          .document(classId)
+          .collection('Students')
+          .document(studentEmail)
+          .get()
+          .then((docSnap) => docSnap.data[unreadType]);
+      // the field for unread type is there - increment the value
+      _firestore
+          .collection('Class-Chats')
+          .document(classId)
+          .collection('Students')
+          .document(studentEmail)
+          .updateData({
+        unreadType: FieldValue.increment(1),
+      });
+    } catch (_) {
+      //no field for unread type - set it to zero
+      _firestore
+          .collection('Class-Chats')
+          .document(classId)
+          .collection('Students')
+          .document(studentEmail)
+          .setData({
+        unreadType: 0,
+      }, merge: true);
+    }
   }
 
   void resetUnreadCount(
