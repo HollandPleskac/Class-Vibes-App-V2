@@ -295,6 +295,45 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                               ),
                                             ),
                                           ),
+                                          Positioned(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.01,
+                                            right: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.02,
+                                            child: FutureBuilder(
+                                              future: _firestore
+                                                  .collection('Class-Chats')
+                                                  .document(document.documentID)
+                                                  .collection('Students')
+                                                  .getDocuments(),
+                                                  
+                                              builder: (context,
+                                                  AsyncSnapshot<QuerySnapshot>
+                                                      snapshot) {
+                                                int allUnread = 0;
+                                                if (!snapshot.hasData){
+                                                  return Container();
+                                                }
+                                                for (int i = 0;
+                                                    i <
+                                                        snapshot.data.documents
+                                                            .length;
+                                                    i++) {
+                                                  allUnread = allUnread +
+                                                      snapshot.data.documents[i]
+                                                          ['teacher unread'];
+                                                }
+                                                
+                                                return Text(
+                                                  allUnread.toString(),
+                                                );
+                                              },
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );
