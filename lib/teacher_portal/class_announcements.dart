@@ -10,9 +10,11 @@ import '../constant.dart';
 import '../logic/fire.dart';
 import './class_announcements.dart';
 import '../widgets/announcements.dart';
+import '../logic/fcm.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
+final _fcm = FCM();
 
 class ClassAnnouncements extends StatelessWidget {
   final String classId;
@@ -182,7 +184,10 @@ class PushAnnouncementBtn extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(left: 14),
                                         child: TextFormField(
-                                          style: TextStyle(color: Colors.grey[100],fontWeight: FontWeight.bold,letterSpacing: 1),
+                                          style: TextStyle(
+                                              color: Colors.grey[100],
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1),
                                           controller: _titleController,
                                           validator: (value) {
                                             if (value == null || value == '') {
@@ -221,7 +226,10 @@ class PushAnnouncementBtn extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(left: 14),
                                         child: TextFormField(
-                                          style: TextStyle(color: Colors.grey[100],fontWeight: FontWeight.bold,letterSpacing: 1),
+                                          style: TextStyle(
+                                              color: Colors.grey[100],
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1),
                                           controller: _contentController,
                                           validator: (value) {
                                             if (value == null || value == '') {
@@ -264,6 +272,11 @@ class PushAnnouncementBtn extends StatelessWidget {
                                                       _contentController.text,
                                                   className:
                                                       await getClassName(),
+                                                );
+                                                _fcm.sendAnnouncementNotification(
+                                                  title: _titleController.text,
+                                                  body: _contentController.text,
+                                                  classId: classId,
                                                 );
                                                 Navigator.pop(context);
                                               }
