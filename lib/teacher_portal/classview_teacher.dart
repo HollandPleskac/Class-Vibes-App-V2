@@ -202,7 +202,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     ),
                     centerTitle: true,
                     actions: [
-
                       IconButton(
                         onPressed: () {
                           _showModalSheetEditUserName(_email);
@@ -217,9 +216,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                       stream: _firestore
                           .collection('Classes')
                           .where('teacher email', isEqualTo: _email)
-                          // .collection('UserData')
-                          // .document(_email)
-                          // .collection('Classes')
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -258,96 +254,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                           },
                                         );
                                       },
-                                      child: StreamBuilder(
-                                        stream: _firestore
-                                            .collection('Classes')
-                                            .document(document.documentID)
-                                            .collection('Students')
-                                            .snapshots(),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<QuerySnapshot>
-                                                snapshot) {
-                                          int unReadCount = 0;
-                                          if (snapshot.hasError) {
-                                            return Text(
-                                                'Error: ${snapshot.error}');
-                                          }
-                                          switch (snapshot.connectionState) {
-                                            case ConnectionState.waiting:
-                                              return Center(
-                                                child: AspectRatio(
-                                                    aspectRatio: 1.6),
-                                              );
-                                            default:
-                                              if (snapshot.data != null &&
-                                                  snapshot.data.documents
-                                                          .isEmpty ==
-                                                      false) {
-                                                for (int i = 0;
-                                                    i <
-                                                        snapshot.data.documents
-                                                            .length;
-                                                    i++) {
-                                                  unReadCount = unReadCount +
-                                                      snapshot.data.documents[i]
-                                                          ['teacher unread'];
-                                                }
-                                                return Stack(
-                                                  children: [
-                                                    Container(
-                                                      width: double.infinity,
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.all(5),
-                                                        child: Card(
-                                                          child: Center(
-                                                            child:
-                                                                DynamicPieChart(
-                                                              // the document is class document
-                                                              // student documents is all the student email documents in class
-                                                              studentDocuments:
-                                                                  snapshot.data
-                                                                      .documents,
-                                                              doc: document,
-                                                            ),
-                                                          ),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                  14),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Positioned(
-                                                      top:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height *
-                                                              0.02,
-                                                      right:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.04,
-                                                      child: UnreadMessageBadge(
-                                                          unReadCount),
-                                                    ),
-                                                  ],
-                                                );
-                                              } else {
-                                                return NoStudentsClass(
-                                                  className:
-                                                      document['class name'],
-                                                );
-                                              }
-                                          }
-                                        },
-                                      ),
+                                      child: Class(document),
                                     );
                                   }).toList(),
                                 ),
@@ -368,13 +275,85 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   }
 }
 
+class Class extends StatelessWidget {
+  final DocumentSnapshot document;
+
+  Class(this.document);
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _firestore
+          .collection('Classes')
+          .document(document.documentID)
+          .collection('Students')
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        int unReadCount = 0;
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(
+              child: AspectRatio(aspectRatio: 1.6),
+            );
+          default:
+            if (snapshot.data != null &&
+                snapshot.data.documents.isEmpty == false) {
+              for (int i = 0; i < snapshot.data.documents.length; i++) {
+                unReadCount =
+                    unReadCount + snapshot.data.documents[i]['teacher unread'];
+              }
+              return Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Card(
+                        child: Center(
+                          child: DynamicPieChart(
+                            // the document is class document
+                            // student documents is all the student email documents in class
+                            studentDocuments: snapshot.data.documents,
+                            classDocument: document,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.02,
+                    right: MediaQuery.of(context).size.width * 0.04,
+                    child: UnreadMessageBadge(unReadCount),
+                  ),
+                ],
+              );
+            } else {
+              return NoStudentsClass(
+                className: document['class name'],
+              );
+            }
+        }
+      },
+    );
+  }
+}
+
 class DynamicPieChart extends StatelessWidget {
+  // student documents are from classes --> class --> students
   final List<DocumentSnapshot> studentDocuments;
-  final DocumentSnapshot doc;
+  // classDocument is from classes --> class
+  final DocumentSnapshot classDocument;
 
   DynamicPieChart({
     this.studentDocuments,
-    this.doc,
+    this.classDocument,
   });
   @override
   Widget build(BuildContext context) {
@@ -387,7 +366,7 @@ class DynamicPieChart extends StatelessWidget {
                       documentSnapshot.data['date'].toDate().toString()),
                 )
                 .inDays <
-            doc['max days inactive'])
+            classDocument['max days inactive'])
         .length
         .toDouble();
 
@@ -401,7 +380,7 @@ class DynamicPieChart extends StatelessWidget {
                       documentSnapshot.data['date'].toDate().toString()),
                 )
                 .inDays <
-            doc['max days inactive'])
+            classDocument['max days inactive'])
         .length
         .toDouble();
     double frustratedStudents = studentDocuments
@@ -414,7 +393,7 @@ class DynamicPieChart extends StatelessWidget {
                       documentSnapshot.data['date'].toDate().toString()),
                 )
                 .inDays <
-            doc['max days inactive'])
+            classDocument['max days inactive'])
         .length
         .toDouble();
     double inactiveStudents = studentDocuments
@@ -425,7 +404,7 @@ class DynamicPieChart extends StatelessWidget {
                       documentSnapshot.data['date'].toDate().toString()),
                 )
                 .inDays >=
-            doc['max days inactive'])
+            classDocument['max days inactive'])
         .length
         .toDouble();
 
@@ -450,7 +429,7 @@ class DynamicPieChart extends StatelessWidget {
               right: 10,
               left: 10),
           child: Text(
-            doc['class name'],
+            classDocument['class name'],
             overflow: TextOverflow.fade,
             softWrap: false,
             style: kSubTextStyle.copyWith(
