@@ -6,7 +6,7 @@ class UnreadMessageBadge extends StatelessWidget {
   UnreadMessageBadge(this.unreadCount);
   @override
   Widget build(BuildContext context) {
-    if (unreadCount.toInt() == 0) {
+    if (unreadCount == 0 || unreadCount == null) {
       //   return Container(
       //     decoration: BoxDecoration(
       //         color: Colors.blue[200], borderRadius: BorderRadius.circular(6)),
@@ -22,7 +22,7 @@ class UnreadMessageBadge extends StatelessWidget {
       //   );
       // }
       return Container();
-    } else if (0 < unreadCount.toInt() && unreadCount.toInt() >= 5) {
+    } else if (0 < unreadCount && unreadCount >= 5) {
       return Container(
         decoration: BoxDecoration(
             color: Colors.orangeAccent, borderRadius: BorderRadius.circular(6)),

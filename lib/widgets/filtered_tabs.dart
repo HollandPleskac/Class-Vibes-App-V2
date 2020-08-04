@@ -108,6 +108,7 @@ class DoingGreatTab extends StatelessWidget {
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
+                    teacherUnread: document['teacher unread'],
                   );
                 }).toList(),
               );
@@ -172,6 +173,7 @@ class NeedHelpTab extends StatelessWidget {
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
+                    teacherUnread: document['teacher unread'],
                   );
                 }).toList(),
               );
@@ -236,6 +238,7 @@ class FrustratedTab extends StatelessWidget {
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
+                    teacherUnread: document['teacher unread'],
                   );
                 }).toList(),
               );
@@ -303,6 +306,7 @@ class InactiveTab extends StatelessWidget {
                     teacherEmail: teacherEmail,
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
+                    teacherUnread: document['teacher unread'],
                   );
                 }).toList(),
               );
