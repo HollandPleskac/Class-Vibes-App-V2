@@ -228,6 +228,7 @@ class Fire {
           'email': studentEmail,
           'name': studentName,
           'status': 'doing great',
+          'teacher unread':0,
         });
 
         _firestore
