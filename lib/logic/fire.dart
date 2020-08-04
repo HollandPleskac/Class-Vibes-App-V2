@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:random_string/random_string.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -346,6 +347,7 @@ class Fire {
         .updateData({
       'student unread': FieldValue.increment(1),
     });
+    FlutterAppBadger.updateBadgeCount(1);
   }
 
   void incrementTeacherUnreadCount(
@@ -358,6 +360,7 @@ class Fire {
         .updateData({
       'teacher unread': FieldValue.increment(1),
     });
+    FlutterAppBadger.updateBadgeCount(1);
 
 
   }
@@ -371,6 +374,7 @@ class Fire {
         .updateData({
       'student unread': 0,
     });
+    FlutterAppBadger.removeBadge();
   }
 
   void resetTeacherUnreadCount({String classId, String studentEmail}) {
@@ -383,6 +387,7 @@ class Fire {
         .updateData({
       'teacher unread': 0,
     });
+    FlutterAppBadger.removeBadge();
 
 
   }
