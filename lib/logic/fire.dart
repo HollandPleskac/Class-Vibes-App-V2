@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:random_string/random_string.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 final Firestore _firestore = Firestore.instance;
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class Fire {
   // class setttings
@@ -238,6 +240,7 @@ class Fire {
           'student unread': 0,
           'teacher unread': 0,
         });
+        await _firebaseMessaging.subscribeToTopic(classCode);
         return 'You have joined the class!';
       } else {
         return 'Teacher is not accepting students right now';
