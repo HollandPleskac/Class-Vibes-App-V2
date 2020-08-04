@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:random_string/random_string.dart';
 
 final Firestore _firestore = Firestore.instance;
@@ -234,7 +235,8 @@ class Fire {
             .document(classCode)
             .setData({
           'code': classCode,
-          'class name': 'class name placeholder (take out later)'
+          'student unread': 0,
+          'teacher unread': 0,
         });
         return 'You have joined the class!';
       } else {
@@ -334,62 +336,54 @@ class Fire {
         .delete();
   }
 
-  void incrementUnreadCount(
-      {String classId, String studentEmail, String unreadType}) async {
-    try {
-      int unread = await _firestore
-          .collection('Class-Chats')
-          .document(classId)
-          .collection('Students')
-          .document(studentEmail)
-          .get()
-          .then((docSnap) => docSnap.data[unreadType]);
-      // the field for unread type is there - increment the value
-      _firestore
-          .collection('Class-Chats')
-          .document(classId)
-          .collection('Students')
-          .document(studentEmail)
-          .updateData({
-        unreadType: FieldValue.increment(1),
-      });
-    } catch (_) {
-      //no field for unread type - set it to zero
-      _firestore
-          .collection('Class-Chats')
-          .document(classId)
-          .collection('Students')
-          .document(studentEmail)
-          .setData({
-        unreadType: 0,
-      }, merge: true);
-    }
+  void incrementStudentUnreadCount(
+      {String classId, String studentEmail}) async {
+    _firestore
+        .collection('UserData')
+        .document(studentEmail)
+        .collection('Classes')
+        .document(classId)
+        .updateData({
+      'student unread': FieldValue.increment(1),
+    });
   }
 
-  void resetUnreadCount(
-      {String classId, String studentEmail, String unreadType}) {
-    //unreadType is "teacher unread" or "student unread" - this is literally a field in the db
-
+  void incrementTeacherUnreadCount(
+      {String classId, String studentEmail}) async {
     _firestore
-        .collection('Class-Chats')
+        .collection('Classes')
         .document(classId)
         .collection('Students')
         .document(studentEmail)
         .updateData({
-      unreadType: 0,
+      'teacher unread': FieldValue.increment(1),
+    });
+
+
+  }
+
+  void resetStudentUnreadCount({String classId, String studentEmail}) {
+    _firestore
+        .collection('UserData')
+        .document(studentEmail)
+        .collection('Classes')
+        .document(classId)
+        .updateData({
+      'student unread': 0,
     });
   }
 
-  void updateIsReadAnnouncements(
-      String classId, String studentEmail, String announcementId) {
+  void resetTeacherUnreadCount({String classId, String studentEmail}) {
+
     _firestore
         .collection('Classes')
         .document(classId)
-        .collection('Announcements')
-        .document(announcementId)
+        .collection('Students')
+        .document(studentEmail)
         .updateData({
-      'isRead': true,
-      'saw announcement': DateTime.now(),
+      'teacher unread': 0,
     });
+
+
   }
 }

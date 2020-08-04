@@ -229,9 +229,11 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     height: MediaQuery.of(context).size.height,
                     child: StreamBuilder(
                       stream: _firestore
-                          .collection('UserData')
-                          .document(_email)
                           .collection('Classes')
+                          .where('teacher email', isEqualTo: _email)
+                          // .collection('UserData')
+                          // .document(_email)
+                          // .collection('Classes')
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -270,71 +272,112 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                           },
                                         );
                                       },
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            // color: Colors.red,
-                                            width: double.infinity,
-                                            child: Padding(
-                                              padding: EdgeInsets.all(5),
-                                              child: Card(
-                                                child: Center(
-                                                  child: DynamicPieChart(
-                                                    classId:
-                                                        document.documentID,
-                                                    className:
-                                                        document['class name'],
-                                                    maxDaysInactive: document[
-                                                        'max days inactive'],
-                                                  ),
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(14),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            top: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.02,
-                                            right: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.04,
-                                            child: FutureBuilder(
-                                              future: _firestore
-                                                  .collection('Class-Chats')
-                                                  .document(document.documentID)
-                                                  .collection('Students')
-                                                  .getDocuments(),
-                                                  
-                                              builder: (context,
-                                                  AsyncSnapshot<QuerySnapshot>
-                                                      snapshot) {
-                                                int allUnread = 0;
-                                                if (!snapshot.hasData){
-                                                  return Container();
-                                                }
+
+                                      child: StreamBuilder(
+                                        stream: _firestore
+                                            .collection('Classes')
+                                            .document(document.documentID)
+                                            .collection('Students')
+                                            .snapshots(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                snapshot) {
+                                          int unReadCount = 0;
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                'Error: ${snapshot.error}');
+                                          }
+                                          switch (snapshot.connectionState) {
+                                            case ConnectionState.waiting:
+                                              return Center(
+                                                child: AspectRatio(
+                                                    aspectRatio: 1.6),
+                                              );
+                                            default:
+                                              if (snapshot.data != null &&
+                                                  snapshot.data.documents
+                                                          .isEmpty ==
+                                                      false) {
                                                 for (int i = 0;
                                                     i <
                                                         snapshot.data.documents
                                                             .length;
                                                     i++) {
-                                                  allUnread = allUnread +
+                                                  unReadCount = unReadCount +
                                                       snapshot.data.documents[i]
                                                           ['teacher unread'];
                                                 }
-                                                
-                                                return UnreadMessageBadge(allUnread);
-                                              },
-                                            ),
-                                          ),
-                                        ],
+                                                return Stack(
+                                                  children: [
+                                                    Container(
+                                                      width: double.infinity,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5),
+                                                        child: Card(
+                                                          child: Center(
+                                                            child:
+                                                                DynamicPieChart(
+                                                                    doc:
+                                                                        document),
+                                                          ),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  14),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      top:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.02,
+                                                      right:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.04,
+                                                      child: UnreadMessageBadge(
+                                                          unReadCount),
+                                                    ),
+                                                  ],
+                                                );
+                                              } else {
+                                                return Container(
+                                                      width: double.infinity,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5),
+                                                        child: Card(
+                                                          child: Center(
+                                                            child:
+                                                                DynamicPieChart(
+                                                                    doc:
+                                                                        document),
+                                                          ),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  14),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    
+                                                );
+                                              }
+                                          }
+                                        },
                                       ),
                                     );
                                   }).toList(),
@@ -357,21 +400,17 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 }
 
 class DynamicPieChart extends StatelessWidget {
-  final String classId;
-  final String className;
-  final int maxDaysInactive;
+  final DocumentSnapshot doc;
 
   DynamicPieChart({
-    this.classId,
-    this.className,
-    this.maxDaysInactive,
+    this.doc,
   });
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .document(doc.documentID)
           .collection('Students')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -396,7 +435,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      maxDaysInactive)
+                      doc['max days inactive'])
                   .length
                   .toDouble();
 
@@ -411,7 +450,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      maxDaysInactive)
+                      doc['max days inactive'])
                   .length
                   .toDouble();
               double frustratedStudents = snapshot.data.documents
@@ -425,7 +464,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays <
-                      maxDaysInactive)
+                      doc['max days inactive'])
                   .length
                   .toDouble();
               double inactiveStudents = snapshot.data.documents
@@ -437,7 +476,7 @@ class DynamicPieChart extends StatelessWidget {
                                 .toString()),
                           )
                           .inDays >=
-                      maxDaysInactive)
+                      doc['max days inactive'])
                   .length
                   .toDouble();
 
@@ -477,7 +516,7 @@ class DynamicPieChart extends StatelessWidget {
                         right: 10,
                         left: 10),
                     child: Text(
-                      className,
+                      doc['class name'],
                       overflow: TextOverflow.fade,
                       softWrap: false,
                       style: kSubTextStyle.copyWith(
@@ -504,7 +543,7 @@ class DynamicPieChart extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: 10, left: 10),
                     child: Text(
-                      className,
+                      doc['class name'],
                       overflow: TextOverflow.fade,
                       softWrap: false,
                       style: kSubTextStyle.copyWith(

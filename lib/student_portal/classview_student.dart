@@ -103,6 +103,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                 return StudentClass(
                                   classId: document.documentID,
                                   email: _email,
+                                  unreadCount: document['student unread'],
                                 );
                               }).toList(),
                             );
@@ -124,10 +125,12 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 class StudentClass extends StatelessWidget {
   final String classId;
   final String email;
+  final int unreadCount;
 
   StudentClass({
     this.classId,
     this.email,
+    this.unreadCount,
   });
   @override
   Widget build(BuildContext context) {
@@ -145,11 +148,11 @@ class StudentClass extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () async {
-            _fire.resetUnreadCount(
-                  classId: classId,
-                  studentEmail: email,
-                  unreadType: 'student unread',
-                );
+            _fire.resetStudentUnreadCount(
+              classId: classId,
+              studentEmail: email,
+              
+            );
             Navigator.pushNamed(context, ViewClassStudent.routename,
                 arguments: {
                   'class id': classId,
@@ -249,39 +252,7 @@ class StudentClass extends StatelessWidget {
         Positioned(
           top: MediaQuery.of(context).size.height * 0.03,
           right: MediaQuery.of(context).size.width * 0.03,
-          child: StreamBuilder(
-            stream: _firestore
-                .collection('Class-Chats')
-                .document(classId)
-                .collection('Students')
-                .document(email)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Text('');
-              } else {
-                return UnreadMessageBadge(snapshot.data['student unread']);
-              }
-            },
-          ),
-
-          // child: GestureDetector(
-          //   onTap: () async {
-          //     print('tap');
-
-          //     Navigator.pushNamed(context, ViewClassStudent.routename,
-          //         arguments: {
-          //           'class id': classId,
-          //           'class name': await getClassName(),
-          //           'initial index': 0,
-          //         });
-          //   },
-          //   child: FaIcon(
-          //     FontAwesomeIcons.solidComments,
-          //     size: 35,
-          //     color: kPrimaryColor,
-          //   ),
-          // ),
+          child: UnreadMessageBadge(unreadCount),
         ),
       ],
     );
