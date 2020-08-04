@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:http/http.dart' as http;
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -16,6 +20,8 @@ class _TestingState extends State<Testing> {
     // TODO: implement initState
     super.initState();
 
+    _firebaseMessaging.subscribeToTopic('puppies');
+
     _firebaseMessaging.configure(
       onMessage: (message) async {
         // in app
@@ -29,11 +35,57 @@ class _TestingState extends State<Testing> {
         setState(() {
           title = message["data"]["title"];
           helper = "You have open the application from notification";
-          print('TITLE : '+title);
-          print('HELPER : '+helper);
+          print('TITLE : ' + title);
+          print('HELPER : ' + helper);
         });
       },
     );
+  }
+
+  // Replace with server token from firebase console settings.
+  final String serverToken =
+      'AAAA2miS9yY:APA91bEU74Nt7Ddt4HGq14lDMvh0Gar7vsc2SfiqTQWhS01xkQpF6QmALEYM6c-4CqD4RFdJFTIubtUZvPmZP4fwP3vvUbyIrXdbrpUYXMNWmVeq6r9lzYt2DfgLqYRsNdxKjuXnLrEl';
+
+  Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
+    print('request notification permissions');
+    await _firebaseMessaging.requestNotificationPermissions(
+      const IosNotificationSettings(
+          sound: true, badge: true, alert: true, provisional: false),
+    );
+    print('before http post');
+    await http.post(
+      'https://fcm.googleapis.com/fcm/send',
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=$serverToken',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'notification': <String, dynamic>{
+            'body': 'this is a body',
+            'title': 'this is a title'
+          },
+          'priority': 'high',
+          'data': <String, dynamic>{
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'title': 'some title',
+          },
+          'to': '/topics/puppies',
+        },
+      ),
+    );
+    print('after http request');
+
+    final Completer<Map<String, dynamic>> completer =
+        Completer<Map<String, dynamic>>();
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        completer.complete(message);
+      },
+    );
+
+    return completer.future;
   }
 
   @override
@@ -48,9 +100,13 @@ class _TestingState extends State<Testing> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Set State'),
-        onPressed: () {
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.plus_one),
+        onPressed: () async {
+          await _firebaseMessaging.subscribeToTopic('puppies');
+          var res = await sendAndRetrieveMessage();
+
+          print('RESULT : ' + res.toString());
           setState(() {});
         },
       ),

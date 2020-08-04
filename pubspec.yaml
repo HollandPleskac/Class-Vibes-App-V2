@@ -40,6 +40,8 @@ dependencies:
   flutter_svg:
   firebase_messaging: ^6.0.16
   visibility_detector: ^0.1.5
+  http: ^0.12.2
+
 
   
 
