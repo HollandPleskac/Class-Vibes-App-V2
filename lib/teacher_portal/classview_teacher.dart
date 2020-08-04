@@ -342,12 +342,12 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .height *
-                                                              0.03,
+                                                              0.02,
                                                       right:
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.03,
+                                                              0.04,
                                                       child: UnreadMessageBadge(
                                                           unReadCount),
                                                     ),
