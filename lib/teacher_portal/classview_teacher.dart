@@ -272,10 +272,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                           },
                                         );
                                       },
-                                      // TODO : wrap this in the streambuilder used in the dynamic pie chart currently
-                                      ///
-
-                                      ///
 
                                       child: StreamBuilder(
                                         stream: _firestore
@@ -286,6 +282,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                         builder: (BuildContext context,
                                             AsyncSnapshot<QuerySnapshot>
                                                 snapshot) {
+                                          int unReadCount = 0;
                                           if (snapshot.hasError) {
                                             return Text(
                                                 'Error: ${snapshot.error}');
@@ -301,6 +298,15 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                   snapshot.data.documents
                                                           .isEmpty ==
                                                       false) {
+                                                for (int i = 0;
+                                                    i <
+                                                        snapshot.data.documents
+                                                            .length;
+                                                    i++) {
+                                                  unReadCount = unReadCount +
+                                                      snapshot.data.documents[i]
+                                                          ['teacher unread'];
+                                                }
                                                 return Stack(
                                                   children: [
                                                     Container(
@@ -339,67 +345,40 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                                   .width *
                                                               0.03,
                                                       child: UnreadMessageBadge(
-                                                          document[
-                                                              'total unread']),
+                                                          unReadCount),
                                                     ),
                                                   ],
                                                 );
                                               } else {
-                                                return Text(
-                                                    'text that shows error on class or something?');
+                                                return Container(
+                                                      width: double.infinity,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(5),
+                                                        child: Card(
+                                                          child: Center(
+                                                            child:
+                                                                DynamicPieChart(
+                                                                    doc:
+                                                                        document),
+                                                          ),
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(
+                                                              Radius.circular(
+                                                                  14),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    
+                                                );
                                               }
                                           }
                                         },
                                       ),
-
-                                      // child: Stack(
-                                      //   children: [
-                                      //     Container(
-                                      //       width: double.infinity,
-                                      //       child: Padding(
-                                      //         padding: EdgeInsets.all(5),
-                                      //         child: Card(
-                                      //           child: Center(
-                                      //             child: DynamicPieChart(
-                                      //               classId:
-                                      //                   document.documentID,
-                                      //               className:
-                                      //                   document['class name'],
-                                      //               maxDaysInactive: document[
-                                      //                   'max days inactive'],
-                                      //             ),
-                                      //           ),
-                                      //           shape: RoundedRectangleBorder(
-                                      //             borderRadius:
-                                      //                 BorderRadius.all(
-                                      //               Radius.circular(14),
-                                      //             ),
-                                      //           ),
-                                      //         ),
-                                      //       ),
-                                      //     ),
-                                      //     Positioned(
-                                      //       top: MediaQuery.of(context)
-                                      //               .size
-                                      //               .height *
-                                      //           0.03,
-                                      //       right: MediaQuery.of(context)
-                                      //               .size
-                                      //               .width *
-                                      //           0.03,
-                                      //       child: UnreadMessageBadge(
-                                      //           document['total unread']),
-                                      //     ),
-                                      //   ],
-                                      // ),
-                                      ///
-                                      ///
-                                      ///
-                                      ///
-
-                                      ///
-
-                                      ///
                                     );
                                   }).toList(),
                                 ),
