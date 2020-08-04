@@ -7,7 +7,10 @@ class ClassVibesServer {
     String message,
     String className,
   ) async {
+    print(className);
+    print(classCode);
     var getResponse = await http.get(
-        'http://api.classvibes.net/api/sendEmail?code=123&title=test&message=hi&className=testclass');
+        'http://api.classvibes.net/api/sendEmail?code=$classCode&title=$title&message=$message&className=$className');
+    print(getResponse.body);
   }
 }
