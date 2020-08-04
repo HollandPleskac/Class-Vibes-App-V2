@@ -202,27 +202,13 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     ),
                     centerTitle: true,
                     actions: [
-                      //DONT NEED THIS STREAMBUILDER ( TAKE OUT )
-                      StreamBuilder(
-                        stream: _firestore
-                            .collection('Application Management')
-                            .document('ServerManagement')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Text('');
-                          } else {
-                            return snapshot.data['serversAreUp'] == false
-                                ? Container()
-                                : IconButton(
-                                    onPressed: () {
-                                      _showModalSheetEditUserName(_email);
-                                    },
-                                    icon: Icon(Icons.add),
-                                  );
-                          }
+
+                      IconButton(
+                        onPressed: () {
+                          _showModalSheetEditUserName(_email);
                         },
-                      )
+                        icon: Icon(Icons.add),
+                      ),
                     ],
                   ),
                   body: Container(
@@ -354,66 +340,9 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                   ],
                                                 );
                                               } else {
-                                                return Container(
-                                                  width: double.infinity,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.all(5),
-                                                    child: Card(
-                                                      child: Center(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Center(
-                                                              child:
-                                                                  AspectRatio(
-                                                                aspectRatio:
-                                                                    1.6,
-                                                                child: Center(
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    'assets/svg/undraw_analytics_5pgy.svg',
-                                                                    width: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.2,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      right: 10,
-                                                                      left: 10),
-                                                              child: Text(
-                                                                document[
-                                                                    'class name'],
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .fade,
-                                                                softWrap: false,
-                                                                style: kSubTextStyle.copyWith(
-                                                                    fontSize: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.037),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(14),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                return NoStudentsClass(
+                                                  className:
+                                                      document['class name'],
                                                 );
                                               }
                                           }
@@ -529,6 +458,56 @@ class DynamicPieChart extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class NoStudentsClass extends StatelessWidget {
+  final String className;
+
+  NoStudentsClass({this.className});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.all(5),
+        child: Card(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: AspectRatio(
+                    aspectRatio: 1.6,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/svg/undraw_analytics_5pgy.svg',
+                        width: MediaQuery.of(context).size.width * 0.2,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  child: Text(
+                    className,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    style: kSubTextStyle.copyWith(
+                        fontSize: MediaQuery.of(context).size.width * 0.037),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(14),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
