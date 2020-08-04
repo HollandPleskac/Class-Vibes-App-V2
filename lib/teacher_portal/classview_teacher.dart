@@ -317,8 +317,13 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                           child: Center(
                                                             child:
                                                                 DynamicPieChart(
-                                                                    doc:
-                                                                        document),
+                                                              // the document is class document
+                                                              // student documents is all the student email documents in class
+                                                              studentDocuments:
+                                                                  snapshot.data
+                                                                      .documents,
+                                                              doc: document,
+                                                            ),
                                                           ),
                                                           shape:
                                                               RoundedRectangleBorder(
@@ -435,161 +440,95 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 }
 
 class DynamicPieChart extends StatelessWidget {
+  final List<DocumentSnapshot> studentDocuments;
   final DocumentSnapshot doc;
 
   DynamicPieChart({
+    this.studentDocuments,
     this.doc,
   });
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _firestore
-          .collection('Classes')
-          .document(doc.documentID)
-          .collection('Students')
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Center(
-              child: AspectRatio(aspectRatio: 1.6),
-            );
-          default:
-            if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
-              double doingGreatStudents = snapshot.data.documents
-                  .where((document) => document["status"] == "doing great")
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays <
-                      doc['max days inactive'])
-                  .length
-                  .toDouble();
+    double doingGreatStudents = studentDocuments
+        .where((document) => document["status"] == "doing great")
+        .where((documentSnapshot) =>
+            DateTime.now()
+                .difference(
+                  DateTime.parse(
+                      documentSnapshot.data['date'].toDate().toString()),
+                )
+                .inDays <
+            doc['max days inactive'])
+        .length
+        .toDouble();
 
-              double needHelpStudents = snapshot.data.documents
-                  .where((documentSnapshot) =>
-                      documentSnapshot.data['status'] == 'need help')
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays <
-                      doc['max days inactive'])
-                  .length
-                  .toDouble();
-              double frustratedStudents = snapshot.data.documents
-                  .where((documentSnapshot) =>
-                      documentSnapshot.data['status'] == 'frustrated')
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays <
-                      doc['max days inactive'])
-                  .length
-                  .toDouble();
-              double inactiveStudents = snapshot.data.documents
-                  .where((documentSnapshot) =>
-                      DateTime.now()
-                          .difference(
-                            DateTime.parse(documentSnapshot.data['date']
-                                .toDate()
-                                .toString()),
-                          )
-                          .inDays >=
-                      doc['max days inactive'])
-                  .length
-                  .toDouble();
+    double needHelpStudents = studentDocuments
+        .where((documentSnapshot) =>
+            documentSnapshot.data['status'] == 'need help')
+        .where((documentSnapshot) =>
+            DateTime.now()
+                .difference(
+                  DateTime.parse(
+                      documentSnapshot.data['date'].toDate().toString()),
+                )
+                .inDays <
+            doc['max days inactive'])
+        .length
+        .toDouble();
+    double frustratedStudents = studentDocuments
+        .where((documentSnapshot) =>
+            documentSnapshot.data['status'] == 'frustrated')
+        .where((documentSnapshot) =>
+            DateTime.now()
+                .difference(
+                  DateTime.parse(
+                      documentSnapshot.data['date'].toDate().toString()),
+                )
+                .inDays <
+            doc['max days inactive'])
+        .length
+        .toDouble();
+    double inactiveStudents = studentDocuments
+        .where((documentSnapshot) =>
+            DateTime.now()
+                .difference(
+                  DateTime.parse(
+                      documentSnapshot.data['date'].toDate().toString()),
+                )
+                .inDays >=
+            doc['max days inactive'])
+        .length
+        .toDouble();
 
-              double totalStudents = doingGreatStudents +
-                  needHelpStudents +
-                  frustratedStudents +
-                  inactiveStudents.toDouble();
+    double totalStudents = doingGreatStudents +
+        needHelpStudents +
+        frustratedStudents +
+        inactiveStudents.toDouble();
 
-              var doingGreatPercentage =
-                  (doingGreatStudents / totalStudents * 100)
-                          .toStringAsFixed(0) +
-                      '%';
-              var needHelpPercentage =
-                  (needHelpStudents / totalStudents * 100).toStringAsFixed(0) +
-                      '%';
-              var frustratedPercentage =
-                  (frustratedStudents / totalStudents * 100)
-                          .toStringAsFixed(0) +
-                      '%';
-              var inactivePercentage =
-                  (inactiveStudents / totalStudents * 100).toStringAsFixed(0) +
-                      '%';
-
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PieChartSampleSmall(
-                    //graph percentage
-                    doingGreatStudents: doingGreatStudents,
-                    needHelpStudents: needHelpStudents,
-                    frustratedStudents: frustratedStudents,
-                    inactiveStudents: inactiveStudents,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.0225,
-                        right: 10,
-                        left: 10),
-                    child: Text(
-                      doc['class name'],
-                      overflow: TextOverflow.fade,
-                      softWrap: false,
-                      style: kSubTextStyle.copyWith(
-                          fontSize: MediaQuery.of(context).size.width * 0.037),
-                    ),
-                  ),
-                ],
-              );
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: AspectRatio(
-                      aspectRatio: 1.6,
-                      child: Center(
-                        child: SvgPicture.asset(
-                          'assets/svg/undraw_analytics_5pgy.svg',
-                          width: MediaQuery.of(context).size.width * 0.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 10, left: 10),
-                    child: Text(
-                      doc['class name'],
-                      overflow: TextOverflow.fade,
-                      softWrap: false,
-                      style: kSubTextStyle.copyWith(
-                          fontSize: MediaQuery.of(context).size.width * 0.037),
-                    ),
-                  ),
-                ],
-              );
-            }
-        }
-      },
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        PieChartSampleSmall(
+          //graph percentage
+          doingGreatStudents: doingGreatStudents,
+          needHelpStudents: needHelpStudents,
+          frustratedStudents: frustratedStudents,
+          inactiveStudents: inactiveStudents,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.0225,
+              right: 10,
+              left: 10),
+          child: Text(
+            doc['class name'],
+            overflow: TextOverflow.fade,
+            softWrap: false,
+            style: kSubTextStyle.copyWith(
+                fontSize: MediaQuery.of(context).size.width * 0.037),
+          ),
+        ),
+      ],
     );
   }
 }
