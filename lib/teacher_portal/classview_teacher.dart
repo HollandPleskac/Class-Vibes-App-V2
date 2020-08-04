@@ -272,7 +272,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                           },
                                         );
                                       },
-
                                       child: StreamBuilder(
                                         stream: _firestore
                                             .collection('Classes')
@@ -351,29 +350,65 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                                 );
                                               } else {
                                                 return Container(
-                                                      width: double.infinity,
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.all(5),
-                                                        child: Card(
-                                                          child: Center(
-                                                            child:
-                                                                DynamicPieChart(
-                                                                    doc:
-                                                                        document),
-                                                          ),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(
-                                                              Radius.circular(
-                                                                  14),
+                                                  width: double.infinity,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(5),
+                                                    child: Card(
+                                                      child: Center(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Center(
+                                                              child:
+                                                                  AspectRatio(
+                                                                aspectRatio:
+                                                                    1.6,
+                                                                child: Center(
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    'assets/svg/undraw_analytics_5pgy.svg',
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.2,
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right: 10,
+                                                                      left: 10),
+                                                              child: Text(
+                                                                document[
+                                                                    'class name'],
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .fade,
+                                                                softWrap: false,
+                                                                style: kSubTextStyle.copyWith(
+                                                                    fontSize: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.037),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                    
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(14),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 );
                                               }
                                           }
