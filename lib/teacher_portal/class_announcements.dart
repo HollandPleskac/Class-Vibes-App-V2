@@ -182,6 +182,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(left: 14),
                                         child: TextFormField(
+                                          style: TextStyle(color: Colors.grey[100],fontWeight: FontWeight.bold,letterSpacing: 1),
                                           controller: _titleController,
                                           validator: (value) {
                                             if (value == null || value == '') {
@@ -220,6 +221,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                         padding:
                                             const EdgeInsets.only(left: 14),
                                         child: TextFormField(
+                                          style: TextStyle(color: Colors.grey[100],fontWeight: FontWeight.bold,letterSpacing: 1),
                                           controller: _contentController,
                                           validator: (value) {
                                             if (value == null || value == '') {
