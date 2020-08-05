@@ -330,6 +330,7 @@ class DynamicPieChart extends StatelessWidget {
   }
 }
 
+// keep the state of the bottom of the screen all here so the graph doesnt update when u switch the filer
 class FilterView extends StatefulWidget {
   final String classId;
   final String teacherEmail;

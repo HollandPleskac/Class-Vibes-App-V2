@@ -21,7 +21,7 @@ class AllTab extends StatelessWidget {
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students')
+          .collection('Students').orderBy('date',descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -78,7 +78,7 @@ class DoingGreatTab extends StatelessWidget {
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students')
+          .collection('Students').orderBy('date',descending: true)
           .where("status", isEqualTo: 'doing great')
           .where(
             "date",
@@ -145,7 +145,7 @@ class NeedHelpTab extends StatelessWidget {
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students')
+          .collection('Students').orderBy('date',descending: true)
           .where("status", isEqualTo: 'need help')
           .where(
             "date",
@@ -212,7 +212,7 @@ class FrustratedTab extends StatelessWidget {
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students')
+          .collection('Students').orderBy('date',descending: true)
           .where("status", isEqualTo: 'frustrated')
           .where(
             "date",
@@ -284,7 +284,7 @@ class InactiveTab extends StatelessWidget {
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students')
+          .collection('Students').orderBy('date')
           .where(
             "date",
             isLessThan: DateTime.now().subtract(
