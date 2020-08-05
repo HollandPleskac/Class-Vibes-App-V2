@@ -15,30 +15,33 @@ class FCM {
     String body,
     String classId,
   }) async {
-    await _firebaseMessaging.requestNotificationPermissions(
-      const IosNotificationSettings(
-          sound: true, badge: true, alert: true, provisional: false),
-    );
-    await http.post(
-      'https://fcm.googleapis.com/fcm/send',
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'key=$serverToken',
-      },
-      body: jsonEncode(
-        <String, dynamic>{
-          'notification': <String, dynamic>{
-            'body': body,
-            'title': title,
-          },
-          'priority': 'high',
-          'data': <String, dynamic>{
-            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            'title': 'New Announcement',
-          },
-          'to': '/topics/'+classId.toString(),
-        },
-      ),
-    );
+    // doesnt work for multiple instances of an app
+    // try subscribing to device group messaging
+
+    // await _firebaseMessaging.requestNotificationPermissions(
+    //   const IosNotificationSettings(
+    //       sound: true, badge: true, alert: true, provisional: false),
+    // );
+    // await http.post(
+    //   'https://fcm.googleapis.com/fcm/send',
+    //   headers: <String, String>{
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'key=$serverToken',
+    //   },
+    //   body: jsonEncode(
+    //     <String, dynamic>{
+    //       'notification': <String, dynamic>{
+    //         'body': body,
+    //         'title': title,
+    //       },
+    //       'priority': 'high',
+    //       'data': <String, dynamic>{
+    //         'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+    //         'title': 'New Announcement',
+    //       },
+    //       'to': '/topics/'+classId.toString(),
+    //     },
+    //   ),
+    // );
   }
 }
