@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "938057332518-sp0umnrs7is0l2kf2p74am973iqu3om9.apps.googleusercontent.com",
+              "client_id": "938057332518-e76ljtlahd76ptk0bf1h5tumga7qbkct.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hollandpleskac.cyberDojoApp"
+                "bundle_id": "com.xeondevelopershp.classVibesV2"
               }
             }
           ]
@@ -68,10 +68,10 @@
               "client_type": 3
             },
             {
-              "client_id": "938057332518-sp0umnrs7is0l2kf2p74am973iqu3om9.apps.googleusercontent.com",
+              "client_id": "938057332518-e76ljtlahd76ptk0bf1h5tumga7qbkct.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hollandpleskac.cyberDojoApp"
+                "bundle_id": "com.xeondevelopershp.classVibesV2"
               }
             }
           ]
@@ -86,6 +86,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "938057332518-ei6v1ndrt1u02q6h3k50enhgl7jh7vb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xeondevelopers.class_vibes_v2",
+            "certificate_hash": "64e2cb5fd226086875dbb84dd12365b5df3e12d8"
+          }
+        },
         {
           "client_id": "938057332518-bobk61co8rm7ge0lbf56df6405pev01m.apps.googleusercontent.com",
           "client_type": 3
@@ -104,10 +112,10 @@
               "client_type": 3
             },
             {
-              "client_id": "938057332518-sp0umnrs7is0l2kf2p74am973iqu3om9.apps.googleusercontent.com",
+              "client_id": "938057332518-e76ljtlahd76ptk0bf1h5tumga7qbkct.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hollandpleskac.cyberDojoApp"
+                "bundle_id": "com.xeondevelopershp.classVibesV2"
               }
             }
           ]
