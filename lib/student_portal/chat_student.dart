@@ -197,7 +197,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                   }),
                               //SIZE THIS
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.only(left:8.0,right:8.0,bottom:8.0),
                                 child: Center(
                                   child: Container(
                                     width: MediaQuery.of(context).size.width *

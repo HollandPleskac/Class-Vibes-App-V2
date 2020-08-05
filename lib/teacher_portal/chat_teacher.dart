@@ -249,16 +249,18 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         _controller.clear();
                                       }),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.only(left:8.0,right:8.0,bottom:8.0),
 
                                     //SIZE THIS
                                     child: Center(
                                       child: Container(
+                                        
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.675,
                                         child: TextField(
                                           controller: _controller,
+                                          
                                         ),
                                       ),
                                     ),
