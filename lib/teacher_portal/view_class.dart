@@ -99,8 +99,7 @@ class _ViewClassState extends State<ViewClass> {
                     body: Theme(
                       data: ThemeData(
                         backgroundColor: Colors.white,
-                         canvasColor: Colors.transparent,
-                  
+                        canvasColor: Colors.transparent,
                       ),
                       child: TabBarView(
                         children: [
@@ -169,17 +168,22 @@ class _StudentsTabState extends State<StudentsTab> {
                 if (!snapshot.hasData) {
                   return Text('');
                 } else {
-                  return DynamicPieChart(
-                    widget.classId,
-                    snapshot.data['max days inactive'],
+                  return Column(
+                    children: <Widget>[
+                      DynamicPieChart(
+                        widget.classId,
+                        snapshot.data['max days inactive'],
+                      ),
+                      //filter view
+                      FilterView(
+                        classId: widget.classId,
+                        teacherEmail: widget.teacherEmail,
+                        maxDaysInactive: snapshot.data['max days inactive'],
+                      ),
+                    ],
                   );
                 }
               }),
-          //filter view
-          FilterView(
-            classId: widget.classId,
-            teacherEmail: widget.teacherEmail,
-          ),
         ],
       ),
     );
@@ -205,7 +209,6 @@ class DynamicPieChart extends StatelessWidget {
 
     // }
 
-    
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
@@ -299,7 +302,6 @@ class DynamicPieChart extends StatelessWidget {
                   (inactiveStudents / totalStudents * 100).toStringAsFixed(0) +
                       '%';
 
-       
               return PieChartSampleBig(
                 //graph percentage
                 doingGreatStudents: doingGreatStudents,
@@ -331,8 +333,9 @@ class DynamicPieChart extends StatelessWidget {
 class FilterView extends StatefulWidget {
   final String classId;
   final String teacherEmail;
+  final int maxDaysInactive;
 
-  FilterView({this.classId, this.teacherEmail});
+  FilterView({this.classId, this.teacherEmail,this.maxDaysInactive});
   @override
   _FilterViewState createState() => _FilterViewState();
 }
@@ -365,6 +368,7 @@ class _FilterViewState extends State<FilterView> {
                     _isTouchedFrustrated = false;
                     _isTouchedInactive = false;
                   }),
+                
                 ),
               ),
               Padding(
@@ -433,15 +437,15 @@ class _FilterViewState extends State<FilterView> {
         Container(
           height: MediaQuery.of(context).size.height * 0.41,
           child: _isTouchedAll == true
-              ? AllTab(widget.classId, widget.teacherEmail)
+              ? AllTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
               : _isTouchedDoingGreat
-                  ? DoingGreatTab(widget.classId, widget.teacherEmail)
+                  ? DoingGreatTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
                   : _isTouchedNeedHelp
-                      ? NeedHelpTab(widget.classId, widget.teacherEmail)
+                      ? NeedHelpTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
                       : _isTouchedFrustrated
-                          ? FrustratedTab(widget.classId, widget.teacherEmail)
+                          ? FrustratedTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
                           : _isTouchedInactive
-                              ? InactiveTab(widget.classId, widget.teacherEmail)
+                              ? InactiveTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
                               : Text(
                                   'IMPORTANT - this text will never show since one of the first values will always be true'),
         ),

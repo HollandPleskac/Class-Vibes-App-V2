@@ -13,7 +13,8 @@ final _fire = Fire();
 class AllTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  AllTab(this.classId, this.teacherEmail);
+  final int maxDaysInactive;
+  AllTab(this.classId, this.teacherEmail,this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -44,6 +45,7 @@ class AllTab extends StatelessWidget {
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
+                    maxDaysInactive: maxDaysInactive,
                   );
                 }).toList(),
               );
@@ -68,7 +70,8 @@ class AllTab extends StatelessWidget {
 class DoingGreatTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  DoingGreatTab(this.classId, this.teacherEmail);
+  final int maxDaysInactive;
+  DoingGreatTab(this.classId, this.teacherEmail,this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -80,7 +83,7 @@ class DoingGreatTab extends StatelessWidget {
           .where(
             "date",
             isGreaterThan: DateTime.now().subtract(
-              Duration(days: 5),
+              Duration(days: maxDaysInactive),
             ),
           )
           .snapshots(),
@@ -109,6 +112,7 @@ class DoingGreatTab extends StatelessWidget {
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
+                    maxDaysInactive: maxDaysInactive,
                   );
                 }).toList(),
               );
@@ -133,7 +137,8 @@ class DoingGreatTab extends StatelessWidget {
 class NeedHelpTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  NeedHelpTab(this.classId, this.teacherEmail);
+  final int maxDaysInactive;
+  NeedHelpTab(this.classId, this.teacherEmail,this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -145,7 +150,7 @@ class NeedHelpTab extends StatelessWidget {
           .where(
             "date",
             isGreaterThan: DateTime.now().subtract(
-              Duration(days: 5),
+              Duration(days: maxDaysInactive),
             ),
           )
           .snapshots(),
@@ -174,6 +179,7 @@ class NeedHelpTab extends StatelessWidget {
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
+                    maxDaysInactive: maxDaysInactive,
                   );
                 }).toList(),
               );
@@ -198,7 +204,8 @@ class NeedHelpTab extends StatelessWidget {
 class FrustratedTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  FrustratedTab(this.classId, this.teacherEmail);
+  final int maxDaysInactive;
+  FrustratedTab(this.classId, this.teacherEmail,this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -210,7 +217,7 @@ class FrustratedTab extends StatelessWidget {
           .where(
             "date",
             isGreaterThan: DateTime.now().subtract(
-              Duration(days: 5),
+              Duration(days: maxDaysInactive),
             ),
           )
           .snapshots(),
@@ -239,6 +246,7 @@ class FrustratedTab extends StatelessWidget {
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
+                    maxDaysInactive: maxDaysInactive,
                   );
                 }).toList(),
               );
@@ -263,10 +271,12 @@ class FrustratedTab extends StatelessWidget {
 class InactiveTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
+  final int maxDaysInactive;
 
   InactiveTab(
     this.classId,
     this.teacherEmail,
+    this.maxDaysInactive,
   );
   @override
   Widget build(BuildContext context) {
@@ -278,7 +288,7 @@ class InactiveTab extends StatelessWidget {
           .where(
             "date",
             isLessThan: DateTime.now().subtract(
-              Duration(days: 5),
+              Duration(days: maxDaysInactive),
             ),
           )
           .snapshots(),
@@ -307,6 +317,7 @@ class InactiveTab extends StatelessWidget {
                     studentEmail: document.documentID,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
+                    maxDaysInactive: maxDaysInactive,
                   );
                 }).toList(),
               );
@@ -337,6 +348,8 @@ class Student extends StatelessWidget {
   final String studentEmail;
   final Timestamp lastChangedStatus;
   final int teacherUnread;
+  final int maxDaysInactive;
+  
 
   Student({
     this.status,
@@ -347,6 +360,8 @@ class Student extends StatelessWidget {
     this.studentEmail,
     this.lastChangedStatus,
     this.teacherUnread,
+    this.maxDaysInactive,
+   
   });
 
   // final TextEditingController _titleController = TextEditingController();
@@ -686,7 +701,7 @@ class Student extends StatelessWidget {
                                     lastChangedStatus.toDate().toString()),
                               )
                               .inDays >=
-                          5
+                          maxDaysInactive
                       ? Center(
                           child: FaIcon(
                             FontAwesomeIcons.userAlt,
