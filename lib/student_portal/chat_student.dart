@@ -151,7 +151,6 @@ class _ChatStudentState extends State<ChatStudent> {
                                 reverse: true,
                                 itemCount: snapshot.data.length,
                                 controller: scrollController,
-                                physics: BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   // if item builder index is equal to the current last index of the stream then show loading
                                     // if snapshot.data.length (remainder) 10 is 0 then dont show loading to prevent weird constand loading error (dont really know why this works)
@@ -306,6 +305,9 @@ class _ChatStudentState extends State<ChatStudent> {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       print("at the end of list");
+      setState(() {
+        isLoading = true;
+      });
       chatListBloc.fetchNextChats(widget.classId, widget.email, () {
         setState(() {
           isLoading = false;
