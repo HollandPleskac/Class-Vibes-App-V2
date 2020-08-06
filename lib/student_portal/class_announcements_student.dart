@@ -22,7 +22,7 @@ class ClassAnnouncementsStudent extends StatelessWidget {
           .collection("Classes")
           .document(classId)
           .collection('Announcements')
-          .orderBy("date", descending: true)
+          .orderBy("date", descending: true).limit(50)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
