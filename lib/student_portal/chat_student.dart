@@ -126,9 +126,7 @@ class _ChatStudentState extends State<ChatStudent> {
                         child: CircularProgressIndicator(),
                       );
                     default:
-                      if (snapshot.data != null &&
-                          snapshot.data.isEmpty == false) {
-                        return Center(
+                      Center(
                           //lazy loading
                           child: ListView.builder(
                             reverse: true,
@@ -148,11 +146,7 @@ class _ChatStudentState extends State<ChatStudent> {
                             },
                           ),
                         );
-                      } else {
-                        return Center(
-                          child: NoDocsChat(),
-                        );
-                      }
+                      
                   }
                 },
               ),

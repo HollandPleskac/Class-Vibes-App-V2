@@ -182,35 +182,26 @@ class _ChatTeacherState extends State<ChatTeacher> {
                           child: CircularProgressIndicator(),
                         );
                       default:
-                        if (snapshot.data != null &&
-                            snapshot.data.isEmpty == false) {
-                          return Center(
-                            //lazy loading
-                            child: ListView.builder(
-                              reverse: true,
-                              controller: scrollController,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data[index]['sent type'] ==
-                                        'student'
-                                    ? RecievedChat(
-                                        title: snapshot.data[index]['user'],
-                                        content: snapshot.data[index]
-                                            ['message'],
-                                      )
-                                    : SentChat(
-                                        title: snapshot.data[index]['user'],
-                                        content: snapshot.data[index]
-                                            ['message'],
-                                      );
-                              },
-                            ),
-                          );
-                        } else {
-                          return Center(
-                            child: NoDocsChat(),
-                          );
-                        }
+                        return Center(
+                          //lazy loading
+                          child: ListView.builder(
+                            reverse: true,
+                            controller: scrollController,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              return snapshot.data[index]['sent type'] ==
+                                      'student'
+                                  ? RecievedChat(
+                                      title: snapshot.data[index]['user'],
+                                      content: snapshot.data[index]['message'],
+                                    )
+                                  : SentChat(
+                                      title: snapshot.data[index]['user'],
+                                      content: snapshot.data[index]['message'],
+                                    );
+                            },
+                          ),
+                        );
                     }
                   },
                 ),
