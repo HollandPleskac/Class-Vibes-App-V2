@@ -169,66 +169,63 @@ class StudentClass extends StatelessWidget {
                 right: MediaQuery.of(context).size.width * 0.05,
               ),
               child: Card(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.05,
-                    ),
-                    StreamBuilder(
-                        stream: _firestore
-                            .collection('Classes')
-                            .document(classId)
-                            .snapshots(),
-                        builder: (BuildContext context, classSnapshot) {
-                          if (classSnapshot.data == null) {
-                            return Center(
-                              child: Container(),
-                            );
-                          }
-                          return Row(
-                            children: <Widget>[
-                              Text(
-                                classSnapshot.data['class name'],
-                                overflow: TextOverflow.fade,
-                                softWrap: false,
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.046,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              Spacer(),
-                              StreamBuilder(
-                                stream: _firestore
-                                    .collection('Classes')
-                                    .document(classId)
-                                    .collection('Students')
-                                    .document(email)
-                                    .snapshots(),
-                                builder: (BuildContext context, snapshot) {
-                                  if (snapshot.data == null) {
-                                    return Center(
-                                      child: Container(),
-                                    );
-                                  }
-                                  return SelectStatusRow(
-                                    classId: classId,
-                                    lastChangedStatus: snapshot.data['date'],
-                                    status: snapshot.data['status'],
-                                    email: email,
-                                    maxDaysInactive:
-                                        classSnapshot.data['max days inactive'],
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        }),
-                    SizedBox(
-                      width: 20,
-                    ),
-                  ],
-                ),
+                child: StreamBuilder(
+                    stream: _firestore
+                        .collection('Classes')
+                        .document(classId)
+                        .snapshots(),
+                    builder: (BuildContext context, classSnapshot) {
+                      if (classSnapshot.data == null) {
+                        return Center(
+                          child: Container(),
+                        );
+                      }
+                      return Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          Text(
+                            classSnapshot.data['class name'],
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.046,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Spacer(),
+                          StreamBuilder(
+                            stream: _firestore
+                                .collection('Classes')
+                                .document(classId)
+                                .collection('Students')
+                                .document(email)
+                                .snapshots(),
+                            builder: (BuildContext context, snapshot) {
+                              if (snapshot.data == null) {
+                                return Center(
+                                  child: Container(),
+                                );
+                              }
+                              return SelectStatusRow(
+                                classId: classId,
+                                lastChangedStatus: snapshot.data['date'],
+                                status: snapshot.data['status'],
+                                email: email,
+                                maxDaysInactive:
+                                    classSnapshot.data['max days inactive'],
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                        ],
+                      );
+                    }),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
