@@ -110,17 +110,10 @@ class _ChatStudentState extends State<ChatStudent> {
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height * 0.7,
-              child: StreamBuilder(
-                stream: _firestore
-                    .collection("Class-Chats")
-                    .document(widget.classId)
-                    .collection('Students')
-                    .document(widget.email)
-                    .collection('Messages')
-                    .orderBy("timestamp", descending: true)
-                    .snapshots(),
+              child: StreamBuilder<List<DocumentSnapshot>>(
+                stream: chatListBloc.chatStream,
                 builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                    snapshot) {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
@@ -131,26 +124,26 @@ class _ChatStudentState extends State<ChatStudent> {
                       );
                     default:
                       if (snapshot.data != null &&
-                          snapshot.data.documents.isEmpty == false) {
+                          snapshot.data.isEmpty == false) {
                         return Center(
                           //lazy loading
                           child: ListView.builder(
                             reverse: true,
-                            itemCount: snapshot.data.documents.length,
+                            itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
-                              return snapshot.data.documents[index]
+                              return snapshot.data[index]
                                           ['sent type'] ==
                                       'teacher'
                                   ? RecievedChat(
-                                      title: snapshot.data.documents[index]
+                                      title: snapshot.data[index]
                                           ['user'],
-                                      content: snapshot.data.documents[index]
+                                      content: snapshot.data[index]
                                           ['message'],
                                     )
                                   : SentChat(
-                                      title: snapshot.data.documents[index]
+                                      title: snapshot.data[index]
                                           ['user'],
-                                      content: snapshot.data.documents[index]
+                                      content: snapshot.data[index]
                                           ['message'],
                                     );
                             },
