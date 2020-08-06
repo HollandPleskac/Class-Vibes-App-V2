@@ -113,12 +113,12 @@ class _ChatStudentState extends State<ChatStudent> {
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.hasError) {
                     return snapshot.error == 'No Data Available'
-                          ? Center(
-                              child: NoDocsChat(),
-                            )
-                          : Center(
-                              child: Text('Error: ${snapshot.error}'),
-                            );
+                        ? Center(
+                            child: NoDocsChat(),
+                          )
+                        : Center(
+                            child: Text('Error: ${snapshot.error}'),
+                          );
                   }
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -127,26 +127,25 @@ class _ChatStudentState extends State<ChatStudent> {
                       );
                     default:
                       return Center(
-                          //lazy loading
-                          child: ListView.builder(
-                            reverse: true,
-                            itemCount: snapshot.data.length,
-                            controller: scrollController,
-                            itemBuilder: (context, index) {
-                              return snapshot.data[index]['sent type'] ==
-                                      'teacher'
-                                  ? RecievedChat(
-                                      title: snapshot.data[index]['user'],
-                                      content: snapshot.data[index]['message'],
-                                    )
-                                  : SentChat(
-                                      title: snapshot.data[index]['user'],
-                                      content: snapshot.data[index]['message'],
-                                    );
-                            },
-                          ),
-                        );
-                      
+                        //lazy loading
+                        child: ListView.builder(
+                          reverse: true,
+                          itemCount: snapshot.data.length,
+                          controller: scrollController,
+                          itemBuilder: (context, index) {
+                            return snapshot.data[index]['sent type'] ==
+                                    'teacher'
+                                ? RecievedChat(
+                                    title: snapshot.data[index]['user'],
+                                    content: snapshot.data[index]['message'],
+                                  )
+                                : SentChat(
+                                    title: snapshot.data[index]['user'],
+                                    content: snapshot.data[index]['message'],
+                                  );
+                          },
+                        ),
+                      );
                   }
                 },
               ),
@@ -189,11 +188,12 @@ class _ChatStudentState extends State<ChatStudent> {
                                       'sent type': 'student',
                                     });
                                     await scrollController.animateTo(
-                                        scrollController.position.minScrollExtent,
-                                        duration: Duration(seconds: 1),
-                                        curve: Curves.fastOutSlowIn,
-                                      );
-                                    chatListBloc.fetchFirstList(widget.classId, widget.email);
+                                      scrollController.position.minScrollExtent,
+                                      duration: Duration(seconds: 1),
+                                      curve: Curves.fastOutSlowIn,
+                                    );
+                                    chatListBloc.fetchFirstList(
+                                        widget.classId, widget.email);
                                     _controller.clear();
                                   }),
                               //SIZE THIS
