@@ -151,7 +151,6 @@ class StudentClass extends StatelessWidget {
             _fire.resetStudentUnreadCount(
               classId: classId,
               studentEmail: email,
-              
             );
             Navigator.pushNamed(context, ViewClassStudent.routename,
                 arguments: {
@@ -186,55 +185,45 @@ class StudentClass extends StatelessWidget {
                               child: Container(),
                             );
                           }
-                          return Text(
-                            classSnapshot.data['class name'],
-                            overflow: TextOverflow.fade,
-                            softWrap: false,
-                            style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.046,
-                              fontWeight: FontWeight.w400,
-                            ),
+                          return Row(
+                            children: <Widget>[
+                              Text(
+                                classSnapshot.data['class name'],
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.046,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              Spacer(),
+                              StreamBuilder(
+                                stream: _firestore
+                                    .collection('Classes')
+                                    .document(classId)
+                                    .collection('Students')
+                                    .document(email)
+                                    .snapshots(),
+                                builder: (BuildContext context, snapshot) {
+                                  if (snapshot.data == null) {
+                                    return Center(
+                                      child: Container(),
+                                    );
+                                  }
+                                  return SelectStatusRow(
+                                    classId: classId,
+                                    lastChangedStatus: snapshot.data['date'],
+                                    status: snapshot.data['status'],
+                                    email: email,
+                                    maxDaysInactive:
+                                        classSnapshot.data['max days inactive'],
+                                  );
+                                },
+                              ),
+                            ],
                           );
                         }),
-                    Spacer(),
-                    StreamBuilder(
-                      stream: _firestore
-                          .collection('Classes')
-                          .document(classId)
-                          .snapshots(),
-                      builder: (BuildContext context, classSnapshot) {
-                        if (classSnapshot.data == null) {
-                          return Center(
-                            child: Container(),
-                          );
-                        }
-                        //purpose of this classSnapshot is to get the max days inactive
-                        return StreamBuilder(
-                          stream: _firestore
-                              .collection('Classes')
-                              .document(classId)
-                              .collection('Students')
-                              .document(email)
-                              .snapshots(),
-                          builder: (BuildContext context, snapshot) {
-                            if (snapshot.data == null) {
-                              return Center(
-                                child: Container(),
-                              );
-                            }
-                            return SelectStatusRow(
-                              classId: classId,
-                              lastChangedStatus: snapshot.data['date'],
-                              status: snapshot.data['status'],
-                              email: email,
-                              maxDaysInactive:
-                                  classSnapshot.data['max days inactive'],
-                            );
-                          },
-                        );
-                      },
-                    ),
                     SizedBox(
                       width: 20,
                     ),
