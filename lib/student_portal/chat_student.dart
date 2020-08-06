@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../constant.dart';
 import '../widgets/no_documents_message.dart';
 import '../logic/fire.dart';
+import '../logic/bloc.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -26,6 +27,10 @@ class ChatStudent extends StatefulWidget {
 }
 
 class _ChatStudentState extends State<ChatStudent> {
+
+  ChatListBloc chatListBloc;
+
+  ScrollController scrollController = ScrollController();
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -75,16 +80,21 @@ class _ChatStudentState extends State<ChatStudent> {
 
   String _studentName;
 
-  Future getStudentName() async {
+  Future getStudentData() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
     final name = user.displayName;
 
+
     _studentName = name;
+
   }
 
   @override
   void initState() {
-    getStudentName().then((_) {
+    chatListBloc = ChatListBloc();
+    chatListBloc.fetchFirstList(widget.classId, widget.email);
+    scrollController.addListener(_scrollListener);
+    getStudentData().then((_) {
       setState(() {});
     });
     super.initState();
@@ -225,6 +235,14 @@ class _ChatStudentState extends State<ChatStudent> {
         ),
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+      print("at the end of list");
+      chatListBloc.fetchNextChats(widget.classId,widget.email);
+    }
   }
 }
 
