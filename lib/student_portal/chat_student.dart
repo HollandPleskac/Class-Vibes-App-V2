@@ -112,9 +112,13 @@ class _ChatStudentState extends State<ChatStudent> {
                 stream: chatListBloc.chatStream,
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
+                    return snapshot.error == 'No Data Available'
+                          ? Center(
+                              child: NoDocsChat(),
+                            )
+                          : Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
                   }
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
