@@ -126,7 +126,7 @@ class _ChatStudentState extends State<ChatStudent> {
                         child: CircularProgressIndicator(),
                       );
                     default:
-                      Center(
+                      return Center(
                           //lazy loading
                           child: ListView.builder(
                             reverse: true,
@@ -188,6 +188,12 @@ class _ChatStudentState extends State<ChatStudent> {
                                       'user': _studentName,
                                       'sent type': 'student',
                                     });
+                                    await scrollController.animateTo(
+                                        scrollController.position.minScrollExtent,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.fastOutSlowIn,
+                                      );
+                                    chatListBloc.fetchFirstList(widget.classId, widget.email);
                                     _controller.clear();
                                   }),
                               //SIZE THIS

@@ -29,7 +29,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
 
   ScrollController scrollController = ScrollController();
 
-
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -245,6 +244,14 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         'user': _teacherName,
                                         'sent type': 'teacher',
                                       });
+                                      await scrollController.animateTo(
+                                        scrollController.position.minScrollExtent,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.fastOutSlowIn,
+                                      );
+                                      chatListBloc.fetchFirstList(
+                                          widget.classId, widget.studentEmail);
+
                                       _controller.clear();
                                     }),
                                 Padding(
@@ -283,12 +290,10 @@ class _ChatTeacherState extends State<ChatTeacher> {
   }
 
   void _scrollListener() {
-    
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       print("at the end of list");
       chatListBloc.fetchNextChats(widget.classId, widget.studentEmail);
-      
     }
   }
 }
