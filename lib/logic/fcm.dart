@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 
-//DELETE THIS DONT HAVE THIS IN CLIENT VERSION OF APP
+// not safe in client app
 // final String serverToken =
-//     'secret token not safe in client';
+//     'secret key';
 
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
