@@ -10,12 +10,11 @@ import '../constant.dart';
 import '../logic/fire.dart';
 import './class_announcements.dart';
 import '../widgets/announcements.dart';
-import '../logic/fcm.dart';
 import '../logic/class_vibes_server.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
-final _fcm = FCM();
+
 final _classVibesServer = ClassVibesServer();
 
 class ClassAnnouncements extends StatelessWidget {
@@ -275,11 +274,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                                   className:
                                                       await getClassName(),
                                                 );
-                                                _fcm.sendAnnouncementNotification(
-                                                  title: _titleController.text,
-                                                  body: _contentController.text,
-                                                  classId: classId,
-                                                );
+                                            
 
                                                 _classVibesServer
                                                     .sendEmailForAnnouncement(
