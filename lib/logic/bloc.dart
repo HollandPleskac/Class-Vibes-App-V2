@@ -49,7 +49,7 @@ class ChatListBloc {
   }
 
 /*This will automatically fetch the next 10 elements from the list*/
-  fetchNextChats(String classId, String email) async {
+  fetchNextChats(String classId, String email, Function updateLoading) async {
     print(classId);
     print(email);
     try {
@@ -58,6 +58,7 @@ class ChatListBloc {
           await firebaseProvider.fetchNextList(documentList, classId, email);
       documentList.addAll(newDocumentList);
       chatController.sink.add(documentList);
+      updateLoading();
       try {
         if (documentList.length == 0) {
           chatController.sink.addError("No Data Available");

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,8 @@ class _ChatStudentState extends State<ChatStudent> {
   ChatListBloc chatListBloc;
 
   ScrollController scrollController = ScrollController();
+
+  bool isLoading = false;
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -116,7 +119,6 @@ class _ChatStudentState extends State<ChatStudent> {
                       .document(widget.classId)
                       .snapshots(),
                   builder: (BuildContext context, classSnapshot) {
-                    
                     if (classSnapshot.data == null) {
                       return Center(
                         child: Text('Error : No class found'),
@@ -149,7 +151,15 @@ class _ChatStudentState extends State<ChatStudent> {
                                 reverse: true,
                                 itemCount: snapshot.data.length,
                                 controller: scrollController,
+                                physics: BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
+                                  // if item builder index is equal to the current last index of the stream then show loading
+                                    // if snapshot.data.length (remainder) 10 is 0 then dont show loading to prevent weird constand loading error (dont really know why this works)
+                                    // and isLoading == true
+                                  if ((index == snapshot.data.length - 1 && snapshot.data.length%10 == 0) &&
+                                        isLoading == true) {
+                                      return CupertinoActivityIndicator(radius: 15,);
+                                    }
                                   return snapshot.data[index]['sent type'] ==
                                           'teacher'
                                       ? RecievedChat(
@@ -296,7 +306,11 @@ class _ChatStudentState extends State<ChatStudent> {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       print("at the end of list");
-      chatListBloc.fetchNextChats(widget.classId, widget.email);
+      chatListBloc.fetchNextChats(widget.classId, widget.email, () {
+        setState(() {
+          isLoading = false;
+        });
+      });
     }
   }
 }

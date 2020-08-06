@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,8 @@ class _ChatTeacherState extends State<ChatTeacher> {
   ScrollController scrollController = ScrollController();
 
   final TextEditingController _controller = TextEditingController();
+
+  bool isLoading = false;
 
   void _showModalSheet() {
     showModalBottomSheet(
@@ -205,23 +208,28 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                 child: ListView.builder(
                                   reverse: true,
                                   itemCount: snapshot.data.length,
+                                  
                                   controller: scrollController,
                                   itemBuilder: (context, index) {
-                                    
+                                    // if item builder index is equal to the current last index of the stream then show loading
+                                    // if snapshot.data.length (remainder) 10 is 0 then dont show loading to prevent weird constand loading error (dont really know why this works)
+                                    // and isLoading == true
+                                    if ((index == snapshot.data.length - 1 && snapshot.data.length%10 == 0) &&
+                                        isLoading == true) {
+                                      return CupertinoActivityIndicator(radius: 15,);
+                                    }
                                     return snapshot.data[index]['sent type'] ==
-                                                'student'
-                                            ? RecievedChat(
-                                                title: snapshot.data[index]
-                                                    ['user'],
-                                                content: snapshot.data[index]
-                                                    ['message'],
-                                              )
-                                            : SentChat(
-                                                title: snapshot.data[index]
-                                                    ['user'],
-                                                content: snapshot.data[index]
-                                                    ['message'],
-                                              );
+                                            'student'
+                                        ? RecievedChat(
+                                            title: snapshot.data[index]['user'],
+                                            content: snapshot.data[index]
+                                                ['message'],
+                                          )
+                                        : SentChat(
+                                            title: snapshot.data[index]['user'],
+                                            content: snapshot.data[index]
+                                                ['message'],
+                                          );
                                   },
                                 ),
                               );
@@ -358,8 +366,15 @@ class _ChatTeacherState extends State<ChatTeacher> {
   void _scrollListener() {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
+      setState(() {
+        isLoading = true;
+      });
       print("at the end of list");
-      chatListBloc.fetchNextChats(widget.classId, widget.studentEmail);
+      chatListBloc.fetchNextChats(widget.classId, widget.studentEmail, () {
+        setState(() {
+          isLoading = false;
+        });
+      });
     }
   }
 }
