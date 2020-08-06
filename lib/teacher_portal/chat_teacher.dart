@@ -28,6 +28,8 @@ class _ChatTeacherState extends State<ChatTeacher> {
   ChatListBloc chatListBloc;
 
   ScrollController scrollController = ScrollController();
+
+
   final TextEditingController _controller = TextEditingController();
   void _showModalSheet() {
     showModalBottomSheet(
@@ -281,12 +283,12 @@ class _ChatTeacherState extends State<ChatTeacher> {
   }
 
   void _scrollListener() {
-    print(widget.studentEmail);
-    print(widget.classId);
+    
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       print("at the end of list");
       chatListBloc.fetchNextChats(widget.classId, widget.studentEmail);
+      
     }
   }
 }
