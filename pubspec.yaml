@@ -41,8 +41,9 @@ dependencies:
   firebase_messaging: ^6.0.16
   visibility_detector: ^0.1.5
   http: ^0.12.2
+  rxdart: ^0.24.1
 
-  socket_io_client: ^0.9.11
+
 
 
 
