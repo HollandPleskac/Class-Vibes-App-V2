@@ -164,33 +164,49 @@ class _ChatTeacherState extends State<ChatTeacher> {
             children: <Widget>[
               Container(
                 height: MediaQuery.of(context).size.height * 0.8,
-                child: StreamBuilder<List<DocumentSnapshot>>(
-                  stream: chatListBloc.chatStream,
-                  builder: (BuildContext context, snapshot) {
-                    if (snapshot.hasError) {
-                      print(snapshot.error);
-                      return snapshot.error == 'No Data Available'
-                          ? Center(
-                              child: NoDocsChat(),
-                            )
-                          : Center(
-                              child: Text('Error: ${snapshot.error}'),
-                            );
+                child: StreamBuilder(
+                  stream: _firestore
+                      .collection('Classes')
+                      .document(widget.classId)
+                      .collection('Students')
+                      .document(widget.studentEmail)
+                      .snapshots(),
+                  builder: (BuildContext context, classSnapshot) {
+                    
+                    if (classSnapshot.data == null) {
+                      return Center(
+                        child: Text('Error : No class found'),
+                      );
                     }
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      default:
-                        return Center(
-                          //lazy loading
-                          child: ListView.builder(
-                            reverse: true,
-                            controller: scrollController,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) {
-                              return snapshot.data[index]['sent type'] ==
+                    if (classSnapshot.data['teacher unread'] > 0) {
+                      chatListBloc.fetchFirstList(widget.classId, widget.studentEmail);
+                    }
+                    return StreamBuilder<List<DocumentSnapshot>>(
+                      stream: chatListBloc.chatStream,
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasError) {
+                          return snapshot.error == 'No Data Available'
+                              ? Center(
+                                  child: NoDocsChat(),
+                                )
+                              : Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                        }
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          default:
+                            return Center(
+                              //lazy loading
+                              child: ListView.builder(
+                                reverse: true,
+                                itemCount: snapshot.data.length,
+                                controller: scrollController,
+                                itemBuilder: (context, index) {
+                                  return snapshot.data[index]['sent type'] ==
                                       'student'
                                   ? RecievedChat(
                                       title: snapshot.data[index]['user'],
@@ -200,12 +216,55 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       title: snapshot.data[index]['user'],
                                       content: snapshot.data[index]['message'],
                                     );
-                            },
-                          ),
-                        );
-                    }
-                  },
-                ),
+                                },
+                              ),
+                            );
+                        }
+                      },
+                    );
+                  }),
+                // child: StreamBuilder<List<DocumentSnapshot>>(
+                //   stream: chatListBloc.chatStream,
+                //   builder: (BuildContext context, snapshot) {
+                //     if (snapshot.hasError) {
+                //       print(snapshot.error);
+                //       return snapshot.error == 'No Data Available'
+                //           ? Center(
+                //               child: NoDocsChat(),
+                //             )
+                //           : Center(
+                //               child: Text('Error: ${snapshot.error}'),
+                //             );
+                //     }
+                //     switch (snapshot.connectionState) {
+                //       case ConnectionState.waiting:
+                //         return Center(
+                //           child: CircularProgressIndicator(),
+                //         );
+                //       default:
+                //         return Center(
+                //           //lazy loading
+                //           child: ListView.builder(
+                //             reverse: true,
+                //             controller: scrollController,
+                //             itemCount: snapshot.data.length,
+                //             itemBuilder: (context, index) {
+                //               return snapshot.data[index]['sent type'] ==
+                //                       'student'
+                //                   ? RecievedChat(
+                //                       title: snapshot.data[index]['user'],
+                //                       content: snapshot.data[index]['message'],
+                //                     )
+                //                   : SentChat(
+                //                       title: snapshot.data[index]['user'],
+                //                       content: snapshot.data[index]['message'],
+                //                     );
+                //             },
+                //           ),
+                //         );
+                //     }
+                //   },
+                // ),
               ),
               Center(
                 child: Column(
