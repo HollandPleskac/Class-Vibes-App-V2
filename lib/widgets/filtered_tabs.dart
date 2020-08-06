@@ -367,220 +367,220 @@ class Student extends StatelessWidget {
     this.maxDaysInactive,
   });
 
-  // final TextEditingController _titleController = TextEditingController();
-  // final TextEditingController _contentController = TextEditingController();
-  // final TextEditingController _lengthController = TextEditingController();
-  // final TextEditingController _dateAndTimeController = TextEditingController();
-  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
+  final TextEditingController _lengthController = TextEditingController();
+  final TextEditingController _dateAndTimeController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // void showModalSheet() {
-  //   showModalBottomSheet(
-  //     barrierColor: Colors.white.withOpacity(0),
-  //     elevation: 0,
-  //     isScrollControlled: true,
-  //     context: context,
-  //     builder: (context) {
-  //       return SingleChildScrollView(
-  //         child: Container(
-  //           padding: EdgeInsets.only(
-  //               bottom: MediaQuery.of(context).viewInsets.bottom),
-  //           child: ClipRect(
-  //             child: Container(
-  //               decoration: BoxDecoration(
-  //                   color: Colors.grey.shade300.withOpacity(0.5),
-  //                   borderRadius: BorderRadius.only(
-  //                       topLeft: Radius.circular(30),
-  //                       topRight: Radius.circular(30))),
-  //               child: Column(
-  //                 mainAxisSize: MainAxisSize.min,
-  //                 children: <Widget>[
-  //                   SizedBox(
-  //                     height: MediaQuery.of(context).size.height * 0.0125,
-  //                   ),
-  //                   Text(
-  //                     'Setup a Meeting',
-  //                     style: TextStyle(
-  //                         color: Colors.black87,
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.w800),
-  //                   ),
-  //                   Form(
-  //                     key: _formKey,
-  //                     child: Column(
-  //                       children: [
-  //                         SizedBox(
-  //                           height: MediaQuery.of(context).size.height * 0.0125,
-  //                         ),
-  //                         Padding(
-  //                           padding: EdgeInsets.only(
-  //                               left: MediaQuery.of(context).size.width * 0.05,
-  //                               right: MediaQuery.of(context).size.width * 0.05,
-  //                               bottom: MediaQuery.of(context).size.height *
-  //                                   0.0125),
-  //                           child: TextFormField(
-  //                             controller: _titleController,
-  //                             // autofocus: true,
-  //                             validator: (value) {
-  //                               if (value == null || value == '') {
-  //                                 return 'meeting title is required';
-  //                               } else {
-  //                                 return null;
-  //                               }
-  //                             },
-  //                             decoration: InputDecoration(
-  //                               border: InputBorder.none,
-  //                               hintStyle: TextStyle(
-  //                                 color: Color.fromRGBO(126, 126, 126, 1),
-  //                               ),
-  //                               labelStyle: TextStyle(
-  //                                 color: Colors.grey[700],
-  //                               ),
-  //                               hintText: 'Title',
-  //                               icon: FaIcon(FontAwesomeIcons.speakap),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         Padding(
-  //                           padding: EdgeInsets.only(
-  //                               left: MediaQuery.of(context).size.width * 0.05,
-  //                               right: MediaQuery.of(context).size.width * 0.05,
-  //                               bottom: MediaQuery.of(context).size.height *
-  //                                   0.0125),
-  //                           child: TextFormField(
-  //                             controller: _dateAndTimeController,
-  //                             validator: (value) {
-  //                               if (value == null || value == '') {
-  //                                 return 'date/time (Thursday 11:55 pm) is requred';
-  //                               } else {
-  //                                 return null;
-  //                               }
-  //                             },
-  //                             decoration: InputDecoration(
-  //                               border: InputBorder.none,
-  //                               hintStyle: TextStyle(
-  //                                 color: Color.fromRGBO(126, 126, 126, 1),
-  //                               ),
-  //                               labelStyle: TextStyle(
-  //                                 color: Colors.grey[700],
-  //                               ),
-  //                               hintText: 'Date/Time',
-  //                               icon: FaIcon(FontAwesomeIcons.speakap),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         Padding(
-  //                           padding: EdgeInsets.only(
-  //                               left: MediaQuery.of(context).size.width * 0.05,
-  //                               right: MediaQuery.of(context).size.width * 0.05,
-  //                               bottom: MediaQuery.of(context).size.height *
-  //                                   0.0125),
-  //                           child: TextFormField(
-  //                             controller: _contentController,
-  //                             validator: (value) {
-  //                               if (value == null || value == '') {
-  //                                 return 'message is requred';
-  //                               } else {
-  //                                 return null;
-  //                               }
-  //                             },
-  //                             decoration: InputDecoration(
-  //                               border: InputBorder.none,
-  //                               hintStyle: TextStyle(
-  //                                 color: Color.fromRGBO(126, 126, 126, 1),
-  //                               ),
-  //                               labelStyle: TextStyle(
-  //                                 color: Colors.grey[700],
-  //                               ),
-  //                               hintText: 'Message',
-  //                               icon: FaIcon(FontAwesomeIcons.speakap),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         Padding(
-  //                           padding: EdgeInsets.only(
-  //                               left: MediaQuery.of(context).size.width * 0.05,
-  //                               right: MediaQuery.of(context).size.width * 0.05,
-  //                               bottom: MediaQuery.of(context).size.height *
-  //                                   0.0125),
-  //                           child: TextFormField(
-  //                             validator: (value) {
-  //                               if (value == null || value == '') {
-  //                                 return 'meeting length (ex. 2 hours) is required';
-  //                               } else {
-  //                                 return null;
-  //                               }
-  //                             },
-  //                             controller: _lengthController,
-  //                             decoration: InputDecoration(
-  //                               border: InputBorder.none,
-  //                               hintStyle: TextStyle(
-  //                                 color: Color.fromRGBO(126, 126, 126, 1),
-  //                               ),
-  //                               labelStyle: TextStyle(
-  //                                 color: Colors.grey[700],
-  //                               ),
-  //                               hintText: 'Length',
-  //                               icon: FaIcon(FontAwesomeIcons.speakap),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         Padding(
-  //                           padding: EdgeInsets.only(
-  //                               right: MediaQuery.of(context).size.width * 0.05,
-  //                               bottom: MediaQuery.of(context).size.height *
-  //                                   0.0125),
-  //                           child: Align(
-  //                             alignment: Alignment.centerRight,
-  //                             child: FlatButton(
-  //                               shape: RoundedRectangleBorder(
-  //                                 borderRadius: BorderRadius.circular(5),
-  //                               ),
-  //                               color: kPrimaryColor,
-  //                               onPressed: () async {
-  //                                 String courseName = await _firestore
-  //                                     .collection('Classes')
-  //                                     .document(classId)
-  //                                     .get()
-  //                                     .then((docSnap) =>
-  //                                         docSnap.data['class name']);
-  //                                 if (_formKey.currentState.validate()) {
-  //                                   _fire.setupMeeting(
-  //                                     studentUid: studentEmail,
-  //                                     length: _lengthController.text,
-  //                                     title: _titleController.text,
-  //                                     content: _contentController.text,
-  //                                     dateAndTime: _dateAndTimeController.text,
-  //                                     teacherUid: teacherEmail,
-  //                                     classId: classId,
-  //                                     timestampId: DateTime.now(),
-  //                                     courseName: courseName,
-  //                                   );
-  //                                   Navigator.pop(context);
-  //                                 }
-  //                               },
-  //                               child: Text(
-  //                                 'Setup',
-  //                                 style: TextStyle(
-  //                                     color: Colors.white, fontSize: 16),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                         // SizedBox(
-  //                         //   height: MediaQuery.of(context).size.height * 0.35,
-  //                         // )
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  void showModalSheet() {
+    showModalBottomSheet(
+      barrierColor: Colors.grey[300].withOpacity(0.3),
+      elevation: 0,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: ClipRect(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.0125,
+                    ),
+                    Text(
+                      'Setup a Meeting',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800),
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.0125,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            child: TextFormField(
+                              controller: _titleController,
+                              // autofocus: true,
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'meeting title is required';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Title',
+                                icon: FaIcon(FontAwesomeIcons.speakerDeck),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            child: TextFormField(
+                              controller: _dateAndTimeController,
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'date/time (Thursday 11:55 pm) is requred';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Date/Time',
+                                icon: FaIcon(FontAwesomeIcons.clock),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            child: TextFormField(
+                              controller: _contentController,
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'message is requred';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Message',
+                                icon: FaIcon(FontAwesomeIcons.facebookMessenger),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'meeting length (ex. 2 hours) is required';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: _lengthController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Color.fromRGBO(126, 126, 126, 1),
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: 'Length',
+                                icon: FaIcon(FontAwesomeIcons.businessTime),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width * 0.05,
+                                bottom: MediaQuery.of(context).size.height *
+                                    0.0125),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                color: kPrimaryColor,
+                                onPressed: () async {
+                                  String courseName = await _firestore
+                                      .collection('Classes')
+                                      .document(classId)
+                                      .get()
+                                      .then((docSnap) =>
+                                          docSnap.data['class name']);
+                                  if (_formKey.currentState.validate()) {
+                                    _fire.setupMeeting(
+                                      studentUid: studentEmail,
+                                      length: _lengthController.text,
+                                      title: _titleController.text,
+                                      content: _contentController.text,
+                                      dateAndTime: _dateAndTimeController.text,
+                                      teacherUid: teacherEmail,
+                                      classId: classId,
+                                      timestampId: DateTime.now(),
+                                      courseName: courseName,
+                                    );
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                child: Text(
+                                  'Setup',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // SizedBox(
+                          //   height: MediaQuery.of(context).size.height * 0.35,
+                          // )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   String lastUpdatedStatus(Timestamp lastUpdate) {
     if (DateTime.now()
@@ -781,17 +781,17 @@ class Student extends StatelessWidget {
                   ],
                 ),
                 Spacer(),
-                // GestureDetector(
-                //   onTap: () => showModalSheet(),
-                //   child: FaIcon(
-                //     FontAwesomeIcons.paperPlane,
-                //     color: kPrimaryColor,
-                //     size: MediaQuery.of(context).size.width * 0.075,
-                //   ),
-                // ),
-                // SizedBox(
-                //   width: MediaQuery.of(context).size.width * 0.055,
-                // ),
+                GestureDetector(
+                  onTap: () => showModalSheet(),
+                  child: FaIcon(
+                    FontAwesomeIcons.paperPlane,
+                    color: kPrimaryColor,
+                    size: MediaQuery.of(context).size.width * 0.075,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.055,
+                ),
                 GestureDetector(
                   onTap: () {
                     _fire.resetTeacherUnreadCount(

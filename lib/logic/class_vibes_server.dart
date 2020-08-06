@@ -13,9 +13,9 @@ class ClassVibesServer {
     print(className);
     print(classCode);
     final FirebaseUser user = await _firebaseAuth.currentUser();
-    final IdTokenResult token = await user.getIdToken();
+    final String token = await user.getIdToken().then((value) => value.token);
     var getResponse = await http.get(
-        'http://api.classvibes.net/api/sendEmail?code=$classCode&title=$title&message=$message&className=$className&apiToken=$token');
+        'http://api-v1.classvibes.net/api/sendEmail?code=$classCode&title=$title&message=$message&className=$className&apiToken=$token');
     print(getResponse.body);
   }
 }
