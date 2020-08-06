@@ -29,6 +29,8 @@ class ChatListBloc {
 
 /*This method will automatically fetch first 10 elements from the document list */
   Future fetchFirstList(String classId, String email) async {
+    print(classId);
+    print('EMAIL : '+email);
     try {
       documentList = await firebaseProvider.fetchFirstList(classId, email);
       print(documentList);
@@ -48,6 +50,8 @@ class ChatListBloc {
 
 /*This will automatically fetch the next 10 elements from the list*/
   fetchNextChats(String classId, String email) async {
+    print(classId);
+    print(email);
     try {
       updateIndicator(true);
       List<DocumentSnapshot> newDocumentList =

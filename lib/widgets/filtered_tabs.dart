@@ -14,14 +14,15 @@ class AllTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
   final int maxDaysInactive;
-  AllTab(this.classId, this.teacherEmail,this.maxDaysInactive);
+  AllTab(this.classId, this.teacherEmail, this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students').orderBy('date',descending: true)
+          .collection('Students')
+          .orderBy('date', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -71,14 +72,15 @@ class DoingGreatTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
   final int maxDaysInactive;
-  DoingGreatTab(this.classId, this.teacherEmail,this.maxDaysInactive);
+  DoingGreatTab(this.classId, this.teacherEmail, this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students').orderBy('date',descending: true)
+          .collection('Students')
+          .orderBy('date', descending: true)
           .where("status", isEqualTo: 'doing great')
           .where(
             "date",
@@ -138,14 +140,15 @@ class NeedHelpTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
   final int maxDaysInactive;
-  NeedHelpTab(this.classId, this.teacherEmail,this.maxDaysInactive);
+  NeedHelpTab(this.classId, this.teacherEmail, this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students').orderBy('date',descending: true)
+          .collection('Students')
+          .orderBy('date', descending: true)
           .where("status", isEqualTo: 'need help')
           .where(
             "date",
@@ -205,14 +208,15 @@ class FrustratedTab extends StatelessWidget {
   final String classId;
   final String teacherEmail;
   final int maxDaysInactive;
-  FrustratedTab(this.classId, this.teacherEmail,this.maxDaysInactive);
+  FrustratedTab(this.classId, this.teacherEmail, this.maxDaysInactive);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students').orderBy('date',descending: true)
+          .collection('Students')
+          .orderBy('date', descending: true)
           .where("status", isEqualTo: 'frustrated')
           .where(
             "date",
@@ -284,7 +288,8 @@ class InactiveTab extends StatelessWidget {
       stream: _firestore
           .collection('Classes')
           .document(classId)
-          .collection('Students').orderBy('date')
+          .collection('Students')
+          .orderBy('date')
           .where(
             "date",
             isLessThan: DateTime.now().subtract(
@@ -349,7 +354,6 @@ class Student extends StatelessWidget {
   final Timestamp lastChangedStatus;
   final int teacherUnread;
   final int maxDaysInactive;
-  
 
   Student({
     this.status,
@@ -361,7 +365,6 @@ class Student extends StatelessWidget {
     this.lastChangedStatus,
     this.teacherUnread,
     this.maxDaysInactive,
-   
   });
 
   // final TextEditingController _titleController = TextEditingController();
@@ -796,14 +799,14 @@ class Student extends StatelessWidget {
                       studentEmail: studentEmail,
                     );
                     print('going to chat as a teacher');
-                    Navigator.pushNamed(
-                      context,
-                      ChatTeacher.routeName,
-                      arguments: {
-                        'class id': classId,
-                        'student uid': studentEmail,
-                      },
-                    );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatTeacher(
+                            classId: classId,
+                            studentEmail: studentEmail,
+                          ),
+                        ));
                   },
                   child: FaIcon(
                     FontAwesomeIcons.solidComments,

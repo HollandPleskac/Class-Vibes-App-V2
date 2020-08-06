@@ -27,7 +27,6 @@ class ChatStudent extends StatefulWidget {
 }
 
 class _ChatStudentState extends State<ChatStudent> {
-
   ChatListBloc chatListBloc;
 
   ScrollController scrollController = ScrollController();
@@ -84,9 +83,7 @@ class _ChatStudentState extends State<ChatStudent> {
     final FirebaseUser user = await _firebaseAuth.currentUser();
     final name = user.displayName;
 
-
     _studentName = name;
-
   }
 
   @override
@@ -94,6 +91,7 @@ class _ChatStudentState extends State<ChatStudent> {
     chatListBloc = ChatListBloc();
     chatListBloc.fetchFirstList(widget.classId, widget.email);
     scrollController.addListener(_scrollListener);
+
     getStudentData().then((_) {
       setState(() {});
     });
@@ -112,10 +110,11 @@ class _ChatStudentState extends State<ChatStudent> {
               height: MediaQuery.of(context).size.height * 0.7,
               child: StreamBuilder<List<DocumentSnapshot>>(
                 stream: chatListBloc.chatStream,
-                builder: (BuildContext context,
-                    snapshot) {
+                builder: (BuildContext context, snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
                   }
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -130,21 +129,17 @@ class _ChatStudentState extends State<ChatStudent> {
                           child: ListView.builder(
                             reverse: true,
                             itemCount: snapshot.data.length,
+                            controller: scrollController,
                             itemBuilder: (context, index) {
-                              return snapshot.data[index]
-                                          ['sent type'] ==
+                              return snapshot.data[index]['sent type'] ==
                                       'teacher'
                                   ? RecievedChat(
-                                      title: snapshot.data[index]
-                                          ['user'],
-                                      content: snapshot.data[index]
-                                          ['message'],
+                                      title: snapshot.data[index]['user'],
+                                      content: snapshot.data[index]['message'],
                                     )
                                   : SentChat(
-                                      title: snapshot.data[index]
-                                          ['user'],
-                                      content: snapshot.data[index]
-                                          ['message'],
+                                      title: snapshot.data[index]['user'],
+                                      content: snapshot.data[index]['message'],
                                     );
                             },
                           ),
@@ -179,10 +174,9 @@ class _ChatStudentState extends State<ChatStudent> {
                                   ),
                                   onPressed: () async {
                                     _fire.incrementTeacherUnreadCount(
-                                        classId: widget.classId,
-                                        studentEmail: widget.email,
-                                        
-                                       );
+                                      classId: widget.classId,
+                                      studentEmail: widget.email,
+                                    );
                                     await _firestore
                                         .collection('Class-Chats')
                                         .document(widget.classId)
@@ -200,7 +194,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                   }),
                               //SIZE THIS
                               Padding(
-                                padding: const EdgeInsets.only(left:8.0,right:8.0,bottom:8.0),
+                                padding: const EdgeInsets.only(
+                                    left: 8.0, right: 8.0, bottom: 8.0),
                                 child: Center(
                                   child: Container(
                                     width: MediaQuery.of(context).size.width *
@@ -234,7 +229,7 @@ class _ChatStudentState extends State<ChatStudent> {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       print("at the end of list");
-      chatListBloc.fetchNextChats(widget.classId,widget.email);
+      chatListBloc.fetchNextChats(widget.classId, widget.email);
     }
   }
 }
