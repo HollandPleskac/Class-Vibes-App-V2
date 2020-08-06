@@ -111,6 +111,7 @@ class Fire {
       'class id': classId,
       'recipient': studentUid,
       'course': courseName,
+      'Course':courseName,
     });
     _firestore
         .collection('UserData')
@@ -126,6 +127,7 @@ class Fire {
       'class id': classId,
       'recipient': studentUid,
       'course': courseName,
+      'Course':courseName,
     });
   }
 

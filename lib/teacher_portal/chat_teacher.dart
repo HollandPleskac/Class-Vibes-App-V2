@@ -207,18 +207,21 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                   itemCount: snapshot.data.length,
                                   controller: scrollController,
                                   itemBuilder: (context, index) {
+                                    
                                     return snapshot.data[index]['sent type'] ==
-                                            'student'
-                                        ? RecievedChat(
-                                            title: snapshot.data[index]['user'],
-                                            content: snapshot.data[index]
-                                                ['message'],
-                                          )
-                                        : SentChat(
-                                            title: snapshot.data[index]['user'],
-                                            content: snapshot.data[index]
-                                                ['message'],
-                                          );
+                                                'student'
+                                            ? RecievedChat(
+                                                title: snapshot.data[index]
+                                                    ['user'],
+                                                content: snapshot.data[index]
+                                                    ['message'],
+                                              )
+                                            : SentChat(
+                                                title: snapshot.data[index]
+                                                    ['user'],
+                                                content: snapshot.data[index]
+                                                    ['message'],
+                                              );
                                   },
                                 ),
                               );
