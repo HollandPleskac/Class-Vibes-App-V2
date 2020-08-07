@@ -80,6 +80,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                                   .width *
                                               0.045),
                                       child: TextFormField(
+                                        keyboardType: TextInputType.emailAddress,
                                         controller: _emailController,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,

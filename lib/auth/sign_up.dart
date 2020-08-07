@@ -128,6 +128,7 @@ class _SignUpState extends State<SignUp> {
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
                                         controller: _emailController,
+                                        keyboardType: TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'Email'),
