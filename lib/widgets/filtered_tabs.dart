@@ -492,7 +492,8 @@ class Student extends StatelessWidget {
                                   color: Colors.grey[700],
                                 ),
                                 hintText: 'Message',
-                                icon: FaIcon(FontAwesomeIcons.facebookMessenger),
+                                icon:
+                                    FaIcon(FontAwesomeIcons.facebookMessenger),
                               ),
                             ),
                           ),
@@ -682,22 +683,6 @@ class Student extends StatelessWidget {
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(9999),
                   ),
-                  // child: profilePictureLink == null
-                  //     ? Center(
-                  //         child: FaIcon(
-                  //           FontAwesomeIcons.userAlt,
-                  //           color: kPrimaryColor,
-                  //         ),
-                  //       )
-                  //     : ClipRRect(
-                  //         borderRadius: BorderRadius.circular(9999),
-                  //         child: FittedBox(
-                  //           fit: BoxFit.cover,
-                  //           child: Image.network(
-                  //             profilePictureLink,
-                  //           ),
-                  //         ),
-                  //       ),
                   child: DateTime.now()
                               .difference(
                                 DateTime.parse(
@@ -735,50 +720,57 @@ class Student extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.05,
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(),
-                    Container(),
-                    StreamBuilder(
-                        stream: _firestore
-                            .collection('UserData')
-                            .document(studentEmail)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Text('');
-                          } else {
-                            return Text(
-                              snapshot.data['display name'],
-                              style: TextStyle(fontSize: 16.5),
-                            );
-                          }
-                        }),
-                    StreamBuilder(
-                        stream: _firestore
-                            .collection('Classes')
-                            .document(classId)
-                            .collection('Students')
-                            .document(studentEmail)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Text('');
-                          } else {
-                            return Text(
-                              lastUpdatedStatus(snapshot.data['date']),
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            );
-                          }
-                        }),
-                    Container(),
-                    Container(),
-                  ],
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.42,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(),
+                      Container(),
+                      StreamBuilder(
+                          stream: _firestore
+                              .collection('UserData')
+                              .document(studentEmail)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('');
+                            } else {
+                              return Text(
+                                snapshot.data['display name'],
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(fontSize: 16.5),
+                              );
+                            }
+                          }),
+                      StreamBuilder(
+                          stream: _firestore
+                              .collection('Classes')
+                              .document(classId)
+                              .collection('Students')
+                              .document(studentEmail)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text('');
+                            } else {
+                              return Text(
+                                lastUpdatedStatus(snapshot.data['date']),
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                ),
+                              );
+                            }
+                          }),
+                      Container(),
+                      Container(),
+                    ],
+                  ),
                 ),
                 Spacer(),
                 GestureDetector(
