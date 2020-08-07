@@ -182,8 +182,12 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         );
                       }
                       if (classSnapshot.data['teacher unread'] > 0) {
-                        chatListBloc.fetchFirstList(
-                            widget.classId, widget.studentEmail);
+                        // the teacher unread count does not reset until the 
+                        // user clicks the back arrow so u have to manually reset it
+                        _fire.resetTeacherUnreadCount(classId:widget.classId,studentEmail:widget.studentEmail);
+                          chatListBloc.fetchFirstList(
+                              widget.classId, widget.studentEmail);
+                     
                       }
                       return StreamBuilder<List<DocumentSnapshot>>(
                         stream: chatListBloc.chatStream,
@@ -208,15 +212,17 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                 child: ListView.builder(
                                   reverse: true,
                                   itemCount: snapshot.data.length,
-                                  
                                   controller: scrollController,
                                   itemBuilder: (context, index) {
                                     // if item builder index is equal to the current last index of the stream then show loading
                                     // if snapshot.data.length (remainder) 10 is 0 then dont show loading to prevent weird constand loading error (dont really know why this works)
                                     // and isLoading == true
-                                    if ((index == snapshot.data.length - 1 && snapshot.data.length%10 == 0) &&
+                                    if ((index == snapshot.data.length - 1 &&
+                                            snapshot.data.length % 10 == 0) &&
                                         isLoading == true) {
-                                      return CupertinoActivityIndicator(radius: 15,);
+                                      return CupertinoActivityIndicator(
+                                        radius: 15,
+                                      );
                                     }
                                     return snapshot.data[index]['sent type'] ==
                                             'student'

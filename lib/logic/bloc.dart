@@ -35,6 +35,7 @@ class ChatListBloc {
       documentList = await firebaseProvider.fetchFirstList(classId, email);
       print(documentList);
       chatController.sink.add(documentList);
+      
       try {
         if (documentList.length == 0) {
           chatController.sink.addError("No Data Available");

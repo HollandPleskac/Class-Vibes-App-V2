@@ -125,7 +125,10 @@ class _ChatStudentState extends State<ChatStudent> {
                       );
                     }
                     if (classSnapshot.data['student unread'] > 0) {
-                      chatListBloc.fetchFirstList(widget.classId, widget.email);
+                      // the teacher unread count does not reset until the 
+                        // user clicks the back arrow so u have to manually reset it
+                        _fire.resetStudentUnreadCount(classId:widget.classId,studentEmail:widget.email);
+                     chatListBloc.fetchFirstList(widget.classId, widget.email);
                     }
                     return StreamBuilder<List<DocumentSnapshot>>(
                       stream: chatListBloc.chatStream,
@@ -304,10 +307,11 @@ class _ChatStudentState extends State<ChatStudent> {
   void _scrollListener() {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
-      print("at the end of list");
+      
       setState(() {
         isLoading = true;
       });
+      print("at the end of list");
       chatListBloc.fetchNextChats(widget.classId, widget.email, () {
         setState(() {
           isLoading = false;
