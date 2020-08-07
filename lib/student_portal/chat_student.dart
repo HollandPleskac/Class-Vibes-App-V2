@@ -110,7 +110,7 @@ class _ChatStudentState extends State<ChatStudent> {
                     .document(widget.email)
                     .collection('Messages')
                     .orderBy("timestamp", descending: true)
-                    .limit(30)
+                    .limit(50)
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -130,6 +130,7 @@ class _ChatStudentState extends State<ChatStudent> {
                         return Center(
                           //lazy loading
                           child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
                             reverse: true,
                             itemCount: snapshot.data.documents.length,
                             itemBuilder: (context, index) {
