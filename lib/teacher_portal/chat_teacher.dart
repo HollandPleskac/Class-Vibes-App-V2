@@ -187,7 +187,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         if (!snapshot.hasData ||
                             snapshot.data.documents.length != 0) {
                           return Center(
-                            //lazy loading
+                            
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               reverse: true,

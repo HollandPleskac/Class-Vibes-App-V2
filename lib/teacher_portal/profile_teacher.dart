@@ -184,6 +184,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                       centerTitle: true,
                     ),
                     body: ListView(
+                      physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
                           height: MediaQuery.of(context).size.width * 0.145,

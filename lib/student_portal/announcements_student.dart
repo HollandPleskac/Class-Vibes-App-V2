@@ -101,6 +101,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                       : Center(
                           child: announcements.length != 0
                               ? ListView.builder(
+                                physics: BouncingScrollPhysics(),
                                   itemCount: announcements.length,
                                   itemBuilder: (context, index) {
                                     return Padding(

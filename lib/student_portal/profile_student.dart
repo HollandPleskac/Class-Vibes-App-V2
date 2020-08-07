@@ -184,6 +184,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                     centerTitle: true,
                   ),
                   body: ListView(
+                    physics: BouncingScrollPhysics(),
                     children: [
                       SizedBox(
                         height: 60,
