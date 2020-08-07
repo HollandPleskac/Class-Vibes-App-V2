@@ -182,12 +182,12 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         );
                       }
                       if (classSnapshot.data['teacher unread'] > 0) {
-                        // the teacher unread count does not reset until the 
+                        // the teacher unread count does not reset until the
                         // user clicks the back arrow so u have to manually reset it
                         _fire.resetTeacherUnreadCount(classId:widget.classId,studentEmail:widget.studentEmail);
                           chatListBloc.fetchFirstList(
                               widget.classId, widget.studentEmail);
-                     
+
                       }
                       return StreamBuilder<List<DocumentSnapshot>>(
                         stream: chatListBloc.chatStream,
@@ -243,8 +243,16 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         },
                       );
                     }),
-                // child: StreamBuilder<List<DocumentSnapshot>>(
-                //   stream: chatListBloc.chatStream,
+                // child: StreamBuilder(
+                //   stream: _firestore
+                //       .collection("Class-Chats")
+                //       .document(widget.classId)
+                //       .collection('Students')
+                //       .document(widget.studentEmail)
+                //       .collection('Messages')
+                //       .orderBy("timestamp", descending: true)
+                //       .limit(10)
+                //       .snapshots(),
                 //   builder: (BuildContext context, snapshot) {
                 //     if (snapshot.hasError) {
                 //       print(snapshot.error);
@@ -266,18 +274,22 @@ class _ChatTeacherState extends State<ChatTeacher> {
                 //           //lazy loading
                 //           child: ListView.builder(
                 //             reverse: true,
-                //             controller: scrollController,
-                //             itemCount: snapshot.data.length,
+                //             itemCount: snapshot.data.documents.length,
                 //             itemBuilder: (context, index) {
-                //               return snapshot.data[index]['sent type'] ==
+                //               return snapshot.data.documents[index]
+                //                           ['sent type'] ==
                 //                       'student'
                 //                   ? RecievedChat(
-                //                       title: snapshot.data[index]['user'],
-                //                       content: snapshot.data[index]['message'],
+                //                       title: snapshot.data.documents[index]
+                //                           ['user'],
+                //                       content: snapshot.data.documents[index]
+                //                           ['message'],
                 //                     )
                 //                   : SentChat(
-                //                       title: snapshot.data[index]['user'],
-                //                       content: snapshot.data[index]['message'],
+                //                       title: snapshot.data.documents[index]
+                //                           ['user'],
+                //                       content: snapshot.data.documents[index]
+                //                           ['message'],
                 //                     );
                 //             },
                 //           ),
