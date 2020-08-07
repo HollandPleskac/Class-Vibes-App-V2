@@ -168,7 +168,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                       .document(widget.studentEmail)
                       .collection('Messages')
                       .orderBy("timestamp", descending: true)
-                      .limit(50)
+                      .limit(40)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
