@@ -336,7 +336,7 @@ class FilterView extends StatefulWidget {
   final String teacherEmail;
   final int maxDaysInactive;
 
-  FilterView({this.classId, this.teacherEmail,this.maxDaysInactive});
+  FilterView({this.classId, this.teacherEmail, this.maxDaysInactive});
   @override
   _FilterViewState createState() => _FilterViewState();
 }
@@ -352,7 +352,7 @@ class _FilterViewState extends State<FilterView> {
     return Column(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.04,
+          height: MediaQuery.of(context).size.height * 0.045,
           child: ListView(
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
@@ -369,7 +369,6 @@ class _FilterViewState extends State<FilterView> {
                     _isTouchedFrustrated = false;
                     _isTouchedInactive = false;
                   }),
-                
                 ),
               ),
               Padding(
@@ -438,15 +437,20 @@ class _FilterViewState extends State<FilterView> {
         Container(
           height: MediaQuery.of(context).size.height * 0.41,
           child: _isTouchedAll == true
-              ? AllTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
+              ? AllTab(
+                  widget.classId, widget.teacherEmail, widget.maxDaysInactive)
               : _isTouchedDoingGreat
-                  ? DoingGreatTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
+                  ? DoingGreatTab(widget.classId, widget.teacherEmail,
+                      widget.maxDaysInactive)
                   : _isTouchedNeedHelp
-                      ? NeedHelpTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
+                      ? NeedHelpTab(widget.classId, widget.teacherEmail,
+                          widget.maxDaysInactive)
                       : _isTouchedFrustrated
-                          ? FrustratedTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
+                          ? FrustratedTab(widget.classId, widget.teacherEmail,
+                              widget.maxDaysInactive)
                           : _isTouchedInactive
-                              ? InactiveTab(widget.classId, widget.teacherEmail,widget.maxDaysInactive)
+                              ? InactiveTab(widget.classId, widget.teacherEmail,
+                                  widget.maxDaysInactive)
                               : Text(
                                   'IMPORTANT - this text will never show since one of the first values will always be true'),
         ),
