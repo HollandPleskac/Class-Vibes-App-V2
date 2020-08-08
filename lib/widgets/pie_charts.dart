@@ -124,7 +124,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final double fontSize = isTouched ? 25 : 16;
-      final double radius = isTouched ? 60 : 50;
+      final double radius = isTouched ? MediaQuery.of(context).size.width*0.145 : MediaQuery.of(context).size.width*0.1175;
       switch (i) {
         case 0:
           return PieChartSectionData(
