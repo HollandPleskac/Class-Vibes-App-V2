@@ -187,7 +187,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         if (!snapshot.hasData ||
                             snapshot.data.documents.length != 0) {
                           return Center(
-                            
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               reverse: true,
@@ -240,25 +239,27 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       color: Colors.black,
                                     ),
                                     onPressed: () async {
-                                      _fire.incrementStudentUnreadCount(
-                                        classId: widget.classId,
-                                        studentEmail: widget.studentEmail,
-                                      );
-                                      await _firestore
-                                          .collection('Class-Chats')
-                                          .document(widget.classId)
-                                          .collection('Students')
-                                          .document(widget.studentEmail)
-                                          .collection('Messages')
-                                          .document()
-                                          .setData({
-                                        'timestamp': DateTime.now(),
-                                        'message': _controller.text,
-                                        'user': _teacherName,
-                                        'sent type': 'teacher',
-                                      });
+                                      if (_controller.text != '') {
+                                        _fire.incrementStudentUnreadCount(
+                                          classId: widget.classId,
+                                          studentEmail: widget.studentEmail,
+                                        );
+                                        await _firestore
+                                            .collection('Class-Chats')
+                                            .document(widget.classId)
+                                            .collection('Students')
+                                            .document(widget.studentEmail)
+                                            .collection('Messages')
+                                            .document()
+                                            .setData({
+                                          'timestamp': DateTime.now(),
+                                          'message': _controller.text,
+                                          'user': _teacherName,
+                                          'sent type': 'teacher',
+                                        });
 
-                                      _controller.clear();
+                                        _controller.clear();
+                                      }
                                     }),
                                 Padding(
                                   padding: const EdgeInsets.only(

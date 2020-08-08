@@ -181,25 +181,27 @@ class _ChatStudentState extends State<ChatStudent> {
                                     color: Colors.black,
                                   ),
                                   onPressed: () async {
-                                    _fire.incrementTeacherUnreadCount(
-                                      classId: widget.classId,
-                                      studentEmail: widget.email,
-                                    );
-                                    await _firestore
-                                        .collection('Class-Chats')
-                                        .document(widget.classId)
-                                        .collection('Students')
-                                        .document(widget.email)
-                                        .collection('Messages')
-                                        .document()
-                                        .setData({
-                                      'timestamp': DateTime.now(),
-                                      'message': _controller.text,
-                                      'user': _studentName,
-                                      'sent type': 'student',
-                                    });
+                                    if (_controller.text != '') {
+                                      _fire.incrementTeacherUnreadCount(
+                                        classId: widget.classId,
+                                        studentEmail: widget.email,
+                                      );
+                                      await _firestore
+                                          .collection('Class-Chats')
+                                          .document(widget.classId)
+                                          .collection('Students')
+                                          .document(widget.email)
+                                          .collection('Messages')
+                                          .document()
+                                          .setData({
+                                        'timestamp': DateTime.now(),
+                                        'message': _controller.text,
+                                        'user': _studentName,
+                                        'sent type': 'student',
+                                      });
 
-                                    _controller.clear();
+                                      _controller.clear();
+                                    }
                                   }),
                               //SIZE THIS
                               Padding(
