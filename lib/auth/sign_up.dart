@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../student_portal/classview_student.dart';
 import '../teacher_portal/classview_teacher.dart';
 import '../logic/auth.dart';
+import '../constant.dart';
 
 final _auth = Auth();
 final Firestore _firestore = Firestore.instance;
@@ -401,7 +402,7 @@ class _SignUpState extends State<SignUp> {
                                       child: Text(
                                         'Register',
                                         style: TextStyle(
-                                            color: Colors.grey[100],
+                                            color: Colors.white,
                                             fontSize: 24,
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -420,7 +421,7 @@ class _SignUpState extends State<SignUp> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                color: Color.fromRGBO(78, 114, 222,1.0),
+                                color: kAppBarColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),

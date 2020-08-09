@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'login_student.dart';
 import 'login_teacher.dart';
 import 'sign_up.dart';
+import '../constant.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -155,7 +156,7 @@ class _WelcomeState extends State<Welcome> {
                                       child: Text(
                                         'Register',
                                         style: TextStyle(
-                                            color: Colors.grey[100],
+                                            color: Colors.white,
                                             fontSize: 24,
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -175,7 +176,7 @@ class _WelcomeState extends State<Welcome> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                color: Color.fromRGBO(78, 114, 222,1.0),
+                                color: kAppBarColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),

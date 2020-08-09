@@ -64,7 +64,7 @@ class _ViewClassState extends State<ViewClass> {
                 : Scaffold(
                     resizeToAvoidBottomPadding: false,
                     appBar: AppBar(
-                      backgroundColor: kWetAsphaltColor,
+                      backgroundColor: kAppBarColor,
                       title: StreamBuilder(
                         stream: _firestore
                             .collection('Classes')
