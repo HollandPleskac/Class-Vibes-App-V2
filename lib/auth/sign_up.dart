@@ -61,7 +61,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     )
                   : ListView(
-                    physics: BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.18,
@@ -130,7 +130,8 @@ class _SignUpState extends State<SignUp> {
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
                                         controller: _emailController,
-                                        keyboardType: TextInputType.emailAddress,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'Email'),
@@ -289,143 +290,144 @@ class _SignUpState extends State<SignUp> {
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                            child: Container(
-                              child: new Material(
-                                child: new InkWell(
-                                 onTap: () async {
-                              if (isSwitched == true) {
-                                //sign up as a student
-                                if (_formKey.currentState.validate()) {
-                                  List result = await _auth.signUpStudent(
-                                    username: _usernameController.text,
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                  );
-                                  if (result[0] == 'success') {
-                                    //ste up account
-                                    _auth.setUpAccountStudent(
-                                      username: _usernameController.text,
-                                      password: _passwordController.text,
-                                      email: _emailController.text,
-                                    );
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () async {
+                                  if (isSwitched == true) {
+                                    //sign up as a student
+                                    if (_formKey.currentState.validate()) {
+                                      List result = await _auth.signUpStudent(
+                                        username: _usernameController.text,
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                      );
+                                      if (result[0] == 'success') {
+                                        //ste up account
+                                        _auth.setUpAccountStudent(
+                                          username: _usernameController.text,
+                                          password: _passwordController.text,
+                                          email: _emailController.text,
+                                        );
 
-                                    //push next screen
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ClassViewStudent(),
-                                      ),
-                                    );
+                                        //push next screen
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClassViewStudent(),
+                                          ),
+                                        );
+                                      } else {
+                                        setState(() {
+                                          isEmailValidate = false;
+                                          isPasswordValidate = false;
+                                          isUserNameValidate = false;
+                                          isDistrictIdValidate = false;
+                                          _feedback = result[1];
+                                        });
+                                      }
+                                    } else {
+                                      // determines if the textfield is big to accomodate a validator message
+                                      setState(() {
+                                        isEmailValidate == true
+                                            ? isEmailValidate = true
+                                            : isEmailValidate = false;
+                                        isPasswordValidate == true
+                                            ? isPasswordValidate = true
+                                            : isPasswordValidate = false;
+                                        isUserNameValidate == true
+                                            ? isUserNameValidate = true
+                                            : isUserNameValidate = false;
+                                        isDistrictIdValidate == true
+                                            ? isDistrictIdValidate = true
+                                            : isDistrictIdValidate = false;
+                                      });
+                                    }
                                   } else {
-                                    setState(() {
-                                      isEmailValidate = false;
-                                      isPasswordValidate = false;
-                                      isUserNameValidate = false;
-                                      isDistrictIdValidate = false;
-                                      _feedback = result[1];
-                                    });
-                                  }
-                                } else {
-                                  // determines if the textfield is big to accomodate a validator message
-                                  setState(() {
-                                    isEmailValidate == true
-                                        ? isEmailValidate = true
-                                        : isEmailValidate = false;
-                                    isPasswordValidate == true
-                                        ? isPasswordValidate = true
-                                        : isPasswordValidate = false;
-                                    isUserNameValidate == true
-                                        ? isUserNameValidate = true
-                                        : isUserNameValidate = false;
-                                    isDistrictIdValidate == true
-                                        ? isDistrictIdValidate = true
-                                        : isDistrictIdValidate = false;
-                                  });
-                                }
-                              } else {
-                                //sign up as a teacher
-                                if (_formKey.currentState.validate()) {
-                                  List result = await _auth.signUpTeacher(
-                                    username: _usernameController.text,
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                    districtId: _districtIdController.text,
-                                  );
-                                  if (result[0] == 'success') {
-                                    //set up account
-                                    _auth.setUpAccountTeacher(
-                                      districtId: _districtIdController.text,
-                                      username: _usernameController.text,
-                                      password: _passwordController.text,
-                                      email: _emailController.text,
-                                    );
+                                    //sign up as a teacher
+                                    if (_formKey.currentState.validate()) {
+                                      List result = await _auth.signUpTeacher(
+                                        username: _usernameController.text,
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                        districtId: _districtIdController.text,
+                                      );
+                                      if (result[0] == 'success') {
+                                        //set up account
+                                        _auth.setUpAccountTeacher(
+                                          districtId:
+                                              _districtIdController.text,
+                                          username: _usernameController.text,
+                                          password: _passwordController.text,
+                                          email: _emailController.text,
+                                        );
 
-                                    //push next screen
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ClassViewTeacher(),
-                                      ),
-                                    );
-                                  } else {
-                                    setState(() {
-                                      isEmailValidate = false;
-                                      isPasswordValidate = false;
-                                      isUserNameValidate = false;
-                                      isDistrictIdValidate = false;
-                                      _feedback = result[1];
-                                    });
+                                        //push next screen
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClassViewTeacher(),
+                                          ),
+                                        );
+                                      } else {
+                                        setState(() {
+                                          isEmailValidate = false;
+                                          isPasswordValidate = false;
+                                          isUserNameValidate = false;
+                                          isDistrictIdValidate = false;
+                                          _feedback = result[1];
+                                        });
+                                      }
+                                    } else {
+                                      // form key doesnt validate -- > determines if the textfield is big to accomodate a validator message
+                                      setState(() {
+                                        isEmailValidate == true
+                                            ? isEmailValidate = true
+                                            : isEmailValidate = false;
+                                        isPasswordValidate == true
+                                            ? isPasswordValidate = true
+                                            : isPasswordValidate = false;
+                                        isUserNameValidate == true
+                                            ? isUserNameValidate = true
+                                            : isUserNameValidate = false;
+                                        isDistrictIdValidate == true
+                                            ? isDistrictIdValidate = true
+                                            : isDistrictIdValidate = false;
+                                      });
+                                    }
                                   }
-                                } else {
-                                  // form key doesnt validate -- > determines if the textfield is big to accomodate a validator message
-                                  setState(() {
-                                    isEmailValidate == true
-                                        ? isEmailValidate = true
-                                        : isEmailValidate = false;
-                                    isPasswordValidate == true
-                                        ? isPasswordValidate = true
-                                        : isPasswordValidate = false;
-                                    isUserNameValidate == true
-                                        ? isUserNameValidate = true
-                                        : isUserNameValidate = false;
-                                    isDistrictIdValidate == true
-                                        ? isDistrictIdValidate = true
-                                        : isDistrictIdValidate = false;
-                                  });
-                                }
-                              }
-                            },
-                                  child: new Container(
-                                    child: Center(
-                                      child: Text(
-                                        'Register',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Register',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                                color: Colors.transparent,
                               ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                color: kAppBarColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: kAppBarColor,
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                        ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.025,
                         ),
