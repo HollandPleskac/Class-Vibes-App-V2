@@ -195,7 +195,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                   drawer: NavTeacher(),
                   // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
                   appBar: AppBar(
-                    backgroundColor: kWetAsphaltColor,
+                    backgroundColor: kAppBarColor,
                     title: Text(
                       'Classes',
                       style: TextStyle(color: Colors.white),

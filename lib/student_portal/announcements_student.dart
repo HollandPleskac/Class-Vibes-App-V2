@@ -92,7 +92,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
                   appBar: AppBar(
                     title: Text('Announcements'),
                     centerTitle: true,
-                    backgroundColor: kWetAsphaltColor,
+                    backgroundColor: kAppBarColor,
                   ),
                   body: waiting == true
                       ? Center(

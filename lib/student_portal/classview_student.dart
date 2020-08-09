@@ -58,7 +58,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   drawer: NavStudent(),
                   backgroundColor: Color.fromRGBO(250, 250, 250, 1.0),
                   appBar: AppBar(
-                    backgroundColor: kWetAsphaltColor,
+                    backgroundColor: kAppBarColor,
                     title: Text(
                       'Classes',
                       style: TextStyle(color: Colors.white),

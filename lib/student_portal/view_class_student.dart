@@ -131,7 +131,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                           Navigator.pop(context);
                         },
                       ),
-                      backgroundColor: kWetAsphaltColor,
+                      backgroundColor: kAppBarColor,
                       title: Text(className),
                       centerTitle: true,
                       actions: [

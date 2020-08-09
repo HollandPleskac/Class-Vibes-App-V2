@@ -56,7 +56,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                   drawer: NavTeacher(),
                   appBar: AppBar(
                     title: Text('Meetings'),
-                    backgroundColor: kWetAsphaltColor,
+                    backgroundColor: kAppBarColor,
                     centerTitle: true,
                   ),
                   body: StreamBuilder(

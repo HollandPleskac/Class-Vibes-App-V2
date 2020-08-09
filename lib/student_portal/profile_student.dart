@@ -180,7 +180,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                   backgroundColor: Colors.white,
                   appBar: AppBar(
                     title: Text('Profile'),
-                    backgroundColor: kWetAsphaltColor,
+                    backgroundColor: kAppBarColor,
                     centerTitle: true,
                   ),
                   body: ListView(
