@@ -87,6 +87,7 @@ class _ViewClassState extends State<ViewClass> {
                       ),
                       centerTitle: true,
                       bottom: TabBar(
+                        indicatorColor: Colors.white,
                         isScrollable: true,
                         tabs: [
                           Tab(text: 'Students'),

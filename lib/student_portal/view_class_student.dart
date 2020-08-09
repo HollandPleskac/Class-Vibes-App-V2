@@ -147,6 +147,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                         ),
                       ],
                       bottom: TabBar(
+                        indicatorColor: Colors.white,
                         isScrollable: true,
                         tabs: [
                           // Tab(text: 'Overview'),
