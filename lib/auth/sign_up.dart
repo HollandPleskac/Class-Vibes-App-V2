@@ -401,7 +401,7 @@ class _SignUpState extends State<SignUp> {
                                       child: Text(
                                         'Register',
                                         style: TextStyle(
-                                            color: Colors.grey[600],
+                                            color: Colors.grey[100],
                                             fontSize: 24,
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -420,7 +420,7 @@ class _SignUpState extends State<SignUp> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                color: Colors.deepOrange[400],
+                                color: Color.fromRGBO(78, 114, 222,1.0),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),

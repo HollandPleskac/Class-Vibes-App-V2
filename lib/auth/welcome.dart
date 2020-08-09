@@ -31,8 +31,13 @@ class _WelcomeState extends State<Welcome> {
                   ? ServersDown()
                   : Column(
                       children: [
-                        SizedBox(
+                        Container(
+                          child: Image.network('https://i.imgur.com/UNzfHQm.png',fit: BoxFit.cover,),
                           height: MediaQuery.of(context).size.height * 0.25,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05,
                         ),
                         Center(
                           child: Text(
@@ -150,7 +155,7 @@ class _WelcomeState extends State<Welcome> {
                                       child: Text(
                                         'Register',
                                         style: TextStyle(
-                                            color: Colors.grey[600],
+                                            color: Colors.grey[100],
                                             fontSize: 24,
                                             fontWeight: FontWeight.w400),
                                       ),
@@ -170,7 +175,7 @@ class _WelcomeState extends State<Welcome> {
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.85,
                               decoration: BoxDecoration(
-                                color: Colors.deepOrange[400],
+                                color: Color.fromRGBO(78, 114, 222,1.0),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
