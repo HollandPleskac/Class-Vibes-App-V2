@@ -27,7 +27,7 @@ class NavStudent extends StatelessWidget {
           DrawerHeader(
             // put image here
             decoration: BoxDecoration(
-              color: kWetAsphaltColor,
+              color: kAppBarColor,
             ),
             child: Center(
               child: Text('Class Vibes',style: TextStyle(color: Colors.white,fontSize: 16),),
