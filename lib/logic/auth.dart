@@ -231,6 +231,6 @@ class Auth {
 
   @override
 Future<void> resetPassword(String email) async {
-    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  await _firebaseAuth.sendPasswordResetEmail(email: email);
 }
 }

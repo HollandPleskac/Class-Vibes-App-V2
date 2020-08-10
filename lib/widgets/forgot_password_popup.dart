@@ -1,56 +1,86 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../constant.dart';
 
-class ForgotPasswordPopup extends StatelessWidget {
+class ForgotPasswordPopup extends StatefulWidget {
+  @override
+  _ForgotPasswordPopupState createState() => _ForgotPasswordPopupState();
+}
+
+class _ForgotPasswordPopupState extends State<ForgotPasswordPopup> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController();
+  bool submitEmail = false;
+
   @override
   Widget build(BuildContext context) {
-    return  AlertDialog(
-        title: Text('Reset Your Password'),
-        content: Container(
-          height: MediaQuery.of(context).size.height*0.1,
-                  child: Center(
-            child: Form(
-              key: _formKey,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(top:15),
-                  isDense: true,
-                  hintText: "Email",
-                  prefixIcon: Icon(Icons.email,size: 20),
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: submitEmail == false ? Text('Reset Your Password') : Container(),
+      content: submitEmail == false
+          ? Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Center(
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 0, left: 5),
+                      hintText: "Email",
+                    ),
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value == null || value == '') {
+                        return 'Enter an email address';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
                 ),
-                controller: _emailController,
-                validator: (value) {
-                  if (value == null || value == '') {
-                    return 'Enter an email address';
-                  } else {
-                    return null;
-                  }
-                },
+              ),
+            )
+          : Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.check,
+                    color: Colors.green,
+                    size: 50,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Password Reset Sent!')
+                ],
               ),
             ),
-          ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-              color: kAppBarColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                'Reset Password',
-                style: TextStyle(
-                  color: Colors.white,
+      actions: <Widget>[
+        submitEmail == false
+            ? FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
                 ),
-              ),
-              onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  Navigator.pop(context);
-                }
-              })
-        ],
-      
+                child: Text(
+                  'Reset Password',
+                  style: TextStyle(color: kPrimaryColor, fontSize: 15.5),
+                ),
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    setState(() {
+                      submitEmail = true;
+                    });
+                    Timer(Duration(seconds: 5), () {
+                      Navigator.pop(context);
+                    });
+                  }
+                })
+            : Container()
+      ],
     );
   }
 }
