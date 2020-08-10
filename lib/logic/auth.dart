@@ -236,11 +236,17 @@ class Auth {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<FirebaseUser> signInWithGoogle() async {
+  Future<String> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
-    // check if user in the database with this email
-    // if not have them sign up
+    bool isUserInDB = await _firestore
+        .collection('UserData')
+        .where('email', isEqualTo: googleUser.email)
+        .getDocuments()
+        .then((querySnap) => querySnap.documents.isNotEmpty);
+    if (isUserInDB == false) {
+      return 'failure';
+    }
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -256,6 +262,6 @@ class Auth {
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
-    return user;
+    return 'success';
   }
 }

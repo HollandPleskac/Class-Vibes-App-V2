@@ -5,8 +5,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
+import '../logic/auth.dart';
 
 final _fire = Fire();
+final _auth = Auth();
 
 class GoogleSignUpPopup extends StatefulWidget {
   @override
@@ -18,14 +20,16 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
 
   final TextEditingController _codeController = TextEditingController();
   bool checkValue = false;
+  String accountType = '';
   String feedback = '';
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      title:
-          checkValue == true ? Text('Enter your District Code') : Container(),
+      title: accountType == 'Teacher'
+          ? Text('Enter your District Code')
+          : Container(),
       content: checkValue == false
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,38 +65,71 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                 ),
               ],
             )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Center(
-                  child: Form(
-                    key: _formKey,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "District Code",
+          : accountType == ''
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton(
+                      color: Colors.blue,
+                      child: Text(
+                        'Student',
+                        style: TextStyle(color: Colors.white),
                       ),
-                      controller: _codeController,
-                      validator: (districtCode) {
-                        if (districtCode == null || districtCode == '') {
-                          return 'Enter a district code';
-                        } else {
-                          return null;
-                        }
+                      onPressed: () {
+                        setState(() {
+                          accountType = 'Student';
+                        });
                       },
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: feedback == '' ? 0 :10,
-                ),
-                Text(
-                  feedback,
-                  style: TextStyle(color: Colors.red),
-                ),
-              ],
-            ),
+                    FlatButton(
+                      color: Colors.red,
+                      child: Text(
+                        'Teacher',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          accountType = 'Teacher';
+                        });
+                      },
+                    ),
+                  ],
+                )
+              : accountType == 'Teacher'
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Center(
+                          child: Form(
+                            key: _formKey,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: "District Code",
+                              ),
+                              controller: _codeController,
+                              validator: (districtCode) {
+                                if (districtCode == null ||
+                                    districtCode == '') {
+                                  return 'Enter a district code';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: feedback == '' ? 0 : 10,
+                        ),
+                        Text(
+                          feedback,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ],
+                    )
+                  : Text('you are a student!'),
       actions: <Widget>[
-        checkValue == true
+        accountType == 'Teacher'
             ? FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(2),
@@ -110,6 +147,8 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                       setState(() {
                         feedback = '';
                       });
+                      String result = await _auth.signInWithGoogle();
+                      print(result);
                     } else {
                       print('invalid');
                       setState(() {
