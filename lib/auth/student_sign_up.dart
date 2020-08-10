@@ -259,7 +259,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                 child: new Container(
                                   child: Center(
                                     child: Text(
-                                      'Register',
+                                      'Sign up',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 24,
