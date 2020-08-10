@@ -1,6 +1,7 @@
 import 'package:class_vibes_v2/logic/fire.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../student_portal/classview_student.dart';
 import '../teacher_portal/classview_teacher.dart';
@@ -23,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   bool isDistrictIdValidate = false;
   bool isSwitched = true;
   String _feedback = '';
+  bool checkValue = false;
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -64,7 +66,7 @@ class _SignUpState extends State<SignUp> {
                       physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.18,
+                          height: MediaQuery.of(context).size.height * 0.05,
                         ),
                         Center(
                           child: Text(
@@ -285,6 +287,47 @@ class _SignUpState extends State<SignUp> {
                               )
                             ],
                           ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Checkbox(
+                              value: checkValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  checkValue = value;
+                                });
+                              },
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Text('I have read and accept the '),
+                                InkWell(
+                                  onTap: () async {
+                                    String url =
+                                        'https://classvibes.net/privacy';
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                  child: Text(
+                                    'Privacy Policy',
+                                    style: TextStyle(
+                                        color: kPrimaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
