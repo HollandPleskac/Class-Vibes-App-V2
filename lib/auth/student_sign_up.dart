@@ -297,6 +297,8 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                 onTap: () async {
                                   print('google sign in');
                                   if (checkValue == true) {
+                                    List result = await _auth.signUpWithGoogleStudent();
+                                    print(result[0]);
                                   } else {
                                     setState(() {
                                       _feedback =

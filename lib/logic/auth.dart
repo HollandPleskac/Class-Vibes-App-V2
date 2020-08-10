@@ -236,7 +236,7 @@ class Auth {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<List> signInWithGoogle() async {
+  Future<List> signUpWithGoogleStudent() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
     bool isUserInDB = await _firestore
@@ -245,7 +245,7 @@ class Auth {
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
     if (isUserInDB == true) {
-      return ['failure','User is already registered'];
+      return ['failure', 'User is already registered'];
     }
 
     final GoogleSignInAuthentication googleAuth =
@@ -262,6 +262,28 @@ class Auth {
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
-    return ['success',''];
+    return ['success', ''];
+  }
+
+  Future<List> signInWithGoogleStudent() async {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    print(googleUser.email);
+   
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final FirebaseUser user =
+        (await _firebaseAuth.signInWithCredential(credential)).user;
+    print("signed in " + user.displayName);
+    // if the user is not email verified which they arenet at this point
+    // send them to the sign in teacher screen
+    // and check if they verify their email
+    return ['success', ''];
   }
 }
