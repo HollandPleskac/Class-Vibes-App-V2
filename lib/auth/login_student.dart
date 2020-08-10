@@ -202,6 +202,8 @@ class _StudentLoginState extends State<StudentLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
+                                  List result = await _auth.signInWithGoogleStudent();
+                                  print(result[0]);
                                 },
                                 child: new Container(
                                   child: Center(
