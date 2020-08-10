@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './student_sign_up.dart';
+import './teacher_sign_up.dart';
 
 class RegisterChoice extends StatefulWidget {
   @override
@@ -28,22 +30,25 @@ class _RegisterChoiceState extends State<RegisterChoice> {
           ),
           Center(
             child: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpStudent()));
+              },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.blue[300],
-                  borderRadius: BorderRadius.circular(10)
-                ),
+                    color: Colors.blue[300],
+                    borderRadius: BorderRadius.circular(10)),
                 child: Center(
                   child: Text(
-              'Student',
-              style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w300),
-            ),
+                    'Student',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w300),
+                  ),
                 ),
-              height: MediaQuery.of(context).size.width * 0.6,
-              width: MediaQuery.of(context).size.width * 0.9,  
+                height: MediaQuery.of(context).size.width * 0.6,
+                width: MediaQuery.of(context).size.width * 0.9,
               ),
             ),
           ),
@@ -52,22 +57,25 @@ class _RegisterChoiceState extends State<RegisterChoice> {
           ),
           Center(
             child: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpTeacher()));
+              },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.deepOrange[400],
-                  borderRadius: BorderRadius.circular(10)
-                ),
+                    color: Colors.deepOrange[400],
+                    borderRadius: BorderRadius.circular(10)),
                 child: Center(
                   child: Text(
-              'Teacher',
-              style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w300),
-            ),
+                    'Teacher',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w300),
+                  ),
                 ),
-              height: MediaQuery.of(context).size.width * 0.6,
-              width: MediaQuery.of(context).size.width * 0.9,  
+                height: MediaQuery.of(context).size.width * 0.6,
+                width: MediaQuery.of(context).size.width * 0.9,
               ),
             ),
           ),

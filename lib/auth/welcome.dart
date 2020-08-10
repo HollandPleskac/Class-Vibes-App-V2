@@ -1,4 +1,4 @@
-import 'package:class_vibes_v2/auth/registerchoice.dart';
+import 'package:class_vibes_v2/auth/register_choice.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +7,7 @@ import 'login_student.dart';
 import 'login_teacher.dart';
 import 'sign_up.dart';
 import '../constant.dart';
+import './register_choice.dart';
 
 final Firestore _firestore = Firestore.instance;
 
