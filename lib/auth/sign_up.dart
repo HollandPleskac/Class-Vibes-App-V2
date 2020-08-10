@@ -19,10 +19,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = new GlobalKey<FormState>();
-  bool isEmailValidate = false;
-  bool isPasswordValidate = false;
-  bool isUserNameValidate = false;
-  bool isDistrictIdValidate = false;
+
   bool isSwitched = true;
   String _feedback = '';
   bool checkValue = false;
@@ -98,10 +95,6 @@ class _SignUpState extends State<SignUp> {
                                             hintText: 'Username'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            setState(() {
-                                              isUserNameValidate = true;
-                                            });
-
                                             return 'Username cannot be blank';
                                           }
                                           return null;
@@ -109,11 +102,8 @@ class _SignUpState extends State<SignUp> {
                                       ),
                                     ),
                                   ),
-                                  height: isUserNameValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
-                                          0.06,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
                                   decoration: BoxDecoration(
@@ -140,10 +130,6 @@ class _SignUpState extends State<SignUp> {
                                             hintText: 'Email'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            setState(() {
-                                              isEmailValidate = true;
-                                            });
-
                                             return 'Email cannot be blank';
                                           }
                                           return null;
@@ -151,11 +137,8 @@ class _SignUpState extends State<SignUp> {
                                       ),
                                     ),
                                   ),
-                                  height: isEmailValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
-                                          0.06,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
                                   decoration: BoxDecoration(
@@ -181,10 +164,6 @@ class _SignUpState extends State<SignUp> {
                                             hintText: 'Password'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            setState(() {
-                                              isPasswordValidate = true;
-                                            });
-
                                             return 'Password cannot be blank';
                                           }
                                           return null;
@@ -192,11 +171,8 @@ class _SignUpState extends State<SignUp> {
                                       ),
                                     ),
                                   ),
-                                  height: isPasswordValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
-                                          0.06,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
                                   decoration: BoxDecoration(
@@ -226,10 +202,6 @@ class _SignUpState extends State<SignUp> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value == '') {
-                                                  setState(() {
-                                                    isDistrictIdValidate = true;
-                                                  });
-
                                                   return 'District Id cannot be blank';
                                                 }
                                                 return null;
@@ -237,14 +209,8 @@ class _SignUpState extends State<SignUp> {
                                             ),
                                           ),
                                         ),
-                                        height: isDistrictIdValidate == true
-                                            ? MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.08
-                                            : MediaQuery.of(context)
-                                                    .size
-                                                    .height *
+                                        height:
+                                            MediaQuery.of(context).size.height *
                                                 0.06,
                                         width:
                                             MediaQuery.of(context).size.width *
@@ -370,29 +336,9 @@ class _SignUpState extends State<SignUp> {
                                           );
                                         } else {
                                           setState(() {
-                                            isEmailValidate = false;
-                                            isPasswordValidate = false;
-                                            isUserNameValidate = false;
-                                            isDistrictIdValidate = false;
                                             _feedback = result[1];
                                           });
                                         }
-                                      } else {
-                                        // determines if the textfield is big to accomodate a validator message
-                                        setState(() {
-                                          isEmailValidate == true
-                                              ? isEmailValidate = true
-                                              : isEmailValidate = false;
-                                          isPasswordValidate == true
-                                              ? isPasswordValidate = true
-                                              : isPasswordValidate = false;
-                                          isUserNameValidate == true
-                                              ? isUserNameValidate = true
-                                              : isUserNameValidate = false;
-                                          isDistrictIdValidate == true
-                                              ? isDistrictIdValidate = true
-                                              : isDistrictIdValidate = false;
-                                        });
                                       }
                                     } else {
                                       //sign up as a teacher
@@ -424,29 +370,9 @@ class _SignUpState extends State<SignUp> {
                                           );
                                         } else {
                                           setState(() {
-                                            isEmailValidate = false;
-                                            isPasswordValidate = false;
-                                            isUserNameValidate = false;
-                                            isDistrictIdValidate = false;
                                             _feedback = result[1];
                                           });
                                         }
-                                      } else {
-                                        // form key doesnt validate -- > determines if the textfield is big to accomodate a validator message
-                                        setState(() {
-                                          isEmailValidate == true
-                                              ? isEmailValidate = true
-                                              : isEmailValidate = false;
-                                          isPasswordValidate == true
-                                              ? isPasswordValidate = true
-                                              : isPasswordValidate = false;
-                                          isUserNameValidate == true
-                                              ? isUserNameValidate = true
-                                              : isUserNameValidate = false;
-                                          isDistrictIdValidate == true
-                                              ? isDistrictIdValidate = true
-                                              : isDistrictIdValidate = false;
-                                        });
                                       }
                                     }
                                   }
@@ -489,9 +415,10 @@ class _SignUpState extends State<SignUp> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                   showDialog(
-                                context: context,
-                                builder: (context) => GoogleSignUpPopup());
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          GoogleSignUpPopup());
                                 },
                                 child: new Container(
                                   child: Center(

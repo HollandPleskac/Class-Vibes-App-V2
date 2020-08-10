@@ -262,7 +262,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.25,
+                          height: MediaQuery.of(context).size.height * 0.025,
                         ),
                         Center(
                           child: Padding(
