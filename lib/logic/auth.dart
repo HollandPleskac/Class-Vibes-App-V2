@@ -232,7 +232,6 @@ class Auth {
     await _firebaseAuth.signOut();
   }
 
-  @override
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
@@ -240,6 +239,8 @@ class Auth {
   Future<FirebaseUser> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
+    // check if user in the database with this email
+    // if not have them sign up
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -252,6 +253,9 @@ class Auth {
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
     print("signed in " + user.displayName);
+    // if the user is not email verified which they arenet at this point
+    // send them to the sign in teacher screen
+    // and check if they verify their email
     return user;
   }
 }
