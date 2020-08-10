@@ -20,7 +20,7 @@ class TeacherLogin extends StatefulWidget {
 
 class _TeacherLoginState extends State<TeacherLogin> {
   final _formKey = new GlobalKey<FormState>();
-  bool isEmailValidate = false;
+  
   bool isPasswordValidate = false;
   String _feedback = '';
 
@@ -94,9 +94,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                             hintText: 'Email'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            setState(() {
-                                              isEmailValidate = true;
-                                            });
+                                          
 
                                             return 'Email cannot be blank';
                                           }
@@ -105,11 +103,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       ),
                                     ),
                                   ),
-                                  height: isEmailValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
+                                  height:
+                                      MediaQuery.of(context).size.height *
                                           0.06,
+                                      
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
                                   decoration: BoxDecoration(
@@ -148,10 +145,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       ),
                                     ),
                                   ),
-                                  height: isPasswordValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
+                                  height: MediaQuery.of(context).size.height *
                                           0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
@@ -188,21 +182,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       );
                                     } else {
                                       setState(() {
-                                        isEmailValidate = false;
-                                        isPasswordValidate = false;
+                                   
                                         _feedback = result[1];
                                       });
                                     }
-                                  } else {
-                                    // determines if the textfield is big to accomodate a validator message
-                                    setState(() {
-                                      isEmailValidate == true
-                                          ? isEmailValidate = true
-                                          : isEmailValidate = false;
-                                      isPasswordValidate == true
-                                          ? isPasswordValidate = true
-                                          : isPasswordValidate = false;
-                                    });
                                   }
                                 },
                                 child: new Container(
