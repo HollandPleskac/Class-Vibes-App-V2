@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login_student.dart';
 import 'login_teacher.dart';
-import 'sign_up.dart';
+import '../archived/sign_up.dart';
 import '../constant.dart';
 import './register_choice.dart';
 
