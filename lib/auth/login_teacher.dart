@@ -56,13 +56,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                   : ListView(
                       physics: BouncingScrollPhysics(),
                       children: [
-                        RaisedButton(
-                          child: Text('sign in google'),
-                          onPressed: () async {
-                            var result = await _auth.signInWithGoogle();
-                            print(result.uid);
-                          },
-                        ),
+                       
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.18,
                         ),
