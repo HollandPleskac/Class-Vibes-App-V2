@@ -6,7 +6,6 @@ import '../student_portal/classview_student.dart';
 import '../logic/auth.dart';
 import '../constant.dart';
 import '../widgets/forgot_password_popup.dart';
-import '../widgets/google_signin_popup.dart';
 
 final _auth = Auth();
 final Firestore _firestore = Firestore.instance;
