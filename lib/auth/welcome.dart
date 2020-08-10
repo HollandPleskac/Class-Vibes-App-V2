@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/auth/registerchoice.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -148,7 +149,7 @@ class _WelcomeState extends State<Welcome> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignUp()),
+                                          builder: (context) => RegisterChoice()),
                                     );
                                   },
                                   child: new Container(
