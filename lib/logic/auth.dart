@@ -228,4 +228,9 @@ class Auth {
   void signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  @override
+Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+}
 }

@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../student_portal/classview_student.dart';
 import '../logic/auth.dart';
 import '../constant.dart';
+import '../widgets/forgot_password_popup.dart';
 
 final _auth = Auth();
 final Firestore _firestore = Firestore.instance;
@@ -51,7 +52,7 @@ class _StudentLoginState extends State<StudentLogin> {
               return snapshot.data['serversAreUp'] == false
                   ? ServersDown()
                   : ListView(
-                    physics: BouncingScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.18,
@@ -82,7 +83,8 @@ class _StudentLoginState extends State<StudentLogin> {
                                                   .width *
                                               0.045),
                                       child: TextFormField(
-                                        keyboardType: TextInputType.emailAddress,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                         controller: _emailController,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
@@ -239,6 +241,25 @@ class _StudentLoginState extends State<StudentLogin> {
                               textAlign: TextAlign.center,
                               style:
                                   TextStyle(color: Colors.red, fontSize: 15.5),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.025,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print('sending');
+                            showDialog(context: context,
+                            builder: (context) => ForgotPasswordPopup());
+                          },
+                          child: Center(
+                            child: Text(
+                              'Forgot Password',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
