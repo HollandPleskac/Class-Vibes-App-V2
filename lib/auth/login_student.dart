@@ -76,36 +76,24 @@ class _StudentLoginState extends State<StudentLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.045),
-                                      child: TextFormField(
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        controller: _emailController,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Email'),
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                         
-                                            return 'Email cannot be blank';
-                                          }
-                                          return null;
-                                        },
-                                      ),
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
+                                      controller: _emailController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Email'),
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'Email cannot be blank';
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
-                                  height:  MediaQuery.of(context).size.height *
-                                          0.06,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
                               SizedBox(
@@ -115,35 +103,25 @@ class _StudentLoginState extends State<StudentLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.045),
-                                      child: TextFormField(
-                                        controller: _passwordController,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Password'),
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                            
-                                            return 'Password cannot be blank';
-                                          }
-                                          return null;
-                                        },
-                                      ),
+                                    child: TextFormField(
+                                      controller: _passwordController,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Password'),
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'Password cannot be blank';
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
-                                  height:MediaQuery.of(context).size.height *
-                                          0.06,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(10)),
+                                
                                 ),
                               ),
                             ],
@@ -172,7 +150,6 @@ class _StudentLoginState extends State<StudentLogin> {
                                       );
                                     } else {
                                       setState(() {
-                                   
                                         _feedback = result[1];
                                       });
                                     }
@@ -217,9 +194,10 @@ class _StudentLoginState extends State<StudentLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                   showDialog(
-                                context: context,
-                                builder: (context) => GoogleSignInPopup());
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          GoogleSignInPopup());
                                 },
                                 child: new Container(
                                   child: Center(
@@ -271,8 +249,9 @@ class _StudentLoginState extends State<StudentLogin> {
                         InkWell(
                           onTap: () {
                             print('sending');
-                            showDialog(context: context,
-                            builder: (context) => ForgotPasswordPopup());
+                            showDialog(
+                                context: context,
+                                builder: (context) => ForgotPasswordPopup());
                           },
                           child: Center(
                             child: Text(
