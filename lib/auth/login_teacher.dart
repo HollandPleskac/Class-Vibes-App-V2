@@ -20,7 +20,7 @@ class TeacherLogin extends StatefulWidget {
 
 class _TeacherLoginState extends State<TeacherLogin> {
   final _formKey = new GlobalKey<FormState>();
-  
+
   bool isPasswordValidate = false;
   String _feedback = '';
 
@@ -79,39 +79,24 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.045),
-                                      child: TextFormField(
-                                        controller: _emailController,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Email'),
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                          
-
-                                            return 'Email cannot be blank';
-                                          }
-                                          return null;
-                                        },
-                                      ),
+                                    child: TextFormField(
+                                      controller: _emailController,
+                                      keyboardType: TextInputType.emailAddress,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Email'),
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'Email cannot be blank';
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
                                   height:
-                                      MediaQuery.of(context).size.height *
-                                          0.06,
-                                      
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
                               SizedBox(
@@ -121,37 +106,27 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.045),
-                                      child: TextFormField(
-                                        controller: _passwordController,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Password'),
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                            setState(() {
-                                              isPasswordValidate = true;
-                                            });
-                                            return 'Password cannot be blank';
-                                          }
-                                          return null;
-                                        },
-                                      ),
+                                    child: TextFormField(
+                                      controller: _passwordController,
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Password'),
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          setState(() {
+                                            isPasswordValidate = true;
+                                          });
+                                          return 'Password cannot be blank';
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
-                                  height: MediaQuery.of(context).size.height *
-                                          0.06,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(10)),
                                 ),
                               ),
                             ],
@@ -182,7 +157,6 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       );
                                     } else {
                                       setState(() {
-                                   
                                         _feedback = result[1];
                                       });
                                     }
@@ -227,9 +201,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                   showDialog(
-                                context: context,
-                                builder: (context) => GoogleSignInPopup());
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          GoogleSignInPopup());
                                 },
                                 child: new Container(
                                   child: Center(
