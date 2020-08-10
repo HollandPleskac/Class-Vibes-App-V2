@@ -6,6 +6,7 @@ import '../student_portal/classview_student.dart';
 import '../logic/auth.dart';
 import '../constant.dart';
 import '../widgets/forgot_password_popup.dart';
+import '../widgets/google_signin_popup.dart';
 
 final _auth = Auth();
 final Firestore _firestore = Firestore.instance;
@@ -226,6 +227,49 @@ class _StudentLoginState extends State<StudentLogin> {
                             width: MediaQuery.of(context).size.width * 0.85,
                             decoration: BoxDecoration(
                               color: kAppBarColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.025,
+                        ),
+                        Center(
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () async {
+                                  print('google sign in');
+                                   showDialog(
+                                context: context,
+                                builder: (context) => GoogleSignInPopup());
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Sign in with Google',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),

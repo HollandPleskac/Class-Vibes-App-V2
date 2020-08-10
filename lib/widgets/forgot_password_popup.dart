@@ -20,32 +20,33 @@ class _ForgotPasswordPopupState extends State<ForgotPasswordPopup> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: submitEmail == false ? Text('Reset Your Password') : Container(),
       content: submitEmail == false
-          ? Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              child: Center(
-                child: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(top: 0, left: 5),
-                      hintText: "Email",
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Center(
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Email",
+                      ),
+                      controller: _emailController,
+                      validator: (value) {
+                        if (value == null || value == '') {
+                          return 'Enter an email address';
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                    controller: _emailController,
-                    validator: (value) {
-                      if (value == null || value == '') {
-                        return 'Enter an email address';
-                      } else {
-                        return null;
-                      }
-                    },
                   ),
                 ),
-              ),
+              ],
             )
           : Container(
-              height: MediaQuery.of(context).size.height * 0.1,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Icon(
                     Icons.check,
@@ -55,7 +56,10 @@ class _ForgotPasswordPopupState extends State<ForgotPasswordPopup> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text('Password Reset Sent!')
+                  Text('Password Reset Email Sent!'),
+                  SizedBox(height: 5,),
+                  Text('This may take a few minutes.')
+               
                 ],
               ),
             ),

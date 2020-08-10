@@ -387,4 +387,12 @@ class Fire {
       'teacher unread': 0,
     });
   }
+
+  Future<bool> doesDistrictCodeExist(String districtCode) async {
+    return await _firestore
+        .collection('Districts')
+        .where('district id', isEqualTo: districtCode)
+        .getDocuments()
+        .then((querySnap) => querySnap.documents.isNotEmpty);
+  }
 }
