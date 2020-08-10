@@ -231,7 +231,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                           _auth.setUpAccountTeacher(
                             districtId: _districtIdController.text,
                             username: _usernameController.text,
-                            password: _passwordController.text,
+                           
                             email: _emailController.text,
                           );
 

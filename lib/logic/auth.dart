@@ -188,7 +188,7 @@ class Auth {
     return ['failure', 'unknown error'];
   }
 
-  void setUpAccountStudent({String email, String password, String username}) {
+  void setUpAccountStudent({String email, String username}) {
     _firestore.collection('UserData').document(email).setData({
       'email': email,
       'display name': username,
@@ -199,7 +199,7 @@ class Auth {
 
   void setUpAccountTeacher({
     String email,
-    String password,
+
     String username,
     String districtId,
   }) async {
@@ -247,6 +247,8 @@ class Auth {
     if (isUserInDB == true) {
       return ['failure', 'User is already registered'];
     }
+
+    setUpAccountStudent(email: googleUser.email,username: googleUser.displayName);
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;

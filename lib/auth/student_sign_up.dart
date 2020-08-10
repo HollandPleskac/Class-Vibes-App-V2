@@ -29,8 +29,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-        backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -238,7 +237,6 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                         //ste up account
                                         _auth.setUpAccountStudent(
                                           username: _usernameController.text,
-                                          password: _passwordController.text,
                                           email: _emailController.text,
                                         );
 
@@ -297,7 +295,8 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                 onTap: () async {
                                   print('google sign in');
                                   if (checkValue == true) {
-                                    List result = await _auth.signUpWithGoogleStudent();
+                                    List result =
+                                        await _auth.signUpWithGoogleStudent();
                                     print(result[0]);
                                   } else {
                                     setState(() {
