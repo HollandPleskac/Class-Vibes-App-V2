@@ -18,8 +18,7 @@ class StudentLogin extends StatefulWidget {
 
 class _StudentLoginState extends State<StudentLogin> {
   final _formKey = new GlobalKey<FormState>();
-  bool isEmailValidate = false;
-  bool isPasswordValidate = false;
+
   String _feedback = '';
 
   final TextEditingController _emailController = TextEditingController();
@@ -92,10 +91,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                             hintText: 'Email'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            setState(() {
-                                              isEmailValidate = true;
-                                            });
-
+                                         
                                             return 'Email cannot be blank';
                                           }
                                           return null;
@@ -103,10 +99,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                       ),
                                     ),
                                   ),
-                                  height: isEmailValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
+                                  height:  MediaQuery.of(context).size.height *
                                           0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
@@ -136,9 +129,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                             hintText: 'Password'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            setState(() {
-                                              isPasswordValidate = true;
-                                            });
+                                            
                                             return 'Password cannot be blank';
                                           }
                                           return null;
@@ -146,10 +137,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                       ),
                                     ),
                                   ),
-                                  height: isPasswordValidate == true
-                                      ? MediaQuery.of(context).size.height *
-                                          0.08
-                                      : MediaQuery.of(context).size.height *
+                                  height:MediaQuery.of(context).size.height *
                                           0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
@@ -184,21 +172,10 @@ class _StudentLoginState extends State<StudentLogin> {
                                       );
                                     } else {
                                       setState(() {
-                                        isEmailValidate = false;
-                                        isPasswordValidate = false;
+                                   
                                         _feedback = result[1];
                                       });
                                     }
-                                  } else {
-                                    //determines if you need a big textfield box to display a validator message
-                                    setState(() {
-                                      isEmailValidate == true
-                                          ? isEmailValidate = true
-                                          : isEmailValidate = false;
-                                      isPasswordValidate == true
-                                          ? isPasswordValidate = true
-                                          : isPasswordValidate = false;
-                                    });
                                   }
                                 },
                                 child: new Container(
