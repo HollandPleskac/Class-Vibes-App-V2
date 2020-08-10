@@ -149,7 +149,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                         filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.black54,
+                              color: Colors.white.withOpacity(1),
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(30),
                                   topRight: Radius.circular(30))),
@@ -162,7 +162,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                               Text(
                                 'Push Announcment',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.grey[900],
                                     fontSize: 30,
                                     fontWeight: FontWeight.w500),
                               ),
@@ -186,7 +186,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                             const EdgeInsets.only(left: 14),
                                         child: TextFormField(
                                           style: TextStyle(
-                                              color: Colors.grey[100],
+                                              color: Colors.grey[800],
                                               fontWeight: FontWeight.bold,
                                               letterSpacing: 1),
                                           controller: _titleController,
@@ -200,7 +200,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintStyle: TextStyle(
-                                                color: Colors.grey[600],
+                                                color: Colors.grey[500],
                                                 fontSize: 18),
                                             labelStyle: TextStyle(),
                                             hintText: 'Title',
@@ -208,7 +208,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                         ),
                                       ),
                                       decoration: BoxDecoration(
-                                          color: Colors.black26,
+                                          color: Colors.grey[300],
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                     ),
@@ -228,7 +228,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                             const EdgeInsets.only(left: 14),
                                         child: TextFormField(
                                           style: TextStyle(
-                                              color: Colors.grey[100],
+                                              color: Colors.grey[800],
                                               fontWeight: FontWeight.bold,
                                               letterSpacing: 1),
                                           controller: _contentController,
@@ -242,7 +242,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintStyle: TextStyle(
-                                                color: Colors.grey[600],
+                                                color: Colors.grey[500],
                                                 fontSize: 18),
                                             labelStyle: TextStyle(),
                                             hintText: 'Message',
@@ -250,7 +250,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                         ),
                                       ),
                                       decoration: BoxDecoration(
-                                          color: Colors.black26,
+                                          color: Colors.grey[300],
                                           borderRadius:
                                               BorderRadius.circular(10)),
                                     ),
