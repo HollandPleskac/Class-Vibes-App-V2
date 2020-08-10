@@ -76,18 +76,23 @@ class _StudentLoginState extends State<StudentLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.emailAddress,
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Email'),
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'Email cannot be blank';
-                                        }
-                                        return null;
-                                      },
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      child: TextFormField(
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        controller: _emailController,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Email'),
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'Email cannot be blank';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
                                   height:
@@ -103,18 +108,22 @@ class _StudentLoginState extends State<StudentLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: TextFormField(
-                                      controller: _passwordController,
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Password'),
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'Password cannot be blank';
-                                        }
-                                        return null;
-                                      },
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      child: TextFormField(
+                                        controller: _passwordController,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Password'),
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'Password cannot be blank';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
                                   height:

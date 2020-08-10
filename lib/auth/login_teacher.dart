@@ -79,18 +79,23 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: TextFormField(
-                                      controller: _emailController,
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Email'),
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'Email cannot be blank';
-                                        }
-                                        return null;
-                                      },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: TextFormField(
+                                        controller: _emailController,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Email'),
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'Email cannot be blank';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
                                   height:
@@ -106,21 +111,25 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               Center(
                                 child: Container(
                                   child: Center(
-                                    child: TextFormField(
-                                      controller: _passwordController,
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Password'),
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          setState(() {
-                                            isPasswordValidate = true;
-                                          });
-                                          return 'Password cannot be blank';
-                                        }
-                                        return null;
-                                      },
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      child: TextFormField(
+                                        controller: _passwordController,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Password'),
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            setState(() {
+                                              isPasswordValidate = true;
+                                            });
+                                            return 'Password cannot be blank';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
                                   ),
                                   height:
@@ -201,7 +210,6 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                 
                                 },
                                 child: new Container(
                                   child: Center(
