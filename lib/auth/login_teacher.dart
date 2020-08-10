@@ -2,6 +2,7 @@ import 'package:class_vibes_v2/logic/fire.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../logic/auth.dart';
 import '../teacher_portal/classview_teacher.dart';
@@ -55,6 +56,13 @@ class _TeacherLoginState extends State<TeacherLogin> {
                   : ListView(
                       physics: BouncingScrollPhysics(),
                       children: [
+                        RaisedButton(
+                          child: Text('sign in google'),
+                          onPressed: () async {
+                            var result = await _auth.signInWithGoogle();
+                            print(result.uid);
+                          },
+                        ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.18,
                         ),

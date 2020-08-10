@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
+final GoogleSignIn _googleSignIn = GoogleSignIn();
 final _firestore = Firestore.instance;
 
 class Auth {
@@ -230,7 +232,25 @@ class Auth {
   }
 
   @override
-Future<void> resetPassword(String email) async {
-  await _firebaseAuth.sendPasswordResetEmail(email: email);
-}
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  Future<FirebaseUser> signInWithGoogle() async {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    print(googleUser.email);
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    final FirebaseUser user =
+        (await _firebaseAuth.signInWithCredential(credential)).user;
+    print("signed in " + user.displayName);
+    return user;
+  }
 }
