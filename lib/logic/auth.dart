@@ -140,6 +140,7 @@ class Auth {
         .then((querySnap) => querySnap.documents.isNotEmpty);
     if (districtIdExists) {
       //is teacher is allowed teachers collection?
+      //change this iselligible to join to be if teacher email split at @ is matching to one in db
       bool isEligibleForJoin = await _firestore
           .collection('Districts')
           .document(districtId)
