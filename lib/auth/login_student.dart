@@ -121,7 +121,6 @@ class _StudentLoginState extends State<StudentLogin> {
                                       MediaQuery.of(context).size.height * 0.06,
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
-                                
                                 ),
                               ),
                             ],
@@ -194,10 +193,6 @@ class _StudentLoginState extends State<StudentLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          GoogleSignInPopup());
                                 },
                                 child: new Container(
                                   child: Center(

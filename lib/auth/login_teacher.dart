@@ -201,10 +201,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          GoogleSignInPopup());
+                                 
                                 },
                                 child: new Container(
                                   child: Center(
