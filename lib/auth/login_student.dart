@@ -203,6 +203,11 @@ class _StudentLoginState extends State<StudentLogin> {
                                 onTap: () async {
                                   print('google sign in');
                                   List result = await _auth.signInWithGoogleStudent();
+                                  if (result[0] == 'failure') {
+                                    setState(() {
+                                      _feedback = result[1];
+                                    });
+                                  }
                                   print(result[0]);
                                 },
                                 child: new Container(

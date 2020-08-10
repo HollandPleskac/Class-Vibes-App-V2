@@ -297,6 +297,11 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                   if (checkValue == true) {
                                     List result =
                                         await _auth.signUpWithGoogleStudent();
+                                    if (result[0] == 'failure') {
+                                      setState(() {
+                                        _feedback = result[1];
+                                      });
+                                    }
                                     print(result[0]);
                                   } else {
                                     setState(() {

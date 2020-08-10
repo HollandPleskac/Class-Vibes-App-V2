@@ -24,8 +24,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-        backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -231,7 +230,6 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                           _auth.setUpAccountTeacher(
                             districtId: _districtIdController.text,
                             username: _usernameController.text,
-                           
                             email: _emailController.text,
                           );
 
@@ -287,6 +285,14 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                   onTap: () async {
                     print('google sign in');
                     if (checkValue == true) {
+                      List result =
+                          await _auth.signUpWithGoogleTeacher('4623');
+
+                      if (result[0] == 'failure') {
+                        setState(() {
+                          _feedback = result[1];
+                        });
+                      }
                     } else {
                       setState(() {
                         _feedback = 'Accept the privacy policy to continue';
