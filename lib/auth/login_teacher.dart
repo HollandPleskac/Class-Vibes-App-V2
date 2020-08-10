@@ -209,11 +209,20 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                  List result = await _auth.signInWithGoogleStudent();
+                                  List result =
+                                      await _auth.signInWithGoogleTeacher();
                                   if (result[0] == 'failure') {
                                     setState(() {
                                       _feedback = result[1];
                                     });
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ClassViewTeacher(),
+                                      ),
+                                    );
                                   }
                                 },
                                 child: new Container(
