@@ -157,8 +157,6 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
 
   @override
   void initState() {
-        
-
     getTeacherEmail().then((_) {
       updates.handleAccountStatus(context, _email);
       setState(() {});
@@ -216,35 +214,35 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           height: MediaQuery.of(context).size.width * 0.2,
                         ),
                         Center(
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.0525,
-                            width: MediaQuery.of(context).size.width - 50,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "Teacher",
-                                  style: TextStyle(
-                                      color: Colors.grey[800], fontSize: 18),
-                                ),
-                                Spacer(),
-                                // Text(
-                                //   "Created 16 Classes",
-                                //   style: TextStyle(
-                                //       color: Colors.grey[400], fontSize: 14),
-                                // ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(10)),
+                        child: Container(
+                          height: 42,
+                          width: MediaQuery.of(context).size.width - 50,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "Teacher",
+                                style: TextStyle(
+                                    color: Colors.grey[800], fontSize: 18),
+                              ),
+                              Spacer(),
+                              // Text(
+                              //   "Created 16 Classes",
+                              //   style: TextStyle(
+                              //       color: Colors.grey[400], fontSize: 14),
+                              // ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
                           ),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(10)),
                         ),
+                      ),
                         SizedBox(
                           height: 15,
                         ),
@@ -253,35 +251,40 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             height: MediaQuery.of(context).size.height * 0.0525,
                             width: MediaQuery.of(context).size.width - 50,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: 15,
+                                Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.51,
+                                    child: StreamBuilder(
+                                        stream: _firestore
+                                            .collection('UserData')
+                                            .document(_email)
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (!snapshot.hasData) {
+                                            return Text('');
+                                          } else {
+                                            return Text(
+                                              snapshot.data['email'],
+                                              softWrap: false,
+                                              style: TextStyle(
+                                                  color: Colors.grey[800],
+                                                  fontSize: 18),
+                                            );
+                                          }
+                                        }),
+                                  ),
                                 ),
-                                StreamBuilder(
-                                    stream: _firestore
-                                        .collection('UserData')
-                                        .document(_email)
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return Text('');
-                                      } else {
-                                        return Text(
-                                          snapshot.data['email'],
-                                          style: TextStyle(
-                                              color: Colors.grey[800],
-                                              fontSize: 18),
-                                        );
-                                      }
-                                    }),
-                                Spacer(),
-                                Text(
-                                  "Email Address",
-                                  style: TextStyle(
-                                      color: Colors.grey[400], fontSize: 14),
-                                ),
-                                SizedBox(
-                                  width: 15,
+                                Padding(
+                                  padding: EdgeInsets.only(right: 15),
+                                  child: Text(
+                                    "Email Address",
+                                    style: TextStyle(
+                                        color: Colors.grey[400], fontSize: 14),
+                                  ),
                                 ),
                               ],
                             ),
@@ -308,36 +311,43 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                   SizedBox(
                                     width: 15,
                                   ),
-                                  FutureBuilder(
-                                    future: _firebaseAuth.currentUser(),
-                                    builder: (context, snapshot) {
-                                      print(snapshot.data.toString());
-                                      return Text(
-                                        snapshot.data.displayName,
-                                        style: TextStyle(
-                                            color: Colors.grey[800],
-                                            fontSize: 18),
-                                      );
-                                    },
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.51,
+                                    child: StreamBuilder(
+                                      stream: _firestore
+                                          .collection('UserData')
+                                          .document(_email)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return Text('');
+                                        } else {
+                                          return Text(
+                                            snapshot.data['display name'],
+                                            softWrap: false,
+                                            style: TextStyle(
+                                                color: Colors.grey[800],
+                                                fontSize: 18),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ),
+                                  // FutureBuilder(
+                                  //   future: _firebaseAuth.currentUser(),
+                                  //   builder: (context, snapshot) {
+                                  //     print(snapshot.data.toString());
+                                  //     return Text(
+                                  //       snapshot.data.displayName,
+                                  //       style: TextStyle(
+                                  //           color: Colors.grey[800],
+                                  //           fontSize: 18),
+                                  //     );
+                                  //   },
+                                  // ),
                                   // Text(getDisplayName().toString()),
-                                  // StreamBuilder(
-                                  //     stream: _firestore
-                                  //         .collection('UserData')
-                                  //         .document(_email)
-                                  //         .snapshots(),
-                                  //     builder: (context, snapshot) {
-                                  //       if (!snapshot.hasData) {
-                                  //         return Text('');
-                                  //       } else {
-                                  //         return Text(
-                                  //           snapshot.data['display name'],
-                                  //           style: TextStyle(
-                                  //               color: Colors.grey[800],
-                                  //               fontSize: 18),
-                                  //         );
-                                  //       }
-                                  //     }),
+
                                   Spacer(),
                                   Text(
                                     "UserName",

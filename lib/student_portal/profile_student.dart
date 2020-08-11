@@ -106,7 +106,6 @@ class _ProfileStudentState extends State<ProfileStudent> {
                             color: kPrimaryColor,
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                
                                 FirebaseUser user =
                                     await _firebaseAuth.currentUser();
                                 UserUpdateInfo userUpdateInfo =
@@ -115,7 +114,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                     _userNameEditController.text;
 
                                 await user.updateProfile(userUpdateInfo);
-                                
+
                                 _fire.editUserName(
                                   newUserName: _userNameEditController.text,
                                   uid: email,
@@ -251,23 +250,26 @@ class _ProfileStudentState extends State<ProfileStudent> {
                               SizedBox(
                                 width: 15,
                               ),
-                              StreamBuilder(
-                                  stream: _firestore
-                                      .collection('UserData')
-                                      .document(_email)
-                                      .snapshots(),
-                                  builder: (context, snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return Text('');
-                                    } else {
-                                      return Text(
-                                        snapshot.data['email'],
-                                        style: TextStyle(
-                                            color: Colors.grey[800],
-                                            fontSize: 18),
-                                      );
-                                    }
-                                  }),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.51,
+                                child: StreamBuilder(
+                                    stream: _firestore
+                                        .collection('UserData')
+                                        .document(_email)
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (!snapshot.hasData) {
+                                        return Text('');
+                                      } else {
+                                        return Text(
+                                          snapshot.data['email'],
+                                          style: TextStyle(
+                                              color: Colors.grey[800],
+                                              fontSize: 18),
+                                        );
+                                      }
+                                    }),
+                              ),
                               Spacer(),
                               Text(
                                 "Email Address",
@@ -301,34 +303,41 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 SizedBox(
                                   width: 15,
                                 ),
-                                FutureBuilder(
-                                    future: _firebaseAuth.currentUser(),
-                                    builder: (context, snapshot) {
-                                      return Text(
-                                        snapshot.data.displayName,
-                                        style: TextStyle(
-                                            color: Colors.grey[800],
-                                            fontSize: 18),
-                                      );
-                                    },
-                                  ),
-                                // StreamBuilder(
-                                //     stream: _firestore
-                                //         .collection('UserData')
-                                //         .document(_email)
-                                //         .snapshots(),
-                                //     builder: (context, snapshot) {
-                                //       if (!snapshot.hasData) {
-                                //         return Text('');
-                                //       } else {
-                                //         return Text(
-                                //           snapshot.data['display name'],
-                                //           style: TextStyle(
-                                //               color: Colors.grey[800],
-                                //               fontSize: 18),
-                                //         );
-                                //       }
-                                //     }),
+                                Container(
+                                  
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.51,
+                                  child: StreamBuilder(
+                                      stream: _firestore
+                                          .collection('UserData')
+                                          .document(_email)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return Text('');
+                                        } else {
+                                          return Text(
+                                            snapshot.data['display name'],
+                                            softWrap: false,
+                                            style: TextStyle(
+                                                color: Colors.grey[800],
+                                                fontSize: 18),
+                                          );
+                                        }
+                                      }),
+                                ),
+                                // FutureBuilder(
+                                //   future: _firebaseAuth.currentUser(),
+                                //   builder: (context, snapshot) {
+                                //     return Text(
+                                //       snapshot.data.displayName,
+                                //       style: TextStyle(
+                                //           color: Colors.grey[800],
+                                //           fontSize: 18),
+                                //     );
+                                //   },
+                                // ),
+
                                 Spacer(),
                                 Text(
                                   "UserName",
