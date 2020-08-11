@@ -24,27 +24,33 @@ class _RegisterChoiceState extends State<RegisterChoice> {
               Navigator.pop(context);
             }),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
           Center(
-                      child: Text(
-                        'Register As',
-                        style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 30,
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ),
-                    SizedBox(height: 50,),
+            child: Text(
+              'Register As',
+              style: TextStyle(
+                  color: Colors.grey[800],
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+          ),
           Center(
             child: Container(
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUpStudent()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpStudent()));
                   },
                   child: Container(
                     child: Center(
@@ -61,12 +67,11 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                   ),
                 ),
               ),
-              
-                  decoration: BoxDecoration(
-                      color: Colors.blue[300],
-                      borderRadius: BorderRadius.circular(10)),
-               height: MediaQuery.of(context).size.width * 0.6,
-                  width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                  color: Colors.blue[300],
+                  borderRadius: BorderRadius.circular(10)),
+              height: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.9,
             ),
           ),
           SizedBox(
@@ -78,8 +83,10 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUpTeacher()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpTeacher()));
                   },
                   child: Container(
                     child: Center(
@@ -96,15 +103,16 @@ class _RegisterChoiceState extends State<RegisterChoice> {
                   ),
                 ),
               ),
-              
-                  decoration: BoxDecoration(
-                      color: Colors.deepOrange[400],
-                      borderRadius: BorderRadius.circular(10)),
-               height: MediaQuery.of(context).size.width * 0.6,
-                  width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                  color: Colors.deepOrange[400],
+                  borderRadius: BorderRadius.circular(10)),
+              height: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.9,
             ),
           ),
-          SizedBox(height: 50,),
+          SizedBox(
+            height: 50,
+          ),
         ],
       ),
     );
