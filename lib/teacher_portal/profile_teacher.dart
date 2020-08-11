@@ -194,6 +194,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                         SizedBox(
                           height: MediaQuery.of(context).size.width * 0.145,
                         ),
+                        //
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width / 2.5,

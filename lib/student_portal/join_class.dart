@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -145,9 +147,16 @@ class _JoinClassState extends State<JoinClass> {
                             );
 
                             _scaffoldKey.currentState.showSnackBar(snackBar);
-
+                            Timer(Duration(milliseconds: 1500), () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ClassViewStudent(),
+                                ),
+                              );
+                            });
                             // if (result == 'You have joined the class!') {
-                              
+
                             //   Navigator.push(
                             //     context,
                             //     MaterialPageRoute(
