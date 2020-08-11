@@ -12,11 +12,13 @@ import '../constant.dart';
 import '../logic/fire.dart';
 import '../logic/auth.dart';
 import '../auth/welcome.dart';
+import '../logic/updates.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 final _auth = Auth();
+final updates = Updates();
 
 class ProfileTeacher extends StatefulWidget {
   @override
@@ -155,7 +157,10 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
 
   @override
   void initState() {
+        
+
     getTeacherEmail().then((_) {
+      updates.handleAccountStatus(context, _email);
       setState(() {});
     });
 

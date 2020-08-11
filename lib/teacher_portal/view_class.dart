@@ -13,10 +13,12 @@ import '../logic/fire.dart';
 import './class_settings.dart';
 import './class_announcements.dart';
 import './class_meetings.dart';
+import '../logic/updates.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
+final updates = Updates();
 
 class ViewClass extends StatefulWidget {
   static const routeName = 'individual-class-teacher';
@@ -36,7 +38,10 @@ class _ViewClassState extends State<ViewClass> {
 
   @override
   void initState() {
+        
+
     getTeacherEmail().then((_) {
+      updates.handleAccountStatus(context, _email);
       setState(() {});
     });
 

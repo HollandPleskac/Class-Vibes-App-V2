@@ -9,11 +9,14 @@ import '../logic/fire.dart';
 import '../nav_teacher.dart';
 import '../widgets/no_documents_message.dart';
 import '../widgets/meetings.dart';
+import '../logic/updates.dart';
 
 final _fire = Fire();
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+final updates = Updates();
 
 class MeetingsTeacher extends StatefulWidget {
   @override
@@ -32,7 +35,10 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
 
   @override
   void initState() {
+       
+
     getTeacherEmail().then((_) {
+      updates.handleAccountStatus(context, _teacherEmail);
       setState(() {});
     });
 

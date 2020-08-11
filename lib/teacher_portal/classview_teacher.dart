@@ -170,7 +170,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
   @override
   void initState() {
+        
+
     getTeacherEmail().then((_) {
+      updates.handleAccountStatus(context, _email);
       setState(() {});
     });
 
