@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../logic/auth.dart';
 import '../constant.dart';
+
+final _auth = Auth();
 
 class ForgotPasswordPopup extends StatefulWidget {
   @override
@@ -75,6 +78,7 @@ class _ForgotPasswordPopupState extends State<ForgotPasswordPopup> {
                 ),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
+                    _auth.resetPassword(_emailController.text);
                     setState(() {
                       submitEmail = true;
                     });
