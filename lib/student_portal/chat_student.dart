@@ -256,7 +256,7 @@ class SentChat extends StatelessWidget {
               bottomRight: Radius.circular(0),
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15)),
-          color: kPrimaryColor.withOpacity(0.5),
+          color: kAppBarColor,
           // color: Colors.redAccent.shade400.withOpacity(0.3),
         ),
         width: 100,

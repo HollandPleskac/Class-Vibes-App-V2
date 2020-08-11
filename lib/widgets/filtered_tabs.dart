@@ -776,7 +776,7 @@ class Student extends StatelessWidget {
                 GestureDetector(
                   onTap: () => showModalSheet(),
                   child: FaIcon(
-                    FontAwesomeIcons.paperPlane,
+                    FontAwesomeIcons.calendarAlt,
                     color: kPrimaryColor,
                     size: MediaQuery.of(context).size.width * 0.075,
                   ),

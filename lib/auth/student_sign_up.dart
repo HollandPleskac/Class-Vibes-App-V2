@@ -62,7 +62,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                       physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
+                          height: MediaQuery.of(context).size.height * 0.01,
                         ),
                         Center(
                           child: Text(
