@@ -1,8 +1,8 @@
-import 'package:class_vibes_v2/testing.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../auth/welcome.dart';
+import '../deactivated_account_screen.dart';
 
 final Firestore _firestore = Firestore.instance;
 
@@ -19,7 +19,7 @@ class Updates {
         print('the account is now deactivated');
         // gets rid of the entire screen stack
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => DeactivatedAccountScreen()),
+            MaterialPageRoute(builder: (context) => DeactivatedAccountScreen(teacherEmail: teacherEmail,)),
             (Route<dynamic> route) => false);
       } else {
         print(docSnap.data['account status']);

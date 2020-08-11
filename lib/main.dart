@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DeactivatedAccountScreen(teacherEmail: 'new1@gmail.com',),
+      home: Splash(),
       routes: {
         ViewClass.routeName: (context) => ViewClass(),
         ClassSettings.routeName: (context) => ClassSettings(),
