@@ -42,7 +42,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
         physics: BouncingScrollPhysics(),
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: MediaQuery.of(context).size.height * 0.02,
           ),
           Center(
             child: Text(
@@ -54,7 +54,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
+            height: MediaQuery.of(context).size.height * 0.12,
           ),
           Form(
             key: _formKey,
