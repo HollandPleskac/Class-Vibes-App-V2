@@ -181,47 +181,50 @@ class StudentClass extends StatelessWidget {
                         );
                       }
                       return Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          Text(
-                            classSnapshot.data['class name'],
-                            overflow: TextOverflow.fade,
-                            softWrap: false,
-                            style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.046,
-                              fontWeight: FontWeight.w400,
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.05),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Text(
+                                classSnapshot.data['class name'],
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.046,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                             ),
                           ),
-                          Spacer(),
-                          StreamBuilder(
-                            stream: _firestore
-                                .collection('Classes')
-                                .document(classId)
-                                .collection('Students')
-                                .document(email)
-                                .snapshots(),
-                            builder: (BuildContext context, snapshot) {
-                              if (snapshot.data == null) {
-                                return Center(
-                                  child: Container(),
+                          Padding(
+                            padding: EdgeInsets.only(right: 20),
+                            child: StreamBuilder(
+                              stream: _firestore
+                                  .collection('Classes')
+                                  .document(classId)
+                                  .collection('Students')
+                                  .document(email)
+                                  .snapshots(),
+                              builder: (BuildContext context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return Center(
+                                    child: Container(),
+                                  );
+                                }
+                                return SelectStatusRow(
+                                  classId: classId,
+                                  lastChangedStatus: snapshot.data['date'],
+                                  status: snapshot.data['status'],
+                                  email: email,
+                                  maxDaysInactive:
+                                      classSnapshot.data['max days inactive'],
                                 );
-                              }
-                              return SelectStatusRow(
-                                classId: classId,
-                                lastChangedStatus: snapshot.data['date'],
-                                status: snapshot.data['status'],
-                                email: email,
-                                maxDaysInactive:
-                                    classSnapshot.data['max days inactive'],
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            width: 20,
+                              },
+                            ),
                           ),
                         ],
                       );
