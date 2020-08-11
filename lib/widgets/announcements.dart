@@ -60,7 +60,6 @@ class TeacherAnnouncement extends StatelessWidget {
                     announcementId: announcementId,
                   );
                   Navigator.pop(context);
-                  
                 },
               ),
             ],
@@ -76,8 +75,11 @@ class TeacherAnnouncement extends StatelessWidget {
           padding: const EdgeInsets.only(right: 15),
           child: Container(
             decoration: BoxDecoration(
+              border: Border.fromBorderSide(
+                BorderSide(width: 4.0, color: Colors.blue[50]),
+              ),
               borderRadius: BorderRadius.circular(10),
-              color: Color.fromRGBO(235, 235, 235, 1),
+              color: Colors.blue[100],
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -93,9 +95,9 @@ class TeacherAnnouncement extends StatelessWidget {
                         .format(timestamp)
                         .toString(),
                     style: TextStyle(
-                      color: Colors.grey[500],
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[100],
+                      fontSize: 14,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
                   Text(
@@ -110,14 +112,17 @@ class TeacherAnnouncement extends StatelessWidget {
                     message,
                     style: TextStyle(
                         fontSize: 19,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey[500]),
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[800]),
                     softWrap: true,
                   ),
                 ],
               ),
             ),
           ),
+        ),
+        Row(
+          children: [Container()],
         ),
         GestureDetector(
           onTap: () {
