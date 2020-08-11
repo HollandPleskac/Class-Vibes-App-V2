@@ -263,6 +263,8 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                       } else {
                                         return Text(
                                           snapshot.data['email'],
+                                          softWrap: false,
+                                          overflow: TextOverflow.fade,
                                           style: TextStyle(
                                               color: Colors.grey[800],
                                               fontSize: 18),
@@ -319,6 +321,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                           return Text(
                                             snapshot.data['display name'],
                                             softWrap: false,
+                                            overflow: TextOverflow.fade,
                                             style: TextStyle(
                                                 color: Colors.grey[800],
                                                 fontSize: 18),
