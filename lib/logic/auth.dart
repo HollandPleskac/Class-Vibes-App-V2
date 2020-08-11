@@ -280,13 +280,13 @@ class Auth {
       return ['failure', 'User is not registered'];
     }
 
-    String accountStatus = await _firestore
+    String accountType = await _firestore
         .collection('UserData')
         .document(googleUser.email)
         .get()
         .then((docSnap) => docSnap.data['account type']);
 
-    if (accountStatus != 'Student') {
+    if (accountType != 'Student') {
       return ['failure', 'Account set up as a teacher'];
     } else {
       final GoogleSignInAuthentication googleAuth =
@@ -370,13 +370,13 @@ class Auth {
       return ['failure', 'User is not registered'];
     }
 
-    String accountStatus = await _firestore
+    String accountType = await _firestore
         .collection('UserData')
         .document(googleUser.email)
         .get()
         .then((docSnap) => docSnap.data['account type']);
 
-    if (accountStatus != 'Teacher') {
+    if (accountType != 'Teacher') {
       return ['failure', 'Account set up as a student'];
     } else {
       final GoogleSignInAuthentication googleAuth =
