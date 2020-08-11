@@ -176,7 +176,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       'Login',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.028,
+                                          fontSize: MediaQuery.of(context).size.height * 0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -231,7 +231,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       'Sign in with Google',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.028,
+                                          fontSize: MediaQuery.of(context).size.height * 0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),

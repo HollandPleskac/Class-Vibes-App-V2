@@ -71,7 +71,7 @@ class _WelcomeState extends State<Welcome> {
                                         'Student',
                                         style: TextStyle(
                                             color: Colors.grey[600],
-                                            fontSize: MediaQuery.of(context).size.height*0.028,
+                                            fontSize: MediaQuery.of(context).size.height*0.03,
                                             fontWeight: FontWeight.w400),
                                       ),
                                     ),
@@ -115,7 +115,7 @@ class _WelcomeState extends State<Welcome> {
                                         'Teacher',
                                         style: TextStyle(
                                             color: Colors.grey[600],
-                                            fontSize: MediaQuery.of(context).size.height*0.028,
+                                            fontSize: MediaQuery.of(context).size.height*0.03,
                                             fontWeight: FontWeight.w400),
                                       ),
                                     ),
@@ -159,7 +159,7 @@ class _WelcomeState extends State<Welcome> {
                                         'Register',
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: MediaQuery.of(context).size.height*0.028,
+                                            fontSize: MediaQuery.of(context).size.height*0.03,
                                             fontWeight: FontWeight.w400),
                                       ),
                                     ),

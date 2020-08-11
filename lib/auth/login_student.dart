@@ -169,7 +169,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                       'Login',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.028,
+                                          fontSize: MediaQuery.of(context).size.height * 0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -226,7 +226,7 @@ class _StudentLoginState extends State<StudentLogin> {
                                       'Sign in with Google',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.028,
+                                          fontSize: MediaQuery.of(context).size.height * 0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),

@@ -255,7 +255,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                         'Sign up',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.height * 0.028,
+                            fontSize: MediaQuery.of(context).size.height * 0.03,
                             fontWeight: FontWeight.w400),
                       ),
                     ),
@@ -301,7 +301,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                         'Sign up with Google',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.height * 0.028,
+                            fontSize: MediaQuery.of(context).size.height * 0.03,
                             fontWeight: FontWeight.w400),
                       ),
                     ),
