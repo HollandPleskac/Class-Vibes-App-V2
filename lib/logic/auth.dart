@@ -454,4 +454,8 @@ class Auth {
     // delete the user in firebaser auth
     await user.delete();
   }
+
+  Future<void> deleteStudentAccount() {
+    
+  }
 }
