@@ -108,8 +108,16 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                               }).toList(),
                             );
                           } else {
-                            return Center(
-                              child: NoDocsClassViewStudent(),
+                            return Scaffold(
+                              backgroundColor: Colors.white,
+                              appBar: AppBar(
+                                backgroundColor: Colors.blue[200],
+                                elevation: 6,
+                                leading: SizedBox(),
+                                centerTitle: true,
+                                title: Text('Ask your teacher for the class code!',style: TextStyle(color: Colors.white),),
+                              ),
+                              body: Center(child: NoDocsClassViewStudent()),
                             );
                           }
                       }
@@ -263,7 +271,7 @@ void showStudentInfoPopUp(BuildContext context) {
                   height: 200.0,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white.withOpacity(0.9)),
+                      color: Colors.white.withOpacity(1)),
                   child: Column(
                     children: [
                       SizedBox(
