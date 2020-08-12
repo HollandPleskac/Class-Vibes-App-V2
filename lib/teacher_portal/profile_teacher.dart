@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:class_vibes_v2/teacher_portal/account_settings_teacher.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -214,35 +215,35 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           height: MediaQuery.of(context).size.width * 0.2,
                         ),
                         Center(
-                        child: Container(
-                          height: 42,
-                          width: MediaQuery.of(context).size.width - 50,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                "Teacher",
-                                style: TextStyle(
-                                    color: Colors.grey[800], fontSize: 18),
-                              ),
-                              Spacer(),
-                              // Text(
-                              //   "Created 16 Classes",
-                              //   style: TextStyle(
-                              //       color: Colors.grey[400], fontSize: 14),
-                              // ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                            ],
+                          child: Container(
+                            height: 42,
+                            width: MediaQuery.of(context).size.width - 50,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Teacher",
+                                  style: TextStyle(
+                                      color: Colors.grey[800], fontSize: 18),
+                                ),
+                                Spacer(),
+                                // Text(
+                                //   "Created 16 Classes",
+                                //   style: TextStyle(
+                                //       color: Colors.grey[400], fontSize: 14),
+                                // ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                              ],
+                            ),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10)),
                           ),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(10)),
                         ),
-                      ),
                         SizedBox(
                           height: 15,
                         ),
@@ -374,21 +375,48 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(140, 15, 140, 0),
-                          child: FlatButton(
-                            color: Colors.grey[200],
-                            onPressed: () {
-                              print('logging out');
-                              _auth.signOut();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Welcome()));
-                            },
-                            child: Text(
-                              'Log Out',
-                            ),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.4,
+                                padding: EdgeInsets.only(top:20),
+                                child: FlatButton(
+                                  color: Colors.grey[200],
+                                  onPressed: () {
+                                    print('logging out');
+                                    _auth.signOut();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Welcome()));
+                                  },
+                                  child: Text(
+                                    'Log Out',
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 20,),
+                              Container(
+                                width: MediaQuery.of(context).size.width*0.4,
+                                padding: EdgeInsets.only(top:20),
+                                child: FlatButton(
+                                  color: Colors.grey[200],
+                                  onPressed: () {
+                                    print('deleteing account');
+                                    
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => AccountSettingsTeacherPage()));
+                                  },
+                                  child: Text(
+                                    'Acount Settings',
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         )
                       ],

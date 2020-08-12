@@ -332,7 +332,7 @@ class Auth {
         .then((querySnap) => querySnap.documents.isNotEmpty);
 
     if (districtIdExists == false) {
-      return ['failure','That district code does not exist'];
+      return ['failure', 'That district code does not exist'];
     }
 
     setUpAccountTeacher(
@@ -401,5 +401,61 @@ class Auth {
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
+  }
+
+  Future<void> deleteAccount() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    String email = user.email;
+
+    // delete all Classes from all of the trees
+    List<DocumentSnapshot> classDocuments = await _firestore
+        .collection('UserData')
+        .document(email)
+        .collection('Classes')
+        .getDocuments()
+        .then((querySnap) {
+      return querySnap.documents;
+    });
+
+    for (int i = 0; i < classDocuments.length; i++) {
+      // delete the class from the classes tree
+      String classId = classDocuments[i].documentID;
+      _firestore.collection('Classes').document(classId).delete();
+
+      // delete the class from the UserData teachers tree
+
+      _firestore
+          .collection('UserData')
+          .document(email)
+          .collection('Classes')
+          .document(classId)
+          .delete();
+
+      // delete classes from UserData students tree
+
+      List<DocumentSnapshot> studentDocuments = await _firestore
+          .collection('Classes')
+          .document(classId)
+          .collection('Students')
+          .getDocuments()
+          .then((querySnap) => querySnap.documents);
+      print(studentDocuments);
+
+      //looping through all student documents for the class and deleting them from user data tree
+      for (var i = 0; i < studentDocuments.length; i++) {
+        studentDocuments.forEach((DocumentSnapshot document) {
+          //document.documentID is a student email
+          _firestore
+              .collection('UserData')
+              .document(document.documentID)
+              .collection('Classes')
+              .document(classId)
+              .delete();
+        });
+      }
+    }
+
+    // await _firestore.collection('UserData').document(email).delete();
+    // await user.delete();
   }
 }
