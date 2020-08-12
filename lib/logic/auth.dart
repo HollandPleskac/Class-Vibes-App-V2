@@ -112,6 +112,8 @@ class Auth {
 
       await user.updateProfile(userUpdateInfo);
 
+      await user.sendEmailVerification();
+
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -161,6 +163,8 @@ class Auth {
           userUpdateInfo.displayName = username;
 
           await user.updateProfile(userUpdateInfo);
+
+          await user.sendEmailVerification();
 
           return ['success', email];
         } catch (error) {
@@ -260,6 +264,8 @@ class Auth {
 
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
+
+    await user.sendEmailVerification();
     print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
@@ -350,6 +356,8 @@ class Auth {
 
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
+
+    await user.sendEmailVerification();
     print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
