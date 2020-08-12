@@ -354,7 +354,7 @@ class Auth {
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
-    return ['success', ''];
+    return ['success', 'Successfully Signed Up\nVerify your email to continue'];
   }
 
   Future<List> signInWithGoogleTeacher() async {
