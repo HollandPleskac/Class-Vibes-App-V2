@@ -19,7 +19,7 @@ class DeleteAccountScreen extends StatelessWidget {
         child: FlatButton(
           child: Text('Delete forever'),
           onPressed: () {
-            _auth.deleteAccount();
+            _auth.deleteTeacherAccount();
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => Welcome()),
                   (Route<dynamic> route) => false);
