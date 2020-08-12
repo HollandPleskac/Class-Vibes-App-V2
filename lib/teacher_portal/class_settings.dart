@@ -349,7 +349,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
             : NumberPicker.integer(
                 initialValue: widget.maxDaysInactive,
                 minValue: 1,
-                maxValue: 7,
+                maxValue: 14,
                 onChanged: (value) {
                   setState(() {
                     widget.maxDaysInactive = value;
