@@ -14,6 +14,10 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
+      // if (!user.isEmailVerified) {
+      //   return ['failure', 'Verify your email to continue'];
+      // }
+
       if (await checkAccountType(email) == 'Teacher') {
         return ['failure', 'Account registered as a teacher'];
       }
@@ -57,6 +61,10 @@ class Auth {
           email: email, password: password);
 
       FirebaseUser user = authResult.user;
+
+      // if (!user.isEmailVerified) {
+      //   return ['failure', 'Verify your email to continue'];
+      // }
 
       if (await checkAccountType(email) == 'Student') {
         return ['failure', 'Account registered as a student'];
@@ -112,6 +120,8 @@ class Auth {
 
       await user.updateProfile(userUpdateInfo);
 
+      await user.sendEmailVerification();
+
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -161,6 +171,8 @@ class Auth {
           userUpdateInfo.displayName = username;
 
           await user.updateProfile(userUpdateInfo);
+
+          await user.sendEmailVerification();
 
           return ['success', email];
         } catch (error) {
@@ -260,6 +272,7 @@ class Auth {
 
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
+
     print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
@@ -350,11 +363,12 @@ class Auth {
 
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
+
     print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
-    return ['success', ''];
+    return ['success', 'Successfully Signed Up'];
   }
 
   Future<List> signInWithGoogleTeacher() async {
@@ -401,61 +415,5 @@ class Auth {
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
-  }
-
-  Future<void> deleteTeacherAccount() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
-    String email = user.email;
-
-    // delete all Classes from all of the trees
-    List<DocumentSnapshot> classDocuments = await _firestore
-        .collection('UserData')
-        .document(email)
-        .collection('Classes')
-        .getDocuments()
-        .then((querySnap) {
-      return querySnap.documents;
-    });
-
-    for (int i = 0; i < classDocuments.length; i++) {
-      // delete the class from the classes tree
-      String classId = classDocuments[i].documentID;
-      _firestore.collection('Classes').document(classId).delete();
-
-      // not need to the delete from UserData teacher Classes tree because email of User is getting deleted anyways
-
-      // delete classes from UserData students tree
-
-      List<DocumentSnapshot> studentDocuments = await _firestore
-          .collection('Classes')
-          .document(classId)
-          .collection('Students')
-          .getDocuments()
-          .then((querySnap) => querySnap.documents);
-      print(studentDocuments);
-
-      //looping through all student documents for the class and deleting them from user data tree
-      for (var i = 0; i < studentDocuments.length; i++) {
-        studentDocuments.forEach((DocumentSnapshot document) {
-          //document.documentID is a student email
-          _firestore
-              .collection('UserData')
-              .document(document.documentID)
-              .collection('Classes')
-              .document(classId)
-              .delete();
-        });
-      }
-    }
-
-    // delete the users account in the UserData tree
-    await _firestore.collection('UserData').document(email).delete();
-
-    // delete the user in firebaser auth
-    await user.delete();
-  }
-
-  Future<void> deleteStudentAccount() {
-    
   }
 }

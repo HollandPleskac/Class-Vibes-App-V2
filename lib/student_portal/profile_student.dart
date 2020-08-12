@@ -11,7 +11,7 @@ import '../constant.dart';
 import '../logic/fire.dart';
 import '../logic/auth.dart';
 import '../auth/welcome.dart';
-import 'account_settings_student.dart';
+import './account_settings_student.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

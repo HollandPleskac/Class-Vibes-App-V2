@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:class_vibes_v2/auth/login_teacher.dart';
+import 'package:class_vibes_v2/auth/teacher_sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,32 +24,54 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
   final TextEditingController _codeController = TextEditingController();
 
   String feedback = '';
-  String googleAuthFeedback = '';
+  List<dynamic> googleAuthFeedback = ['', ''];
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      title: googleAuthFeedback != ''
+      title: googleAuthFeedback[0] != ''
           ? Container()
           : Text('Enter your District Code'),
-      content: googleAuthFeedback != ''
+      content: googleAuthFeedback[0] != ''
           ? Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  FaIcon(
-                    FontAwesomeIcons.exclamationCircle,
-                    size: 35,
-                  ),
+                  googleAuthFeedback[0] == 'failure'
+                      ? FaIcon(
+                          FontAwesomeIcons.exclamationCircle,
+                          color: Colors.red,
+                          size: 30,
+                        )
+                      : FaIcon(
+                          FontAwesomeIcons.check,
+                          color: Colors.green,
+                          size: 30,
+                        ),
                   SizedBox(
                     height: 20,
                   ),
                   Text(
-                    googleAuthFeedback,
-                    style: TextStyle(),
+                    googleAuthFeedback[1],
+                    textAlign: TextAlign.center,
                   ),
+                  // googleAuthFeedback[0] == 'success'
+                  //     ? FlatButton(
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(2),
+                  //         ),
+                  //         child: Text(
+                  //           'Resend Email Verification',
+                  //           style:
+                  //               TextStyle(color: kPrimaryColor, fontSize: 15.5),
+                  //         ),
+                  //         onPressed: () {
+                  //           print('todo is to make resend email verification function');
+                  //         },
+                  //       )
+                  //     : Container(),
                 ],
               ),
             )
@@ -79,10 +103,7 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                   feedback,
                   style: TextStyle(color: Colors.red),
                 ),
-              ],
-            ),
-      actions: <Widget>[
-        googleAuthFeedback != ''
+                googleAuthFeedback[0] != ''
             ? Container()
             : FlatButton(
                 shape: RoundedRectangleBorder(
@@ -103,10 +124,19 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                       });
                       List result = await _auth
                           .signUpWithGoogleTeacher(_codeController.text);
-                      print(result);
-                      if (result[0] == 'failure') {
-                        setState(() {
-                          googleAuthFeedback = result[1];
+
+                      setState(() {
+                        googleAuthFeedback = result;
+                      });
+
+                      if (googleAuthFeedback[0] == 'success') {
+                        Timer(Duration(milliseconds: 2250), () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TeacherLogin(),
+                            ),
+                          );
                         });
                       }
                     } else {
@@ -117,7 +147,9 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                     }
                   }
                 })
-      ],
+              ],
+            ),
+      
     );
   }
 }
