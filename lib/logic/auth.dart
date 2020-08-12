@@ -422,6 +422,7 @@ class Auth {
       _firestore.collection('Classes').document(classId).delete();
 
       // not need to the delete from UserData teacher Classes tree because email of User is getting deleted anyways
+      // Note on the above comment - maybe delete the other trees becuase they seem to stay there in the db
 
       // delete classes from UserData students tree
 
@@ -480,12 +481,13 @@ class Auth {
           .document(email)
           .delete();
 
-      // delete student from User Data tree
+      
+    }
+    // delete student from User Data tree
 
       await _firestore.collection('UserData').document(email).delete();
 
       await user.delete();
       print('successfully deleted account');
-    }
   }
 }
