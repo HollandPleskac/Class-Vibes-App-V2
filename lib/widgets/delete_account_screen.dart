@@ -24,7 +24,7 @@ class DeleteAccountScreen extends StatelessWidget {
           onPressed: () async {
             print('deleteing + ' + accountType);
             
-            accountType == 'Teacher' ? await _auth.deleteTeacherAccount() : await _auth.deleteStudentAccount();
+            // accountType == 'Teacher' ? await _auth.deleteTeacherAccount() : await _auth.deleteStudentAccount();
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => Welcome()),
                   (Route<dynamic> route) => false);
