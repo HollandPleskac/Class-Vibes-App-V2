@@ -14,6 +14,10 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
+      // if (!user.isEmailVerified) {
+      //   return ['failure', 'Verify your email to continue'];
+      // }
+
       if (await checkAccountType(email) == 'Teacher') {
         return ['failure', 'Account registered as a teacher'];
       }
@@ -57,6 +61,10 @@ class Auth {
           email: email, password: password);
 
       FirebaseUser user = authResult.user;
+
+      // if (!user.isEmailVerified) {
+      //   return ['failure', 'Verify your email to continue'];
+      // }
 
       if (await checkAccountType(email) == 'Student') {
         return ['failure', 'Account registered as a student'];
@@ -265,7 +273,6 @@ class Auth {
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
 
-    await user.sendEmailVerification();
     print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
@@ -357,12 +364,11 @@ class Auth {
     final FirebaseUser user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
 
-    await user.sendEmailVerification();
     print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
-    return ['success', 'Successfully Signed Up\nVerify your email to continue'];
+    return ['success', 'Successfully Signed Up'];
   }
 
   Future<List> signInWithGoogleTeacher() async {
