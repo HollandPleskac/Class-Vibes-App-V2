@@ -48,7 +48,7 @@ class Auth {
         case "ERROR_OPERATION_NOT_ALLOWED":
           return [
             'failure',
-            'Signing in with Email and Password is not enabled.'
+            'Operation not allowed.'
           ];
         default:
           return ['failure', 'An unknown error occurred'];
@@ -98,7 +98,7 @@ class Auth {
         case "ERROR_OPERATION_NOT_ALLOWED":
           return [
             'failure',
-            'Signing in with Email and Password is not enabled.'
+            'Operation not allowed.'
           ];
         default:
           return ['failure', 'An unknown error occurred'];
@@ -266,18 +266,18 @@ class Auth {
     setUpAccountStudent(
         email: googleUser.email, username: googleUser.displayName);
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    // final GoogleSignInAuthentication googleAuth =
+    //     await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+    // final AuthCredential credential = GoogleAuthProvider.getCredential(
+    //   accessToken: googleAuth.accessToken,
+    //   idToken: googleAuth.idToken,
+    // );
 
-    final FirebaseUser user =
-        (await _firebaseAuth.signInWithCredential(credential)).user;
+    // final FirebaseUser user =
+    //     (await _firebaseAuth.signInWithCredential(credential)).user;
 
-    print("signed in " + user.displayName);
+    // print("signed in " + user.displayName);
     // if the user is not email verified which they arenet at this point
     // send them to the sign in teacher screen
     // and check if they verify their email
