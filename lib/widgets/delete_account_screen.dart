@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constant.dart';
 import '../logic/auth.dart';
+import '../auth/welcome.dart';
 
 final _auth = Auth();
 
@@ -19,9 +20,9 @@ class DeleteAccountScreen extends StatelessWidget {
           child: Text('Delete forever'),
           onPressed: () {
             _auth.deleteAccount();
-              // Navigator.of(context).pushAndRemoveUntil(
-              //     MaterialPageRoute(builder: (context) => Welcome()),
-              //     (Route<dynamic> route) => false);
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => Welcome()),
+                  (Route<dynamic> route) => false);
           },
         ),
       ),
