@@ -458,7 +458,6 @@ class Auth {
   Future<void> deleteStudentAccount() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     String email = user.email;
-    print('USERS EMAIL + ' + user.email);
 
     List<DocumentSnapshot> classDocuments = await _firestore
         .collection('UserData')
