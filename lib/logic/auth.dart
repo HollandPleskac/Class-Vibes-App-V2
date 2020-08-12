@@ -422,14 +422,7 @@ class Auth {
       String classId = classDocuments[i].documentID;
       _firestore.collection('Classes').document(classId).delete();
 
-      // delete the class from the UserData teachers tree
-
-      _firestore
-          .collection('UserData')
-          .document(email)
-          .collection('Classes')
-          .document(classId)
-          .delete();
+      // not need to the delete from UserData teacher Classes tree because email of User is getting deleted anyways
 
       // delete classes from UserData students tree
 
@@ -455,7 +448,10 @@ class Auth {
       }
     }
 
-    // await _firestore.collection('UserData').document(email).delete();
-    // await user.delete();
+    // delete the users account in the UserData tree
+    await _firestore.collection('UserData').document(email).delete();
+
+    // delete the user in firebaser auth
+    await user.delete();
   }
 }
