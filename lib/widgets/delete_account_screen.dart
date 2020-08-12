@@ -7,6 +7,9 @@ import '../auth/welcome.dart';
 final _auth = Auth();
 
 class DeleteAccountScreen extends StatelessWidget {
+  final String accountType;
+
+  DeleteAccountScreen(this.accountType);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +22,7 @@ class DeleteAccountScreen extends StatelessWidget {
         child: FlatButton(
           child: Text('Delete forever'),
           onPressed: () {
-            _auth.deleteTeacherAccount();
+            accountType == 'Teacher' ? _auth.deleteTeacherAccount() : _auth.deleteStudentAccount();
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => Welcome()),
                   (Route<dynamic> route) => false);

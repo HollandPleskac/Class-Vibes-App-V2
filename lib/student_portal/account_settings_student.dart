@@ -8,7 +8,7 @@ import '../widgets/delete_account_screen.dart';
 final _auth = Auth();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-class AccountSettingsTeacherPage extends StatelessWidget {
+class AccountSettingsStudentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class AccountSettingsTeacherPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DeleteAccountScreen('Teacher'),
+                  builder: (context) => DeleteAccountScreen('Student'),
                 ),
               );
             },
