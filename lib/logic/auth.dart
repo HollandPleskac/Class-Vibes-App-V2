@@ -407,7 +407,7 @@ class Auth {
     FirebaseUser user = await _firebaseAuth.currentUser();
     String email = user.email;
 
-    // delete all Classes from all of the trees
+    // delete all Classes 
     List<DocumentSnapshot> classDocuments = await _firestore
         .collection('UserData')
         .document(email)
@@ -418,7 +418,7 @@ class Auth {
     });
 
     for (int i = 0; i < classDocuments.length; i++) {
-      // delete the class from the classes tree
+     
       String classId = classDocuments[i].documentID;
       _firestore.collection('Classes').document(classId).delete();
 
@@ -455,7 +455,29 @@ class Auth {
     await user.delete();
   }
 
-  Future<void> deleteStudentAccount() {
-    
+  Future<void> deleteStudentAccount() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    String email = user.email;
+
+    List<DocumentSnapshot> classDocuments = await _firestore
+        .collection('UserData')
+        .document(email)
+        .collection('Classes')
+        .getDocuments()
+        .then((querySnap) {
+      return querySnap.documents;
+    });
+
+    for (int i = 0; i < classDocuments.length; i++) {
+      String classId = classDocuments[i].documentID;
+
+      // delete student from Classes tree
+
+      _firestore.collection('Classes').document(classId).collection('Students').document(email).delete();
+
+      // delet student from User Data tree
+
+      _firestore .collection('UserData').document(email).delete();
+    }
   }
 }
