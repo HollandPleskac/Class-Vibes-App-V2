@@ -129,16 +129,16 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                         googleAuthFeedback = result;
                       });
 
-                      if (googleAuthFeedback[0] == 'success') {
-                        Timer(Duration(milliseconds: 2250), () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TeacherLogin(),
-                            ),
-                          );
-                        });
-                      }
+                      // if (googleAuthFeedback[0] == 'success') {
+                        // Timer(Duration(milliseconds: 2250), () {
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => TeacherLogin(),
+                          //   ),
+                          // );
+                        // });
+                      // }
                     } else {
                       print('invalid');
                       setState(() {

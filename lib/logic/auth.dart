@@ -48,11 +48,13 @@ class Auth {
         case "ERROR_OPERATION_NOT_ALLOWED":
           return [
             'failure',
-            'Account not enabled - contact {class vibes email}'
+            'Signing in with Email and Password is not enabled.'
           ];
+        default:
+          return ['failure', 'An unknown error occurred'];
       }
     }
-    return ['success', email];
+  
   }
 
   Future<List> loginAsTeacher({String email, String password}) async {
@@ -96,11 +98,13 @@ class Auth {
         case "ERROR_OPERATION_NOT_ALLOWED":
           return [
             'failure',
-            'Account not enabled - contact {class vibes email}'
+            'Signing in with Email and Password is not enabled.'
           ];
+        default:
+          return ['failure', 'An unknown error occurred'];
       }
     }
-    return ['success', email];
+    
   }
 
 // if teacher - get district id - check w/ district id and sort out all the errors before signing up
@@ -353,21 +357,19 @@ class Auth {
         username: googleUser.displayName,
         districtId: districtCode);
 
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+    // final GoogleSignInAuthentication googleAuth =
+    //     await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+    // final AuthCredential credential = GoogleAuthProvider.getCredential(
+    //   accessToken: googleAuth.accessToken,
+    //   idToken: googleAuth.idToken,
+    // );
 
-    final FirebaseUser user =
-        (await _firebaseAuth.signInWithCredential(credential)).user;
+    // final FirebaseUser user =
+    //     (await _firebaseAuth.signInWithCredential(credential)).user;
 
-    print("signed in " + user.displayName);
-    // if the user is not email verified which they arenet at this point
-    // send them to the sign in teacher screen
-    // and check if they verify their email
+    // print("signed in " + user.displayName);
+
     return ['success', 'Successfully Signed Up'];
   }
 
@@ -411,9 +413,5 @@ class Auth {
       await user.updateProfile(userUpdateInfo);
       return ['success', ''];
     }
-
-    // if the user is not email verified which they arenet at this point
-    // send them to the sign in teacher screen
-    // and check if they verify their email
   }
 }
