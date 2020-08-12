@@ -403,7 +403,7 @@ class Auth {
     // and check if they verify their email
   }
 
-  Future<void> deleteAccount() async {
+  Future<void> deleteTeacherAccount() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     String email = user.email;
 
