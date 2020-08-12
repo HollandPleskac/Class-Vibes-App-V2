@@ -103,10 +103,7 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                   feedback,
                   style: TextStyle(color: Colors.red),
                 ),
-              ],
-            ),
-      actions: <Widget>[
-        googleAuthFeedback[0] != ''
+                googleAuthFeedback[0] != ''
             ? Container()
             : FlatButton(
                 shape: RoundedRectangleBorder(
@@ -150,7 +147,9 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                     }
                   }
                 })
-      ],
+              ],
+            ),
+      
     );
   }
 }
