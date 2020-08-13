@@ -385,6 +385,7 @@ class Auth {
     if (isUserInDB == false) {
       return ['failure', 'User is not registered'];
     }
+    print('user is in db');
 
     String accountType = await _firestore
         .collection('UserData')
@@ -394,7 +395,10 @@ class Auth {
 
     if (accountType != 'Teacher') {
       return ['failure', 'Account set up as a student'];
+
+    
     } else {
+      print('account is set up as a teacher');
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
@@ -402,6 +406,7 @@ class Auth {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+     
 
       final FirebaseUser user =
           (await _firebaseAuth.signInWithCredential(credential)).user;

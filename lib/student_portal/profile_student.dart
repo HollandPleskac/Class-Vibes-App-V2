@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
@@ -17,6 +18,7 @@ final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 final _auth = Auth();
+final _googleSignIn = GoogleSignIn();
 
 class ProfileStudent extends StatefulWidget {
   @override
@@ -378,6 +380,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                   onPressed: () {
                                     print('logging out');
                                     _auth.signOut();
+                                    _googleSignIn.disconnect();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
