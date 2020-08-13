@@ -382,14 +382,18 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Container(
-                                width: MediaQuery.of(context).size.width*0.4,
-                                padding: EdgeInsets.only(top:20),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                padding: EdgeInsets.only(top: 20),
                                 child: FlatButton(
                                   color: Colors.grey[200],
-                                  onPressed: () {
+                                  onPressed: () async {
                                     print('logging out');
                                     _auth.signOut();
-                                    _googleSignIn.disconnect();
+                                    if (await _googleSignIn.isSignedIn() ==
+                                        true) {
+                                          // await _googleSignIn.signOut();
+                                      await _googleSignIn.disconnect();
+                                    }
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -400,19 +404,22 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 20,),
+                              SizedBox(
+                                width: 20,
+                              ),
                               Container(
-                                width: MediaQuery.of(context).size.width*0.4,
-                                padding: EdgeInsets.only(top:20),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                padding: EdgeInsets.only(top: 20),
                                 child: FlatButton(
                                   color: Colors.grey[200],
                                   onPressed: () {
                                     print('deleteing account');
-                                    
+
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => AccountSettingsTeacherPage()));
+                                            builder: (context) =>
+                                                AccountSettingsTeacherPage()));
                                   },
                                   child: Text(
                                     'Acount Settings',

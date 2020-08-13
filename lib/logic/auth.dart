@@ -46,15 +46,11 @@ class Auth {
             'Too many requests to sign in please wait to sign in'
           ];
         case "ERROR_OPERATION_NOT_ALLOWED":
-          return [
-            'failure',
-            'Operation not allowed.'
-          ];
+          return ['failure', 'Operation not allowed.'];
         default:
           return ['failure', 'An unknown error occurred'];
       }
     }
-  
   }
 
   Future<List> loginAsTeacher({String email, String password}) async {
@@ -96,15 +92,11 @@ class Auth {
             'Too many requests to sign in please wait to sign in'
           ];
         case "ERROR_OPERATION_NOT_ALLOWED":
-          return [
-            'failure',
-            'Operation not allowed.'
-          ];
+          return ['failure', 'Operation not allowed.'];
         default:
           return ['failure', 'An unknown error occurred'];
       }
     }
-    
   }
 
 // if teacher - get district id - check w/ district id and sort out all the errors before signing up
@@ -155,13 +147,14 @@ class Auth {
     if (districtIdExists) {
       //is teacher is allowed teachers collection?
       //change this iselligible to join to be if teacher email split at @ is matching to one in db
-      bool isEligibleForJoin = await _firestore
-          .collection('Districts')
-          .document(districtId)
-          .collection('Allowed Teachers')
-          .where(FieldPath.documentId, isEqualTo: email)
-          .getDocuments()
-          .then((querySnap) => querySnap.documents.isNotEmpty);
+      // bool isEligibleForJoin = await _firestore
+      //     .collection('Districts')
+      //     .document(districtId)
+      //     .collection('Allowed Teachers')
+      //     .where(FieldPath.documentId, isEqualTo: email)
+      //     .getDocuments()
+      //     .then((querySnap) => querySnap.documents.isNotEmpty);
+      bool isEligibleForJoin = true;
 
       if (isEligibleForJoin) {
         // if so --> sign up the teacher
@@ -252,6 +245,9 @@ class Auth {
   }
 
   Future<List> signUpWithGoogleStudent() async {
+    // if (await _googleSignIn.isSignedIn() == true) {
+    //   await _googleSignIn.signOut();
+    // }
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
     bool isUserInDB = await _firestore
@@ -285,6 +281,10 @@ class Auth {
   }
 
   Future<List> signInWithGoogleStudent() async {
+
+    // if (await _googleSignIn.isSignedIn() == true) {
+    //   await _googleSignIn.signOut();
+    // }
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
@@ -331,6 +331,11 @@ class Auth {
   }
 
   Future<List> signUpWithGoogleTeacher(String districtCode) async {
+    // to show the full google popup and let them choose an account
+    // if (await _googleSignIn.isSignedIn() == true) {
+    //   await _googleSignIn.disconnect();
+    // }
+
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
     bool isUserInDB = await _firestore
@@ -374,6 +379,9 @@ class Auth {
   }
 
   Future<List> signInWithGoogleTeacher() async {
+    // if (await _googleSignIn.isSignedIn() == true) {
+    //   await _googleSignIn.signOut();
+    // }
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
@@ -395,8 +403,6 @@ class Auth {
 
     if (accountType != 'Teacher') {
       return ['failure', 'Account set up as a student'];
-
-    
     } else {
       print('account is set up as a teacher');
       final GoogleSignInAuthentication googleAuth =
@@ -406,7 +412,6 @@ class Auth {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-     
 
       final FirebaseUser user =
           (await _firebaseAuth.signInWithCredential(credential)).user;

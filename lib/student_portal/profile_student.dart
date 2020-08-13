@@ -309,7 +309,6 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                   width: 15,
                                 ),
                                 Container(
-                                  
                                   width:
                                       MediaQuery.of(context).size.width * 0.51,
                                   child: StreamBuilder(
@@ -368,51 +367,58 @@ class _ProfileStudentState extends State<ProfileStudent> {
                           ),
                         ),
                       ),
-                     Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.4,
-                                padding: EdgeInsets.only(top:20),
-                                child: FlatButton(
-                                  color: Colors.grey[200],
-                                  onPressed: () {
-                                    print('logging out');
-                                    _auth.signOut();
-                                    _googleSignIn.disconnect();
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Welcome()));
-                                  },
-                                  child: Text(
-                                    'Log Out',
-                                  ),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              padding: EdgeInsets.only(top: 20),
+                              child: FlatButton(
+                                color: Colors.grey[200],
+                                onPressed: () async {
+                                  print('logging out');
+                                  _auth.signOut();
+                                  if (await _googleSignIn.isSignedIn() ==
+                                      true) {
+                                    await _googleSignIn.disconnect();
+                                  }
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Welcome()));
+                                },
+                                child: Text(
+                                  'Log Out',
                                 ),
                               ),
-                              SizedBox(width: 20,),
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.4,
-                                padding: EdgeInsets.only(top:20),
-                                child: FlatButton(
-                                  color: Colors.grey[200],
-                                  onPressed: () {
-                                    print('deleteing account');
-                                    
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AccountSettingsStudentPage()));
-                                  },
-                                  child: Text(
-                                    'Acount Settings',
-                                  ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              padding: EdgeInsets.only(top: 20),
+                              child: FlatButton(
+                                color: Colors.grey[200],
+                                onPressed: () {
+                                  print('deleteing account');
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AccountSettingsStudentPage()));
+                                },
+                                child: Text(
+                                  'Acount Settings',
                                 ),
-                              )
-                            ],
-                          ),
-                        )
+                              ),
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 );
