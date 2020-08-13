@@ -14,9 +14,9 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
-      // if (!user.isEmailVerified) {
-      //   return ['failure', 'Verify your email to continue'];
-      // }
+      if (!user.isEmailVerified) {
+        return ['failure', 'Verify your email to continue'];
+      }
 
       if (await checkAccountType(email) == 'Teacher') {
         return ['failure', 'Account registered as a teacher'];
@@ -64,9 +64,9 @@ class Auth {
 
       FirebaseUser user = authResult.user;
 
-      // if (!user.isEmailVerified) {
-      //   return ['failure', 'Verify your email to continue'];
-      // }
+      if (!user.isEmailVerified) {
+        return ['failure', 'Verify your email to continue'];
+      }
 
       if (await checkAccountType(email) == 'Student') {
         return ['failure', 'Account registered as a student'];
