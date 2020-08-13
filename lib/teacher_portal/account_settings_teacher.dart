@@ -51,62 +51,62 @@ class AccountSettingsTeacherPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Divider(),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DeleteAccountScreen('Teacher'),
-                ),
-              );
-            },
-            child: InkWell(
-              child: Container(
-                height: 40,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    height: 40,
-                    child: Row(
-                      children: [SizedBox(width: 20,),
-                        Text('Edit Name',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w400),),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Divider(),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DeleteAccountScreen('Teacher'),
-                ),
-              );
-            },
-            child: InkWell(
-              child: Container(
-                height: 40,
-                child: Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    height: 40,
-                    child: Row(
-                      children: [SizedBox(width: 20,),
-                        Text('Bob',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w400),),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => DeleteAccountScreen('Teacher'),
+          //       ),
+          //     );
+          //   },
+          //   child: InkWell(
+          //     child: Container(
+          //       height: 40,
+          //       child: Material(
+          //         color: Colors.transparent,
+          //         child: Container(
+          //           height: 40,
+          //           child: Row(
+          //             children: [SizedBox(width: 20,),
+          //               Text('Edit Name',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w400),),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 10),
+          //   child: Divider(),
+          // ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => DeleteAccountScreen('Teacher'),
+          //       ),
+          //     );
+          //   },
+          //   child: InkWell(
+          //     child: Container(
+          //       height: 40,
+          //       child: Material(
+          //         color: Colors.transparent,
+          //         child: Container(
+          //           height: 40,
+          //           child: Row(
+          //             children: [SizedBox(width: 20,),
+          //               Text('Bob',style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w400),),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -362,18 +362,18 @@ class Auth {
         username: googleUser.displayName,
         districtId: districtCode);
 
-    // final GoogleSignInAuthentication googleAuth =
-    //     await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
-    // final AuthCredential credential = GoogleAuthProvider.getCredential(
-    //   accessToken: googleAuth.accessToken,
-    //   idToken: googleAuth.idToken,
-    // );
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
 
-    // final FirebaseUser user =
-    //     (await _firebaseAuth.signInWithCredential(credential)).user;
+    final FirebaseUser user =
+        (await _firebaseAuth.signInWithCredential(credential)).user;
 
-    // print("signed in " + user.displayName);
+    print("signed in " + user.displayName);
 
     return ['success', 'Successfully Signed Up'];
   }

@@ -216,7 +216,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       _feedback = result[1];
                                     });
                                   } else {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>

@@ -18,4 +18,8 @@ class ClassVibesServer {
         'http://api-v1.classvibes.net/api/sendEmail?code=$classCode&title=$title&message=$message&className=$className&apiToken=$token');
     print(getResponse.body);
   }
+
+  Future<void> deleteAccountStudent() async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+  }
 }

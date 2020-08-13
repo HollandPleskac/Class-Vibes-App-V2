@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:class_vibes_v2/auth/login_teacher.dart';
 import 'package:class_vibes_v2/auth/teacher_sign_up.dart';
+import 'package:class_vibes_v2/teacher_portal/classview_teacher.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -129,16 +130,16 @@ class _GoogleSignUpPopupState extends State<GoogleSignUpPopup> {
                         googleAuthFeedback = result;
                       });
 
-                      // if (googleAuthFeedback[0] == 'success') {
-                        // Timer(Duration(milliseconds: 2250), () {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => TeacherLogin(),
-                          //   ),
-                          // );
-                        // });
-                      // }
+                      if (googleAuthFeedback[0] == 'success') {
+                        Timer(Duration(milliseconds: 1000), () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ClassViewTeacher(),
+                            ),
+                          );
+                        });
+                      }
                     } else {
                       print('invalid');
                       setState(() {
