@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../student_portal/classview_student.dart';
 import '../constant.dart';
@@ -189,7 +190,9 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                 });
                               },
                             ),
-                            SizedBox(width: 10,),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -218,7 +221,8 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.005,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.005,
                                 ),
                                 Row(
                                   children: <Widget>[
@@ -273,13 +277,34 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                           username: _usernameController.text,
                                           email: _emailController.text,
                                         );
-
-                                        //push next screen
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ClassViewStudent(),
+                                        //show success dialog
+                                        showDialog(
+                                          context: context,
+                                          child: AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                FaIcon(
+                                                  FontAwesomeIcons.check,
+                                                  color: Colors.green,
+                                                  size: 30,
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Center(
+                                                  child: Text('Success!'),
+                                                ),
+                                                SizedBox(height: 5),
+                                                Center(
+                                                  child: Text(
+                                                      'Verify you email to continue'),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         );
                                       } else {

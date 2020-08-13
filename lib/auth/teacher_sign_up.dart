@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constant.dart';
@@ -270,11 +271,32 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                             email: _emailController.text,
                           );
 
-                          //push next screen
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ClassViewTeacher(),
+                          //show success dialog
+                          showDialog(
+                            context: context,
+                            child: AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  FaIcon(
+                                    FontAwesomeIcons.check,
+                                    color: Colors.green,
+                                    size: 30,
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Center(
+                                    child: Text('Success!'),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Center(
+                                    child: Text('Verify you email to continue'),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         } else {
