@@ -391,7 +391,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                     _auth.signOut();
                                     if (await _googleSignIn.isSignedIn() ==
                                         true) {
-                                          await _googleSignIn.disconnect();
+                                          // await _googleSignIn.disconnect();
                                           await _googleSignIn.signOut();
                                       
                                     }
