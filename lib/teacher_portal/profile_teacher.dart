@@ -392,7 +392,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                     if (await _googleSignIn.isSignedIn() ==
                                         true) {
                                           // await _googleSignIn.signOut();
-                                      await _googleSignIn.disconnect();
+                                      await _googleSignIn.signOut();
                                     }
                                     Navigator.push(
                                         context,

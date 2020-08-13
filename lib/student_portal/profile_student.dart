@@ -381,7 +381,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                   _auth.signOut();
                                   if (await _googleSignIn.isSignedIn() ==
                                       true) {
-                                    await _googleSignIn.disconnect();
+                                    await _googleSignIn.signOut();
                                   }
 
                                   Navigator.push(
