@@ -379,9 +379,7 @@ class Auth {
   }
 
   Future<List> signInWithGoogleTeacher() async {
-    // if (await _googleSignIn.isSignedIn() == true) {
-    //   await _googleSignIn.signOut();
-    // }
+    
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 

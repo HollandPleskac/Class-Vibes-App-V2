@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "938057332518-e76ljtlahd76ptk0bf1h5tumga7qbkct.apps.googleusercontent.com",
+              "client_id": "938057332518-oubbajgk83ih3chh6s076s3in6i86khf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.xeondevelopershp.classVibesV2"
+                "bundle_id": "com.xeondevelopers.classVibesV2"
               }
             }
           ]
@@ -68,10 +68,10 @@
               "client_type": 3
             },
             {
-              "client_id": "938057332518-e76ljtlahd76ptk0bf1h5tumga7qbkct.apps.googleusercontent.com",
+              "client_id": "938057332518-oubbajgk83ih3chh6s076s3in6i86khf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.xeondevelopershp.classVibesV2"
+                "bundle_id": "com.xeondevelopers.classVibesV2"
               }
             }
           ]
@@ -87,11 +87,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "938057332518-ei6v1ndrt1u02q6h3k50enhgl7jh7vb1.apps.googleusercontent.com",
+          "client_id": "938057332518-kcp39lhvbcjlceeinsh83lg988f8f017.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.xeondevelopers.class_vibes_v2",
-            "certificate_hash": "64e2cb5fd226086875dbb84dd12365b5df3e12d8"
+            "certificate_hash": "6b76954edc33f011e7bc1e1c157b71e28bfd1cb6"
           }
         },
         {
@@ -112,10 +112,10 @@
               "client_type": 3
             },
             {
-              "client_id": "938057332518-e76ljtlahd76ptk0bf1h5tumga7qbkct.apps.googleusercontent.com",
+              "client_id": "938057332518-oubbajgk83ih3chh6s076s3in6i86khf.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.xeondevelopershp.classVibesV2"
+                "bundle_id": "com.xeondevelopers.classVibesV2"
               }
             }
           ]
