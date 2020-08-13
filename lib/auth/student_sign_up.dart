@@ -189,25 +189,59 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                 });
                               },
                             ),
-                            Row(
+                            SizedBox(width: 10,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('I have read and accept the '),
-                                InkWell(
-                                  onTap: () async {
-                                    String url =
-                                        'https://classvibes.net/privacy';
-                                    if (await canLaunch(url)) {
-                                      await launch(url);
-                                    } else {
-                                      throw 'Could not launch $url';
-                                    }
-                                  },
-                                  child: Text(
-                                    'Privacy Policy',
-                                    style: TextStyle(
-                                        color: kPrimaryColor,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('I agree to the '),
+                                    InkWell(
+                                      onTap: () async {
+                                        String url =
+                                            'https://classvibes.net/legal';
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
+                                      child: Text(
+                                        'Terms of Service',
+                                        style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Text('.'),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.005,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Text('I have read and accept the '),
+                                    InkWell(
+                                      onTap: () async {
+                                        String url =
+                                            'https://classvibes.net/privacy';
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
+                                      child: Text(
+                                        'Privacy Policy',
+                                        style: TextStyle(
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Text('.'),
+                                  ],
                                 ),
                               ],
                             ),
@@ -262,7 +296,10 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                       'Sign up',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.03,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -316,7 +353,10 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                       'Sign up with Google',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.03,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
