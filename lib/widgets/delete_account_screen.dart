@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../constant.dart';
 import '../logic/class_vibes_server.dart';
 import '../auth/welcome.dart';
+import '../logic/auth.dart';
 
 final classVibesServer = ClassVibesServer();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+final _auth = Auth();
 
 class DeleteAccountScreen extends StatefulWidget {
   final String accountType;
@@ -47,10 +50,12 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
         child: FlatButton(
           child: Text('Delete forever'),
           onPressed: () async {
+            FirebaseUser user = await _firebaseAuth.currentUser();
             print('deleteing + ' + widget.accountType);
-
+            user.delete();
             await classVibesServer.deleteAccount(
                 email: email, accountType: widget.accountType);
+                
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => Welcome()),
                 (Route<dynamic> route) => false);
