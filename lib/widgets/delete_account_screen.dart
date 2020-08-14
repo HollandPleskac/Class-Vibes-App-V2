@@ -1,15 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
-import '../logic/auth.dart';
+import '../logic/class_vibes_server.dart';
 import '../auth/welcome.dart';
 
-final _auth = Auth();
+final classVibesServer = ClassVibesServer();
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-class DeleteAccountScreen extends StatelessWidget {
+class DeleteAccountScreen extends StatefulWidget {
   final String accountType;
 
   DeleteAccountScreen(this.accountType);
+
+  @override
+  _DeleteAccountScreenState createState() => _DeleteAccountScreenState();
+}
+
+class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
+  String email;
+
+  Future getUserEmail() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    String userEmail = user.email;
+    email = userEmail;
+  }
+
+  @override
+  void initState() {
+    getUserEmail().then((_) {
+      setState(() {});
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +47,13 @@ class DeleteAccountScreen extends StatelessWidget {
         child: FlatButton(
           child: Text('Delete forever'),
           onPressed: () async {
-            print('deleteing + ' + accountType);
-            
-            // accountType == 'Teacher' ? await _auth.deleteTeacherAccount() : await _auth.deleteStudentAccount();
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => Welcome()),
-                  (Route<dynamic> route) => false);
+            print('deleteing + ' + widget.accountType);
+
+            await classVibesServer.deleteAccount(
+                email: email, accountType: widget.accountType);
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => Welcome()),
+                (Route<dynamic> route) => false);
           },
         ),
       ),
