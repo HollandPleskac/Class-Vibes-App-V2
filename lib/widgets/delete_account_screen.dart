@@ -53,14 +53,17 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
           child: Text('Delete forever'),
           onPressed: () async {
             FirebaseUser user = await _firebaseAuth.currentUser();
+
             print('deleteing + ' + widget.accountType);
-            
+
             await classVibesServer.deleteAccount(
                 email: email, accountType: widget.accountType);
-                
-                await _googleSignIn.disconnect();
-                await user.delete();
-                
+
+            if (await _googleSignIn.isSignedIn()) {
+              _googleSignIn.signOut();
+            }
+            await user.delete();
+
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => Welcome()),
                 (Route<dynamic> route) => false);

@@ -18,8 +18,8 @@ class Auth {
         return ['failure', 'Verify your email to continue'];
       }
 
-      if (await checkAccountType(email) == 'Teacher') {
-        return ['failure', 'Account registered as a teacher'];
+      if (await checkAccountType(email) != 'Student') {
+        return ['failure', 'Account is not registered as a student'];
       }
 
       if (await checkAccountStatus(email) != 'Activated') {
@@ -64,8 +64,8 @@ class Auth {
         return ['failure', 'Verify your email to continue'];
       }
 
-      if (await checkAccountType(email) == 'Student') {
-        return ['failure', 'Account registered as a student'];
+      if (await checkAccountType(email) != 'Teacher') {
+        return ['failure', 'Account is not registered as a teacher'];
       }
 
       if (await checkAccountStatus(email) != 'Activated') {
@@ -304,7 +304,7 @@ class Auth {
         .then((docSnap) => docSnap.data['account type']);
 
     if (accountType != 'Student') {
-      return ['failure', 'Account set up as a teacher'];
+      return ['failure', 'Account is not registered as a student'];
     } else {
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
@@ -400,7 +400,7 @@ class Auth {
         .then((docSnap) => docSnap.data['account type']);
 
     if (accountType != 'Teacher') {
-      return ['failure', 'Account set up as a student'];
+      return ['failure', 'Account is not registered as a teacher'];
     } else {
       print('account is set up as a teacher');
       final GoogleSignInAuthentication googleAuth =
