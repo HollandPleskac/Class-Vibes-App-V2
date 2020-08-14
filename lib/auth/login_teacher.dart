@@ -176,7 +176,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       'Login',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.03,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -211,6 +214,14 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                   print('google sign in');
                                   List result =
                                       await _auth.signInWithGoogleTeacher();
+
+                                  //push to next screen
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ClassViewTeacher(),
+                                    ),
+                                  );
                                   if (result[0] == 'failure') {
                                     setState(() {
                                       _feedback = result[1];
@@ -231,7 +242,10 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                       'Sign in with Google',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.03,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),

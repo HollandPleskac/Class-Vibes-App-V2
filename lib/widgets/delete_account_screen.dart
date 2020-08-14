@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../constant.dart';
 import '../logic/class_vibes_server.dart';
@@ -9,6 +10,7 @@ import '../logic/auth.dart';
 final classVibesServer = ClassVibesServer();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+final _googleSignIn = GoogleSignIn();
 final _auth = Auth();
 
 class DeleteAccountScreen extends StatefulWidget {
@@ -52,9 +54,12 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
           onPressed: () async {
             FirebaseUser user = await _firebaseAuth.currentUser();
             print('deleteing + ' + widget.accountType);
-            user.delete();
+            
             await classVibesServer.deleteAccount(
                 email: email, accountType: widget.accountType);
+                
+                await _googleSignIn.disconnect();
+                await user.delete();
                 
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => Welcome()),
