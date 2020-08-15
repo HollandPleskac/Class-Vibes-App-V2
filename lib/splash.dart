@@ -25,7 +25,7 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   FirebaseUser user;
   String accountType;
-  String accountStatus;
+
   bool isCheckedAccount = false;
   Future getUser() async {
     try {
@@ -40,18 +40,17 @@ class _SplashState extends State<Splash> {
     if (user != null) {
       try {
         String type = await _auth.checkAccountType(user.email);
-        String status = await _auth.checkAccountStatus(user.email);
         accountType = type;
-        accountStatus = status;
+       
         isCheckedAccount = true;
       } catch (_) {
         accountType = null;
-        accountStatus = null;
+      
         isCheckedAccount = true;
       }
     } else {
       accountType = null;
-      accountStatus = null;
+      
       isCheckedAccount = true;
     }
   }
@@ -72,13 +71,11 @@ class _SplashState extends State<Splash> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            if (accountStatus != 'Activated') {
-              _auth.signOut();
-            }
+         
             return isCheckedAccount == true
-                ? (accountType == 'Student' && accountStatus == 'Activated')
+                ? (accountType == 'Student')
                     ? ClassViewStudent()
-                    : (accountType == 'Teacher' && accountStatus == 'Activated')
+                    : (accountType == 'Teacher')
                         ? ClassViewTeacher()
                         : Welcome()
                 : Welcome(
