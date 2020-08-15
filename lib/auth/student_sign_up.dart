@@ -27,6 +27,9 @@ class _SignUpStudentState extends State<SignUpStudent> {
 
   final TextEditingController _passwordController = TextEditingController();
 
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,10 +94,10 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                         controller: _usernameController,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: 'Username'),
+                                            hintText: 'Full Name'),
                                         validator: (value) {
                                           if (value == null || value == '') {
-                                            return 'Username cannot be blank';
+                                            return 'Full Name cannot be blank';
                                           }
                                           return null;
                                         },
@@ -158,6 +161,38 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                         validator: (value) {
                                           if (value == null || value == '') {
                                             return 'Password cannot be blank';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02,
+                              ),
+                              Center(
+                                child: Container(
+                                  child: Center(
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 20),
+                                      child: TextFormField(
+                                        controller: _confirmPasswordController,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Confirm Password'),
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'Confirm password field cannot be blank';
                                           }
                                           return null;
                                         },
@@ -265,52 +300,60 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                           'Accept the Privacy Policy to Continue';
                                     });
                                   } else {
-                                    if (_formKey.currentState.validate()) {
-                                      List result = await _auth.signUpStudent(
-                                        username: _usernameController.text,
-                                        email: _emailController.text,
-                                        password: _passwordController.text,
-                                      );
-                                      if (result[0] == 'success') {
-                                        //ste up account
-                                        _auth.setUpAccountStudent(
+                                    if (_passwordController.text !=
+                                        _confirmPasswordController.text) {
+                                          setState(() {
+                                            _feedback = 'Confirm Password is not equal to password';
+                                          });
+                                    } else {
+                                      if (_formKey.currentState.validate()) {
+                                        List result = await _auth.signUpStudent(
                                           username: _usernameController.text,
                                           email: _emailController.text,
+                                          password: _passwordController.text,
                                         );
-                                        //show success dialog
-                                        showDialog(
-                                          context: context,
-                                          child: AlertDialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                FaIcon(
-                                                  FontAwesomeIcons.check,
-                                                  color: Colors.green,
-                                                  size: 30,
-                                                ),
-                                                SizedBox(
-                                                  height: 15,
-                                                ),
-                                                Center(
-                                                  child: Text('Success!'),
-                                                ),
-                                                SizedBox(height: 5),
-                                                Center(
-                                                  child: Text(
-                                                      'Verify you email to continue'),
-                                                ),
-                                              ],
+                                        if (result[0] == 'success') {
+                                          //ste up account
+                                          _auth.setUpAccountStudent(
+                                            username: _usernameController.text,
+                                            email: _emailController.text,
+                                          );
+                                          //show success dialog
+                                          showDialog(
+                                            context: context,
+                                            child: AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  FaIcon(
+                                                    FontAwesomeIcons.check,
+                                                    color: Colors.green,
+                                                    size: 30,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15,
+                                                  ),
+                                                  Center(
+                                                    child: Text('Success!'),
+                                                  ),
+                                                  SizedBox(height: 5),
+                                                  Center(
+                                                    child: Text(
+                                                        'Verify you email to continue'),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      } else {
-                                        setState(() {
-                                          _feedback = result[1];
-                                        });
+                                          );
+                                        } else {
+                                          setState(() {
+                                            _feedback = result[1];
+                                          });
+                                        }
                                       }
                                     }
                                   }
