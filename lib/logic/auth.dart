@@ -22,12 +22,7 @@ class Auth {
         return ['failure', 'Account is not registered as a student'];
       }
 
-      if (await checkAccountStatus(email) != 'Activated') {
-        return [
-          'failure',
-          'Account is Deactivated. If you think this is a mistake contact {class vibes email}'
-        ];
-      }
+
 
       return ['success', email];
     } catch (error) {
@@ -68,12 +63,7 @@ class Auth {
         return ['failure', 'Account is not registered as a teacher'];
       }
 
-      if (await checkAccountStatus(email) != 'Activated') {
-        return [
-          'failure',
-          'Account is Deactivated. If you think this is a mistake contact {class vibes email}'
-        ];
-      }
+
 
       return ['success', email];
     } catch (error) {
@@ -226,13 +216,7 @@ class Auth {
         .then((docSnap) => docSnap.data['account type']);
   }
 
-  Future<String> checkAccountStatus(String email) async {
-    return await _firestore
-        .collection('UserData')
-        .document(email)
-        .get()
-        .then((docSnap) => docSnap.data['account status']);
-  }
+
 
   void signOut() async {
     await _firebaseAuth.signOut();
