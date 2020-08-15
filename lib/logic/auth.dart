@@ -330,7 +330,7 @@ class Auth {
     // and check if they verify their email
   }
 
-  Future<List> signUpWithGoogleTeacher(String districtCode) async {
+  Future<List> signUpWithGoogleTeacher() async {
     // to show the full google popup and let them choose an account
     // if (await _googleSignIn.isSignedIn() == true) {
     //   await _googleSignIn.disconnect();
