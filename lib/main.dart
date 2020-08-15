@@ -8,7 +8,7 @@ import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
 import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
-import './splash.dart';
+import 'router.dart';
 import './testing.dart';
 
 // void main() => runApp((MyApp()));
@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      home: Router(),
       routes: {
         ViewClass.routeName: (context) => ViewClass(),
         ClassSettings.routeName: (context) => ClassSettings(),

@@ -9,20 +9,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import './student_portal/classview_student.dart';
-import './teacher_portal/classview_teacher.dart';
-import './auth/welcome.dart';
-import './logic/auth.dart';
+import 'student_portal/classview_student.dart';
+import 'teacher_portal/classview_teacher.dart';
+import 'auth/welcome.dart';
+import 'logic/auth.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _auth = Auth();
 
-class Splash extends StatefulWidget {
+class Router extends StatefulWidget {
   @override
-  _SplashState createState() => _SplashState();
+  _RouterState createState() => _RouterState();
 }
 
-class _SplashState extends State<Splash> {
+class _RouterState extends State<Router> {
   FirebaseUser user;
   String accountType;
 
@@ -41,16 +41,16 @@ class _SplashState extends State<Splash> {
       try {
         String type = await _auth.checkAccountType(user.email);
         accountType = type;
-       
+
         isCheckedAccount = true;
       } catch (_) {
         accountType = null;
-      
+
         isCheckedAccount = true;
       }
     } else {
       accountType = null;
-      
+
       isCheckedAccount = true;
     }
   }
@@ -66,16 +66,15 @@ class _SplashState extends State<Splash> {
       });
     });
     Timer(
-      Duration(seconds: 2),
+      Duration(seconds: 1),
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-         
             return isCheckedAccount == true
                 ? (accountType == 'Student')
                     ? ClassViewStudent()
-                    : (accountType == 'Teacher')
+                    : (accountType == 'Teacher' || accountType == 'District Teacher')
                         ? ClassViewTeacher()
                         : Welcome()
                 : Welcome(
@@ -92,13 +91,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     print('Splash');
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-          child: Image.asset(
-        'Loading/loading.gif',
-        fit: BoxFit.contain,
-      )),
+      backgroundColor: Colors.redAccent,
     );
- 
   }
 }
