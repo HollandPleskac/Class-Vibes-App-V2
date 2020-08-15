@@ -173,7 +173,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
         
 
     getTeacherEmail().then((_) {
-      updates.handleAccountStatus(context, _email);
       setState(() {});
     });
 

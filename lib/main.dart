@@ -1,4 +1,3 @@
-import 'package:class_vibes_v2/deactivated_account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
