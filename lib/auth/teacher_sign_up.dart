@@ -22,7 +22,8 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,37 +137,33 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                   ),
                 ),
                 SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              Center(
-                                child: Container(
-                                  child: Center(
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 20),
-                                      child: TextFormField(
-                                        controller: _confirmPasswordController,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Confirm Password'),
-                                        validator: (value) {
-                                          if (value == null || value == '') {
-                                            return 'Confirm password field cannot be blank';
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.06,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.85,
-                                ),
-                              ),
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Center(
+                  child: Container(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: TextFormField(
+                          controller: _confirmPasswordController,
+                          obscureText: true,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Confirm Password'),
+                          validator: (value) {
+                            if (value == null || value == '') {
+                              return 'Confirm password field cannot be blank';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ),
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.85,
+                  ),
+                ),
               ],
             ),
           ),

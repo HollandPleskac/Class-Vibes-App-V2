@@ -185,6 +185,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                           EdgeInsets.symmetric(horizontal: 20),
                                       child: TextFormField(
                                         controller: _confirmPasswordController,
+                                        obscureText: true,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         decoration: InputDecoration(
