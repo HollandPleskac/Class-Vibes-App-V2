@@ -9,10 +9,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'student_portal/classview_student.dart';
-import 'teacher_portal/classview_teacher.dart';
-import 'auth/welcome.dart';
-import 'logic/auth.dart';
+import './student_portal/classview_student.dart';
+import './teacher_portal/classview_teacher.dart';
+import './auth/welcome.dart';
+import './logic/auth.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _auth = Auth();
@@ -41,16 +41,16 @@ class _RouterState extends State<Router> {
       try {
         String type = await _auth.checkAccountType(user.email);
         accountType = type;
-
+       
         isCheckedAccount = true;
       } catch (_) {
         accountType = null;
-
+      
         isCheckedAccount = true;
       }
     } else {
       accountType = null;
-
+      
       isCheckedAccount = true;
     }
   }
@@ -65,16 +65,18 @@ class _RouterState extends State<Router> {
         });
       });
     });
-    // Timer(
-    //   Duration(seconds: 1),
+    Timer(
+      Duration(milliseconds: 1),
+      () => 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
+         
             return isCheckedAccount == true
                 ? (accountType == 'Student')
                     ? ClassViewStudent()
-                    : (accountType == 'Teacher' || accountType == 'District Teacher')
+                    : (accountType == 'Teacher')
                         ? ClassViewTeacher()
                         : Welcome()
                 : Welcome(
@@ -82,17 +84,22 @@ class _RouterState extends State<Router> {
                     );
           },
         ),
-      // ),
+      ),
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // maybe have an animation like twitter or something
     print('Splash');
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      // body: Center(
+      //     child: Image.asset(
+      //   'Loading/loading.gif',
+      //   fit: BoxFit.contain,
+      // )),
     );
+ 
   }
 }

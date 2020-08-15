@@ -231,6 +231,7 @@ class Fire {
           'name': studentName,
           'status': 'doing great',
           'teacher unread':0,
+          'accepted':false,
         });
 
         _firestore

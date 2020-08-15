@@ -13,7 +13,7 @@ import '../logic/fire.dart';
 import './class_settings.dart';
 import './class_announcements.dart';
 import './class_meetings.dart';
-import '../archived/updates.dart';
+import './class_queue.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -37,8 +37,6 @@ class _ViewClassState extends State<ViewClass> {
 
   @override
   void initState() {
-        
-
     getTeacherEmail().then((_) {
       setState(() {});
     });
@@ -52,7 +50,7 @@ class _ViewClassState extends State<ViewClass> {
     final String classId = routeArguments['class id'];
 
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: StreamBuilder(
         stream: _firestore
             .collection('Application Management')
@@ -96,6 +94,7 @@ class _ViewClassState extends State<ViewClass> {
                           Tab(text: 'Students'),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
+                          Tab(text: 'Queue'),
                           Tab(text: 'Settings'),
                         ],
                       ),
@@ -122,6 +121,12 @@ class _ViewClassState extends State<ViewClass> {
                           Container(
                             child: ClassAnnouncements(
                               classId: classId,
+                            ),
+                          ),
+                          Container(
+                            child: ClassQueue(
+                             
+                              
                             ),
                           ),
                           Container(
@@ -204,15 +209,6 @@ class DynamicPieChart extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    // Future<int> getMaxDaysInactive(String classId) async {
-    //   return await _firestore
-    //       .collection('Classes')
-    //       .document(classId)
-    //       .get()
-    //       .then((docSnap) => docSnap.data['max days inactive']);
-
-    // }
-
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
