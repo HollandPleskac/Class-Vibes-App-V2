@@ -65,9 +65,9 @@ class _RouterState extends State<Router> {
         });
       });
     });
-    Timer(
-      Duration(seconds: 1),
-      () => Navigator.pushReplacement(
+    // Timer(
+    //   Duration(seconds: 1),
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
@@ -82,16 +82,17 @@ class _RouterState extends State<Router> {
                     );
           },
         ),
-      ),
+      // ),
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    // maybe have an animation like twitter or something
     print('Splash');
     return Scaffold(
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Colors.white,
     );
   }
 }
