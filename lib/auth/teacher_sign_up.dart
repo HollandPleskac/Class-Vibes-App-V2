@@ -22,7 +22,6 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _districtIdController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,32 +134,6 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                     width: MediaQuery.of(context).size.width * 0.85,
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                Center(
-                  child: Container(
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: TextFormField(
-                          controller: _districtIdController,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'District Id'),
-                          validator: (value) {
-                            if (value == null || value == '') {
-                              return 'District Id cannot be blank';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                  ),
-                ),
               ],
             ),
           ),
@@ -261,12 +234,12 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                           username: _usernameController.text,
                           email: _emailController.text,
                           password: _passwordController.text,
-                          districtId: _districtIdController.text,
+                          districtId: '4623',
                         );
                         if (result[0] == 'success') {
                           //set up account
                           _auth.setUpAccountTeacher(
-                            districtId: _districtIdController.text,
+                          
                             username: _usernameController.text,
                             email: _emailController.text,
                           );

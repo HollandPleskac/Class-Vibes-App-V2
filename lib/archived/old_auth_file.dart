@@ -330,7 +330,7 @@
 //     // and check if they verify their email
 //   }
 
-//   Future<List> signUpWithGoogleTeacher() async {
+//   Future<List> signUpWithGoogleTeacher(String districtCode) async {
 //     // to show the full google popup and let them choose an account
 //     // if (await _googleSignIn.isSignedIn() == true) {
 //     //   await _googleSignIn.disconnect();

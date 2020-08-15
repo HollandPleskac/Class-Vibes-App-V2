@@ -209,14 +209,12 @@ class Auth {
   void setUpAccountTeacher({
     String email,
     String username,
-    String districtId,
   }) async {
     _firestore.collection('UserData').document(email).setData({
       'email': email,
       'display name': username,
       'account type': 'Teacher',
       'account status': 'Activated',
-      'district id': districtId,
     });
   }
 
@@ -281,7 +279,6 @@ class Auth {
   }
 
   Future<List> signInWithGoogleStudent() async {
-
     // if (await _googleSignIn.isSignedIn() == true) {
     //   await _googleSignIn.signOut();
     // }
@@ -347,20 +344,10 @@ class Auth {
       return ['failure', 'User is already registered'];
     }
 
-    bool districtIdExists = await _firestore
-        .collection('Districts')
-        .where('district id', isEqualTo: districtCode)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
-
-    if (districtIdExists == false) {
-      return ['failure', 'That district code does not exist'];
-    }
-
     setUpAccountTeacher(
         email: googleUser.email,
         username: googleUser.displayName,
-        districtId: districtCode);
+        );
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -379,7 +366,6 @@ class Auth {
   }
 
   Future<List> signInWithGoogleTeacher() async {
-    
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
