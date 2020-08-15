@@ -366,13 +366,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  rxdart:
-    dependency: "direct main"
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.24.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -469,13 +462,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  visibility_detector:
-    dependency: "direct main"
-    description:
-      name: visibility_detector
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.5"
   xml:
     dependency: transitive
     description:
@@ -492,4 +478,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.13.8 <2.0.0"
+  flutter: ">=1.12.13+hotfix.5 <2.0.0"
