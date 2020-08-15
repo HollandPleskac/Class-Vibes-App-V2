@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../constant.dart';
 import '../logic/auth.dart';
 import '../teacher_portal/classview_teacher.dart';
-import '../widgets/google_signup_popup.dart';
+import '../archived/google_signup_popup.dart';
 
 final _auth = Auth();
 
@@ -344,9 +344,19 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                   onTap: () async {
                     print('google sign in');
                     if (checkValue == true) {
-                      showDialog(
-                          context: context,
-                          builder: (context) => GoogleSignUpPopup());
+                      List result = await _auth.signUpWithGoogleTeacher();
+                      if (result[0] == 'success') {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ClassViewTeacher(),
+                          ),
+                        );
+                      } else {
+                        setState(() {
+                          _feedback = result[1];
+                        });
+                      }
                     } else {
                       setState(() {
                         _feedback = 'Accept the privacy policy to continue';

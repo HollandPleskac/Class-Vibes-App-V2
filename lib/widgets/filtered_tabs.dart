@@ -647,6 +647,23 @@ class Student extends StatelessWidget {
             child: ListBody(
               children: <Widget>[
                 Text('Email : ' + studentEmail),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      'Remove',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {
+                      print('remove student from class');
+                    },
+                  ),
+                ),
               ],
             ),
           ),

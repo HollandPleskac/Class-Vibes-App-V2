@@ -395,4 +395,6 @@ class Fire {
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
   }
+
+  
 }
