@@ -125,7 +125,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
                       if (!snapshot.hasData) {
                         return Text('');
                       }
-                      if (snapshot.data['accepted'] == true) {
+                      if (snapshot.data['accepted'] == false) {
                         return Scaffold(
                           appBar: AppBar(
                             title: Text('Pending Approval'),
