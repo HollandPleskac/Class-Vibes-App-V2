@@ -151,6 +151,7 @@ class StudentClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom:10),
       height: MediaQuery.of(context).size.height * 0.1,
       width: MediaQuery.of(context).size.width,
       // color: Colors.red,
@@ -171,7 +172,7 @@ class StudentClass extends StatelessWidget {
                   right: 15,
                 ),
                 child: Text(
-                  'Physics in the Universe',
+                  classSnapshot.data['class name'],
                   overflow: TextOverflow.fade,
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -486,18 +487,18 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
     return Row(
       children: <Widget>[
         InkWell(
-              onTap: () {
-                _fire.updateStudentMood(
-                    uid: widget.email,
-                    classId: widget.classId,
-                    newMood: 'doing great');
-                print('changing status');
-              },
-              splashColor: Colors.green[100],
-              child: Ink(
-                width: MediaQuery.of(context).size.width * 0.2,
-                height: MediaQuery.of(context).size.height * 0.1,
-                color: DateTime.now()
+          onTap: () {
+            _fire.updateStudentMood(
+                uid: widget.email,
+                classId: widget.classId,
+                newMood: 'doing great');
+            print('changing status');
+          },
+          splashColor: Colors.green[100],
+          child: Ink(
+            width: MediaQuery.of(context).size.width * 0.2,
+            height: MediaQuery.of(context).size.height * 0.1,
+            color: DateTime.now()
                         .difference(
                           DateTime.parse(
                               widget.lastChangedStatus.toDate().toString()),
@@ -508,17 +509,15 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                 : widget.status == 'doing great'
                     ? Colors.green[100]
                     : Colors.transparent,
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.smile,
-                    color: Colors.green,
-                    size: MediaQuery.of(context).size.width * 0.0825,
-                    //used to be 36
-                  ),
-                ),
+            child: Center(
+              child: FaIcon(
+                FontAwesomeIcons.smile,
+                color: Colors.green,
+                size: MediaQuery.of(context).size.width * 0.0825,
+                //used to be 36
               ),
-           
-    
+            ),
+          ),
         ),
         InkWell(
           onTap: () {
