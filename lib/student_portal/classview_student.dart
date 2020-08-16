@@ -229,7 +229,7 @@ class StudentClass extends StatelessWidget {
                       child: Container(),
                     );
                   }
-                  return snapshot.data['approved'] == true
+                  return snapshot.data['accepted'] == true
                       ? SelectStatusRow(
                           classId: classId,
                           lastChangedStatus: snapshot.data['date'],
