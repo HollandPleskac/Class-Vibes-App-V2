@@ -190,8 +190,8 @@ class StudentClass extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.4,
                       height: MediaQuery.of(context).size.height * 0.1,
                       padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width*0.05,
-                        right: MediaQuery.of(context).size.width*0.07,
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        right: MediaQuery.of(context).size.width * 0.07,
                       ),
                       child: Center(
                         child: Text(
@@ -211,7 +211,7 @@ class StudentClass extends StatelessWidget {
                   ),
                   Positioned(
                     top: 5,
-                    right: MediaQuery.of(context).size.width*0.025,
+                    right: MediaQuery.of(context).size.width * 0.025,
                     child: UnreadMessageBadge(unreadCount),
                   ),
                 ],
@@ -229,13 +229,16 @@ class StudentClass extends StatelessWidget {
                       child: Container(),
                     );
                   }
-                  return SelectStatusRow(
-                    classId: classId,
-                    lastChangedStatus: snapshot.data['date'],
-                    status: snapshot.data['status'],
-                    email: email,
-                    maxDaysInactive: classSnapshot.data['max days inactive'],
-                  );
+                  return snapshot.data['approved'] == true
+                      ? SelectStatusRow(
+                          classId: classId,
+                          lastChangedStatus: snapshot.data['date'],
+                          status: snapshot.data['status'],
+                          email: email,
+                          maxDaysInactive:
+                              classSnapshot.data['max days inactive'],
+                        )
+                      : StatusRowLocked();
                 },
               ),
             ],
@@ -759,3 +762,31 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
 //     );
 //   }
 // }
+
+class StatusRowLocked extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      width: MediaQuery.of(context).size.width * 0.6,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width * 0.03,
+          ),
+          //maybe a row with some type of nice loading indicator here or something?
+          child: Text(
+            'Pending Approval',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 1.25,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
