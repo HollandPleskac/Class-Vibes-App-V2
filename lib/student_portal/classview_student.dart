@@ -78,7 +78,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                     ],
                   ),
                   body: Padding(
-                    padding: EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.only(top: 20),
                     child: StreamBuilder(
                       stream: _firestore
                           .collection('UserData')
@@ -150,8 +150,18 @@ class StudentClass extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    Future getClassName() async {
+      return await _firestore
+          .collection('Classes')
+          .document(classId)
+          .get()
+          .then(
+            (docSnap) => docSnap.data['class name'],
+          );
+    }
+
     return Container(
-      margin: EdgeInsets.only(bottom:10),
+      margin: EdgeInsets.only(bottom: 20),
       height: MediaQuery.of(context).size.height * 0.1,
       width: MediaQuery.of(context).size.width,
       // color: Colors.red,
@@ -165,24 +175,46 @@ class StudentClass extends StatelessWidget {
           }
           return Row(
             children: <Widget>[
-              Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                padding: EdgeInsets.only(
-                  left: 15,
-                  right: 15,
-                ),
-                child: Text(
-                  classSnapshot.data['class name'],
-                  overflow: TextOverflow.fade,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    // fontFamily: 'Nunito',
-                    wordSpacing: 2,
-                    letterSpacing: 1.25,
-                    fontSize: 18,
+              Stack(
+                children: <Widget>[
+                  InkWell(
+                    onTap: () async {
+                      Navigator.pushNamed(context, ViewClassStudent.routename,
+                          arguments: {
+                            'class id': classId,
+                            'class name': await getClassName(),
+                            'initial index': 0,
+                          });
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width*0.05,
+                        right: MediaQuery.of(context).size.width*0.07,
+                      ),
+                      child: Center(
+                        child: Text(
+                          classSnapshot.data['class name'],
+                          overflow: TextOverflow.fade,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            // fontFamily: 'Nunito',
+                            wordSpacing: 2,
+                            letterSpacing: 1.25,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    top: 5,
+                    right: MediaQuery.of(context).size.width*0.025,
+                    child: UnreadMessageBadge(unreadCount),
+                  ),
+                ],
               ),
               StreamBuilder(
                 stream: _firestore
