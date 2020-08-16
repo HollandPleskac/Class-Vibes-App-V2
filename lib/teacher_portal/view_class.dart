@@ -125,6 +125,7 @@ class _ViewClassState extends State<ViewClass> {
                           ),
                           Container(
                             child: ClassQueue(
+                              
                               classId: classId,
                             ),
                           ),

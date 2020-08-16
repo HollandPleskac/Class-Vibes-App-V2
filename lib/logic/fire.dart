@@ -397,7 +397,7 @@ class Fire {
         .then((querySnap) => querySnap.documents.isNotEmpty);
   }
 
-  Future<void> rejectFromQueue(String studentEmail, String classId) {
+  void rejectFromQueue(String studentEmail, String classId) {
     _firestore
         .collection('Classes')
         .document(classId)
@@ -413,7 +413,9 @@ class Fire {
         .delete();
   }
 
-  Future<void> acceptFromQueue(String studentEmail, String classId) {
+  void acceptFromQueue(String studentEmail, String classId) {
+    print(studentEmail);
+    print(classId);
     _firestore
         .collection('Classes')
         .document(classId)

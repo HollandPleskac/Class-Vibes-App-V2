@@ -170,8 +170,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
   @override
   void initState() {
-        
-
     getTeacherEmail().then((_) {
       setState(() {});
     });
@@ -303,8 +301,10 @@ class Class extends StatelessWidget {
             if (snapshot.data != null &&
                 snapshot.data.documents.isEmpty == false) {
               for (int i = 0; i < snapshot.data.documents.length; i++) {
-                unReadCount =
-                    unReadCount + snapshot.data.documents[i]['teacher unread'];
+                if (snapshot.data.documents[i]['accepted'] == true) {
+                  unReadCount = unReadCount +
+                      snapshot.data.documents[i]['teacher unread'];
+                }
               }
               return Stack(
                 children: [

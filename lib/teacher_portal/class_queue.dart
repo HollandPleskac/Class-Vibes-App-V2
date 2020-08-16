@@ -10,7 +10,6 @@ import '../logic/fire.dart';
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
 
-
 class ClassQueue extends StatelessWidget {
   final String classId;
 
@@ -22,7 +21,8 @@ class ClassQueue extends StatelessWidget {
         stream: _firestore
             .collection('Classes')
             .document(classId)
-            .collection('Students').where('accepted',isEqualTo:false)
+            .collection('Students')
+            .where('accepted', isEqualTo: false)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -42,6 +42,7 @@ class ClassQueue extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return UnapprovedStudent(
                       document: snapshot.data.documents[index],
+                      classId: classId,
                     );
                   },
                 );
@@ -177,7 +178,8 @@ class UnapprovedStudent extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   onPressed: () {
-                    _fire.acceptFromQueue(document.documentID, classId);
+                    
+                    _fire.rejectFromQueue(document.documentID, classId);
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.trash,
@@ -190,7 +192,7 @@ class UnapprovedStudent extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    _fire.rejectFromQueue(document.documentID, classId);
+                    _fire.acceptFromQueue(document.documentID, classId);
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.check,
