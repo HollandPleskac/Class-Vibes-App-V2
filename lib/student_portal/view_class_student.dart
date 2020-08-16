@@ -114,76 +114,107 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
           } else {
             return snapshot.data['serversAreUp'] == false
                 ? ServersDown()
-                : Scaffold(
-                    appBar: AppBar(
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          print(_email);
-                          _fire.resetStudentUnreadCount(
-                            classId: classId,
-                            studentEmail: _email,
-                            
-                          );
-                          Navigator.pop(context);
-                        },
-                      ),
-                      backgroundColor: kAppBarColor,
-                      title: Text(className),
-                      centerTitle: true,
-                      actions: [
-                        IconButton(
-                          icon: FaIcon(
-                            FontAwesomeIcons.trash,
-                            size: 19.5,
-                            color: Colors.white,
+                : StreamBuilder(
+                    stream: _firestore
+                        .collection('Classes')
+                        .document(classId)
+                        .collection('Students')
+                        .document(_email)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Text('');
+                      }
+                      if (snapshot.data['accepted'] == true) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            title: Text('Pending Approval'),
+                            backgroundColor: kAppBarColor,
+                            centerTitle: true,
                           ),
-                          onPressed: () {
-                            _showAlert(classId);
-                          },
-                        ),
-                      ],
-                      bottom: TabBar(
-                        indicatorColor: Colors.white,
-                        isScrollable: true,
-                        tabs: [
-                          // Tab(text: 'Overview'),
-                          Tab(text: 'Live Chat'),
-                          Tab(text: 'Meetings'),
-                          Tab(text: 'Announcements'),
-                        ],
-                      ),
-                    ),
-                    body: TabBarView(
-                      children: [
-                        // Container(
-                        //   child: ClassOverViewStudent(
-                        //     classId: classId,
-                        //     email: _email,
-                        //   ),
-                        // ),
-                        Container(
-                          child: ChatStudent(
-                            email: _email,
-                            classId: classId,
+                          body: Center(
+                            child: Text(
+                              'Pending Approval',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 20,
+                              ),
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: ClassMeetingsStudent(
-                            classId: classId,
-                            email: _email,
+                        );
+                      } else {
+                        return Scaffold(
+                          appBar: AppBar(
+                            leading: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                print(_email);
+                                _fire.resetStudentUnreadCount(
+                                  classId: classId,
+                                  studentEmail: _email,
+                                );
+                                Navigator.pop(context);
+                              },
+                            ),
+                            backgroundColor: kAppBarColor,
+                            title: Text(className),
+                            centerTitle: true,
+                            actions: [
+                              IconButton(
+                                icon: FaIcon(
+                                  FontAwesomeIcons.trash,
+                                  size: 19.5,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  _showAlert(classId);
+                                },
+                              ),
+                            ],
+                            bottom: TabBar(
+                              indicatorColor: Colors.white,
+                              isScrollable: true,
+                              tabs: [
+                                // Tab(text: 'Overview'),
+                                Tab(text: 'Live Chat'),
+                                Tab(text: 'Meetings'),
+                                Tab(text: 'Announcements'),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: ClassAnnouncementsStudent(
-                            classId: classId,
+                          body: TabBarView(
+                            children: [
+                              // Container(
+                              //   child: ClassOverViewStudent(
+                              //     classId: classId,
+                              //     email: _email,
+                              //   ),
+                              // ),
+                              Container(
+                                child: ChatStudent(
+                                  email: _email,
+                                  classId: classId,
+                                ),
+                              ),
+                              Container(
+                                child: ClassMeetingsStudent(
+                                  classId: classId,
+                                  email: _email,
+                                ),
+                              ),
+                              Container(
+                                child: ClassAnnouncementsStudent(
+                                  classId: classId,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
+                        );
+                      }
+                    },
                   );
           }
         },

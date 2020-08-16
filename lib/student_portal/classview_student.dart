@@ -25,7 +25,7 @@ class ClassViewStudent extends StatefulWidget {
 class _ClassViewStudentState extends State<ClassViewStudent> {
   String _email;
 
-  Future getTeacherEmail() async {
+  Future getStudentEmail() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
     final email = user.email;
 
@@ -34,7 +34,8 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
 
   @override
   void initState() {
-    getTeacherEmail().then((_) {
+    getStudentEmail().then((_) {
+      print(_email);
       setState(() {});
     });
 
