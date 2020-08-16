@@ -111,7 +111,7 @@ class Fire {
       'class id': classId,
       'recipient': studentUid,
       'course': courseName,
-      'Course':courseName,
+      'Course': courseName,
     });
     _firestore
         .collection('UserData')
@@ -127,7 +127,7 @@ class Fire {
       'class id': classId,
       'recipient': studentUid,
       'course': courseName,
-      'Course':courseName,
+      'Course': courseName,
     });
   }
 
@@ -230,8 +230,8 @@ class Fire {
           'email': studentEmail,
           'name': studentName,
           'status': 'doing great',
-          'teacher unread':0,
-          'accepted':false,
+          'teacher unread': 0,
+          'accepted': false,
         });
 
         _firestore
@@ -397,5 +397,32 @@ class Fire {
         .then((querySnap) => querySnap.documents.isNotEmpty);
   }
 
-  
+  Future<void> rejectFromQueue(String studentEmail, String classId) {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .delete();
+
+    _firestore
+        .collection('UserData')
+        .document(classId)
+        .collection('Classes')
+        .document(classId)
+        .delete();
+  }
+
+  Future<void> acceptFromQueue(String studentEmail, String classId) {
+    _firestore
+        .collection('Classes')
+        .document(classId)
+        .collection('Students')
+        .document(studentEmail)
+        .updateData(
+      {
+        'accepted': true,
+      },
+    );
+  }
 }

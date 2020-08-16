@@ -23,6 +23,7 @@ class AllTab extends StatelessWidget {
           .document(classId)
           .collection('Students')
           .orderBy('date', descending: true)
+          .where('accepted', isEqualTo: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -88,6 +89,7 @@ class DoingGreatTab extends StatelessWidget {
               Duration(days: maxDaysInactive),
             ),
           )
+          .where('accepted', isEqualTo: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -156,6 +158,7 @@ class NeedHelpTab extends StatelessWidget {
               Duration(days: maxDaysInactive),
             ),
           )
+          .where('accepted', isEqualTo: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -224,6 +227,7 @@ class FrustratedTab extends StatelessWidget {
               Duration(days: maxDaysInactive),
             ),
           )
+          .where('accepted', isEqualTo: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -296,6 +300,7 @@ class InactiveTab extends StatelessWidget {
               Duration(days: maxDaysInactive),
             ),
           )
+          .where('accepted', isEqualTo: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {

@@ -4,6 +4,7 @@
 // the default is a white screen which is what we have kept
 // this screen is just a gif - it looks good after the actual splash screen
 
+//TODO : PUT THE ROUTER CODE IN THE MAIN>DART FILE ?
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class _RouterState extends State<Router> {
       });
     });
     Timer(
-      Duration(milliseconds: 1),
+      Duration(milliseconds: 500),
       () => 
       Navigator.pushReplacement(
         context,
