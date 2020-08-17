@@ -387,8 +387,8 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                   onPressed: () async {
                                     print('logging out');
                                     print('google log out too');
-                                          // await _googleSignIn.disconnect();
-                                          await _googleSignIn.signOut();
+                                          await _googleSignIn.disconnect();
+                                          // await _googleSignIn.signOut();
                                       
                                     
                                     await _auth.signOut();
