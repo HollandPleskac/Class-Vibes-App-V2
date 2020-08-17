@@ -215,7 +215,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                   List result =
                                       await _auth.signInWithGoogleTeacher();
                                   
-                                  
+                                   
                                   if (result[0] == 'failure') {
                                     setState(() {
                                       _feedback = result[1];
