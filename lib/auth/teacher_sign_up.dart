@@ -271,7 +271,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                             username: _usernameController.text,
                             email: _emailController.text,
                             password: _passwordController.text,
-                            districtId: '4623',
+                            
                           );
                           if (result[0] == 'success') {
                             //set up account

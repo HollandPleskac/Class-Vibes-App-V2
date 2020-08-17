@@ -22,8 +22,6 @@ class Auth {
         return ['failure', 'Account is not registered as a student'];
       }
 
-
-
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -62,8 +60,6 @@ class Auth {
       if (await checkAccountType(email) != 'Teacher') {
         return ['failure', 'Account is not registered as a teacher'];
       }
-
-
 
       return ['success', email];
     } catch (error) {
@@ -126,65 +122,33 @@ class Auth {
     String email,
     String password,
     String username,
-    String districtId,
   }) async {
-    //get does district id exist?
-    bool districtIdExists = await _firestore
-        .collection('Districts')
-        .where('district id', isEqualTo: districtId)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
-    if (districtIdExists) {
-      //is teacher is allowed teachers collection?
-      //change this iselligible to join to be if teacher email split at @ is matching to one in db
-      // bool isEligibleForJoin = await _firestore
-      //     .collection('Districts')
-      //     .document(districtId)
-      //     .collection('Allowed Teachers')
-      //     .where(FieldPath.documentId, isEqualTo: email)
-      //     .getDocuments()
-      //     .then((querySnap) => querySnap.documents.isNotEmpty);
-      bool isEligibleForJoin = true;
+    try {
+      AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
 
-      if (isEligibleForJoin) {
-        // if so --> sign up the teacher
-        print('iseligible');
-        try {
-          AuthResult result = await _firebaseAuth
-              .createUserWithEmailAndPassword(email: email, password: password);
-          FirebaseUser user = result.user;
+      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+      userUpdateInfo.displayName = username;
 
-          UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-          userUpdateInfo.displayName = username;
+      await user.updateProfile(userUpdateInfo);
 
-          await user.updateProfile(userUpdateInfo);
+      await user.sendEmailVerification();
 
-          await user.sendEmailVerification();
-
-          return ['success', email];
-        } catch (error) {
-          print(error.code);
-          switch (error.code) {
-            case "ERROR_WEAK_PASSWORD":
-              return ['failure', 'Password is not strong enough'];
-            case "ERROR_INVALID_EMAIL":
-              return ['failure', 'Email address formatted incorrectly'];
-            case "ERROR_EMAIL_ALREADY_IN_USE":
-              return ['failure', 'Email already in use'];
-          }
-        }
-      } else {
-        return [
-          'failure',
-          'That email address is not eligible to join this district.  If you think this is an error please contact your district administrator'
-        ];
+      return ['success', email];
+    } catch (error) {
+      print(error.code);
+      switch (error.code) {
+        case "ERROR_WEAK_PASSWORD":
+          return ['failure', 'Password is not strong enough'];
+        case "ERROR_INVALID_EMAIL":
+          return ['failure', 'Email address formatted incorrectly'];
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+          return ['failure', 'Email already in use'];
+        default:
+          return ['failure', 'An unknown error occurred'];
       }
-    } else {
-      return ['failure', 'District Id does not extis'];
     }
-    // this return should never show - all other possibilities are in the tree already
-    print('error unknown');
-    return ['failure', 'unknown error'];
   }
 
   void setUpAccountStudent({String email, String username}) {
@@ -216,8 +180,6 @@ class Auth {
         .then((docSnap) => docSnap.data['account type']);
   }
 
-
-
   Future signOut() async {
     await _firebaseAuth.signOut();
   }
@@ -244,66 +206,65 @@ class Auth {
     setUpAccountStudent(
         email: googleUser.email, username: googleUser.displayName);
 
-    // final GoogleSignInAuthentication googleAuth =
-    //     await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
-    // final AuthCredential credential = GoogleAuthProvider.getCredential(
-    //   accessToken: googleAuth.accessToken,
-    //   idToken: googleAuth.idToken,
-    // );
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
 
-    // final FirebaseUser user =
-    //     (await _firebaseAuth.signInWithCredential(credential)).user;
+    final FirebaseUser user =
+        (await _firebaseAuth.signInWithCredential(credential)).user;
 
-    // print("signed in " + user.displayName);
-    // if the user is not email verified which they arenet at this point
-    // send them to the sign in teacher screen
-    // and check if they verify their email
+    print("signed in " + user.displayName);
+
     return ['success', ''];
   }
 
   Future<List> signInWithGoogleStudent() async {
-try {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    print(googleUser.email);
+    try {
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      print(googleUser.email);
 
-    bool isUserInDB = await _firestore
-        .collection('UserData')
-        .where('email', isEqualTo: googleUser.email)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
-    if (isUserInDB == false) {
-      return ['failure', 'User is not registered'];
-    }
+      bool isUserInDB = await _firestore
+          .collection('UserData')
+          .where('email', isEqualTo: googleUser.email)
+          .getDocuments()
+          .then((querySnap) => querySnap.documents.isNotEmpty);
+      if (isUserInDB == false) {
+        return ['failure', 'User is not registered'];
+      }
 
-    String accountType = await _firestore
-        .collection('UserData')
-        .document(googleUser.email)
-        .get()
-        .then((docSnap) => docSnap.data['account type']);
+      String accountType = await _firestore
+          .collection('UserData')
+          .document(googleUser.email)
+          .get()
+          .then((docSnap) => docSnap.data['account type']);
 
-    if (accountType != 'Student') {
-      return ['failure', 'Account is not registered as a student'];
-    } else {
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      if (accountType != 'Student') {
+        return ['failure', 'Account is not registered as a student'];
+      } else {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+        final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      final FirebaseUser user =
-          (await _firebaseAuth.signInWithCredential(credential)).user;
-      print("signed in " + user.displayName);
+        final FirebaseUser user =
+            (await _firebaseAuth.signInWithCredential(credential)).user;
+        print("signed in " + user.displayName);
 
-      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-      userUpdateInfo.displayName = user.displayName;
+        UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+        userUpdateInfo.displayName = user.displayName;
 
-      await user.updateProfile(userUpdateInfo);
-      return ['success', ''];
-    } }catch(e) {
-      return ['failure,' , 'some error'];
+        await user.updateProfile(userUpdateInfo);
+        return ['success', ''];
+      }
+    } catch (e) {
+      return ['failure,', 'some error'];
     }
 
     // if the user is not email verified which they arenet at this point
@@ -329,9 +290,9 @@ try {
     }
 
     setUpAccountTeacher(
-        email: googleUser.email,
-        username: googleUser.displayName,
-        );
+      email: googleUser.email,
+      username: googleUser.displayName,
+    );
 
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -375,7 +336,7 @@ try {
       print('account is set up as a teacher');
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-print('user.auth');
+      print('user.auth');
       final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
