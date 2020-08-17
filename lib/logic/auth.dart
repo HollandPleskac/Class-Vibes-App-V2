@@ -189,7 +189,6 @@ class Auth {
   }
 
   Future<List> signUpWithGoogleStudent() async {
-   
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
     bool isUserInDB = await _firestore
@@ -264,12 +263,9 @@ class Auth {
     } catch (e) {
       return ['failure,', 'some error'];
     }
-
   }
 
   Future<List> signUpWithGoogleTeacher() async {
-
-
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
     bool isUserInDB = await _firestore
@@ -326,24 +322,29 @@ class Auth {
       return ['failure', 'Account is not registered as a teacher'];
     } else {
       print('account is set up as a teacher');
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      print('user.auth');
-      print(googleUser.authentication);
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+      try {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        print('user.auth');
+        print(googleUser.authentication);
+        final AuthCredential credential = GoogleAuthProvider.getCredential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      final FirebaseUser user =
-          (await _firebaseAuth.signInWithCredential(credential)).user;
-      print("signed in " + user.displayName);
+        final FirebaseUser user =
+            (await _firebaseAuth.signInWithCredential(credential)).user;
+        print("signed in " + user.displayName);
 
-      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-      userUpdateInfo.displayName = user.displayName;
+        UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+        userUpdateInfo.displayName = user.displayName;
 
-      await user.updateProfile(userUpdateInfo);
-      return ['success', ''];
+        await user.updateProfile(userUpdateInfo);
+        return ['success', ''];
+      } catch (e) {
+        print(e);
+        return ['failure', e];
+      }
     }
   }
 }
