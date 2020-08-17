@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
-final GoogleSignIn _googleSignIn = GoogleSignIn();
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 final _firestore = Firestore.instance;
 
 class Auth {
@@ -218,7 +218,7 @@ class Auth {
 
 
 
-  void signOut() async {
+  Future signOut() async {
     await _firebaseAuth.signOut();
   }
 
@@ -263,9 +263,7 @@ class Auth {
   }
 
   Future<List> signInWithGoogleStudent() async {
-    // if (await _googleSignIn.isSignedIn() == true) {
-    //   await _googleSignIn.signOut();
-    // }
+try {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
@@ -304,6 +302,8 @@ class Auth {
 
       await user.updateProfile(userUpdateInfo);
       return ['success', ''];
+    } }catch(e) {
+      return ['failure,' , 'some error'];
     }
 
     // if the user is not email verified which they arenet at this point
@@ -375,7 +375,7 @@ class Auth {
       print('account is set up as a teacher');
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-
+print('user.auth');
       final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,

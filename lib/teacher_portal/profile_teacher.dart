@@ -386,13 +386,13 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                   color: Colors.grey[200],
                                   onPressed: () async {
                                     print('logging out');
-                                    _auth.signOut();
-                                    if (await _googleSignIn.isSignedIn() ==
-                                        true) {
+                                    print('google log out too');
                                           // await _googleSignIn.disconnect();
                                           await _googleSignIn.signOut();
                                       
-                                    }
+                                    
+                                    await _auth.signOut();
+                                    
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

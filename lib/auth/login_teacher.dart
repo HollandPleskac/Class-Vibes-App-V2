@@ -214,14 +214,8 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                   print('google sign in');
                                   List result =
                                       await _auth.signInWithGoogleTeacher();
-
-                                  //push to next screen
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ClassViewTeacher(),
-                                    ),
-                                  );
+                                  
+                                  
                                   if (result[0] == 'failure') {
                                     setState(() {
                                       _feedback = result[1];
