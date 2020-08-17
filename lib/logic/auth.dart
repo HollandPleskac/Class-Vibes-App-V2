@@ -337,6 +337,7 @@ class Auth {
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
       print('user.auth');
+      print(googleUser.authentication);
       final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
