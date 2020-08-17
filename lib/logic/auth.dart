@@ -189,9 +189,7 @@ class Auth {
   }
 
   Future<List> signUpWithGoogleStudent() async {
-    // if (await _googleSignIn.isSignedIn() == true) {
-    //   await _googleSignIn.signOut();
-    // }
+   
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
     bool isUserInDB = await _firestore
@@ -267,16 +265,10 @@ class Auth {
       return ['failure,', 'some error'];
     }
 
-    // if the user is not email verified which they arenet at this point
-    // send them to the sign in teacher screen
-    // and check if they verify their email
   }
 
   Future<List> signUpWithGoogleTeacher() async {
-    // to show the full google popup and let them choose an account
-    // if (await _googleSignIn.isSignedIn() == true) {
-    //   await _googleSignIn.disconnect();
-    // }
+
 
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
