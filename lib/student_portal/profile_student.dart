@@ -380,6 +380,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                   print('logging out');
                                     // await _googleSignIn.disconnect();
                                           await _googleSignIn.signOut();
+                                        
                                       
                                     
                                     await _auth.signOut();
