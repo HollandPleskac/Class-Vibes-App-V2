@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/widgets/badges.dart';
 import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +95,14 @@ class _ViewClassState extends State<ViewClass> {
                           Tab(text: 'Students'),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
-                          Tab(text: 'Queue'),
+                          Tab(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Queue'),
+                              ],
+                            ),
+                          ),
                           Tab(text: 'Settings'),
                         ],
                       ),
@@ -125,7 +133,6 @@ class _ViewClassState extends State<ViewClass> {
                           ),
                           Container(
                             child: ClassQueue(
-                              
                               classId: classId,
                             ),
                           ),
