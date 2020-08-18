@@ -379,7 +379,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 onPressed: () async {
                                   print('logging out');
                                     // await _googleSignIn.disconnect();
-                                          await _googleSignIn.signOut();
+                                          // await _googleSignIn.signOut();
                                         
                                       
                                     

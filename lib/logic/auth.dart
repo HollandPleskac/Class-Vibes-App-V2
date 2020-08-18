@@ -181,6 +181,7 @@ class Auth {
   }
 
   Future signOut() async {
+    await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }
 
