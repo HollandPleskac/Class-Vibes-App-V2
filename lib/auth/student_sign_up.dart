@@ -303,9 +303,10 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                   } else {
                                     if (_passwordController.text !=
                                         _confirmPasswordController.text) {
-                                          setState(() {
-                                            _feedback = 'Confirm Password is not equal to password';
-                                          });
+                                      setState(() {
+                                        _feedback =
+                                            'Confirm Password is not equal to password';
+                                      });
                                     } else {
                                       if (_formKey.currentState.validate()) {
                                         List result = await _auth.signUpStudent(
@@ -407,6 +408,14 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                       setState(() {
                                         _feedback = result[1];
                                       });
+                                    } else {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ClassViewStudent(),
+                                        ),
+                                      );
                                     }
                                     print(result[0]);
                                   } else {

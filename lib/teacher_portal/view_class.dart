@@ -93,16 +93,16 @@ class _ViewClassState extends State<ViewClass> {
                         isScrollable: true,
                         tabs: [
                           Tab(text: 'Students'),
-                          Tab(text: 'Meetings'),
-                          Tab(text: 'Announcements'),
                           Tab(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text('Queue'),
+                                Text('Join Requests'),
                               ],
                             ),
                           ),
+                          Tab(text: 'Meetings'),
+                          Tab(text: 'Announcements'),
                           Tab(text: 'Settings'),
                         ],
                       ),
@@ -121,6 +121,11 @@ class _ViewClassState extends State<ViewClass> {
                             ),
                           ),
                           Container(
+                            child: ClassQueue(
+                              classId: classId,
+                            ),
+                          ),
+                          Container(
                             child: ClassMeetings(
                               teacherEmail: _email,
                               classId: classId,
@@ -128,11 +133,6 @@ class _ViewClassState extends State<ViewClass> {
                           ),
                           Container(
                             child: ClassAnnouncements(
-                              classId: classId,
-                            ),
-                          ),
-                          Container(
-                            child: ClassQueue(
                               classId: classId,
                             ),
                           ),
@@ -233,9 +233,13 @@ class DynamicPieChart extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.documents.isEmpty == false &&
+                snapshot.data.documents
+                    .where((document) => document['accepted'] == true)
+                    .isNotEmpty) {
               double doingGreatStudents = snapshot.data.documents
                   .where((document) => document["status"] == "doing great")
+                  .where((document) => document['accepted'] == true)
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
@@ -251,6 +255,7 @@ class DynamicPieChart extends StatelessWidget {
               double needHelpStudents = snapshot.data.documents
                   .where((documentSnapshot) =>
                       documentSnapshot.data['status'] == 'need help')
+                  .where((document) => document['accepted'] == true)
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
@@ -265,6 +270,7 @@ class DynamicPieChart extends StatelessWidget {
               double frustratedStudents = snapshot.data.documents
                   .where((documentSnapshot) =>
                       documentSnapshot.data['status'] == 'frustrated')
+                  .where((document) => document['accepted'] == true)
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
@@ -286,6 +292,7 @@ class DynamicPieChart extends StatelessWidget {
                           )
                           .inDays >=
                       maxDaysInactive)
+                  .where((document) => document['accepted'] == true)
                   .length
                   .toDouble();
 

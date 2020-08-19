@@ -407,7 +407,7 @@ class Fire {
 
     _firestore
         .collection('UserData')
-        .document(classId)
+        .document(studentEmail)
         .collection('Classes')
         .document(classId)
         .delete();

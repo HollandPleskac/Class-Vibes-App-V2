@@ -299,7 +299,10 @@ class Class extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.documents.isEmpty == false &&
+                snapshot.data.documents
+                    .where((document) => document['accepted'] == true)
+                    .isNotEmpty) {
               for (int i = 0; i < snapshot.data.documents.length; i++) {
                 if (snapshot.data.documents[i]['accepted'] == true) {
                   unReadCount = unReadCount +
@@ -361,6 +364,7 @@ class DynamicPieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     double doingGreatStudents = studentDocuments
         .where((document) => document["status"] == "doing great")
+        .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
@@ -375,6 +379,7 @@ class DynamicPieChart extends StatelessWidget {
     double needHelpStudents = studentDocuments
         .where((documentSnapshot) =>
             documentSnapshot.data['status'] == 'need help')
+        .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
@@ -388,6 +393,7 @@ class DynamicPieChart extends StatelessWidget {
     double frustratedStudents = studentDocuments
         .where((documentSnapshot) =>
             documentSnapshot.data['status'] == 'frustrated')
+        .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
@@ -407,6 +413,7 @@ class DynamicPieChart extends StatelessWidget {
                 )
                 .inDays >=
             classDocument['max days inactive'])
+        .where((document) => document['accepted'] == true)
         .length
         .toDouble();
 
@@ -414,7 +421,7 @@ class DynamicPieChart extends StatelessWidget {
         needHelpStudents +
         frustratedStudents +
         inactiveStudents.toDouble();
-
+    print(doingGreatStudents);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
