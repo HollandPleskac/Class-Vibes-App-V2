@@ -209,15 +209,17 @@ class Fire {
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
 
-    bool isAcceptingJoin = await _firestore
+    
+    if (isAlreadyInClass == true) {
+      return 'You are already in that class.';
+    }
+    
+    if (isClassCode == true) {
+      bool isAcceptingJoin = await _firestore
         .collection('Classes')
         .document(classCode)
         .get()
         .then((docSnap) => docSnap.data['allow join']);
-    if (isAlreadyInClass == true) {
-      return 'You are already in that class.';
-    }
-    if (isClassCode == true) {
       //put the student in that class
       if (isAcceptingJoin) {
         _firestore
