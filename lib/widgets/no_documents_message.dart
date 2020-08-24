@@ -446,7 +446,40 @@ class NoDocsClassQueue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('No Queue!'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/svg/undraw_secure_data_0rwp.svg',
+            width: MediaQuery.of(context).size.width * 0.65,
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.035,
+          ),
+          Text(
+            'No Queue',
+            style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 38,
+                color: Colors.grey[800]),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.0175,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Text(
+              'No students are in the queue.  When a student tries to join the class they will show up here.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  height: 2,
+                  color: Colors.grey[600],
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
