@@ -19,7 +19,10 @@ class ClassVibesServer {
     print(getResponse.body);
   }
 
-  Future<void> deleteAccount({String email, String accountType}) async {
+  Future<void> deleteAccount({
+    String email,
+    String accountType,
+  }) async {
     // https://api-v1.classvibes.net/api/deleteUserAccount?authToken=&email=&type=
     final FirebaseUser user = await _firebaseAuth.currentUser();
 
@@ -28,4 +31,18 @@ class ClassVibesServer {
         'https://api-v1.classvibes.net/api/deleteUserAccount?authToken=$token&email=$email&type=$accountType');
     print(getResponse.body);
   }
+
+  Future<void> removeFromClass({
+    String studentEmail,
+    String classId,
+  }) async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+
+    final String token = await user.getIdToken().then((value) => value.token);
+    // var getResponse = await http.get(
+    //     'https://api-v1.classvibes.net/api/deleteUserAccount?authToken=$token&email=$email&type=$accountType');
+    // print(getResponse.body);
+  }
+
+  
 }
