@@ -314,7 +314,7 @@ class Class extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     child: Padding(
-                      padding: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(0),
                       child: Card(
                         elevation: 3,
                         // shape: RoundedRectangleBorder(
@@ -334,8 +334,8 @@ class Class extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height * 0.02,
-                    right: MediaQuery.of(context).size.width * 0.04,
+                    top: MediaQuery.of(context).size.height * 0.015,
+                    right: MediaQuery.of(context).size.width * 0.03,
                     child: UnreadMessageBadge(unReadCount),
                   ),
                 ],
@@ -460,7 +460,7 @@ class NoStudentsClass extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(0),
         child: Card(
              elevation: 2,
           // shape: RoundedRectangleBorder(
@@ -477,7 +477,7 @@ class NoStudentsClass extends StatelessWidget {
                     aspectRatio: 1.6,
                     child: Center(
                       child: SvgPicture.asset(
-                        'assets/svg/undraw_analytics_5pgy.svg',
+                        'assets/svg/undraw_empty_xct9.svg',
                         width: MediaQuery.of(context).size.width * 0.2,
                       ),
                     ),
