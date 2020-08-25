@@ -160,6 +160,14 @@ class StudentClass extends StatelessWidget {
             (docSnap) => docSnap.data['class name'],
           );
     }
+    Future<void> _showNotAcceptedMessage() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return NotAcceptedContent();
+      },
+    );
+  }
 
     return Container(
       margin: EdgeInsets.only(bottom: 20),
@@ -178,37 +186,57 @@ class StudentClass extends StatelessWidget {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  InkWell(
-                    onTap: () async {
-                      Navigator.pushNamed(context, ViewClassStudent.routename,
-                          arguments: {
-                            'class id': classId,
-                            'class name': await getClassName(),
-                            'initial index': 0,
-                          });
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.05,
-                        right: MediaQuery.of(context).size.width * 0.07,
-                      ),
-                      child: Center(
-                        child: Text(
-                          classSnapshot.data['class name'],
-                          overflow: TextOverflow.fade,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            // fontFamily: 'Nunito',
-                            wordSpacing: 2,
-                            letterSpacing: 1.25,
-                            fontSize: 18,
+                  StreamBuilder(
+                    stream: _firestore
+                        .collection('Classes')
+                        .document(classId)
+                        .collection('Students')
+                        .document(email)
+                        .snapshots(),
+                    builder: (BuildContext context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Center(
+                          child: Container(),
+                        );
+                      }
+                      return InkWell(
+                        onTap: () async {
+                          if (snapshot.data['accepted'] == true) {
+                            Navigator.pushNamed(
+                                context, ViewClassStudent.routename,
+                                arguments: {
+                                  'class id': classId,
+                                  'class name': await getClassName(),
+                                  'initial index': 0,
+                                });
+                          } else {
+                            _showNotAcceptedMessage();
+                          }
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.05,
+                            right: MediaQuery.of(context).size.width * 0.07,
+                          ),
+                          child: Center(
+                            child: Text(
+                              classSnapshot.data['class name'],
+                              overflow: TextOverflow.fade,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                // fontFamily: 'Nunito',
+                                wordSpacing: 2,
+                                letterSpacing: 1.25,
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                   Positioned(
                     top: 5,
@@ -239,7 +267,10 @@ class StudentClass extends StatelessWidget {
                           maxDaysInactive:
                               classSnapshot.data['max days inactive'],
                         )
-                      : StatusRowLocked();
+                      : StatusRowLocked(
+                          classId: classId,
+                          studentEmail: email,
+                        );
                 },
               ),
             ],
@@ -249,132 +280,6 @@ class StudentClass extends StatelessWidget {
     );
   }
 }
-
-// class StudentClass extends StatelessWidget {
-//   final String classId;
-//   final String email;
-//   final int unreadCount;
-
-//   StudentClass({
-//     this.classId,
-//     this.email,
-//     this.unreadCount,
-//   });
-//   @override
-//   Widget build(BuildContext context) {
-//     Future getClassName() async {
-//       return await _firestore
-//           .collection('Classes')
-//           .document(classId)
-//           .get()
-//           .then(
-//             (docSnap) => docSnap.data['class name'],
-//           );
-//     }
-
-//     return Stack(
-//       children: [
-//         GestureDetector(
-//           onTap: () async {
-//             _fire.resetStudentUnreadCount(
-//               classId: classId,
-//               studentEmail: email,
-//             );
-//             Navigator.pushNamed(context, ViewClassStudent.routename,
-//                 arguments: {
-//                   'class id': classId,
-//                   'class name': await getClassName(),
-//                   'initial index': 0,
-//                 });
-//           },
-//           child: Container(
-//             height: MediaQuery.of(context).size.height * 0.14,
-//             width: double.infinity,
-//             child: Padding(
-//               padding: EdgeInsets.only(
-//                 top: MediaQuery.of(context).size.height * 0.035,
-//                 left: MediaQuery.of(context).size.width * 0.05,
-//                 right: MediaQuery.of(context).size.width * 0.05,
-//               ),
-//               child: Card(
-//                 child: StreamBuilder(
-//                     stream: _firestore
-//                         .collection('Classes')
-//                         .document(classId)
-//                         .snapshots(),
-//                     builder: (BuildContext context, classSnapshot) {
-//                       if (classSnapshot.data == null) {
-//                         return Center(
-//                           child: Container(),
-//                         );
-//                       }
-//                       return Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         children: <Widget>[
-//                           Padding(
-//                             padding: EdgeInsets.only(
-//                                 left: MediaQuery.of(context).size.width * 0.05),
-//                             child: Container(
-//                               width: MediaQuery.of(context).size.width * 0.4,
-//                               child: Text(
-//                                 classSnapshot.data['class name'],
-//                                 overflow: TextOverflow.fade,
-//                                 softWrap: false,
-//                                 style: TextStyle(
-//                                   fontSize:
-//                                       MediaQuery.of(context).size.width * 0.046,
-//                                   fontWeight: FontWeight.w400,
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                           Padding(
-//                             padding: EdgeInsets.only(right: 20),
-//                             child: StreamBuilder(
-//                               stream: _firestore
-//                                   .collection('Classes')
-//                                   .document(classId)
-//                                   .collection('Students')
-//                                   .document(email)
-//                                   .snapshots(),
-//                               builder: (BuildContext context, snapshot) {
-//                                 if (snapshot.data == null) {
-//                                   return Center(
-//                                     child: Container(),
-//                                   );
-//                                 }
-//                                 return SelectStatusRow(
-//                                   classId: classId,
-//                                   lastChangedStatus: snapshot.data['date'],
-//                                   status: snapshot.data['status'],
-//                                   email: email,
-//                                   maxDaysInactive:
-//                                       classSnapshot.data['max days inactive'],
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                         ],
-//                       );
-//                     }),
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.all(
-//                     Radius.circular(10),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//         Positioned(
-//           top: MediaQuery.of(context).size.height * 0.03,
-//           right: MediaQuery.of(context).size.width * 0.03,
-//           child: UnreadMessageBadge(unreadCount),
-//         ),
-//       ],
-//     );
-//   }
-// }
 
 void showStudentInfoPopUp(BuildContext context) {
   showDialog(
@@ -626,166 +531,70 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
   }
 }
 
-// class SelectStatusRow extends StatefulWidget {
-//   final String classId;
-//   final Timestamp lastChangedStatus;
-//   final String status;
-//   final String email;
-//   final int maxDaysInactive;
-
-//   SelectStatusRow(
-//       {this.classId,
-//       this.lastChangedStatus,
-//       this.status,
-//       this.email,
-//       this.maxDaysInactive});
-//   @override
-//   _SelectStatusRowState createState() => _SelectStatusRowState();
-// }
-
-// class _SelectStatusRowState extends State<SelectStatusRow> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         GestureDetector(
-//           onTap: () {
-//             _fire.updateStudentMood(
-//                 uid: widget.email,
-//                 classId: widget.classId,
-//                 newMood: 'doing great');
-//             print('changing status');
-//           },
-//           child: DateTime.now()
-//                       .difference(
-//                         DateTime.parse(
-//                             widget.lastChangedStatus.toDate().toString()),
-//                       )
-//                       .inDays >=
-//                   widget.maxDaysInactive
-//               ? FaIcon(
-//                   FontAwesomeIcons.smile,
-//                   color: Colors.grey,
-//                   size: MediaQuery.of(context).size.width * 0.0825,
-//                   //used to be 36
-//                 )
-//               : FaIcon(
-//                   widget.status == 'doing great'
-//                       ? FontAwesomeIcons.solidSmile
-//                       : FontAwesomeIcons.smile,
-//                   color: Colors.green,
-//                   size: MediaQuery.of(context).size.width * 0.0825,
-//                   //used to be 36
-//                 ),
-//         ),
-//         // FaIcon(
-//         //   FontAwesomeIcons.smile,
-//         //   color: Colors.green,
-//         //   size: 36,
-//         // ),
-//         SizedBox(
-//           width: 20,
-//         ),
-//         GestureDetector(
-//           onTap: () {
-//             _fire.updateStudentMood(
-//                 uid: widget.email,
-//                 classId: widget.classId,
-//                 newMood: 'need help');
-//             print('changing status');
-//           },
-//           child: DateTime.now()
-//                       .difference(
-//                         DateTime.parse(
-//                             widget.lastChangedStatus.toDate().toString()),
-//                       )
-//                       .inDays >=
-//                   widget.maxDaysInactive
-//               ? FaIcon(
-//                   FontAwesomeIcons.meh,
-//                   color: Colors.grey,
-//                   size: MediaQuery.of(context).size.width * 0.0825,
-//                   //used to be 36
-//                 )
-//               : FaIcon(
-//                   widget.status == 'need help'
-//                       ? FontAwesomeIcons.solidMeh
-//                       : FontAwesomeIcons.meh,
-//                   color: Colors.yellow[800],
-//                   size: MediaQuery.of(context).size.width * 0.0825,
-//                   //used to be 36
-//                 ),
-//         ),
-//         // FaIcon(
-//         //   FontAwesomeIcons.meh,
-//         //   color: Colors.yellow[800],
-//         //   size: 36,
-//         // ),
-//         SizedBox(
-//           width: 20,
-//         ),
-//         GestureDetector(
-//           onTap: () {
-//             _fire.updateStudentMood(
-//                 uid: widget.email,
-//                 classId: widget.classId,
-//                 newMood: 'frustrated');
-//             print('changing status');
-//           },
-//           child: DateTime.now()
-//                       .difference(
-//                         DateTime.parse(
-//                             widget.lastChangedStatus.toDate().toString()),
-//                       )
-//                       .inDays >=
-//                   widget.maxDaysInactive
-//               ? FaIcon(
-//                   FontAwesomeIcons.frown,
-//                   color: Colors.grey,
-//                   size: MediaQuery.of(context).size.width * 0.0825,
-//                   //used to be 36
-//                 )
-//               : FaIcon(
-//                   widget.status == 'frustrated'
-//                       ? FontAwesomeIcons.solidFrown
-//                       : FontAwesomeIcons.frown,
-//                   color: Colors.red,
-//                   size: MediaQuery.of(context).size.width * 0.0825,
-//                   //used to be 36
-//                 ),
-//         ),
-//         // FaIcon(
-//         //   FontAwesomeIcons.frown,
-//         //   color: Colors.red,
-//         //   size: 36,
-//         // ),
-//       ],
-//     );
-//   }
-// }
-
 class StatusRowLocked extends StatelessWidget {
+  final String classId;
+  final String studentEmail;
+
+  StatusRowLocked({this.classId, this.studentEmail});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Ink(
       height: MediaQuery.of(context).size.height * 0.1,
       width: MediaQuery.of(context).size.width * 0.6,
+      color: kAppBarColor,
       child: Align(
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
         child: Padding(
           padding: EdgeInsets.only(
             left: MediaQuery.of(context).size.width * 0.03,
           ),
           //maybe a row with some type of nice loading indicator here or something?
-          child: Text(
-            'Pending Approval',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 1.25,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Pending Approval',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 1.25,
+                ),
+              ),
+              IconButton(
+                icon: FaIcon(
+                  FontAwesomeIcons.trash,
+                  size: 19.5,
+                  color: Colors.white,
+                ),
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  _fire.leaveClass(
+                    classId: classId,
+                    studentEmail: studentEmail,
+                  );
+                },
+              ),
+            ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class NotAcceptedContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Pending Approval'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Text(
+              'You will be able to click on this class after your teacher approves you',
+            ),
+          ],
         ),
       ),
     );
