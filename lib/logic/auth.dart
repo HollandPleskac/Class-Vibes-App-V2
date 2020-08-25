@@ -190,7 +190,7 @@ class Auth {
   }
 
   Future<List> signUpWithGoogleStudent() async {
-    if(await _googleSignIn.isSignedIn()) {
+    if (await _googleSignIn.isSignedIn()) {
       await _googleSignIn.signOut();
     }
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -270,7 +270,7 @@ class Auth {
   }
 
   Future<List> signUpWithGoogleTeacher() async {
-    if(await _googleSignIn.isSignedIn()) {
+    if (await _googleSignIn.isSignedIn()) {
       await _googleSignIn.signOut();
     }
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -306,7 +306,7 @@ class Auth {
   }
 
   Future<List> signInWithGoogleTeacher() async {
-    if(await _googleSignIn.isSignedIn()) {
+    if (await _googleSignIn.isSignedIn()) {
       await _googleSignIn.signOut();
     }
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
