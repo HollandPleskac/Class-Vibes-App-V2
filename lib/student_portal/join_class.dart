@@ -147,14 +147,7 @@ class _JoinClassState extends State<JoinClass> {
                             );
 
                             _scaffoldKey.currentState.showSnackBar(snackBar);
-                            Timer(Duration(milliseconds: 1500), () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ClassViewStudent(),
-                                ),
-                              );
-                            });
+
                             // if (result == 'You have joined the class!') {
 
                             //   Navigator.push(
