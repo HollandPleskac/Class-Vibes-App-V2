@@ -107,6 +107,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                     classId: document.documentID,
                                     email: _email,
                                     unreadCount: document['student unread'],
+                                    accepted: document['accepted'],
                                   );
                                 }).toList(),
                               );
@@ -143,11 +144,13 @@ class StudentClass extends StatelessWidget {
   final String classId;
   final String email;
   final int unreadCount;
+  final bool accepted;
 
   StudentClass({
     this.classId,
     this.email,
     this.unreadCount,
+    this.accepted,
   });
   @override
   Widget build(BuildContext context) {
@@ -160,14 +163,15 @@ class StudentClass extends StatelessWidget {
             (docSnap) => docSnap.data['class name'],
           );
     }
+
     Future<void> _showNotAcceptedMessage() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return NotAcceptedContent();
-      },
-    );
-  }
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return NotAcceptedContent();
+        },
+      );
+    }
 
     return Container(
       margin: EdgeInsets.only(bottom: 20),
@@ -186,57 +190,41 @@ class StudentClass extends StatelessWidget {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  StreamBuilder(
-                    stream: _firestore
-                        .collection('Classes')
-                        .document(classId)
-                        .collection('Students')
-                        .document(email)
-                        .snapshots(),
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Center(
-                          child: Container(),
-                        );
+                  InkWell(
+                    onTap: () async {
+                      if (accepted == true) {
+                        Navigator.pushNamed(context, ViewClassStudent.routename,
+                            arguments: {
+                              'class id': classId,
+                              'class name': await getClassName(),
+                              'initial index': 0,
+                            });
+                      } else {
+                        _showNotAcceptedMessage();
                       }
-                      return InkWell(
-                        onTap: () async {
-                          if (snapshot.data['accepted'] == true) {
-                            Navigator.pushNamed(
-                                context, ViewClassStudent.routename,
-                                arguments: {
-                                  'class id': classId,
-                                  'class name': await getClassName(),
-                                  'initial index': 0,
-                                });
-                          } else {
-                            _showNotAcceptedMessage();
-                          }
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.1,
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.05,
-                            right: MediaQuery.of(context).size.width * 0.07,
-                          ),
-                          child: Center(
-                            child: Text(
-                              classSnapshot.data['class name'],
-                              overflow: TextOverflow.fade,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                // fontFamily: 'Nunito',
-                                wordSpacing: 2,
-                                letterSpacing: 1.25,
-                                fontSize: 18,
-                              ),
-                            ),
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.05,
+                        right: MediaQuery.of(context).size.width * 0.07,
+                      ),
+                      child: Center(
+                        child: Text(
+                          classSnapshot.data['class name'],
+                          overflow: TextOverflow.fade,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            // fontFamily: 'Nunito',
+                            wordSpacing: 2,
+                            letterSpacing: 1.25,
+                            fontSize: 18,
                           ),
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                   Positioned(
                     top: 5,
@@ -245,34 +233,28 @@ class StudentClass extends StatelessWidget {
                   ),
                 ],
               ),
-              StreamBuilder(
-                stream: _firestore
-                    .collection('Classes')
-                    .document(classId)
-                    .collection('Students')
-                    .document(email)
-                    .snapshots(),
-                builder: (BuildContext context, snapshot) {
-                  if (snapshot.data == null) {
-                    return Center(
-                      child: Container(),
-                    );
-                  }
-                  return snapshot.data['accepted'] == true
-                      ? SelectStatusRow(
+              accepted == true
+                  ? StreamBuilder(
+                      stream: _firestore
+                          .collection('Classes')
+                          .document(classId)
+                          .collection('Students')
+                          .snapshots(),
+                      builder: (BuildContext context, snapshot) {
+                        return SelectStatusRow(
                           classId: classId,
                           lastChangedStatus: snapshot.data['date'],
                           status: snapshot.data['status'],
                           email: email,
                           maxDaysInactive:
                               classSnapshot.data['max days inactive'],
-                        )
-                      : StatusRowLocked(
-                          classId: classId,
-                          studentEmail: email,
                         );
-                },
-              ),
+                      },
+                    )
+                  : StatusRowLocked(
+                      classId: classId,
+                      studentEmail: email,
+                    ),
             ],
           );
         },

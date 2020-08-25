@@ -209,17 +209,16 @@ class Fire {
         .getDocuments()
         .then((querySnap) => querySnap.documents.isNotEmpty);
 
-    
     if (isAlreadyInClass == true) {
       return 'You are already in that class.';
     }
-    
+
     if (isClassCode == true) {
       bool isAcceptingJoin = await _firestore
-        .collection('Classes')
-        .document(classCode)
-        .get()
-        .then((docSnap) => docSnap.data['allow join']);
+          .collection('Classes')
+          .document(classCode)
+          .get()
+          .then((docSnap) => docSnap.data['allow join']);
       //put the student in that class
       if (isAcceptingJoin) {
         _firestore
@@ -245,6 +244,7 @@ class Fire {
           'code': classCode,
           'student unread': 0,
           'teacher unread': 0,
+          'accepted': false,
         });
         await _firebaseMessaging.subscribeToTopic(classCode);
         return 'You have joined the class!';
@@ -391,6 +391,7 @@ class Fire {
     });
   }
 
+// TODO : delete
   Future<bool> doesDistrictCodeExist(String districtCode) async {
     return await _firestore
         .collection('Districts')
@@ -418,6 +419,17 @@ class Fire {
   void acceptFromQueue(String studentEmail, String classId) {
     print(studentEmail);
     print(classId);
+    _firestore
+        .collection('UserData')
+        .document(studentEmail)
+        .collection('Classes')
+        .document(classId)
+        .updateData(
+      {
+        'accepted': true,
+      },
+    );
+
     _firestore
         .collection('Classes')
         .document(classId)
