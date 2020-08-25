@@ -316,17 +316,18 @@ class Class extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(5),
                       child: Card(
+                        elevation: 3,
+                        // shape: RoundedRectangleBorder(
+                        //   borderRadius: BorderRadius.all(
+                        //     Radius.circular(14),
+                        //   ),
+                        // ),
                         child: Center(
                           child: DynamicPieChart(
                             // the document is class document
                             // student documents is all the student email documents in class
                             studentDocuments: snapshot.data.documents,
                             classDocument: document,
-                          ),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(14),
                           ),
                         ),
                       ),
@@ -461,6 +462,12 @@ class NoStudentsClass extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Card(
+             elevation: 2,
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.all(
+          //     Radius.circular(14),
+          //   ),
+          // ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -489,11 +496,7 @@ class NoStudentsClass extends StatelessWidget {
               ],
             ),
           ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(14),
-            ),
-          ),
+          
         ),
       ),
     );
