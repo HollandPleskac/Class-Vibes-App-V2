@@ -59,9 +59,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
             await classVibesServer.deleteAccount(
                 email: email, accountType: widget.accountType);
 
-            if (await _googleSignIn.isSignedIn()) {
-              _googleSignIn.signOut();
-            }
+            await _auth.signOutGoogle();
             await user.delete();
 
             Navigator.of(context).pushAndRemoveUntil(

@@ -185,6 +185,10 @@ class Auth {
     await _firebaseAuth.signOut();
   }
 
+  Future signOutGoogle() async {
+    await _googleSignIn.signOut();
+  }
+
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }

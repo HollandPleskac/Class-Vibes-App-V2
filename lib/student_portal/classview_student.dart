@@ -17,6 +17,7 @@ final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 
+
 class ClassViewStudent extends StatefulWidget {
   @override
   _ClassViewStudentState createState() => _ClassViewStudentState();
@@ -239,8 +240,14 @@ class StudentClass extends StatelessWidget {
                           .collection('Classes')
                           .document(classId)
                           .collection('Students')
+                          .document(email)
                           .snapshots(),
                       builder: (BuildContext context, snapshot) {
+                        if (classSnapshot.data == null) {
+                          return Center(
+                            child: Container(),
+                          );
+                        }
                         return SelectStatusRow(
                           classId: classId,
                           lastChangedStatus: snapshot.data['date'],
