@@ -35,13 +35,15 @@ class ClassVibesServer {
   Future<void> removeFromClass({
     String studentEmail,
     String classId,
+    String teacherEmail,
   }) async {
+    // https://api-v1.classvibes.net/api/removeStudent?email=&code=&teacher=&classUID=&authToken=
     final FirebaseUser user = await _firebaseAuth.currentUser();
 
     final String token = await user.getIdToken().then((value) => value.token);
-    // var getResponse = await http.get(
-    //     'https://api-v1.classvibes.net/api/deleteUserAccount?authToken=$token&email=$email&type=$accountType');
-    // print(getResponse.body);
+    var getResponse = await http.get(
+        'https://api-v1.classvibes.net/api/removeStudent?email=$studentEmail&code=$classId&teacher=$teacherEmail&classUID=$classId&authToken=$token');
+    print(getResponse.body);
   }
 
   

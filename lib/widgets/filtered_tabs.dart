@@ -6,9 +6,11 @@ import '../teacher_portal/chat_teacher.dart';
 import '../logic/fire.dart';
 import './badges.dart';
 import '../constant.dart';
+import '../logic/class_vibes_server.dart';
 
 final Firestore _firestore = Firestore.instance;
 final _fire = Fire();
+final _classVibesServer = ClassVibesServer();
 
 class AllTab extends StatelessWidget {
   final String classId;
@@ -666,6 +668,12 @@ class Student extends StatelessWidget {
                     ),
                     onPressed: () {
                       print('remove student from class');
+                      _classVibesServer.removeFromClass(
+                        classId: classId,
+                        studentEmail: studentEmail,
+                        teacherEmail: teacherEmail,
+                      );
+                      Navigator.pop(context);
                     },
                   ),
                 ),
