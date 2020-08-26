@@ -207,7 +207,9 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                                     ),
                                 image: DecorationImage(
                                     image: NetworkImage(
-                                        'https://www.kindpng.com/picc/m/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png'),
+                                        // 'https://www.kindpng.com/picc/m/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png'
+                                        'https://i.pinimg.com/736x/9e/e8/9f/9ee89f7623acc78fc33fc0cbaf3a014b.jpg'
+                                        ),
                                     fit: BoxFit.cover)),
                           ),
                         ),

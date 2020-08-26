@@ -133,24 +133,24 @@ class _ChatTeacherState extends State<ChatTeacher> {
               }
             }),
         // title:
-        actions: <Widget>[
-          GestureDetector(
-            onTap: _showModalSheet,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: NetworkImage(
-                            'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-                        fit: BoxFit.cover)),
-              ),
-            ),
-          )
-        ],
+      //   actions: <Widget>[
+      //     GestureDetector(
+      //       onTap: _showModalSheet,
+      //       child: Padding(
+      //         padding: const EdgeInsets.all(10),
+      //         child: Container(
+      //           width: 30,
+      //           height: 30,
+      //           decoration: BoxDecoration(
+      //               shape: BoxShape.circle,
+      //               image: DecorationImage(
+      //                   image: NetworkImage(
+      //                       'https://i.pinimg.com/736x/9e/e8/9f/9ee89f7623acc78fc33fc0cbaf3a014b.jpg'),
+      //                   fit: BoxFit.cover)),
+      //         ),
+      //       ),
+      //     )
+        // ],
       ),
       body: SingleChildScrollView(
         reverse: true,
