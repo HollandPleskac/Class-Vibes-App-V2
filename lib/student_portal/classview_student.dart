@@ -17,7 +17,6 @@ final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 
-
 class ClassViewStudent extends StatefulWidget {
   @override
   _ClassViewStudentState createState() => _ClassViewStudentState();
@@ -435,14 +434,22 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                         )
                         .inDays >=
                     widget.maxDaysInactive
-                ? Colors.grey[300]
+                ? Colors.grey[200]
                 : widget.status == 'doing great'
                     ? Colors.green[100]
                     : Colors.transparent,
             child: Center(
               child: FaIcon(
                 FontAwesomeIcons.smile,
-                color: Colors.green,
+                color: DateTime.now()
+                            .difference(
+                              DateTime.parse(
+                                  widget.lastChangedStatus.toDate().toString()),
+                            )
+                            .inDays >=
+                        widget.maxDaysInactive
+                    ? Colors.grey
+                    : Colors.green,
                 size: MediaQuery.of(context).size.width * 0.0825,
                 //used to be 36
               ),
@@ -468,14 +475,22 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                         )
                         .inDays >=
                     widget.maxDaysInactive
-                ? Colors.grey[300]
+                ? Colors.grey[200]
                 : widget.status == 'need help'
                     ? Colors.orange[100]
                     : Colors.transparent,
             child: Center(
               child: FaIcon(
                 FontAwesomeIcons.meh,
-                color: Colors.yellow[800],
+                color: DateTime.now()
+                            .difference(
+                              DateTime.parse(
+                                  widget.lastChangedStatus.toDate().toString()),
+                            )
+                            .inDays >=
+                        widget.maxDaysInactive
+                    ? Colors.grey
+                    : Colors.yellow[800],
                 size: MediaQuery.of(context).size.width * 0.0825,
                 //used to be 36
               ),
@@ -501,14 +516,22 @@ class _SelectStatusRowState extends State<SelectStatusRow> {
                         )
                         .inDays >=
                     widget.maxDaysInactive
-                ? Colors.grey[300]
+                ? Colors.grey[200]
                 : widget.status == 'frustrated'
                     ? Colors.red[100]
                     : Colors.transparent,
             child: Center(
               child: FaIcon(
                 FontAwesomeIcons.frown,
-                color: Colors.red,
+                color: DateTime.now()
+                            .difference(
+                              DateTime.parse(
+                                  widget.lastChangedStatus.toDate().toString()),
+                            )
+                            .inDays >=
+                        widget.maxDaysInactive
+                    ? Colors.grey
+                    : Colors.red,
                 size: MediaQuery.of(context).size.width * 0.0825,
                 //used to be 36
               ),
