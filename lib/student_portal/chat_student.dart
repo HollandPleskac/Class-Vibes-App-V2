@@ -172,47 +172,17 @@ class _ChatStudentState extends State<ChatStudent> {
                         filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          height: 50,
+                          height: MediaQuery.of(context).size.height * 0.0625,
                           child: Row(
                             children: <Widget>[
-                              IconButton(
-                                  icon: Icon(
-                                    Icons.send,
-                                    color: Colors.black,
-                                      size:
-                                            MediaQuery.of(context).size.width *
-                                                0.06,
-                                  ),
-                                  onPressed: () async {
-                                    if (_controller.text != '') {
-                                      _fire.incrementTeacherUnreadCount(
-                                        classId: widget.classId,
-                                        studentEmail: widget.email,
-                                      );
-                                      await _firestore
-                                          .collection('Class-Chats')
-                                          .document(widget.classId)
-                                          .collection('Students')
-                                          .document(widget.email)
-                                          .collection('Messages')
-                                          .document()
-                                          .setData({
-                                        'timestamp': DateTime.now(),
-                                        'message': _controller.text,
-                                        'user': _studentName,
-                                        'sent type': 'student',
-                                      });
-
-                                      _controller.clear();
-                                    }
-                                  }),
+                              
                               Padding(
-                                  padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.04,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.025,
-                                      bottom: 9.0),
+                                padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.025,
+                                ),
                                 child: Center(
                                   child: Container(
                                     width:
@@ -220,6 +190,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                     child: TextField(
                                       controller: _controller,
                                       decoration: InputDecoration(
+                                        hintText: 'Type something...',
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
@@ -229,6 +200,37 @@ class _ChatStudentState extends State<ChatStudent> {
                                     ),
                                   ),
                                 ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.send,
+                                  color: Colors.black,
+                                  size:
+                                      MediaQuery.of(context).size.width * 0.06,
+                                ),
+                                onPressed: () async {
+                                  if (_controller.text != '') {
+                                    _fire.incrementTeacherUnreadCount(
+                                      classId: widget.classId,
+                                      studentEmail: widget.email,
+                                    );
+                                    await _firestore
+                                        .collection('Class-Chats')
+                                        .document(widget.classId)
+                                        .collection('Students')
+                                        .document(widget.email)
+                                        .collection('Messages')
+                                        .document()
+                                        .setData({
+                                      'timestamp': DateTime.now(),
+                                      'message': _controller.text,
+                                      'user': _studentName,
+                                      'sent type': 'student',
+                                    });
+
+                                    _controller.clear();
+                                  }
+                                },
                               ),
                             ],
                           ),

@@ -182,6 +182,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                       case ConnectionState.waiting:
                         return Center(
                           child: CircularProgressIndicator(),
+                          // child: Container(),
                         );
                       default:
                         if (!snapshot.hasData ||
@@ -230,51 +231,16 @@ class _ChatTeacherState extends State<ChatTeacher> {
                           filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            height: 50,
+                            height: MediaQuery.of(context).size.height * 0.0625,
                             child: Row(
                               children: <Widget>[
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.1,
-                                  child: IconButton(
-                                      icon: Icon(
-                                        Icons.send,
-                                        color: Colors.black,
-                                        size:
-                                            MediaQuery.of(context).size.width *
-                                                0.06,
-                                      ),
-                                      onPressed: () async {
-                                        if (_controller.text != '') {
-                                          _fire.incrementStudentUnreadCount(
-                                            classId: widget.classId,
-                                            studentEmail: widget.studentEmail,
-                                          );
-                                          await _firestore
-                                              .collection('Class-Chats')
-                                              .document(widget.classId)
-                                              .collection('Students')
-                                              .document(widget.studentEmail)
-                                              .collection('Messages')
-                                              .document()
-                                              .setData({
-                                            'timestamp': DateTime.now(),
-                                            'message': _controller.text,
-                                            'user': _teacherName,
-                                            'sent type': 'teacher',
-                                          });
-
-                                          _controller.clear();
-                                        }
-                                      }),
-                                ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.04,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.025,
-                                      bottom: 9.0),
+                                    left: MediaQuery.of(context).size.width *
+                                        0.04,
+                                    right: MediaQuery.of(context).size.width *
+                                        0.025,
+                                  ),
                                   child: Center(
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
@@ -282,6 +248,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       child: TextField(
                                         controller: _controller,
                                         decoration: InputDecoration(
+                                          hintText: 'Type something...',
                                           border: InputBorder.none,
                                           focusedBorder: InputBorder.none,
                                           enabledBorder: InputBorder.none,
@@ -290,6 +257,41 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         ),
                                       ),
                                     ),
+                                  ),
+                                ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.send,
+                                      color: Colors.black,
+                                      size: MediaQuery.of(context).size.width *
+                                          0.06,
+                                    ),
+                                    onPressed: () async {
+                                      if (_controller.text != '') {
+                                        _fire.incrementStudentUnreadCount(
+                                          classId: widget.classId,
+                                          studentEmail: widget.studentEmail,
+                                        );
+                                        await _firestore
+                                            .collection('Class-Chats')
+                                            .document(widget.classId)
+                                            .collection('Students')
+                                            .document(widget.studentEmail)
+                                            .collection('Messages')
+                                            .document()
+                                            .setData({
+                                          'timestamp': DateTime.now(),
+                                          'message': _controller.text,
+                                          'user': _teacherName,
+                                          'sent type': 'teacher',
+                                        });
+
+                                        _controller.clear();
+                                      }
+                                    },
                                   ),
                                 ),
                               ],
