@@ -133,23 +133,23 @@ class _ChatTeacherState extends State<ChatTeacher> {
               }
             }),
         // title:
-      //   actions: <Widget>[
-      //     GestureDetector(
-      //       onTap: _showModalSheet,
-      //       child: Padding(
-      //         padding: const EdgeInsets.all(10),
-      //         child: Container(
-      //           width: 30,
-      //           height: 30,
-      //           decoration: BoxDecoration(
-      //               shape: BoxShape.circle,
-      //               image: DecorationImage(
-      //                   image: NetworkImage(
-      //                       'https://i.pinimg.com/736x/9e/e8/9f/9ee89f7623acc78fc33fc0cbaf3a014b.jpg'),
-      //                   fit: BoxFit.cover)),
-      //         ),
-      //       ),
-      //     )
+        //   actions: <Widget>[
+        //     GestureDetector(
+        //       onTap: _showModalSheet,
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(10),
+        //         child: Container(
+        //           width: 30,
+        //           height: 30,
+        //           decoration: BoxDecoration(
+        //               shape: BoxShape.circle,
+        //               image: DecorationImage(
+        //                   image: NetworkImage(
+        //                       'https://i.pinimg.com/736x/9e/e8/9f/9ee89f7623acc78fc33fc0cbaf3a014b.jpg'),
+        //                   fit: BoxFit.cover)),
+        //         ),
+        //       ),
+        //     )
         // ],
       ),
       body: SingleChildScrollView(
@@ -229,38 +229,45 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                           child: Container(
-                            width: MediaQuery.of(context).size.width - 50,
+                            width: MediaQuery.of(context).size.width * 0.9,
                             height: 50,
                             child: Row(
                               children: <Widget>[
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.send,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () async {
-                                      if (_controller.text != '') {
-                                        _fire.incrementStudentUnreadCount(
-                                          classId: widget.classId,
-                                          studentEmail: widget.studentEmail,
-                                        );
-                                        await _firestore
-                                            .collection('Class-Chats')
-                                            .document(widget.classId)
-                                            .collection('Students')
-                                            .document(widget.studentEmail)
-                                            .collection('Messages')
-                                            .document()
-                                            .setData({
-                                          'timestamp': DateTime.now(),
-                                          'message': _controller.text,
-                                          'user': _teacherName,
-                                          'sent type': 'teacher',
-                                        });
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  child: IconButton(
+                                      icon: Icon(
+                                        Icons.send,
+                                        color: Colors.black,
+                                        size:
+                                            MediaQuery.of(context).size.width *
+                                                0.06,
+                                      ),
+                                      onPressed: () async {
+                                        if (_controller.text != '') {
+                                          _fire.incrementStudentUnreadCount(
+                                            classId: widget.classId,
+                                            studentEmail: widget.studentEmail,
+                                          );
+                                          await _firestore
+                                              .collection('Class-Chats')
+                                              .document(widget.classId)
+                                              .collection('Students')
+                                              .document(widget.studentEmail)
+                                              .collection('Messages')
+                                              .document()
+                                              .setData({
+                                            'timestamp': DateTime.now(),
+                                            'message': _controller.text,
+                                            'user': _teacherName,
+                                            'sent type': 'teacher',
+                                          });
 
-                                        _controller.clear();
-                                      }
-                                    }),
+                                          _controller.clear();
+                                        }
+                                      }),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0, bottom: 8.0),
@@ -269,7 +276,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                   child: Center(
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.675,
+                                          0.7,
                                       child: TextField(
                                         controller: _controller,
                                       ),
