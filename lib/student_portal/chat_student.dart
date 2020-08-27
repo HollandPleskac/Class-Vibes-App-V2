@@ -171,7 +171,7 @@ class _ChatStudentState extends State<ChatStudent> {
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                         child: Container(
-                          width: MediaQuery.of(context).size.width - 50,
+                          width: MediaQuery.of(context).size.width * 0.9,
                           height: 50,
                           child: Row(
                             children: <Widget>[
@@ -179,6 +179,9 @@ class _ChatStudentState extends State<ChatStudent> {
                                   icon: Icon(
                                     Icons.send,
                                     color: Colors.black,
+                                      size:
+                                            MediaQuery.of(context).size.width *
+                                                0.06,
                                   ),
                                   onPressed: () async {
                                     if (_controller.text != '') {
@@ -203,16 +206,26 @@ class _ChatStudentState extends State<ChatStudent> {
                                       _controller.clear();
                                     }
                                   }),
-                              //SIZE THIS
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0, right: 8.0, bottom: 8.0),
+                                  padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.04,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.025,
+                                      bottom: 9.0),
                                 child: Center(
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.675,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
                                     child: TextField(
                                       controller: _controller,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                      ),
                                     ),
                                   ),
                                 ),

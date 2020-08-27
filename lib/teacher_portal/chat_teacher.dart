@@ -269,16 +269,25 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       }),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-
-                                  //SIZE THIS
+                                  padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width *
+                                          0.04,
+                                      right: MediaQuery.of(context).size.width *
+                                          0.025,
+                                      bottom: 9.0),
                                   child: Center(
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.7,
                                       child: TextField(
                                         controller: _controller,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          errorBorder: InputBorder.none,
+                                          disabledBorder: InputBorder.none,
+                                        ),
                                       ),
                                     ),
                                   ),
