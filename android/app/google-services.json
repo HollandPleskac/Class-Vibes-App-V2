@@ -87,6 +87,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "938057332518-oj51lfr9iuqmvqsgk6rh91qjatcti5gh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xeondevelopers.class_vibes_v2",
+            "certificate_hash": "e09b933d2dbf600ce6e6c74a54027785f868cd97"
+          }
+        },
+        {
           "client_id": "938057332518-kcp39lhvbcjlceeinsh83lg988f8f017.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
