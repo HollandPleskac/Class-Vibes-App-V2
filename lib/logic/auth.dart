@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import './class_vibes_server.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 final _firestore = Firestore.instance;
+final _classVibesServer = ClassVibesServer();
 
 class Auth {
   Future<List> loginAsStudent({String email, String password}) async {
@@ -97,11 +99,6 @@ class Auth {
           email: email, password: password);
       FirebaseUser user = result.user;
 
-      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-      userUpdateInfo.displayName = username;
-
-      await user.updateProfile(userUpdateInfo);
-
       await user.sendEmailVerification();
 
       return ['success', email];
@@ -128,12 +125,9 @@ class Auth {
           email: email, password: password);
       FirebaseUser user = result.user;
 
-      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-      userUpdateInfo.displayName = username;
-
-      await user.updateProfile(userUpdateInfo);
-
       await user.sendEmailVerification();
+
+      await _classVibesServer.createStripeCustomer(email);
 
       return ['success', email];
     } catch (error) {
@@ -260,16 +254,25 @@ class Auth {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      final FirebaseUser user =
-          (await _firebaseAuth.signInWithCredential(credential)).user;
-      print("signed in " + user.displayName);
-
-      UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-      userUpdateInfo.displayName = user.displayName;
-
-      await user.updateProfile(userUpdateInfo);
-      return ['success', ''];
+      try {
+        final FirebaseUser user =
+            (await _firebaseAuth.signInWithCredential(credential)).user;
+        print("signed in " + user.displayName);
+        return ['success', ''];
+      } catch (error) {
+        switch (error.code) {
+          case "ERROR_INVALID_CREDENTIAL":
+          return ['failure', 'invalid credential'];
+          case "ERROR_USER_DISABLED":
+          return ['failure','user disabled'];
+          case "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL":
+          return ['failure','accout exists with different credential'];
+          case "ERROR_OPERATION_NOT_ALLOWED":
+          return ['failure','operation not allowed'];
+          case "ERROR_INVALID_ACTION_CODE":
+          return ['failure','invalid action code'];
+        }
+      }
     }
   }
 
@@ -305,6 +308,8 @@ class Auth {
         (await _firebaseAuth.signInWithCredential(credential)).user;
 
     print("signed in " + user.displayName);
+
+    await _classVibesServer.createStripeCustomer(user.email);
 
     return ['success', 'Successfully Signed Up'];
   }
@@ -350,10 +355,6 @@ class Auth {
             (await _firebaseAuth.signInWithCredential(credential)).user;
         print("signed in " + user.displayName);
 
-        UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
-        userUpdateInfo.displayName = user.displayName;
-
-        await user.updateProfile(userUpdateInfo);
         return ['success', ''];
       } catch (e) {
         print(e);
