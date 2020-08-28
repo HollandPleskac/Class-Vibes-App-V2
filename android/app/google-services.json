@@ -87,27 +87,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "938057332518-1hvl4j9oid2bikhauf2m5e6nosgvbsjr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.xeondevelopers.class_vibes_v2",
-            "certificate_hash": "162363ee941735c5eb72bcf26c88a415b8b27852"
-          }
-        },
-        {
-          "client_id": "938057332518-oj51lfr9iuqmvqsgk6rh91qjatcti5gh.apps.googleusercontent.com",
+          "client_id": "938057332518-845qovl93i3ttgr4c13ft7v8qd8thf1c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.xeondevelopers.class_vibes_v2",
             "certificate_hash": "e09b933d2dbf600ce6e6c74a54027785f868cd97"
-          }
-        },
-        {
-          "client_id": "938057332518-kcp39lhvbcjlceeinsh83lg988f8f017.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.xeondevelopers.class_vibes_v2",
-            "certificate_hash": "6b76954edc33f011e7bc1e1c157b71e28bfd1cb6"
           }
         },
         {
