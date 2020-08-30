@@ -45,7 +45,8 @@ dependencies:
   url_launcher: ^5.5.0
   google_sign_in: ^4.5.1
 
-  in_app_purchase: ^0.3.4+4
+  purchases_flutter: ^1.2.1
+
 
 
 
