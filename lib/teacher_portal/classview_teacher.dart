@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:class_vibes_v2/teacher_portal/paywall.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -136,6 +137,12 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                 } else {
                                   _classNameController.text = '';
                                   Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Paywall(),
+                                    ),
+                                  );
                                 }
                               }
                             },
@@ -462,7 +469,7 @@ class NoStudentsClass extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(0),
         child: Card(
-             elevation: 2,
+          elevation: 2,
           // shape: RoundedRectangleBorder(
           //   borderRadius: BorderRadius.all(
           //     Radius.circular(14),
@@ -496,7 +503,6 @@ class NoStudentsClass extends StatelessWidget {
               ],
             ),
           ),
-          
         ),
       ),
     );
