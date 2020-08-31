@@ -17,6 +17,7 @@ class Paywall extends StatelessWidget {
             Text('Purchasing this class will cost 1.99'),
             Text('You will have access to this class for 1 year'),
             Text('After 1 year, your class will expire'),
+            Text('Classes can\'t be used after they expire'),
             RaisedButton(
               child: Text('Purchase'),
               onPressed: () {
