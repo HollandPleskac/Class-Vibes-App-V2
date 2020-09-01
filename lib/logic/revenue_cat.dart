@@ -23,7 +23,10 @@ class RevenueCat {
     await Purchases.setup("icBZdQAfwvIZlcBZcMCTKxplUedWSFtM");
     Offerings offerings = await Purchases.getOfferings();
     try {
-      Package package = offerings.current.getPackage('Annual');
+      Package package = offerings.current.getPackage("class");
+
+      print(offerings.current.getPackage("class"));
+
       await Purchases.purchasePackage(package);
 
       // if (purchaserInfo
