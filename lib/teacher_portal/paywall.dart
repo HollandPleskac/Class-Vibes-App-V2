@@ -20,8 +20,8 @@ class Paywall extends StatelessWidget {
             Text('Classes can\'t be used after they expire'),
             RaisedButton(
               child: Text('Purchase'),
-              onPressed: () {
-                _revenueCat.makePurchase();
+              onPressed: () async {
+                await _revenueCat.makePurchase();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
