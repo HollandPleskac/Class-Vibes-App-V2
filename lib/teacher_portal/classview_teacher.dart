@@ -323,12 +323,12 @@ class Class extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(0),
                       child: Card(
-                        elevation: 3,
-                        // shape: RoundedRectangleBorder(
-                        //   borderRadius: BorderRadius.all(
-                        //     Radius.circular(14),
-                        //   ),
-                        // ),
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                        ),
                         child: Center(
                           child: DynamicPieChart(
                             // the document is class document
@@ -470,11 +470,11 @@ class NoStudentsClass extends StatelessWidget {
         padding: EdgeInsets.all(0),
         child: Card(
           elevation: 2,
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.all(
-          //     Radius.circular(14),
-          //   ),
-          // ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

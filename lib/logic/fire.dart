@@ -275,6 +275,7 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
+      'date':DateTime.now(),
     });
 
     _firestore
@@ -288,6 +289,7 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
+      'date':DateTime.now(),
     });
     return ['success', classCode];
   }
