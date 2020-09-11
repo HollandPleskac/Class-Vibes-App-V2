@@ -387,7 +387,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.85,
                             decoration: BoxDecoration(
-                              color: kAppBarColor,
+                              color: kPrimaryColor,
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
