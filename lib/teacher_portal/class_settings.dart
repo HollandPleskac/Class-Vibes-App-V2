@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -94,6 +96,7 @@ class _ClassSettingsState extends State<ClassSettings> {
             updateSwitch: () {
               setState(() {
                 isSwitched == false ? isSwitched = true : isSwitched = false;
+                isUpdated = true;
               });
             },
             classId: widget.classId,
@@ -107,32 +110,47 @@ class _ClassSettingsState extends State<ClassSettings> {
             height: 25,
           ),
           InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
-              (int newDaysInactive) {
-            // setState(() {
-            maxDaysInactive = newDaysInactive;
-            print('LOCAL + ' + maxDaysInactive.toString());
-            // });
+              (int value) {
+            setState(() {
+              isUpdated = true;
+              maxDaysInactive = value;
+            });
           }),
           Spacer(),
-          Text(feedback),
+          Text(feedback,style: TextStyle(color: Colors.red,fontSize: 16),),
           Spacer(),
           UpdateClassDetails(
             classId: widget.classId,
             teacherEmail: widget.email,
             isUpdated: isUpdated,
             isClassNameUpdated: isClassNameUpdated,
-            classNameController: _classNameController,
-            updateFeedback: () {
-              setState(() {
-                if (_classNameController.text == null ||
-                    _classNameController.text == '') {
-                  feedback = "Class name cannot be blank";
-                } else if (_classNameController.text.length > 25) {
-                  feedback = "Class name cannot be greater than 25 characters";
-                } else {
-                  feedback = "updated";
-                }
-              });
+            allowJoin: isSwitched,
+            maxDaysInactive: maxDaysInactive,
+            updateClassNameAndFeedback: () {
+              if (isClassNameUpdated) {
+                setState(() {
+                  if (_classNameController.text == null ||
+                      _classNameController.text == '') {
+                    feedback = "Class name cannot be blank";
+                  } else if (_classNameController.text.length > 25) {
+                    feedback =
+                        "Class name cannot be greater than 25 characters";
+                  } else {
+                    feedback = "Successfully updated";
+                    _fire.updateClassName(widget.email, widget.classId,
+                        _classNameController.text);
+                  }
+                });
+              } else {
+                setState(() {
+                  feedback = "Successfully updated";
+                });
+              }
+              Timer(Duration(milliseconds: 1500), () {
+                  setState(() {
+                    feedback = "";
+                  });
+                });
             },
           ),
           Spacer(),
@@ -246,16 +264,18 @@ class UpdateClassDetails extends StatelessWidget {
   final String teacherEmail;
   final bool isUpdated;
   final bool isClassNameUpdated;
-  final TextEditingController classNameController;
-  final Function updateFeedback;
+  final int maxDaysInactive;
+  final bool allowJoin;
+  final Function updateClassNameAndFeedback;
 
   UpdateClassDetails({
     this.classId,
     this.teacherEmail,
     this.isUpdated,
     this.isClassNameUpdated,
-    this.classNameController,
-    this.updateFeedback,
+    this.maxDaysInactive,
+    this.allowJoin,
+    this.updateClassNameAndFeedback,
   });
   @override
   Widget build(BuildContext context) {
@@ -268,16 +288,9 @@ class UpdateClassDetails extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: isUpdated ? kPrimaryColor : Color.fromRGBO(200, 200, 200, 1),
         onPressed: () async {
-          //            class name feedback
-          updateFeedback();
-          // _fire.updateClassName(teacherEmail, classId, classNameController.text);
-          print('validated');
-
-          // _fire.updateClassName(teacherEmail, classId, controller.text);
-          // _fire.updateAllowJoin(widget.email, widget.classId, value);
-          // _fire.updateMaxDaysInactive(
-          //           widget.email, widget.classId, widget.maxDaysInactive);
-          // print('updating details');
+          _fire.updateAllowJoin(teacherEmail, classId, allowJoin);
+          _fire.updateMaxDaysInactive(teacherEmail, classId, maxDaysInactive);
+          updateClassNameAndFeedback();
         },
       ),
     );
@@ -346,10 +359,10 @@ class _DeleteClassState extends State<DeleteClass> {
       child: FlatButton(
         child: Text(
           'Delete Class',
-          style: TextStyle(color: Colors.red, fontSize: 16),
+          style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        color: Colors.grey[300],
+        color: Colors.red,
         onPressed: () async {
           _showAlert();
         },
@@ -360,14 +373,14 @@ class _DeleteClassState extends State<DeleteClass> {
 
 class InactiveDaysPicker extends StatefulWidget {
   int maxDaysInactive;
-  String email;
-  String classId;
-  final Function updateLocalMaxInactive;
+  final String email;
+  final String classId;
+  final Function updateMaxDaysInactive;
   InactiveDaysPicker(
     this.maxDaysInactive,
     this.email,
     this.classId,
-    this.updateLocalMaxInactive,
+    this.updateMaxDaysInactive,
   );
   @override
   _InactiveDaysPickerState createState() => _InactiveDaysPickerState();
@@ -394,9 +407,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                 minValue: 7,
                 maxValue: 14,
                 onChanged: (value) {
-                  setState(() {
-                    widget.maxDaysInactive = value;
-                  });
+                  widget.updateMaxDaysInactive(value);
                 },
               ),
         SizedBox(
@@ -408,7 +419,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
 }
 
 class ClassCode extends StatefulWidget {
-  String classId;
+  final String classId;
 
   ClassCode(this.classId);
   @override
