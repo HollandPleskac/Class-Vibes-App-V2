@@ -184,7 +184,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                         ),
                                       );
                                       _scaffoldKey.currentState
-                                            .showSnackBar(pSnackbar);
+                                          .showSnackBar(pSnackbar);
                                     } else {
                                       // successfully made the purchase - now add a class
                                       List result = await _fire.addClass(
@@ -195,7 +195,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       if (result[0] != 'success') {
                                         Navigator.pop(context);
                                         final snackBar = SnackBar(
-                                          content: Text(result[1]),
+                                          content: Text(
+                                              'An error occurred creating the class - Contact Class Vibes for a refund'),
                                           action: SnackBarAction(
                                             label: 'Hide',
                                             onPressed: () {
