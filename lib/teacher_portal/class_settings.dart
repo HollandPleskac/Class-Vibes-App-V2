@@ -117,11 +117,6 @@ class _ClassSettingsState extends State<ClassSettings> {
             });
           }),
           Spacer(),
-          Text(
-            feedback,
-            style: TextStyle(color: Colors.red, fontSize: 16),
-          ),
-          Spacer(),
           isUpdated == false
               ? Container()
               : UpdateClassDetails(
@@ -159,6 +154,13 @@ class _ClassSettingsState extends State<ClassSettings> {
                     });
                   },
                 ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.01,
+          ),
+          Text(
+            feedback,
+            style: TextStyle(color: Colors.red, fontSize: 16),
+          ),
           Spacer(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
