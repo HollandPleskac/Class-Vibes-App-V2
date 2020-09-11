@@ -36,131 +36,184 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
     showModalBottomSheet(
         barrierColor: Colors.white.withOpacity(0),
         isScrollControlled: true,
+        enableDrag: true,
         elevation: 0,
         context: context,
         builder: (builder) {
           return SingleChildScrollView(
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                child: Container(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade300.withOpacity(0.5),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30))),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Create a Class',
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: TextFormField(
-                              controller: _classNameController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  color: Color.fromRGBO(126, 126, 126, 1),
-                                ),
-                                labelStyle: TextStyle(
-                                  color: Colors.grey[700],
-                                ),
-                                hintText: 'class name',
-                                icon: FaIcon(
-                                  FontAwesomeIcons.chalkboard,
-                                  color: Colors.grey[500],
+            child: Column(
+               mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                'Create a Class',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 27,
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                                    Text('Purchasing this class will cost 1.99',style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),),
+                                      SizedBox(
+                                height: 4,
+                              ),
+                Text('You will have access to this class for 1 year',style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),),
+                                      SizedBox(
+                                height: 4,
+                              ),
+                Text('After 1 year, your class will expire',style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),),
+                                      SizedBox(
+                                height: 4,
+                              ),
+                Text('Classes can\'t be used after they expire',style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),),
+                                  ],
+                                )
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Form(
+                                key: _formKey,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.indigo[300],
+                                      borderRadius: BorderRadius.circular(6)
+                                    ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                                        child: TextFormField(
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600
+                                          ),
+                                          controller: _classNameController,
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                            labelStyle: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                            hintText: 'class name',
+                                          ),
+                                          validator: (value) {
+                                            if (value == null || value == '') {
+                                              return 'Class name cannot be blank';
+                                            } else if (value.length > 16) {
+                                              return 'Class name cannot be greater than 16 characters';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                  ),
                                 ),
                               ),
-                              validator: (value) {
-                                if (value == null || value == '') {
-                                  return 'Class name cannot be blank';
-                                } else if (value.length > 16) {
-                                  return 'Class name cannot be greater than 16 characters';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: 20,
-                          ),
-                          child: FlatButton(
-                            color: kPrimaryColor,
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                print('validated');
-                                List result = await _fire.addClass(
-                                    className: _classNameController.text,
-                                    uid: email);
-                                print('RESULT : ' + result.toString());
-                                if (result[0] != 'success') {
-                                  Navigator.pop(context);
-                                  final snackBar = SnackBar(
-                                    content: Text(result[1]),
-                                    action: SnackBarAction(
-                                      label: 'Hide',
-                                      onPressed: () {
-                                        _scaffoldKey.currentState
-                                            .hideCurrentSnackBar();
-                                      },
-                                    ),
-                                  );
+                              SizedBox(
+                                height: 20,
+                              ),
+                               Center(
+                                 child: GestureDetector(
+                                   onTap: () async {
+                                      if (_formKey.currentState.validate()) {
+                                    print('validated');
+                                    List result = await _fire.addClass(
+                                        className: _classNameController.text,
+                                        uid: email);
+                                    print('RESULT : ' + result.toString());
+                                    if (result[0] != 'success') {
+                                      Navigator.pop(context);
+                                      final snackBar = SnackBar(
+                                        content: Text(result[1]),
+                                        action: SnackBarAction(
+                                          label: 'Hide',
+                                          onPressed: () {
+                                            _scaffoldKey.currentState
+                                                .hideCurrentSnackBar();
+                                          },
+                                        ),
+                                      );
 
-                                  _scaffoldKey.currentState
-                                      .showSnackBar(snackBar);
-                                } else {
-                                  _classNameController.text = '';
-                                  Navigator.pop(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Paywall(),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Text(
-                              'Create',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
+                                      _scaffoldKey.currentState
+                                          .showSnackBar(snackBar);
+                                    } else {
+                                      _classNameController.text = '';
+                                      Navigator.pop(context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Paywall(),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                   },
+                                   child: Padding(
+                                     padding: const EdgeInsets.symmetric(horizontal: 20),
+                                     child: Container(
+                                       height: 43,
+                                       width: MediaQuery.of(context).size.width,
+                                          child: Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 10),
+                                              child: Text('Create Class',style: TextStyle(
+                                      color: Colors.blueGrey[600],
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500),),
+                                            ),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(6)
+                                          ),),
+                                   ),
+                                 ),
+                               ),
+                               
+                              SizedBox(
+                                height: 20,
+                              ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                        decoration: BoxDecoration(
+                            color: kPrimaryColor.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(8)),
+                      )),
                 ),
-              ),
+              ],
             ),
           );
         });
