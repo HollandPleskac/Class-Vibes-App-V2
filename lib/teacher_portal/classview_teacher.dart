@@ -170,35 +170,52 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               child: GestureDetector(
                                 onTap: () async {
                                   if (_formKey.currentState.validate()) {
-                                    print('validated');
+                                    //make a purchase with revenue cat
+                                    List purchaseInfo =
+                                        await _revenueCat.makePurchase();
 
-                                    await _revenueCat.makePurchase();
-                                    List result = await _fire.addClass(
-                                        className: _classNameController.text,
-                                        uid: email);
-                                    _classNameController.text = '';
-                                    Navigator.pop(context);
-                                    print('RESULT : ' + result.toString());
-                                    // if (result[0] != 'success') {
-                                    //   Navigator.pop(context);
-                                    //   final snackBar = SnackBar(
-                                    //     content: Text(result[1]),
-                                    //     action: SnackBarAction(
-                                    //       label: 'Hide',
-                                    //       onPressed: () {
-                                    //         _scaffoldKey.currentState
-                                    //             .hideCurrentSnackBar();
-                                    //       },
-                                    //     ),
-                                    //   );
+                                    if (purchaseInfo[0] != 'success') {
+                                      // TODO : Issue a refund
+                                      Navigator.pop(context);
+                                      final pSnackbar = SnackBar(
+                                        content: Text(purchaseInfo[1]),
+                                        action: SnackBarAction(
+                                          label: 'Hide',
+                                          onPressed: () {
+                                            _scaffoldKey.currentState
+                                                .hideCurrentSnackBar();
+                                          },
+                                        ),
+                                      );
+                                      _scaffoldKey.currentState
+                                            .showSnackBar(pSnackbar);
+                                    } else {
+                                      // successfully made the purchase - now add a class
+                                      List result = await _fire.addClass(
+                                          className: _classNameController.text,
+                                          uid: email);
 
-                                    //   _scaffoldKey.currentState
-                                    //       .showSnackBar(snackBar);
-                                    // } else {
-                                    //   _classNameController.text = '';
-                                    //   Navigator.pop(context);
-                                    //   await _revenueCat.makePurchase();
-                                    // }
+                                      print('RESULT : ' + result.toString());
+                                      if (result[0] != 'success') {
+                                        Navigator.pop(context);
+                                        final snackBar = SnackBar(
+                                          content: Text(result[1]),
+                                          action: SnackBarAction(
+                                            label: 'Hide',
+                                            onPressed: () {
+                                              _scaffoldKey.currentState
+                                                  .hideCurrentSnackBar();
+                                            },
+                                          ),
+                                        );
+
+                                        _scaffoldKey.currentState
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        _classNameController.text = '';
+                                        Navigator.pop(context);
+                                      }
+                                    }
                                   }
                                 },
                                 child: Padding(

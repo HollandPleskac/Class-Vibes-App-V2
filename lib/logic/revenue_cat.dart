@@ -19,7 +19,7 @@ class RevenueCat {
     }
   }
 
-  Future<void> makePurchase() async {
+  Future<List> makePurchase() async {
     await Purchases.setup("icBZdQAfwvIZlcBZcMCTKxplUedWSFtM");
     Offerings offerings = await Purchases.getOfferings();
     try {
@@ -33,12 +33,19 @@ class RevenueCat {
       //     .entitlements.all["my_entitlement_identifier"].isActive) {
       //   // Unlock that great "pro" content
       // }
+      return ['success',''];
 
     } on PlatformException catch (e) {
       var errorCode = PurchasesErrorHelper.getErrorCode(e);
-      if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
-        print('error ' + e.toString());
-        print('error code ' + errorCode.toString());
+      switch (errorCode) {
+        case PurchasesErrorCode.purchaseCancelledError:
+          print("User cancelled");
+          return ['failure','User cancelled the purchase'];
+        case PurchasesErrorCode.purchaseNotAllowedError:
+          print("User not allowed to purchase");
+          return ['failure','User is not allowed to make the purchase'];
+        default:
+          return ['failure','An error occurred'];
       }
     }
   }
