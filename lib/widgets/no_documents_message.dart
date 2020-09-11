@@ -92,7 +92,7 @@ class NoDocsMeetingsStudent extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
-            'No Scheduled Meetings',
+            'No Meetings',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 34,
