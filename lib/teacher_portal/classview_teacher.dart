@@ -17,10 +17,12 @@ import '../widgets/server_down.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../widgets/badges.dart';
+import '../logic/revenue_cat.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
+final _revenueCat = RevenueCat();
 
 class ClassViewTeacher extends StatefulWidget {
   @override
@@ -45,7 +47,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
                   child: Padding(
                       padding: EdgeInsets.all(20),
                       child: Container(
@@ -134,9 +137,9 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       controller: _classNameController,
                                       cursorColor: Colors.white,
                                       decoration: InputDecoration(
-                                        errorStyle: TextStyle(color: Colors.white),
+                                        errorStyle:
+                                            TextStyle(color: Colors.white),
                                         border: InputBorder.none,
-                                        
                                         hintStyle: TextStyle(
                                           color: Colors.white,
                                           fontSize: 18,
@@ -168,35 +171,34 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                 onTap: () async {
                                   if (_formKey.currentState.validate()) {
                                     print('validated');
+
+                                    await _revenueCat.makePurchase();
                                     List result = await _fire.addClass(
                                         className: _classNameController.text,
                                         uid: email);
+                                    _classNameController.text = '';
+                                    Navigator.pop(context);
                                     print('RESULT : ' + result.toString());
-                                    if (result[0] != 'success') {
-                                      Navigator.pop(context);
-                                      final snackBar = SnackBar(
-                                        content: Text(result[1]),
-                                        action: SnackBarAction(
-                                          label: 'Hide',
-                                          onPressed: () {
-                                            _scaffoldKey.currentState
-                                                .hideCurrentSnackBar();
-                                          },
-                                        ),
-                                      );
+                                    // if (result[0] != 'success') {
+                                    //   Navigator.pop(context);
+                                    //   final snackBar = SnackBar(
+                                    //     content: Text(result[1]),
+                                    //     action: SnackBarAction(
+                                    //       label: 'Hide',
+                                    //       onPressed: () {
+                                    //         _scaffoldKey.currentState
+                                    //             .hideCurrentSnackBar();
+                                    //       },
+                                    //     ),
+                                    //   );
 
-                                      _scaffoldKey.currentState
-                                          .showSnackBar(snackBar);
-                                    } else {
-                                      _classNameController.text = '';
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Paywall(),
-                                        ),
-                                      );
-                                    }
+                                    //   _scaffoldKey.currentState
+                                    //       .showSnackBar(snackBar);
+                                    // } else {
+                                    //   _classNameController.text = '';
+                                    //   Navigator.pop(context);
+                                    //   await _revenueCat.makePurchase();
+                                    // }
                                   }
                                 },
                                 child: Padding(
