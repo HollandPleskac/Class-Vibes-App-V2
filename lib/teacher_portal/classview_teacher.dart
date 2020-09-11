@@ -1,21 +1,17 @@
 import 'dart:ui';
 
-import 'package:class_vibes_v2/teacher_portal/paywall.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/svg.dart';
 
+import './view_class.dart';
 import '../constant.dart';
 import '../widgets/pie_charts.dart';
 import '../nav_teacher.dart';
 import '../logic/fire.dart';
-import 'view_class.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'class_settings.dart';
 import '../widgets/no_documents_message.dart';
 import '../widgets/server_down.dart';
-import 'package:flutter_svg/svg.dart';
-
 import '../widgets/badges.dart';
 import '../logic/revenue_cat.dart';
 
