@@ -152,6 +152,8 @@ class _ClassSettingsState extends State<ClassSettings> {
                     }
                     Timer(Duration(milliseconds: 1500), () {
                       setState(() {
+                        isUpdated = false;
+                        isClassNameUpdated = false;
                         feedback = "";
                       });
                     });
