@@ -46,8 +46,6 @@ class ClassVibesServer {
     print(getResponse.body);
   }
 
-  // https://api-v1.classvibes.net/api/createCustomer?email=
-
   Future<void> createStripeCustomer(String email) async {
     var getResponse = await http
         .get('https://api-v1.classvibes.net/api/createCustomer?email=$email');
