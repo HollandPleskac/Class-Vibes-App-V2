@@ -117,42 +117,46 @@ class _ClassSettingsState extends State<ClassSettings> {
             });
           }),
           Spacer(),
-          Text(feedback,style: TextStyle(color: Colors.red,fontSize: 16),),
-          Spacer(),
-          UpdateClassDetails(
-            classId: widget.classId,
-            teacherEmail: widget.email,
-            isUpdated: isUpdated,
-            isClassNameUpdated: isClassNameUpdated,
-            allowJoin: isSwitched,
-            maxDaysInactive: maxDaysInactive,
-            updateClassNameAndFeedback: () {
-              if (isClassNameUpdated) {
-                setState(() {
-                  if (_classNameController.text == null ||
-                      _classNameController.text == '') {
-                    feedback = "Class name cannot be blank";
-                  } else if (_classNameController.text.length > 25) {
-                    feedback =
-                        "Class name cannot be greater than 25 characters";
-                  } else {
-                    feedback = "Successfully updated";
-                    _fire.updateClassName(widget.email, widget.classId,
-                        _classNameController.text);
-                  }
-                });
-              } else {
-                setState(() {
-                  feedback = "Successfully updated";
-                });
-              }
-              Timer(Duration(milliseconds: 1500), () {
-                  setState(() {
-                    feedback = "";
-                  });
-                });
-            },
+          Text(
+            feedback,
+            style: TextStyle(color: Colors.red, fontSize: 16),
           ),
+          Spacer(),
+          isUpdated == false
+              ? Container()
+              : UpdateClassDetails(
+                  classId: widget.classId,
+                  teacherEmail: widget.email,
+                  isClassNameUpdated: isClassNameUpdated,
+                  allowJoin: isSwitched,
+                  maxDaysInactive: maxDaysInactive,
+                  updateClassNameAndFeedback: () {
+                    if (isClassNameUpdated) {
+                      setState(() {
+                        if (_classNameController.text == null ||
+                            _classNameController.text == '') {
+                          feedback = "Class name cannot be blank";
+                        } else if (_classNameController.text.length > 25) {
+                          feedback =
+                              "Class name cannot be greater than 25 characters";
+                        } else {
+                          feedback = "Successfully updated";
+                          _fire.updateClassName(widget.email, widget.classId,
+                              _classNameController.text);
+                        }
+                      });
+                    } else {
+                      setState(() {
+                        feedback = "Successfully updated";
+                      });
+                    }
+                    Timer(Duration(milliseconds: 1500), () {
+                      setState(() {
+                        feedback = "";
+                      });
+                    });
+                  },
+                ),
           Spacer(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +201,7 @@ class EditClassName extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             decoration: InputDecoration(
-              labelText: 'Class Name',
+              labelText: 'Edit Class Name',
               labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
             ),
             onChanged: (String value) {
@@ -262,7 +266,6 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
 class UpdateClassDetails extends StatelessWidget {
   final String classId;
   final String teacherEmail;
-  final bool isUpdated;
   final bool isClassNameUpdated;
   final int maxDaysInactive;
   final bool allowJoin;
@@ -271,7 +274,6 @@ class UpdateClassDetails extends StatelessWidget {
   UpdateClassDetails({
     this.classId,
     this.teacherEmail,
-    this.isUpdated,
     this.isClassNameUpdated,
     this.maxDaysInactive,
     this.allowJoin,
@@ -286,7 +288,7 @@ class UpdateClassDetails extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        color: isUpdated ? kPrimaryColor : Color.fromRGBO(200, 200, 200, 1),
+        color: kPrimaryColor,
         onPressed: () async {
           _fire.updateAllowJoin(teacherEmail, classId, allowJoin);
           _fire.updateMaxDaysInactive(teacherEmail, classId, maxDaysInactive);
@@ -387,6 +389,25 @@ class InactiveDaysPicker extends StatefulWidget {
 }
 
 class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
+  Future<void> _showExplainMaxInactiveDaysPopup() {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          title: Text('Information'),
+          content: Text(
+            'Set the minimum number of days for your students to choose a status. Students who don\'t select will show up as gray on your graph.',
+            style: TextStyle(
+              height: 1.75,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -397,6 +418,16 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
         Text(
           'Max Inactive Days',
           style: TextStyle(fontSize: 18, color: kWetAsphaltColor),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        GestureDetector(
+          child: FaIcon(
+            FontAwesomeIcons.questionCircle,
+            color: kWetAsphaltColor,
+          ),
+          onTap: _showExplainMaxInactiveDaysPopup,
         ),
         Spacer(),
         widget.maxDaysInactive == null
@@ -410,9 +441,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                   widget.updateMaxDaysInactive(value);
                 },
               ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.14,
-        ),
+        Spacer(),
       ],
     );
   }
