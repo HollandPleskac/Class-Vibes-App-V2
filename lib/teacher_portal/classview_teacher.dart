@@ -42,9 +42,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
         builder: (builder) {
           return SingleChildScrollView(
             child: Column(
-               mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                   child: Padding(
                       padding: EdgeInsets.all(20),
                       child: Container(
@@ -52,103 +53,120 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                                height: 20,
+                              height: 20,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Create a Class',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    '1. Purchasing this class will cost \$1.99',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    '2. You will have access to this class for 1 year',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    '3. After 1 year, your class will expire',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    '4. Classes can\'t be used after they expire',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                'Create a Class',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 27,
-                                    fontWeight: FontWeight.w800),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                                    Text('Purchasing this class will cost 1.99',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),),
-                                      SizedBox(
-                                height: 4,
-                              ),
-                Text('You will have access to this class for 1 year',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),),
-                                      SizedBox(
-                                height: 4,
-                              ),
-                Text('After 1 year, your class will expire',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),),
-                                      SizedBox(
-                                height: 4,
-                              ),
-                Text('Classes can\'t be used after they expire',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),),
-                                  ],
-                                )
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Form(
-                                key: _formKey,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: Container(
-                                    decoration: BoxDecoration(
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  decoration: BoxDecoration(
                                       color: Colors.indigo[300],
-                                      borderRadius: BorderRadius.circular(6)
-                                    ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600
-                                          ),
-                                          controller: _classNameController,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintStyle: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                            ),
-                                            labelStyle: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                            hintText: 'class name',
-                                          ),
-                                          validator: (value) {
-                                            if (value == null || value == '') {
-                                              return 'Class name cannot be blank';
-                                            } else if (value.length > 16) {
-                                              return 'Class name cannot be greater than 16 characters';
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                        ),
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
                                       ),
+                                      controller: _classNameController,
+                                      cursorColor: Colors.white,
+                                      decoration: InputDecoration(
+                                        errorStyle: TextStyle(color: Colors.white),
+                                        border: InputBorder.none,
+                                        
+                                        hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                        labelStyle: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        hintText: 'Class Name',
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'Class name cannot be blank';
+                                        } else if (value.length > 25) {
+                                          return 'Class name cannot be greater than 25 characters';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                               Center(
-                                 child: GestureDetector(
-                                   onTap: () async {
-                                      if (_formKey.currentState.validate()) {
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (_formKey.currentState.validate()) {
                                     print('validated');
                                     List result = await _fire.addClass(
                                         className: _classNameController.text,
@@ -180,36 +198,40 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       );
                                     }
                                   }
-                                   },
-                                   child: Padding(
-                                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                                     child: Container(
-                                       height: 43,
-                                       width: MediaQuery.of(context).size.width,
-                                          child: Center(
-                                            child: Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 10),
-                                              child: Text('Create Class',style: TextStyle(
-                                      color: Colors.blueGrey[600],
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w500),),
-                                            ),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(6)
-                                          ),),
-                                   ),
-                                 ),
-                               ),
-                               
-                              SizedBox(
-                                height: 20,
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Container(
+                                    height: 43,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text(
+                                          'Create Class',
+                                          style: TextStyle(
+                                              color: Colors.blueGrey[600],
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
+                                ),
                               ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
                           ],
                         ),
                         decoration: BoxDecoration(
-                            color: kPrimaryColor.withOpacity(0.9),
+                            color: kAppBarColor.withOpacity(1),
                             borderRadius: BorderRadius.circular(8)),
                       )),
                 ),
