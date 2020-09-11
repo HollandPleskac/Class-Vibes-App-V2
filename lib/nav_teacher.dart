@@ -24,7 +24,7 @@ class NavTeacher extends StatelessWidget {
           DrawerHeader(
             // put image here
             decoration: BoxDecoration(
-              color: kAppBarColor,
+              color: kPrimaryColor,
             ),
             child: Center(
               child: Text(

@@ -15,7 +15,7 @@ class AccountSettingsTeacherPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Account Settings'),
         centerTitle: true,
-        backgroundColor: kAppBarColor,
+        backgroundColor: kPrimaryColor,
       ),
       backgroundColor: Colors.white,
       body: ListView(

@@ -59,7 +59,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                   drawer: NavStudent(),
                   backgroundColor: Color.fromRGBO(250, 250, 250, 1.0),
                   appBar: AppBar(
-                    backgroundColor: kAppBarColor,
+                    backgroundColor: kPrimaryColor,
                     title: Text(
                       'Classes',
                       style: TextStyle(color: Colors.white),
@@ -553,7 +553,7 @@ class StatusRowLocked extends StatelessWidget {
     return Ink(
       height: MediaQuery.of(context).size.height * 0.1,
       width: MediaQuery.of(context).size.width * 0.6,
-      color: kAppBarColor,
+      color: kPrimaryColor,
       child: Align(
         alignment: Alignment.center,
         child: Padding(

@@ -15,7 +15,7 @@ class AccountSettingsStudentPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Account Settings'),
         centerTitle: true,
-        backgroundColor: kAppBarColor,
+        backgroundColor: kPrimaryColor,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

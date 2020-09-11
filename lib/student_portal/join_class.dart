@@ -74,7 +74,7 @@ class _JoinClassState extends State<JoinClass> {
                   appBar: AppBar(
                     title: Text('Join a Class'),
                     centerTitle: true,
-                    backgroundColor: kAppBarColor,
+                    backgroundColor: kPrimaryColor,
                   ),
                   body: Center(
                     child: Column(

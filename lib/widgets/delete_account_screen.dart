@@ -44,7 +44,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kAppBarColor,
+        backgroundColor: kPrimaryColor,
         title: Text('Delete Account'),
         centerTitle: true,
       ),

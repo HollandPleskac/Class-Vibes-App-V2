@@ -247,7 +247,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                           ],
                         ),
                         decoration: BoxDecoration(
-                            color: kAppBarColor.withOpacity(1),
+                            color: kPrimaryColor.withOpacity(1),
                             borderRadius: BorderRadius.circular(8)),
                       )),
                 ),
@@ -293,7 +293,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                   drawer: NavTeacher(),
                   // backgroundColor: Color.fromRGBO(252, 252, 252, 1.0),
                   appBar: AppBar(
-                    backgroundColor: kAppBarColor,
+                    backgroundColor: kPrimaryColor,
                     title: Text(
                       'Classes',
                       style: TextStyle(color: Colors.white),

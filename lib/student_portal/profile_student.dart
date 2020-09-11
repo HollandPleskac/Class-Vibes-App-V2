@@ -182,7 +182,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                   backgroundColor: Colors.white,
                   appBar: AppBar(
                     title: Text('Profile'),
-                    backgroundColor: kAppBarColor,
+                    backgroundColor: kPrimaryColor,
                     centerTitle: true,
                   ),
                   body: ListView(
