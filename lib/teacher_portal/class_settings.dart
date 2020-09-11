@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -28,6 +29,11 @@ class _ClassSettingsState extends State<ClassSettings> {
   final TextEditingController _classNameController = TextEditingController();
   bool isSwitched;
   int maxDaysInactive;
+
+  // is updated for updated class btn
+  bool isUpdated = false;
+  bool isClassNameUpdated = false;
+  String feedback = '';
 
   Future getInitialSwitchValue() async {
     bool initialSwitchVal = await _firestore
@@ -73,6 +79,12 @@ class _ClassSettingsState extends State<ClassSettings> {
             controller: _classNameController,
             classId: widget.classId,
             teacherEmail: widget.email,
+            updateIsUpdated: () {
+              setState(() {
+                isClassNameUpdated = true;
+                isUpdated = true;
+              });
+            },
           ),
           SizedBox(
             height: 50,
@@ -102,7 +114,29 @@ class _ClassSettingsState extends State<ClassSettings> {
             // });
           }),
           Spacer(),
-          Row(
+          Text(feedback),
+          Spacer(),
+          UpdateClassDetails(
+            classId: widget.classId,
+            teacherEmail: widget.email,
+            isUpdated: isUpdated,
+            isClassNameUpdated: isClassNameUpdated,
+            classNameController: _classNameController,
+            updateFeedback: () {
+              setState(() {
+                if (_classNameController.text == null ||
+                    _classNameController.text == '') {
+                  feedback = "Class name cannot be blank";
+                } else if (_classNameController.text.length > 25) {
+                  feedback = "Class name cannot be greater than 25 characters";
+                } else {
+                  feedback = "updated";
+                }
+              });
+            },
+          ),
+          Spacer(),
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DeleteClass(
@@ -124,13 +158,15 @@ class EditClassName extends StatelessWidget {
   final TextEditingController controller;
   final String teacherEmail;
   final String classId;
+  final Function updateIsUpdated;
 
   EditClassName({
     this.controller,
     this.teacherEmail,
     this.classId,
+    this.updateIsUpdated,
   });
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -138,55 +174,18 @@ class EditClassName extends StatelessWidget {
         SizedBox(
           width: 20,
         ),
-        Form(
-          key: _formKey,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.725,
-            child: TextFormField(
-              controller: controller,
-              decoration: InputDecoration(
-                labelText: 'Class Name',
-                labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
-              ),
-              validator: (value) {
-                if (value == null || value == '') {
-                  return 'Class name cannot be blank';
-                } else if (value.length > 16) {
-                  return 'Class name cannot be greater than 16 characters';
-                } else {
-                  return null;
-                }
-              },
+        Container(
+          width: MediaQuery.of(context).size.width * 0.725,
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: 'Class Name',
+              labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
             ),
+            onChanged: (String value) {
+              updateIsUpdated();
+            },
           ),
-        ),
-        Spacer(),
-        ClipOval(
-          child: Material(
-            color: Colors.transparent, // button color
-
-            child: InkWell(
-              splashColor: Colors.blue,
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.check,
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ),
-              onTap: () {
-                if (_formKey.currentState.validate()) {
-                  _fire.updateClassName(teacherEmail, classId, controller.text);
-                }
-              },
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 25,
         ),
       ],
     );
@@ -238,6 +237,49 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
           width: 20,
         ),
       ],
+    );
+  }
+}
+
+class UpdateClassDetails extends StatelessWidget {
+  final String classId;
+  final String teacherEmail;
+  final bool isUpdated;
+  final bool isClassNameUpdated;
+  final TextEditingController classNameController;
+  final Function updateFeedback;
+
+  UpdateClassDetails({
+    this.classId,
+    this.teacherEmail,
+    this.isUpdated,
+    this.isClassNameUpdated,
+    this.classNameController,
+    this.updateFeedback,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FlatButton(
+        child: Text(
+          'Update Class Details',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        color: isUpdated ? kPrimaryColor : Color.fromRGBO(200, 200, 200, 1),
+        onPressed: () async {
+          //            class name feedback
+          updateFeedback();
+          // _fire.updateClassName(teacherEmail, classId, classNameController.text);
+          print('validated');
+
+          // _fire.updateClassName(teacherEmail, classId, controller.text);
+          // _fire.updateAllowJoin(widget.email, widget.classId, value);
+          // _fire.updateMaxDaysInactive(
+          //           widget.email, widget.classId, widget.maxDaysInactive);
+          // print('updating details');
+        },
+      ),
     );
   }
 }
@@ -348,7 +390,8 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
             ? CircularProgressIndicator()
             : NumberPicker.integer(
                 initialValue: widget.maxDaysInactive,
-                minValue: 1,
+                scrollDirection: Axis.vertical,
+                minValue: 7,
                 maxValue: 14,
                 onChanged: (value) {
                   setState(() {
@@ -356,33 +399,8 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                   });
                 },
               ),
-        Spacer(),
-        ClipOval(
-          child: Material(
-            color: Colors.transparent, // button color
-
-            child: InkWell(
-              splashColor: Colors.blue,
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: Center(
-                  child: FaIcon(
-                    FontAwesomeIcons.check,
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ),
-              onTap: () {
-                widget.updateLocalMaxInactive(widget.maxDaysInactive);
-                _fire.updateMaxDaysInactive(
-                    widget.email, widget.classId, widget.maxDaysInactive);
-              },
-            ),
-          ),
-        ),
         SizedBox(
-          width: 20,
+          width: MediaQuery.of(context).size.width * 0.14,
         ),
       ],
     );

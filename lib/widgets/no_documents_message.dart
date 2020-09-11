@@ -329,7 +329,7 @@ class NoDocsGraphClassTeacher extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/svg/undraw_personal_goals_edgd.svg',
+            'assets/svg/undraw_empty_xct9.svg',
             width: MediaQuery.of(context).size.width * 0.35,
           ),
           SizedBox(
@@ -450,26 +450,27 @@ class NoDocsClassQueue extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/svg/undraw_secure_data_0rwp.svg',
+            'assets/svg/undraw_Checklist__re_2w7v.svg',
             width: MediaQuery.of(context).size.width * 0.65,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.035,
           ),
           Text(
-            'No Queue',
+            'No Pending Requests',
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 38,
+                fontSize: MediaQuery.of(context).size.width*0.085,
                 color: Colors.grey[800]),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.0175,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 15, right: 15),
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: Text(
-              'No students are in the queue.  When a student tries to join the class they will show up here.',
+              'Any pending student join requests will show up here.',
               textAlign: TextAlign.center,
               style: TextStyle(
                   height: 2,

@@ -190,7 +190,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                     child: TextField(
                                       controller: _controller,
                                       decoration: InputDecoration(
-                                        hintText: 'Type something...',
+                                        hintText: 'Type a message...',
                                         border: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
