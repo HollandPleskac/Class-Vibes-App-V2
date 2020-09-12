@@ -574,6 +574,7 @@ class Student extends StatelessWidget {
                               ),
                             ),
                           ),
+                          // commented out this sized box
                           // SizedBox(
                           //   height: MediaQuery.of(context).size.height * 0.35,
                           // )
