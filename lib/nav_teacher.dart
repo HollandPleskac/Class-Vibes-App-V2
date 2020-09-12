@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'teacher_portal/classview_teacher.dart';
 import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
-import './teacher_portal/profile_teacher.dart';
+import 'teacher_portal/settings_teacher.dart';
 
 class NavTeacher extends StatelessWidget {
   @override
