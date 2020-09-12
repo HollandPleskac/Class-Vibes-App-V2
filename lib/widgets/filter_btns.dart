@@ -47,7 +47,7 @@ class FilterDoingGreat extends StatelessWidget {
       child: Text(
         'Doing Great',
         style: TextStyle(
-            color: isTouched == true ? kPrimaryColor : Colors.grey[600],
+            color: isTouched == true ? kPieChartDoingGreatColor : Colors.grey[600],
             fontWeight: FontWeight.w600,
             fontSize: 13.5),
       ),
@@ -72,7 +72,7 @@ class FilterNeedHelp extends StatelessWidget {
       child: Text(
         'Need Help',
         style: TextStyle(
-            color: isTouched == true ? kPrimaryColor : Colors.grey[600],
+            color: isTouched == true ? kPieChartNeedHelpColor : Colors.grey[600],
             fontWeight: FontWeight.w600,
             fontSize: 13.5),
       ),
@@ -97,7 +97,7 @@ class FilterFrustrated extends StatelessWidget {
       child: Text(
         'Frustrated',
         style: TextStyle(
-            color: isTouched == true ? kPrimaryColor : Colors.grey[600],
+            color: isTouched == true ? kPieChartFrustratedColor : Colors.grey[600],
             fontWeight: FontWeight.w600,
             fontSize: 13.5),
       ),
@@ -122,7 +122,7 @@ class FilterInactive extends StatelessWidget {
       child: Text(
         'Inactive',
         style: TextStyle(
-            color: isTouched == true ? kPrimaryColor : Colors.grey[600],
+            color: isTouched == true ? kPieChartInactiveColor : Colors.grey[600],
             fontWeight: FontWeight.w600,
             fontSize: 13.5),
       ),
