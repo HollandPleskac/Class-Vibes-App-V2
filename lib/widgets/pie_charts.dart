@@ -98,7 +98,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                           // TODO : DISPLAY 100 % Green in the middle of the pie chart
                           // if it is 100 percent of one color
                           // center -space -rad used to be 40
-                          centerSpaceRadius: 45,
+                          centerSpaceRadius: 38,
                           sections: showingSections()),
                     ),
                   ),
