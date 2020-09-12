@@ -135,14 +135,14 @@ class _ClassSettingsState extends State<ClassSettings> {
                           feedback =
                               "Class name cannot be greater than 25 characters";
                         } else {
-                          feedback = "Successfully updated";
+                          feedback = "";
                           _fire.updateClassName(widget.email, widget.classId,
                               _classNameController.text);
                         }
                       });
                     } else {
                       setState(() {
-                        feedback = "Successfully updated";
+                        feedback = "";
                       });
                     }
                     Timer(Duration(milliseconds: 1500), () {
