@@ -70,8 +70,8 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                           indicatorColor: Colors.white,
                           isScrollable: true,
                           tabs: [
-                            Tab(text: 'Profile'),
-                            Tab(text: 'Billing'),
+                            Tab(text: 'Account'),
+                            Tab(text: 'Payment'),
                             Tab(text: 'Help'),
                           ],
                         ),
