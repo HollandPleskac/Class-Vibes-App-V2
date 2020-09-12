@@ -106,9 +106,7 @@ class _ClassSettingsState extends State<ClassSettings> {
             height: 50,
           ),
           ClassCode(widget.classId),
-          SizedBox(
-            height: 25,
-          ),
+         
           InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
               (int value) {
             setState(() {
@@ -438,7 +436,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
             ? CircularProgressIndicator()
             : NumberPicker.integer(
                 initialValue: widget.maxDaysInactive,
-                scrollDirection: Axis.vertical,
+                scrollDirection: Axis.horizontal,
                 minValue: 7,
                 maxValue: 14,
                 onChanged: (value) {
