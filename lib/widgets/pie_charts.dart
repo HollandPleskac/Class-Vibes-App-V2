@@ -485,6 +485,8 @@ class Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           width: size,
@@ -495,7 +497,7 @@ class Indicator extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          width: 4,
+          width: 5,
         ),
         Text(
           text,
@@ -503,6 +505,61 @@ class Indicator extends StatelessWidget {
               fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
         )
       ],
+    );
+  }
+}
+
+class GraphKey extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: Indicator(
+              color: kPieChartDoingGreatColor,
+              text: 'Doing Great',
+              isSquare: false,
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.016,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: Indicator(
+              color: kPieChartNeedHelpColor,
+              text: 'Need Help',
+              isSquare: false,
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.016,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: Indicator(
+              color: kPieChartFrustratedColor,
+              text: 'Frustrated',
+              isSquare: false,
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.016,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: Indicator(
+              color: kPieChartInactiveColor,
+              text: 'Inactive',
+              isSquare: false,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -45,6 +45,19 @@ class _ViewClassState extends State<ViewClass> {
     super.initState();
   }
 
+  Future<void> showHelpPopupStatuses() {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          
+          content: GraphKey(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArguments = ModalRoute.of(context).settings.arguments as Map;
@@ -88,6 +101,17 @@ class _ViewClassState extends State<ViewClass> {
                         },
                       ),
                       centerTitle: true,
+                      actions: [
+                        IconButton(
+                          icon: FaIcon(
+                            FontAwesomeIcons.question,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async {
+                            await showHelpPopupStatuses();
+                          },
+                        ),
+                      ],
                       bottom: TabBar(
                         indicatorColor: Colors.white,
                         isScrollable: true,
