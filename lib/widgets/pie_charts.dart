@@ -46,34 +46,63 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           Expanded(
             child: AspectRatio(
               aspectRatio: 1,
-              child: PieChart(
-                PieChartData(
-                    pieTouchData:
-                        PieTouchData(touchCallback: (pieTouchResponse) {
-                      setState(() {
-                        if (pieTouchResponse.touchInput is FlLongPressEnd ||
-                            pieTouchResponse.touchInput is FlPanEnd) {
-                          touchedIndex = -1;
-                        } else {
-                          touchedIndex = pieTouchResponse.touchedSectionIndex;
-                        }
-                      });
-                    }),
-                    borderData: FlBorderData(
-                      show: false,
+              child: Stack(
+                children: [
+                  widget.doingGreatPercentage == "100%" ||
+                          widget.needHelpPercentage == "100%" ||
+                          widget.frustratedPercentage == "100%" ||
+                          widget.inactivePercentage == "100%"
+                      ? Center(
+                          child: Text(
+                            '100%',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: widget.doingGreatPercentage == "100%"
+                                    ? kPieChartDoingGreatColor
+                                    : widget.needHelpPercentage == "100%"
+                                        ? kPieChartNeedHelpColor
+                                        : widget.frustratedPercentage == "100%"
+                                            ? kPieChartFrustratedColor
+                                            : kPieChartInactiveColor),
+                          ),
+                        )
+                      : Container(),
+                  Center(
+                    child: PieChart(
+                      PieChartData(
+                          pieTouchData:
+                              PieTouchData(touchCallback: (pieTouchResponse) {
+                            setState(() {
+                              if (pieTouchResponse.touchInput
+                                      is FlLongPressEnd ||
+                                  pieTouchResponse.touchInput is FlPanEnd) {
+                                touchedIndex = -1;
+                              } else {
+                                touchedIndex =
+                                    pieTouchResponse.touchedSectionIndex;
+                              }
+                            });
+                          }),
+                          borderData: FlBorderData(
+                            show: false,
+                          ),
+                          startDegreeOffset: 0,
+                          sectionsSpace:
+                              widget.doingGreatPercentage == "100%" ||
+                                      widget.needHelpPercentage == "100%" ||
+                                      widget.frustratedPercentage == "100%" ||
+                                      widget.inactivePercentage == "100%"
+                                  ? 0
+                                  : 10,
+                          // TODO : DISPLAY 100 % Green in the middle of the pie chart
+                          // if it is 100 percent of one color
+                          // center -space -rad used to be 40
+                          centerSpaceRadius: 45,
+                          sections: showingSections()),
                     ),
-                    startDegreeOffset: 0,
-                    sectionsSpace: widget.doingGreatPercentage == "100%" ||
-                            widget.needHelpPercentage == "100%" ||
-                            widget.frustratedPercentage == "100%" ||
-                            widget.inactivePercentage == "100%"
-                        ? 0
-                        : 10,
-                    // TODO : DISPLAY 100 % Green in the middle of the pie chart
-                    // if it is 100 percent of one color
-                    // center -space -rad used to be 40
-                    centerSpaceRadius: 45,
-                    sections: showingSections()),
+                  ),
+                ],
               ),
             ),
           ),
