@@ -386,6 +386,7 @@ class _PieChartSampleSmallState extends State<PieChartSampleSmall> {
                 show: false,
               ),
               sectionsSpace: 0,
+              startDegreeOffset: 0,
               centerSpaceRadius: 15,
               sections: showingSectionsSmall()),
         ),
