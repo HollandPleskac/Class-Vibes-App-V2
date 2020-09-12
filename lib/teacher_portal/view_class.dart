@@ -50,8 +50,8 @@ class _ViewClassState extends State<ViewClass> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           content: GraphKey(),
         );
       },
