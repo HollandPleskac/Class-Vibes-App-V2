@@ -1,11 +1,7 @@
 import 'package:class_vibes_v2/constant.dart';
-import 'package:class_vibes_v2/student_portal/classview_student.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'teacher_portal/classview_teacher.dart';
 import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
 import 'teacher_portal/settings_teacher.dart';

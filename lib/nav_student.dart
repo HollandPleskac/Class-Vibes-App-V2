@@ -1,12 +1,7 @@
 import 'package:class_vibes_v2/constant.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'teacher_portal/classview_teacher.dart';
-import 'teacher_portal/classview_teacher.dart';
-import './teacher_portal/meetings_teacher.dart';
 import './student_portal/profile_student.dart';
 import './student_portal/meetings_student.dart';
 import './student_portal/classview_student.dart';
@@ -20,85 +15,167 @@ class NavStudent extends StatelessWidget {
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            // put image here
-            decoration: BoxDecoration(
-              color: kPrimaryColor,
+      child: Container(
+        color: kPrimaryColor,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 25),
+              child: Center(
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/transparent-logo.png',
+                      width: MediaQuery.of(context).size.width * 0.275,
+                    ),
+                    Text(
+                      'CLASS VIBES',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: Center(
-              child: Text('Class Vibes',style: TextStyle(color: Colors.white,fontSize: 16),),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                color: Colors.white54,
+              ),
             ),
-          ),
-          ListTile(
-            title: Text('Classes'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ClassViewStudent(),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'INTERFACE',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
+              ),
+            ),
+            DrawerTile(
+              'Classes',
+              FontAwesomeIcons.stream,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClassViewStudent(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Join a Class (remove)',
+              FontAwesomeIcons.solidPlusSquare,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => JoinClass(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Meetings',
+              FontAwesomeIcons.phoneSquareAlt,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MeetingsStudent(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Announcements',
+              FontAwesomeIcons.bullhorn,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AnnouncementsStudent(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Settings',
+              FontAwesomeIcons.cog,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileStudent(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerTile extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Function onTap;
+
+  DrawerTile(this.title, this.icon, this.onTap);
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: kPrimaryColor,
+      child: InkWell(
+        splashColor: Colors.white.withOpacity(0.1),
+        highlightColor: Colors.white.withOpacity(0.05),
+        onTap: () {
+          onTap();
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 2),
+                child: Icon(
+                  icon,
+                  color: Colors.white54,
+                  size: 15,
                 ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Join a Class'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => JoinClass(),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
                 ),
-              );
-            },
+              ),
+            ],
           ),
-          ListTile(
-            title: Text('Meetings'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MeetingsStudent(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Announcements'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AnnouncementsStudent(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Profile'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileStudent(),
-                ),
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
