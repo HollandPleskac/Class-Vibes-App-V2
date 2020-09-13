@@ -234,7 +234,22 @@ class _ProfileTabState extends State<ProfileTab> {
         });
   }
 
+  var editedtext = '';
   @override
+  void initState() {
+    super.initState();
+
+    _userNameEditController.addListener(_checkValue);
+  }
+
+  _checkValue() {
+    if (_userNameEditController.text.length == 0) {
+      setState(() {
+        editedtext = '';
+      });
+    } else {editedtext = _userNameEditController.text;}
+  }
+
   Widget build(BuildContext context) {
     return ListView(
       physics: BouncingScrollPhysics(),
@@ -261,44 +276,24 @@ class _ProfileTabState extends State<ProfileTab> {
                     fit: BoxFit.cover)),
           ),
         ),
+        
         SizedBox(
-          height: MediaQuery.of(context).size.width * 0.2,
+          height: MediaQuery.of(context).size.width * 0.15,
         ),
+        
+        Padding(
+          padding: const EdgeInsets.only(left: 35,
+          bottom: 10),
+          child: Text("Email Address",style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[900],
+            fontWeight: FontWeight.w400
+          ),),
+        ),
+        
         Center(
           child: Container(
-            height: 42,
-            width: MediaQuery.of(context).size.width - 50,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "Teacher",
-                  style: TextStyle(color: Colors.grey[800], fontSize: 18),
-                ),
-                Spacer(),
-                // Text(
-                //   "Created 16 Classes",
-                //   style: TextStyle(
-                //       color: Colors.grey[400], fontSize: 14),
-                // ),
-                SizedBox(
-                  width: 15,
-                ),
-              ],
-            ),
-            decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(10)),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.0525,
+            height: MediaQuery.of(context).size.height * 0.06,
             width: MediaQuery.of(context).size.width - 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -327,94 +322,170 @@ class _ProfileTabState extends State<ProfileTab> {
                         }),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 15),
-                  child: Text(
-                    "Email Address",
-                    style: TextStyle(color: Colors.grey[400], fontSize: 14),
-                  ),
+              ],
+            ),
+           
+            decoration: BoxDecoration(
+                color: Colors.blueGrey[100].withOpacity(0.5),
+                borderRadius: BorderRadius.circular(7)),
+          ),
+        ),
+        
+        
+        SizedBox(
+          height: 15,
+        ),
+        
+        Padding(
+          padding: const EdgeInsets.only(left: 35,
+          bottom: 10),
+          child: Text("User Name",style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[900],
+            fontWeight: FontWeight.w400
+          ),),
+        ),
+       
+        GestureDetector(
+          onTap: () {
+            //_showModalSheetEditUserName(widget.teacherEmail);
+            //print('user name');
+          },
+          child: Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.06,
+              width: MediaQuery.of(context).size.width - 50,
+              child: Form(
+                key: _formKey,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.51,
+                      child: StreamBuilder(
+                        stream: _firestore
+                            .collection('UserData')
+                            .document(widget.teacherEmail)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text('');
+                          } else {
+                            return TextFormField(
+                              controller: _userNameEditController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(
+                                  color: Colors.grey[800], fontSize: 18
+                                ),
+                                labelStyle: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                                hintText: snapshot.data['display name'],
+                              ),
+                              validator: (value) {
+                                if (value == null || value == '') {
+                                  return 'Username cannot be blank';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onChanged: (value) {
+                                print("g");
+                              },
+                            );
+                            Text(
+                              snapshot.data['display name'],
+                              softWrap: false,
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                  color: Colors.grey[800], fontSize: 18),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    // FutureBuilder(
+                    //   future: _firebaseAuth.currentUser(),
+                    //   builder: (context, snapshot) {
+                    //     print(snapshot.data.toString());
+                    //     return Text(
+                    //       snapshot.data.displayName,
+                    //       style: TextStyle(
+                    //           color: Colors.grey[800],
+                    //           fontSize: 18),
+                    //     );
+                    //   },
+                    // ),
+                    // Text(getDisplayName().toString()),
+
+                    Spacer(),
+                    
+
+                    editedtext == ''
+                        ? SizedBox()
+                        : IconButton(icon: Icon(Icons.save), onPressed: () {}),
+                    SizedBox(
+                      width: 15,
+                    ),
+                  ],
+                ),
+              ),
+             
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.blueGrey[50],
+                  width: 3
+                ),
+                borderRadius: BorderRadius.circular(7)),
+            ),
+          ),
+        ),
+        
+        SizedBox(
+          height: 15,
+        ),
+        
+        Padding(
+          padding: const EdgeInsets.only(left: 35,
+          bottom: 10),
+          child: Text("Account Type",style: TextStyle(
+            color: Colors.grey[900],
+            fontSize: 16,
+            fontWeight: FontWeight.w400
+          ),),
+        ),
+        
+        Center(
+          child: Container(
+            
+              height: MediaQuery.of(context).size.height * 0.06,
+            width: MediaQuery.of(context).size.width - 50,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  "Teacher",
+                  style: TextStyle(color: Colors.grey[800], fontSize: 18),
+                ),
+                Spacer(),
+                // Text(
+                //   "Created 16 Classes",
+                //   style: TextStyle(
+                //       color: Colors.grey[400], fontSize: 14),
+                // ),
+                SizedBox(
+                  width: 15,
                 ),
               ],
             ),
             decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(10)),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-        GestureDetector(
-          onTap: () {
-            _showModalSheetEditUserName(widget.teacherEmail);
-            print('user name');
-          },
-          child: Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.0525,
-              width: MediaQuery.of(context).size.width - 50,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.51,
-                    child: StreamBuilder(
-                      stream: _firestore
-                          .collection('UserData')
-                          .document(widget.teacherEmail)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return Text('');
-                        } else {
-                          return Text(
-                            snapshot.data['display name'],
-                            softWrap: false,
-                            overflow: TextOverflow.fade,
-                            style: TextStyle(
-                                color: Colors.grey[800], fontSize: 18),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  // FutureBuilder(
-                  //   future: _firebaseAuth.currentUser(),
-                  //   builder: (context, snapshot) {
-                  //     print(snapshot.data.toString());
-                  //     return Text(
-                  //       snapshot.data.displayName,
-                  //       style: TextStyle(
-                  //           color: Colors.grey[800],
-                  //           fontSize: 18),
-                  //     );
-                  //   },
-                  // ),
-                  // Text(getDisplayName().toString()),
-
-                  Spacer(),
-                  Text(
-                    "UserName",
-                    style: TextStyle(color: Colors.grey[400], fontSize: 14),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.edit,
-                    color: Colors.grey[400],
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(10)),
-            ),
+                color: Colors.blueGrey[100].withOpacity(0.5),
+                borderRadius: BorderRadius.circular(7)),
           ),
         ),
         Center(
