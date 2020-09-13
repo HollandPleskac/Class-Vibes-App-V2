@@ -507,6 +507,35 @@ class Indicator extends StatelessWidget {
   }
 }
 
+class GraphKeyColor extends StatelessWidget {
+  final Color color;
+  final String text;
+
+  GraphKeyColor(this.color, this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.06,
+      margin: EdgeInsets.only(bottom: 15),
+      color: color,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class GraphKey extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -516,180 +545,161 @@ class GraphKey extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Graph Key : ',
+            'Legend',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.016,
           ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Indicator(
-                      color: kPieChartDoingGreatColor,
-                      text: 'Doing Great',
-                      isSquare: false,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.016,
-                    ),
-                    Indicator(
-                      color: kPieChartNeedHelpColor,
-                      text: 'Need Help',
-                      isSquare: false,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.016,
-                    ),
-                    Indicator(
-                      color: kPieChartFrustratedColor,
-                      text: 'Frustrated',
-                      isSquare: false,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.016,
-                    ),
-                    Indicator(
-                      color: kPieChartInactiveColor,
-                      text: 'Inactive',
-                      isSquare: false,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          Divider(),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
+            height: MediaQuery.of(context).size.height * 0.01,
           ),
-          Text(
-            'FAQ : ',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          GraphKeyColor(
+            kPieChartDoingGreatColor,
+            'Green: Doing Great',
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.016,
+          GraphKeyColor(
+            kPieChartNeedHelpColor,
+            'Yellow: Needs Help',
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width,
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              children: [
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Q : ',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      TextSpan(
-                          text: 'Where is the class code?',
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.016,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'A : ',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      TextSpan(
-                          text:
-                              'The class code is located under the class settings tab.  Scroll to the right on the above tab bar to view the settings tab.',
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Q : ',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      TextSpan(
-                          text: 'What\'s the gray?',
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.016,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'A : ',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      TextSpan(
-                          text:
-                              'Students who don\'t change their status will show up as gray on your graph.  Change the gray limit with the max inactive days property in the class settings.',
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'Q : ',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      TextSpan(
-                          text: 'Need additional help?',
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.016,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: 'A : ',
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Contact ',
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          ),
-                          TextSpan(
-                            text: 'support@classvibes.net',
-                            style: TextStyle(fontWeight: FontWeight.w400, color: kPrimaryColor),
-                          ),
-                          TextSpan(
-                            text: '.  We will respond shortly!',
-                            style: TextStyle(fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          GraphKeyColor(
+            kPieChartFrustratedColor,
+            'Red: Frustrated',
           ),
+          GraphKeyColor(
+            kPieChartInactiveColor,
+            'Gray: Inactive',
+          ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).size.height * 0.03,
+          // ),
+          // Text(
+          //   'FAQ',
+          //   style: TextStyle(fontWeight: FontWeight.bold),
+          // ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).size.height * 0.016,
+          // ),
+          // Container(
+          //   height: MediaQuery.of(context).size.height * 0.4,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: ListView(
+          //     physics: BouncingScrollPhysics(),
+          //     children: [
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(color: Colors.black, fontSize: 16),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //                 text: 'Q : ',
+          //                 style: TextStyle(fontWeight: FontWeight.w600)),
+          //             TextSpan(
+          //                 text: 'Where is the class code?',
+          //                 style: TextStyle(fontWeight: FontWeight.w400)),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.016,
+          //       ),
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(color: Colors.black, fontSize: 16),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //                 text: 'A : ',
+          //                 style: TextStyle(fontWeight: FontWeight.w600)),
+          //             TextSpan(
+          //                 text:
+          //                     'The class code is located under the class settings tab.  Scroll to the right on the above tab bar to view the settings tab.',
+          //                 style: TextStyle(fontWeight: FontWeight.w400)),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.03,
+          //       ),
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(color: Colors.black, fontSize: 16),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //                 text: 'Q : ',
+          //                 style: TextStyle(fontWeight: FontWeight.w600)),
+          //             TextSpan(
+          //                 text: 'What\'s the gray?',
+          //                 style: TextStyle(fontWeight: FontWeight.w400)),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.016,
+          //       ),
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(color: Colors.black, fontSize: 16),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //                 text: 'A : ',
+          //                 style: TextStyle(fontWeight: FontWeight.w600)),
+          //             TextSpan(
+          //                 text:
+          //                     'Students who don\'t change their status will show up as gray on your graph.  Change the gray limit with the max inactive days property in the class settings.',
+          //                 style: TextStyle(fontWeight: FontWeight.w400)),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.03,
+          //       ),
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(color: Colors.black, fontSize: 16),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //                 text: 'Q : ',
+          //                 style: TextStyle(fontWeight: FontWeight.w600)),
+          //             TextSpan(
+          //                 text: 'Need additional help?',
+          //                 style: TextStyle(fontWeight: FontWeight.w400)),
+          //           ],
+          //         ),
+          //       ),
+          //       SizedBox(
+          //         height: MediaQuery.of(context).size.height * 0.016,
+          //       ),
+          //       RichText(
+          //         text: TextSpan(
+          //           style: TextStyle(color: Colors.black, fontSize: 16),
+          //           children: <TextSpan>[
+          //             TextSpan(
+          //                 text: 'A : ',
+          //                 style: TextStyle(fontWeight: FontWeight.w600)),
+          //             TextSpan(
+          //               children: <TextSpan>[
+          //                 TextSpan(
+          //                   text: 'Contact ',
+          //                   style: TextStyle(fontWeight: FontWeight.w400),
+          //                 ),
+          //                 TextSpan(
+          //                   text: 'support@classvibes.net',
+          //                   style: TextStyle(
+          //                       fontWeight: FontWeight.w400,
+          //                       color: kPrimaryColor),
+          //                 ),
+          //                 TextSpan(
+          //                   text: '.  We will respond shortly!',
+          //                   style: TextStyle(fontWeight: FontWeight.w400),
+          //                 ),
+          //               ],
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+              // ],
+            // ),
+          // ),
         ],
       ),
     );
