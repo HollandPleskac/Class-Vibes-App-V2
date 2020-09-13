@@ -276,6 +276,7 @@ class Fire {
       'allow join': true,
       'max days inactive': 7,
       'date':DateTime.now(),
+      'type':'paid',
     });
 
     _firestore
@@ -290,7 +291,51 @@ class Fire {
       'allow join': true,
       'max days inactive': 7,
       'date':DateTime.now(),
+      'type':'paid',
     });
+    return ['success', classCode];
+  }
+
+  Future<List> addTrialClass(String uid) async {
+
+    String classCode = randomNumeric(4);
+    // String classCode = '5gUxwD';
+
+    int isCodeUnique = await _firestore
+        .collection("Classes")
+        .where("class code", isEqualTo: classCode)
+        .getDocuments()
+        .then((querySnapshot) => querySnapshot.documents.length);
+
+    if (isCodeUnique != 0) {
+      return ['failure', 'An error occurred try again'];
+    }
+
+    _firestore.collection('Classes').document(classCode).setData({
+      'teacher email': uid,
+      'class code': classCode,
+      'class name': 'Trial Class',
+      'allow join': true,
+      'max days inactive': 7,
+      'date':DateTime.now(),
+      'type':'trial',
+    });
+
+    _firestore
+        .collection('UserData')
+        .document(uid)
+        .collection('Classes')
+        .document(classCode)
+        .setData({
+      'teacher email': uid,
+      'class code': classCode,
+      'class name': 'Trial Class',
+      'allow join': true,
+      'max days inactive': 7,
+      'date':DateTime.now(),
+      'type':'trial',
+    });
+
     return ['success', classCode];
   }
 
