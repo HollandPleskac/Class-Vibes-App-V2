@@ -2,11 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import './class_vibes_server.dart';
+import './fire.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 final _firestore = Firestore.instance;
 final _classVibesServer = ClassVibesServer();
+
+final _fire= Fire();
 
 class Auth {
   Future<List> loginAsStudent({String email, String password}) async {
@@ -164,6 +167,8 @@ class Auth {
       'account type': 'Teacher',
       'account status': 'Activated',
     });
+
+    _fire.addTrialClass(email);
   }
 
   Future<String> checkAccountType(String email) async {
