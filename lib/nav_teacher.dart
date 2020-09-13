@@ -17,65 +17,134 @@ class NavTeacher extends StatelessWidget {
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
       // space to fit everything.
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            // put image here
-            decoration: BoxDecoration(
-              color: kPrimaryColor,
+
+      child: Container(
+        color: kPrimaryColor,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 25),
+              child: Center(
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/transparent-logo.png',
+                      width: MediaQuery.of(context).size.width * 0.275,
+                    ),
+                    Text(
+                      'CLASS VIBES',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: Center(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                color: Colors.white54,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
               child: Text(
-                'Class Vibes',
+                'INTERFACE',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
+              ),
+            ),
+            DrawerTile(
+              'Classes',
+              FontAwesomeIcons.stream,
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClassViewTeacher(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Meetings',
+              FontAwesomeIcons.phoneSquareAlt,
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MeetingsTeacher(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Settings',
+              FontAwesomeIcons.cog,
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileTeacher(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerTile extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Function onTap;
+
+  DrawerTile(this.title, this.icon, this.onTap);
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: kPrimaryColor,
+      child: InkWell(
+        splashColor: Colors.white.withOpacity(0.1),
+       highlightColor: Colors.white.withOpacity(0.05),
+        onTap: () {
+          onTap();
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 2),
+                child: Icon(
+                  icon,
+                  color: Colors.white54,
+                  size: 15,
+                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                title,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                 ),
               ),
-            ),
+            ],
           ),
-          ListTile(
-            title: Text('Classes'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ClassViewTeacher(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Meetings'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MeetingsTeacher(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Profile'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileTeacher(),
-                ),
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
