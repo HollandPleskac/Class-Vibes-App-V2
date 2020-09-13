@@ -518,7 +518,11 @@ class GraphKeyColor extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.06,
       margin: EdgeInsets.only(bottom: 15),
-      color: color,
+      decoration: BoxDecoration(
+        color: color,
+
+        borderRadius: BorderRadius.circular(5),
+      ),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
@@ -697,8 +701,8 @@ class GraphKey extends StatelessWidget {
           //           ],
           //         ),
           //       ),
-              // ],
-            // ),
+          // ],
+          // ),
           // ),
         ],
       ),
