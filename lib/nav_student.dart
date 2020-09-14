@@ -7,6 +7,7 @@ import './student_portal/meetings_student.dart';
 import './student_portal/classview_student.dart';
 import './student_portal/announcements_student.dart';
 import './student_portal/join_class.dart';
+import 'auth/welcome.dart';
 
 class NavStudent extends StatelessWidget {
   @override
@@ -123,6 +124,23 @@ class NavStudent extends StatelessWidget {
                     builder: (context) => ProfileStudent(),
                   ),
                 );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'SIGN OUT',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
+              ),
+            ),
+            DrawerTile(
+              'Log Out',
+              FontAwesomeIcons.signOutAlt,
+              () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Welcome()),
+                    (Route<dynamic> route) => false);
               },
             ),
           ],

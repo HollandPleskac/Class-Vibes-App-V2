@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
 import 'teacher_portal/settings_teacher.dart';
+import './auth/welcome.dart';
 
 class NavTeacher extends StatelessWidget {
   @override
@@ -90,6 +91,23 @@ class NavTeacher extends StatelessWidget {
                 );
               },
             ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'SIGN OUT',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
+              ),
+            ),
+            DrawerTile(
+              'Log Out',
+              FontAwesomeIcons.signOutAlt,
+              () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Welcome()),
+                    (Route<dynamic> route) => false);
+              },
+            ),
           ],
         ),
       ),
@@ -109,7 +127,7 @@ class DrawerTile extends StatelessWidget {
       color: kPrimaryColor,
       child: InkWell(
         splashColor: Colors.white.withOpacity(0.1),
-       highlightColor: Colors.white.withOpacity(0.05),
+        highlightColor: Colors.white.withOpacity(0.05),
         onTap: () {
           onTap();
         },
