@@ -33,7 +33,7 @@ class NavTeacher extends StatelessWidget {
                       'CLASS VIBES',
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 21,
+                          fontSize: 19,
                           fontWeight: FontWeight.w500),
                     ),
                   ],
