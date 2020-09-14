@@ -22,8 +22,7 @@ class NavStudent extends StatelessWidget {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 25),
+            DrawerHeader(
               child: Center(
                 child: Row(
                   children: [
