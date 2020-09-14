@@ -92,6 +92,12 @@ class NavTeacher extends StatelessWidget {
               },
             ),
             Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                color: Colors.white54,
+              ),
+            ),
+            Padding(
               padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
               child: Text(
                 'SIGN OUT',
