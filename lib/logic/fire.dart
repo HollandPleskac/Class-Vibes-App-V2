@@ -257,7 +257,7 @@ class Fire {
 
   Future<List> addClass({String uid, String className}) async {
     String classCode = randomNumeric(4);
-    // String classCode = '5gUxwD';
+    // String classCode = '7614';
 
     int isCodeUnique = await _firestore
         .collection("Classes")
@@ -266,7 +266,9 @@ class Fire {
         .then((querySnapshot) => querySnapshot.documents.length);
 
     if (isCodeUnique != 0) {
-      return ['failure', 'An error occurred try again'];
+      // return ['failure', 'An error occurred try again'];
+      print('adding a new class');
+      addClass(uid:uid,className:className);
     }
 
     _firestore.collection('Classes').document(classCode).setData({
@@ -308,7 +310,9 @@ class Fire {
         .then((querySnapshot) => querySnapshot.documents.length);
 
     if (isCodeUnique != 0) {
-      return ['failure', 'An error occurred try again'];
+      print('readding trial class');
+      addTrialClass(uid);
+      // return ['failure', 'An error occurred try again'];
     }
 
     _firestore.collection('Classes').document(classCode).setData({
