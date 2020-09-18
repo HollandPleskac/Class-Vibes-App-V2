@@ -109,30 +109,49 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
     );
   }
 
+  String determineTitle(int percentage) {
+    if (0 < percentage && percentage <= 1) {
+      return "<1%";
+    } else if (percentage == 100 || percentage == 0) {
+      return "";
+    } else {
+      return "$percentage%";
+    }
+  }
+
+  double determineTouchedFontSize(int percentage) {
+    if (0 < percentage && percentage <= 10) {
+      return 14.5;
+    } else {
+      return 25.0;
+    }
+  }
+
+  double determineDefaultFontSize(int percentage) {
+    if (0 < percentage && percentage <= 10) {
+      return 11.0;
+    } else {
+      return 16.0;
+    }
+  }
+
   List<PieChartSectionData> showingSections() {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25 : 16;
       final double radius = isTouched
           ? MediaQuery.of(context).size.width * 0.145
-          //TODO : used to be 0.118 adjusted to this better style change to 0.08?
           : MediaQuery.of(context).size.width * 0.118;
       switch (i) {
         case 0:
           return PieChartSectionData(
             color: kPieChartDoingGreatColor,
             value: widget.doingGreatStudents,
-            // not 100% and not between 0% and 10%
-            title: widget.doingGreatPercentage != 100 &&
-                    widget.doingGreatPercentage != 0
-                ? "${widget.doingGreatPercentage}%"
-                : (0 < widget.doingGreatPercentage &&
-                        widget.doingGreatPercentage <= 1)
-                    ? "<1%"
-                    : "",
+            title: determineTitle(widget.doingGreatPercentage),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
+                fontSize: isTouched
+                    ? determineTouchedFontSize(widget.doingGreatPercentage)
+                    : determineDefaultFontSize(widget.doingGreatPercentage),
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
           );
@@ -140,16 +159,12 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartNeedHelpColor,
             value: widget.needHelpStudents,
-            title: widget.needHelpPercentage != 100 &&
-                    widget.needHelpPercentage != 0
-                ? "${widget.needHelpPercentage}%"
-                : (0 < widget.needHelpPercentage &&
-                        widget.needHelpPercentage <= 1)
-                    ? "<1%"
-                    : "",
+            title: determineTitle(widget.needHelpPercentage),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
+                fontSize: isTouched
+                    ? determineTouchedFontSize(widget.needHelpPercentage)
+                    : determineDefaultFontSize(widget.needHelpPercentage),
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
           );
@@ -157,16 +172,12 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartFrustratedColor,
             value: widget.frustratedStudents,
-            title: widget.frustratedPercentage != 100 &&
-                    widget.frustratedPercentage != 0
-                ? "${widget.frustratedPercentage}%"
-                : (0 < widget.frustratedPercentage &&
-                        widget.frustratedPercentage <= 1)
-                    ? "<1%"
-                    : "",
+            title: determineTitle(widget.frustratedPercentage),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
+                fontSize: isTouched
+                    ? determineTouchedFontSize(widget.frustratedPercentage)
+                    : determineDefaultFontSize(widget.frustratedPercentage),
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
           );
@@ -174,16 +185,12 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartInactiveColor,
             value: widget.inactiveStudents,
-            title: widget.inactivePercentage != 100 &&
-                    widget.inactivePercentage != 0
-                ? "${widget.inactivePercentage}%"
-                : (0 < widget.inactivePercentage &&
-                        widget.inactivePercentage <= 1)
-                    ? "<1%"
-                    : "",
+            title: determineTitle(widget.inactivePercentage),
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
+                fontSize: isTouched
+                    ? determineTouchedFontSize(widget.inactivePercentage)
+                    : determineDefaultFontSize(widget.inactivePercentage),
                 fontWeight: FontWeight.bold,
                 color: const Color(0xffffffff)),
           );
