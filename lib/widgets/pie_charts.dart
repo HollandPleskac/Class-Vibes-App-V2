@@ -123,11 +123,13 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
             color: kPieChartDoingGreatColor,
             value: widget.doingGreatStudents,
             // not 100% and not between 0% and 10%
-            title: widget.doingGreatPercentage == 100 ||
-                    (0 <= widget.doingGreatPercentage &&
+            title: widget.doingGreatPercentage != 100 &&
+                    widget.doingGreatPercentage != 0
+                ? "${widget.doingGreatPercentage}%"
+                : (0 < widget.doingGreatPercentage &&
                         widget.doingGreatPercentage <= 1)
-                ? "<1%"
-                : "${widget.doingGreatPercentage}%",
+                    ? "<1%"
+                    : "",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -138,12 +140,13 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartNeedHelpColor,
             value: widget.needHelpStudents,
-            title:
-                widget.needHelpPercentage == 100 ||
-                    (0 <= widget.needHelpPercentage &&
+            title: widget.needHelpPercentage != 100 &&
+                    widget.needHelpPercentage != 0
+                ? "${widget.needHelpPercentage}%"
+                : (0 < widget.needHelpPercentage &&
                         widget.needHelpPercentage <= 1)
                     ? "<1%"
-                    : "${widget.needHelpPercentage}%",
+                    : "",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -154,11 +157,13 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartFrustratedColor,
             value: widget.frustratedStudents,
-            title: widget.frustratedPercentage == 100 ||
-                    (0 <= widget.frustratedPercentage &&
+            title: widget.frustratedPercentage != 100 &&
+                    widget.frustratedPercentage != 0
+                ? "${widget.frustratedPercentage}%"
+                : (0 < widget.frustratedPercentage &&
                         widget.frustratedPercentage <= 1)
                     ? "<1%"
-                    : "${widget.frustratedPercentage}%",
+                    : "",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -169,12 +174,13 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartInactiveColor,
             value: widget.inactiveStudents,
-            title:
-                widget.inactivePercentage == 100 ||
-                    (0 <= widget.inactivePercentage &&
+            title: widget.inactivePercentage != 100 &&
+                    widget.inactivePercentage != 0
+                ? "${widget.inactivePercentage}%"
+                : (0 < widget.inactivePercentage &&
                         widget.inactivePercentage <= 1)
                     ? "<1%"
-                    : "${widget.inactivePercentage}%",
+                    : "",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
