@@ -10,10 +10,10 @@ class PieChartSampleBig extends StatefulWidget {
   double frustratedStudents;
   double inactiveStudents;
   // chart titles
-  String doingGreatPercentage;
-  String needHelpPercentage;
-  String frustratedPercentage;
-  String inactivePercentage;
+  int doingGreatPercentage;
+  int needHelpPercentage;
+  int frustratedPercentage;
+  int inactivePercentage;
 
   PieChartSampleBig({
     // values
@@ -48,21 +48,21 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
               aspectRatio: 1,
               child: Stack(
                 children: [
-                  widget.doingGreatPercentage == "100%" ||
-                          widget.needHelpPercentage == "100%" ||
-                          widget.frustratedPercentage == "100%" ||
-                          widget.inactivePercentage == "100%"
+                  widget.doingGreatPercentage == 100 ||
+                          widget.needHelpPercentage == 100 ||
+                          widget.frustratedPercentage == 100 ||
+                          widget.inactivePercentage == 100
                       ? Center(
                           child: Text(
                             '100%',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: widget.doingGreatPercentage == "100%"
+                                color: widget.doingGreatPercentage == 100
                                     ? kPieChartDoingGreatColor
-                                    : widget.needHelpPercentage == "100%"
+                                    : widget.needHelpPercentage == 100
                                         ? kPieChartNeedHelpColor
-                                        : widget.frustratedPercentage == "100%"
+                                        : widget.frustratedPercentage == 100
                                             ? kPieChartFrustratedColor
                                             : kPieChartInactiveColor),
                           ),
@@ -88,15 +88,13 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                             show: false,
                           ),
                           startDegreeOffset: 0,
-                          sectionsSpace:
-                              widget.doingGreatPercentage == "100%" ||
-                                      widget.needHelpPercentage == "100%" ||
-                                      widget.frustratedPercentage == "100%" ||
-                                      widget.inactivePercentage == "100%"
-                                  ? 0
-                                  : 10,
-                          // TODO : DISPLAY 100 % Green in the middle of the pie chart
-                          // if it is 100 percent of one color
+                          sectionsSpace: widget.doingGreatPercentage == 100 ||
+                                  widget.needHelpPercentage == 100 ||
+                                  widget.frustratedPercentage == 100 ||
+                                  widget.inactivePercentage == 100
+                              ? 0
+                              : 10,
+
                           // center -space -rad used to be 40
                           centerSpaceRadius: 38,
                           sections: showingSections()),
@@ -106,53 +104,6 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
               ),
             ),
           ),
-          // Padding(
-          //   padding: EdgeInsets.only(
-          //       right: MediaQuery.of(context).size.width * 0.095,
-          //       left: MediaQuery.of(context).size.width * 0.08),
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.max,
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: <Widget>[
-          //       Indicator(
-          //         color: kPieChartDoingGreatColor,
-          //         text: 'Doing Great',
-          //         isSquare: false,
-          //       ),
-          //       SizedBox(
-          //         height: MediaQuery.of(context).size.height * 0.0135,
-          //       ),
-          //       Indicator(
-          //         color: kPieChartNeedHelpColor,
-          //         text: 'Need Help',
-          //         isSquare: false,
-          //       ),
-          //       SizedBox(
-          //         height: MediaQuery.of(context).size.height * 0.0135,
-          //       ),
-          //       Indicator(
-          //         color: kPieChartFrustratedColor,
-          //         text: 'Frustrated',
-          //         isSquare: false,
-          //       ),
-          //       SizedBox(
-          //         height: MediaQuery.of(context).size.height * 0.0135,
-          //       ),
-          //       Indicator(
-          //         color: kPieChartInactiveColor,
-          //         text: 'Inactive',
-          //         isSquare: false,
-          //       ),
-          //       SizedBox(
-          //         height: 0,
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 38,
-          // ),
         ],
       ),
     );
@@ -171,10 +122,12 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartDoingGreatColor,
             value: widget.doingGreatStudents,
-            title: widget.doingGreatStudents != 0 &&
-                    widget.doingGreatPercentage != "100%"
-                ? widget.doingGreatPercentage
-                : '',
+            // not 100% and not between 0% and 10%
+            title: widget.doingGreatPercentage == 100 ||
+                    (0 <= widget.doingGreatPercentage &&
+                        widget.doingGreatPercentage <= 1)
+                ? "<1%"
+                : "${widget.doingGreatPercentage}%",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -185,10 +138,12 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartNeedHelpColor,
             value: widget.needHelpStudents,
-            title: widget.needHelpStudents != 0 &&
-                    widget.needHelpPercentage != "100%"
-                ? widget.needHelpPercentage
-                : '',
+            title:
+                widget.needHelpPercentage == 100 ||
+                    (0 <= widget.needHelpPercentage &&
+                        widget.needHelpPercentage <= 1)
+                    ? "<1%"
+                    : "${widget.needHelpPercentage}%",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -199,10 +154,11 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartFrustratedColor,
             value: widget.frustratedStudents,
-            title: widget.frustratedStudents != 0 &&
-                    widget.frustratedPercentage != "100%"
-                ? widget.frustratedPercentage
-                : '',
+            title: widget.frustratedPercentage == 100 ||
+                    (0 <= widget.frustratedPercentage &&
+                        widget.frustratedPercentage <= 1)
+                    ? "<1%"
+                    : "${widget.frustratedPercentage}%",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -213,10 +169,12 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
           return PieChartSectionData(
             color: kPieChartInactiveColor,
             value: widget.inactiveStudents,
-            title: widget.inactiveStudents != 0 &&
-                    widget.inactivePercentage != "100%"
-                ? widget.inactivePercentage
-                : '',
+            title:
+                widget.inactivePercentage == 100 ||
+                    (0 <= widget.inactivePercentage &&
+                        widget.inactivePercentage <= 1)
+                    ? "<1%"
+                    : "${widget.inactivePercentage}%",
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -520,7 +478,6 @@ class GraphKeyColor extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
         color: color,
-
         borderRadius: BorderRadius.circular(5),
       ),
       child: Align(

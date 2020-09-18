@@ -325,20 +325,14 @@ class DynamicPieChart extends StatelessWidget {
                   frustratedStudents +
                   inactiveStudents.toDouble();
 
-              var doingGreatPercentage =
-                  (doingGreatStudents / totalStudents * 100)
-                          .toStringAsFixed(0) +
-                      '%';
-              var needHelpPercentage =
-                  (needHelpStudents / totalStudents * 100).toStringAsFixed(0) +
-                      '%';
-              var frustratedPercentage =
-                  (frustratedStudents / totalStudents * 100)
-                          .toStringAsFixed(0) +
-                      '%';
-              var inactivePercentage =
-                  (inactiveStudents / totalStudents * 100).toStringAsFixed(0) +
-                      '%';
+              int doingGreatPercentage =
+                  (doingGreatStudents / totalStudents * 100).toInt();
+              int needHelpPercentage =
+                  (needHelpStudents / totalStudents * 100).toInt();
+              int frustratedPercentage =
+                  (frustratedStudents / totalStudents * 100).toInt();
+              int inactivePercentage =
+                  (inactiveStudents / totalStudents * 100).toInt();
 
               return PieChartSampleBig(
                 //graph percentage
