@@ -21,7 +21,7 @@ class _TestingState extends State<Testing> {
             RaisedButton(
               child: Text('get offering'),
               onPressed: () async {
-                _revenueCat.getOfferings();
+                await _revenueCat.getOfferings();
               },
             ),
              RaisedButton(
