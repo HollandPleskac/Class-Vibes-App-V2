@@ -3,13 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import './class_vibes_server.dart';
 import './fire.dart';
+import './revenue_cat.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 final _firestore = Firestore.instance;
 final _classVibesServer = ClassVibesServer();
+final _revenueCat = RevenueCat();
 
-final _fire= Fire();
+final _fire = Fire();
 
 class Auth {
   Future<List> loginAsStudent({String email, String password}) async {
@@ -27,6 +29,7 @@ class Auth {
         return ['failure', 'Account is not registered as a student'];
       }
 
+      await _revenueCat.signInRevenueCat(user.uid);
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -66,6 +69,7 @@ class Auth {
         return ['failure', 'Account is not registered as a teacher'];
       }
 
+      await _revenueCat.signInRevenueCat(user.uid);
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -182,10 +186,12 @@ class Auth {
   Future signOut() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
+    await _revenueCat.signOutRevenueCat();
   }
 
   Future signOutGoogle() async {
     await _googleSignIn.signOut();
+    await _revenueCat.signOutRevenueCat();
   }
 
   Future<void> resetPassword(String email) async {
@@ -223,6 +229,7 @@ class Auth {
 
     print("signed in " + user.displayName);
 
+    await _revenueCat.signInRevenueCat(user.uid);
     return ['success', ''];
   }
 
@@ -263,19 +270,21 @@ class Auth {
         final FirebaseUser user =
             (await _firebaseAuth.signInWithCredential(credential)).user;
         print("signed in " + user.displayName);
+
+        await _revenueCat.signInRevenueCat(user.uid);
         return ['success', ''];
       } catch (error) {
         switch (error.code) {
           case "ERROR_INVALID_CREDENTIAL":
-          return ['failure', 'invalid credential'];
+            return ['failure', 'invalid credential'];
           case "ERROR_USER_DISABLED":
-          return ['failure','user disabled'];
+            return ['failure', 'user disabled'];
           case "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL":
-          return ['failure','accout exists with different credential'];
+            return ['failure', 'accout exists with different credential'];
           case "ERROR_OPERATION_NOT_ALLOWED":
-          return ['failure','operation not allowed'];
+            return ['failure', 'operation not allowed'];
           case "ERROR_INVALID_ACTION_CODE":
-          return ['failure','invalid action code'];
+            return ['failure', 'invalid action code'];
         }
       }
     }
@@ -316,6 +325,8 @@ class Auth {
 
     await _classVibesServer.createStripeCustomer(user.email);
 
+
+    await _revenueCat.signInRevenueCat(user.uid);
     return ['success', 'Successfully Signed Up'];
   }
 
@@ -360,6 +371,7 @@ class Auth {
             (await _firebaseAuth.signInWithCredential(credential)).user;
         print("signed in " + user.displayName);
 
+        await _revenueCat.signInRevenueCat(user.uid);
         return ['success', ''];
       } catch (e) {
         print(e);

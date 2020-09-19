@@ -14,9 +14,11 @@ import './student_portal/classview_student.dart';
 import './teacher_portal/classview_teacher.dart';
 import './auth/welcome.dart';
 import './logic/auth.dart';
+import './logic/revenue_cat.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _auth = Auth();
+final _revenueCat = RevenueCat();
 
 class Router extends StatefulWidget {
   @override
@@ -42,16 +44,16 @@ class _RouterState extends State<Router> {
       try {
         String type = await _auth.checkAccountType(user.email);
         accountType = type;
-       
+
         isCheckedAccount = true;
       } catch (_) {
         accountType = null;
-      
+
         isCheckedAccount = true;
       }
     } else {
       accountType = null;
-      
+
       isCheckedAccount = true;
     }
   }
@@ -68,24 +70,25 @@ class _RouterState extends State<Router> {
     });
     Timer(
       Duration(milliseconds: 500),
-      () => 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-         
-            return isCheckedAccount == true
-                ? (accountType == 'Student')
-                    ? ClassViewStudent()
-                    : (accountType == 'Teacher')
-                        ? ClassViewTeacher()
-                        : Welcome()
-                : Welcome(
-                    //this welcome screen never actually shows up
-                    );
-          },
-        ),
-      ),
+      () async {
+        _revenueCat.setupPurchases();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return isCheckedAccount == true
+                  ? (accountType == 'Student')
+                      ? ClassViewStudent()
+                      : (accountType == 'Teacher')
+                          ? ClassViewTeacher()
+                          : Welcome()
+                  : Welcome(
+                      //this welcome screen never actually shows up
+                      );
+            },
+          ),
+        );
+      },
     );
     super.initState();
   }
@@ -94,13 +97,12 @@ class _RouterState extends State<Router> {
   Widget build(BuildContext context) {
     print('Splash');
     return Scaffold(
-      // backgroundColor: Colors.white,
-      // body: Center(
-      //     child: Image.asset(
-      //   'Loading/loading.gif',
-      //   fit: BoxFit.contain,
-      // )),
-    );
- 
+        // backgroundColor: Colors.white,
+        // body: Center(
+        //     child: Image.asset(
+        //   'Loading/loading.gif',
+        //   fit: BoxFit.contain,
+        // )),
+        );
   }
 }

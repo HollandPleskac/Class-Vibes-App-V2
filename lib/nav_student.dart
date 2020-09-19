@@ -8,6 +8,9 @@ import './student_portal/classview_student.dart';
 import './student_portal/announcements_student.dart';
 import './student_portal/join_class.dart';
 import 'auth/welcome.dart';
+import './logic/auth.dart';
+
+final _auth = Auth();
 
 class NavStudent extends StatelessWidget {
   @override
@@ -136,7 +139,8 @@ class NavStudent extends StatelessWidget {
             DrawerTile(
               'Log Out',
               FontAwesomeIcons.signOutAlt,
-              () {
+              () async {
+                await _auth.signOut();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => Welcome()),
                     (Route<dynamic> route) => false);

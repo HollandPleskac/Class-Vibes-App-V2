@@ -6,6 +6,9 @@ import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
 import 'teacher_portal/settings_teacher.dart';
 import './auth/welcome.dart';
+import './logic/auth.dart';
+
+final _auth = Auth();
 
 class NavTeacher extends StatelessWidget {
   @override
@@ -107,7 +110,8 @@ class NavTeacher extends StatelessWidget {
             DrawerTile(
               'Log Out',
               FontAwesomeIcons.signOutAlt,
-              () {
+              () async {
+                await _auth.signOut();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => Welcome()),
                     (Route<dynamic> route) => false);

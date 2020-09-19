@@ -166,10 +166,10 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                               child: GestureDetector(
                                 onTap: () async {
                                   if (_formKey.currentState.validate()) {
-                                    //make a purchase with revenue cat
-                                    // List purchaseInfo =
-                                    //     await _revenueCat.makePurchase();
-                                    List purchaseInfo = ['success','success'];
+                                    // make a purchase with revenue cat
+                                    List purchaseInfo =
+                                        await _revenueCat.makePurchase();
+                                    // List purchaseInfo = ['success','success'];
 
                                     if (purchaseInfo[0] != 'success') {
                                       // TODO : Issue a refund
