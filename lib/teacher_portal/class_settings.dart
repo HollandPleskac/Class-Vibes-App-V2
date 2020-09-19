@@ -143,13 +143,13 @@ class _ClassSettingsState extends State<ClassSettings> {
                         feedback = "";
                       });
                     }
-                    Timer(Duration(milliseconds: 1500), () {
+                    // Timer(Duration(milliseconds: 250), () {
                       setState(() {
                         isUpdated = false;
                         isClassNameUpdated = false;
-                        feedback = "";
+                        // feedback = "";
                       });
-                    });
+                    // });
                   },
                 ),
           SizedBox(
