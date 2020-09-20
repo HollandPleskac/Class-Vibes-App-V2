@@ -93,7 +93,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
                                   widget.frustratedPercentage == 100 ||
                                   widget.inactivePercentage == 100
                               ? 0
-                              : 10,
+                              : 2,
 
                           // center -space -rad used to be 40
                           centerSpaceRadius: 38,
@@ -129,7 +129,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
 
   double determineDefaultFontSize(int percentage) {
     if (0 < percentage && percentage <= 10) {
-      return 11.0;
+      return 16.0;
     } else {
       return 16.0;
     }
