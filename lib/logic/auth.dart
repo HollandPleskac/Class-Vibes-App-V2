@@ -213,9 +213,6 @@ class Auth {
       return ['failure', 'User is already registered'];
     }
 
-    setUpAccountStudent(
-        email: googleUser.email, username: googleUser.displayName);
-
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
@@ -228,6 +225,8 @@ class Auth {
         (await _firebaseAuth.signInWithCredential(credential)).user;
 
     print("signed in " + user.displayName);
+
+    setUpAccountStudent(email: user.email, username: user.displayName);
 
     await _revenueCat.signInRevenueCat(user.uid);
     return ['success', ''];
@@ -305,11 +304,6 @@ class Auth {
       return ['failure', 'User is already registered'];
     }
 
-    setUpAccountTeacher(
-      email: googleUser.email,
-      username: googleUser.displayName,
-    );
-
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
@@ -325,6 +319,10 @@ class Auth {
 
     await _classVibesServer.createStripeCustomer(user.email);
 
+    setUpAccountTeacher(
+      email: user.email,
+      username: user.displayName,
+    );
 
     await _revenueCat.signInRevenueCat(user.uid);
     return ['success', 'Successfully Signed Up'];
