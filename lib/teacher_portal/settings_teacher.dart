@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:class_vibes_v2/teacher_portal/account_settings_teacher.dart';
+import 'package:class_vibes_v2/teacher_portal/help_settings.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +29,7 @@ class ProfileTeacher extends StatefulWidget {
 
 class _ProfileTeacherState extends State<ProfileTeacher> {
   String _email;
+  String _accountType;
 
   Future getTeacherEmail() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
@@ -36,10 +38,21 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
     _email = email;
   }
 
+  Future getAccountType(String email) async {
+    String type = await _firestore
+        .collection('UserData')
+        .document(email)
+        .get()
+        .then((docSnap) => docSnap.data['account type']);
+    _accountType = type;
+  }
+
   @override
   void initState() {
     getTeacherEmail().then((_) {
-      setState(() {});
+      getAccountType(_email).then((_) {
+        setState(() {});
+      });
     });
 
     super.initState();
@@ -92,7 +105,9 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             Container(
                               child: BillingTab(),
                             ),
-                            Container(),
+                            Container(
+                              child: HelpScreen(_email, _accountType),
+                            ),
                           ],
                         ),
                       ),

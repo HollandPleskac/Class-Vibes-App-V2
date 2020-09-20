@@ -1,3 +1,6 @@
+// THIS FILE IS NOT IN USE
+
+
 import 'package:class_vibes_v2/auth/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
