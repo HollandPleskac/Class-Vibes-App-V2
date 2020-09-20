@@ -172,7 +172,7 @@ class Auth {
       'account status': 'Activated',
     });
 
-    _fire.addTrialClass(email);
+    await _fire.addTrialClass(email);
   }
 
   Future<String> checkAccountType(String email) async {
