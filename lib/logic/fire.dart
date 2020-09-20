@@ -268,7 +268,7 @@ class Fire {
     if (isCodeUnique != 0) {
       // return ['failure', 'An error occurred try again'];
       print('adding a new class');
-      addClass(uid:uid,className:className);
+      addClass(uid: uid, className: className);
     }
 
     _firestore.collection('Classes').document(classCode).setData({
@@ -277,8 +277,8 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
-      'date':DateTime.now(),
-      'type':'paid',
+      'date': DateTime.now(),
+      // 'type':'paid',
     });
 
     _firestore
@@ -292,14 +292,13 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
-      'date':DateTime.now(),
-      'type':'paid',
+      'date': DateTime.now(),
+      // 'type':'paid',
     });
     return ['success', classCode];
   }
 
   Future<List> addTrialClass(String uid) async {
-
     String classCode = randomNumeric(4);
     // String classCode = '5gUxwD';
 
@@ -321,8 +320,10 @@ class Fire {
       'class name': 'Trial Class',
       'allow join': true,
       'max days inactive': 7,
-      'date':DateTime.now(),
-      'type':'trial',
+      'date': DateTime.now().add(
+        Duration(days: 335),
+      ),
+      // 'type':'trial',
     });
 
     _firestore
@@ -336,8 +337,10 @@ class Fire {
       'class name': 'Trial Class',
       'allow join': true,
       'max days inactive': 7,
-      'date':DateTime.now(),
-      'type':'trial',
+      'date': DateTime.now().add(
+        Duration(days: 335),
+      ),
+      // 'type':'trial',
     });
 
     return ['success', classCode];
