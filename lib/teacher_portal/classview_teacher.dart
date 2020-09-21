@@ -370,7 +370,8 @@ class Class extends StatelessWidget {
                   .add(Duration(days: 360))
                   .compareTo(DateTime.now()) <=
               0)
-          ? () {
+          ? () {}
+          : () {
               Navigator.pushNamed(
                 context,
                 ViewClass.routeName,
@@ -380,8 +381,7 @@ class Class extends StatelessWidget {
                   'max days inactive': document['max days inactive'],
                 },
               );
-            }
-          : () {},
+            },
       child: StreamBuilder(
         stream: _firestore
             .collection('Classes')
