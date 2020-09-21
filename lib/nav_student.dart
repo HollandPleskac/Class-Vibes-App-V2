@@ -73,7 +73,7 @@ class NavStudent extends StatelessWidget {
               },
             ),
             DrawerTile(
-              'Join a Class (remove)',
+              'Join a Class',
               FontAwesomeIcons.solidPlusSquare,
               () {
                 // Update the state of the app.

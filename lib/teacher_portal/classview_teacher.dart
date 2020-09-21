@@ -339,22 +339,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                   crossAxisCount: 2,
                                   children: snapshot.data.documents
                                       .map((DocumentSnapshot document) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          ViewClass.routeName,
-                                          arguments: {
-                                            'class name':
-                                                document['class name'],
-                                            'class id': document.documentID,
-                                            'max days inactive':
-                                                document['max days inactive'],
-                                          },
-                                        );
-                                      },
-                                      child: Class(document),
-                                    );
+                                    return Class(document);
                                   }).toList(),
                                 ),
                               );
@@ -380,72 +365,103 @@ class Class extends StatelessWidget {
   Class(this.document);
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _firestore
-          .collection('Classes')
-          .document(document.documentID)
-          .collection('Students')
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        int unReadCount = 0;
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Center(
-              child: AspectRatio(aspectRatio: 1.6),
-            );
-          default:
-            if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false &&
-                snapshot.data.documents
-                    .where((document) => document['accepted'] == true)
-                    .isNotEmpty) {
-              for (int i = 0; i < snapshot.data.documents.length; i++) {
-                if (snapshot.data.documents[i]['accepted'] == true) {
-                  unReadCount = unReadCount +
-                      snapshot.data.documents[i]['teacher unread'];
-                }
-              }
-              return Stack(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
-                        child: Center(
-                          child: DynamicPieChart(
-                            // the document is class document
-                            // student documents is all the student email documents in class
-                            studentDocuments: snapshot.data.documents,
-                            classDocument: document,
+    return GestureDetector(
+      onTap: (DateTime.parse(document['date'].toDate().toString())
+                  .add(Duration(days: 360))
+                  .compareTo(DateTime.now()) <=
+              0)
+          ? () {
+              Navigator.pushNamed(
+                context,
+                ViewClass.routeName,
+                arguments: {
+                  'class name': document['class name'],
+                  'class id': document.documentID,
+                  'max days inactive': document['max days inactive'],
+                },
+              );
+            }
+          : () {},
+      child: StreamBuilder(
+        stream: _firestore
+            .collection('Classes')
+            .document(document.documentID)
+            .collection('Students')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          int unReadCount = 0;
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                child: AspectRatio(aspectRatio: 1.6),
+              );
+            default:
+              // compare to is negative if class date + 1 year is before DateTime.now()
+              // then class is expired
+              if (DateTime.parse(document['date'].toDate().toString())
+                      .add(Duration(days: 360))
+                      .compareTo(DateTime.now()) <=
+                  0) {
+                // class is expired
+                return ExpiredClass(document['class name']);
+              } else {
+                if (snapshot.data != null &&
+                    snapshot.data.documents.isEmpty == false &&
+                    snapshot.data.documents
+                        .where((document) => document['accepted'] == true)
+                        .isNotEmpty) {
+                  // class has students
+                  // increment teacher unread count
+                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+                    if (snapshot.data.documents[i]['accepted'] == true) {
+                      unReadCount = unReadCount +
+                          snapshot.data.documents[i]['teacher unread'];
+                    }
+                  }
+                  return Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: EdgeInsets.all(0),
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Center(
+                              child: DynamicPieChart(
+                                // the document is class document
+                                // student documents is all the student email documents in class
+                                studentDocuments: snapshot.data.documents,
+                                classDocument: document,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: MediaQuery.of(context).size.height * 0.015,
-                    right: MediaQuery.of(context).size.width * 0.03,
-                    child: UnreadMessageBadge(unReadCount),
-                  ),
-                ],
-              );
-            } else {
-              return NoStudentsClass(
-                className: document['class name'],
-              );
-            }
-        }
-      },
+                      Positioned(
+                        top: MediaQuery.of(context).size.height * 0.015,
+                        right: MediaQuery.of(context).size.width * 0.03,
+                        child: UnreadMessageBadge(unReadCount),
+                      ),
+                    ],
+                  );
+                } else {
+                  // class does not have students
+                  return NoStudentsClass(
+                    className: document['class name'],
+                  );
+                }
+              }
+          }
+        },
+      ),
     );
   }
 }
@@ -588,6 +604,58 @@ class NoStudentsClass extends StatelessWidget {
                     className,
                     overflow: TextOverflow.fade,
                     softWrap: false,
+                    style: kSubTextStyle.copyWith(
+                        fontSize: MediaQuery.of(context).size.width * 0.037),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ExpiredClass extends StatelessWidget {
+  final String className;
+
+  ExpiredClass(this.className);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.all(0),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: AspectRatio(
+                    aspectRatio: 1.6,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/svg/undraw_empty_xct9.svg',
+                        width: MediaQuery.of(context).size.width * 0.2,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 10, left: 10),
+                  child: Text(
+                    className + "\n(Expired)",
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    textAlign: TextAlign.center,
                     style: kSubTextStyle.copyWith(
                         fontSize: MediaQuery.of(context).size.width * 0.037),
                   ),
