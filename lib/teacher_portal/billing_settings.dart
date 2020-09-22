@@ -100,7 +100,7 @@ class _BillingTabState extends State<BillingTab> {
 }
 
 class PastPurchaseItem extends StatelessWidget {
-  Purchase purchase;
+  final Purchase purchase;
 
   PastPurchaseItem(this.purchase);
   @override
