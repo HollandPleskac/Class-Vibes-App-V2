@@ -86,14 +86,9 @@ class _BillingTabState extends State<BillingTab> {
                     color: Colors.red[100],
                     child: pastPurchases.isEmpty == true
                         ? Text('No Past Purchase History')
-                        // productId (in app/play store)
-                        // purchaseId (unique id for every single purchase)
-                        // original purchase date
-                        // purchase date
-                        // store
                         : ListView(
                             children: pastPurchases
-                                .map((purchase) => Text(purchase.productId))
+                                .map((purchase) => PastPurchaseItem(purchase))
                                 .toList(),
                           ),
                   ),
@@ -101,5 +96,20 @@ class _BillingTabState extends State<BillingTab> {
               ],
             ),
           );
+  }
+}
+
+class PastPurchaseItem extends StatelessWidget {
+  Purchase purchase;
+
+  PastPurchaseItem(this.purchase);
+  @override
+  Widget build(BuildContext context) {
+    // productId (in app/play store)
+    // purchaseId (unique id for every single purchase)
+    // original purchase date
+    // purchase date
+    // store
+    return Text(purchase.productId);
   }
 }
