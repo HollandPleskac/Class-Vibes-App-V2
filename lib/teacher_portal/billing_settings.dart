@@ -21,8 +21,8 @@ class _BillingTabState extends State<BillingTab> {
 
   Future getRevenueCatData() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
-    // String uid = user.uid;
-    String uid = "\$RCAnonymousID:75b278d90514447390804954abb8fc8f";
+    String uid = user.uid;
+    // String uid = "\$RCAnonymousID:75b278d90514447390804954abb8fc8f";
     print(uid);
     String serverResponse =
         await _classVibesServer.getRevenueCatBillingInfo(uid);
@@ -123,7 +123,7 @@ class PastPurchaseItem extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.height * 0.06,
                 width: MediaQuery.of(context).size.height * 0.06,
-                child: Center(child: Text('3',style: TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.w700),),),
+                child: Center(child: Text('1',style: TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.w700),),),
                 decoration: BoxDecoration(
                 color: Colors.grey[900],
                 borderRadius: BorderRadius.circular(10)
@@ -134,9 +134,9 @@ class PastPurchaseItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Three Classes',style: TextStyle(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w700),),
+                  Text('One Class',style: TextStyle(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w700),),
                   SizedBox(height: 5,),
-                  Text('9/22/2020 4:24pm',style: TextStyle(color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w500),),
+                  Text(purchase.purchaseDate,style: TextStyle(color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w500),),
                 ],
               ),
               Spacer(),
@@ -144,7 +144,7 @@ class PastPurchaseItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('- \$7.99',style: TextStyle(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w500),),
+                  Text('- \$1.99',style: TextStyle(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w500),),
                 ],
               ),
               SizedBox(width: 15,),
