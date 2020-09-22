@@ -84,7 +84,6 @@ class _BillingTabState extends State<BillingTab> {
                   flex: 7,
                   child: Container(
                     color: Colors.red[100],
-                    // no non_subscription purchases are fetched
                     child: pastPurchases.isEmpty == true
                         ? Text('No Past Purchase History')
                         // productId (in app/play store)
@@ -99,12 +98,6 @@ class _BillingTabState extends State<BillingTab> {
                           ),
                   ),
                 ),
-                // revenueCatUserInfo == null
-                //     ? Container()
-                //     : Text(revenueCatUserInfo["subscriber"].toString()),
-                // revenueCatUserInfo == null
-                //     ? Container()
-                //     : Text(revenueCatUserInfo["subscriber"]['non_subscriptions'].toString()),
               ],
             ),
           );
