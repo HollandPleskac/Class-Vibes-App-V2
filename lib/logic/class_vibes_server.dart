@@ -51,4 +51,6 @@ class ClassVibesServer {
         .get('https://api-v1.classvibes.net/api/createCustomer?email=$email');
     print(getResponse.body);
   }
+
+  // https://api-v1.classvibes.net/api/getTransactionsRevenueCat?id=
 }
