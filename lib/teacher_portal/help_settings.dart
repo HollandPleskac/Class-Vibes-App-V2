@@ -3,6 +3,7 @@ import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../logic/revenue_cat.dart';
 
 import '../logic/class_vibes_server.dart';
 import '../logic/auth.dart';
@@ -12,6 +13,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _auth = Auth();
 
 final _classVibesServer = ClassVibesServer();
+final _revenueCat = RevenueCat();
 
 class HelpScreen extends StatelessWidget {
   final String email;
@@ -40,7 +42,8 @@ class HelpScreen extends StatelessWidget {
                   email: email, accountType: accountType);
 
               // only signs out google auth because otherwise there is no "user" to delete
-              await _auth.signOutGoogle();
+              // await _auth.signOutGoogle();
+              await _revenueCat.signOutRevenueCat();
               await user.delete();
 
               Navigator.of(context).pushAndRemoveUntil(

@@ -13,8 +13,9 @@ class RevenueCat {
 
   Future<void> signInRevenueCat(String uid) async {
     PurchaserInfo purchaseInfo = await Purchases.identify(uid);
+    print(uid);
 
-    print(purchaseInfo);
+    print('Purchase Info : '+purchaseInfo.toString());
   }
 
 
@@ -61,5 +62,5 @@ class RevenueCat {
     }
   }
 
-  
+
 }

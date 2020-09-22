@@ -367,7 +367,7 @@ class Class extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (DateTime.parse(document['expire date'].toDate().toString())
-                      .compareTo(DateTime.now()) >=
+                      .compareTo(DateTime.now()) <=
                   0)
           ? () {}
           : () {
@@ -398,10 +398,14 @@ class Class extends StatelessWidget {
                 child: AspectRatio(aspectRatio: 1.6),
               );
             default:
-            // if the compareTo() result is positive or 0 class is expired
+            // if the compareTo() result is negative or 0 class is expired
+            // if compareTo() is negative then date on document is less than current date
               if (DateTime.parse(document['expire date'].toDate().toString())
-                      .compareTo(DateTime.now()) >=
+                      .compareTo(DateTime.now()) <=
                   0) {
+                    // print(document['expire date'].toDate().toString());
+                    // print(DateTime.parse(document['expire date'].toDate().toString())
+                    //   .compareTo(DateTime.now()));
                 // class is expired
                 return ExpiredClass(document['class name']);
               } else {

@@ -7,10 +7,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
 import '../logic/class_vibes_server.dart';
+import '../logic/revenue_cat.dart';
 
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _classVibesServer = ClassVibesServer();
+final _revenueCat = RevenueCat();
 
 class BillingTab extends StatefulWidget {
   @override
@@ -37,7 +39,7 @@ class _BillingTabState extends State<BillingTab> {
   Future getPurchases() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     String uid = user.uid;
-    String serverResponse =  await _classVibesServer.getRevenueCatBillingInfo("\$RCAnonymousID:75b278d90514447390804954abb8fc8f");
+    String serverResponse =  await _classVibesServer.getRevenueCatBillingInfo(uid);
 
     revenueCatUserInfo = json.decode(serverResponse);
   }
@@ -79,7 +81,10 @@ class _BillingTabState extends State<BillingTab> {
           // ),
           revenueCatUserInfo == null
               ? Container()
-              : Text(revenueCatUserInfo["subscriber"]['non_subscriptions'].toString()),
+              : Text(revenueCatUserInfo["subscriber"].toString()),
+          // revenueCatUserInfo == null
+          //     ? Container()
+          //     : Text(revenueCatUserInfo["subscriber"]['non_subscriptions'].toString()),
         ],
       ),
     );
