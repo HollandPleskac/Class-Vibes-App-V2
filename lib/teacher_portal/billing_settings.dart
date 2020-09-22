@@ -73,7 +73,11 @@ class _BillingTabState extends State<BillingTab> {
                 Expanded(
                   flex: 3,
                   child: Container(
-                    color: Colors.blue,
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      'Payment History',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 Expanded(
