@@ -87,6 +87,11 @@ class _BillingTabState extends State<BillingTab> {
                     // no non_subscription purchases are fetched
                     child: pastPurchases.isEmpty == true
                         ? Text('No Past Purchase History')
+                        // productId (in app/play store)
+                        // purchaseId (unique id for every single purchase)
+                        // original purchase date
+                        // purchase date
+                        // store
                         : ListView(
                             children: pastPurchases
                                 .map((purchase) => Text(purchase.productId))
