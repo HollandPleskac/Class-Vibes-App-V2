@@ -110,6 +110,10 @@ class PastPurchaseItem extends StatelessWidget {
     // original purchase date
     // purchase date
     // store
+
+    // TODO : didplay wha the purchase is : 3 classes
+    //TODO : display amount
+    // TODO : display the date
     return Text(purchase.productId);
   }
 }
