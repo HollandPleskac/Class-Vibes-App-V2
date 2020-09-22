@@ -3,8 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
+import '../logic/class_vibes_server.dart';
+
+
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+final _classVibesServer = ClassVibesServer();
 
 class BillingTab extends StatefulWidget {
   @override
@@ -12,11 +18,11 @@ class BillingTab extends StatefulWidget {
 }
 
 class _BillingTabState extends State<BillingTab> {
-  Map<String, dynamic> response;
+  Map<String, dynamic> revenueCatUserInfo;
   _makeGetRequest() async {
     Response serverResponse = await get(_localhost());
     setState(() {
-      response = json.decode(serverResponse.body);
+      revenueCatUserInfo = json.decode(serverResponse.body);
       print(serverResponse.body);
     });
   }
@@ -28,16 +34,20 @@ class _BillingTabState extends State<BillingTab> {
       return 'http://localhost:3000';
   }
 
-  Future getPastPurchases() {
-    Map revResponse = {'':''};
+  Future getPurchases() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    String uid = user.uid;
+    String serverResponse =  await _classVibesServer.getRevenueCatBillingInfo("\$RCAnonymousID:75b278d90514447390804954abb8fc8f");
 
-    response = revResponse;
+    revenueCatUserInfo = json.decode(serverResponse);
   }
 
   @override
   void initState() {
-    getPastPurchases().then((_) {
-      setState(() {});
+    getPurchases().then((_) {
+      setState(() {
+        print(revenueCatUserInfo);
+      });
     });
 
     super.initState();
@@ -64,12 +74,12 @@ class _BillingTabState extends State<BillingTab> {
           //   child: Text('get past purchases'),
           //   onPressed: () {
           //     _makeGetRequest();
-          //     print(response);
+          //     print(pastPurchases);
           //   },
           // ),
-          // response == null
-          //     ? Container()
-          //     : Text(response['subscriber']['non_subscriptions'].toString()),
+          revenueCatUserInfo == null
+              ? Container()
+              : Text(revenueCatUserInfo["subscriber"]['non_subscriptions'].toString()),
         ],
       ),
     );

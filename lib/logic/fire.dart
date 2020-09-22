@@ -277,7 +277,7 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
-      'expire date': DateTime.now().add(Duration(days: 360)),
+      'expire date': DateTime.now().add(Duration(days: 365)),
       // 'type':'paid',
     });
 
@@ -292,7 +292,7 @@ class Fire {
       'class name': className,
       'allow join': true,
       'max days inactive': 7,
-      'expire date': DateTime.now(),
+      'expire date': DateTime.now().add(Duration(days: 365)),
       // 'type':'paid',
     });
     return ['success', classCode];
@@ -321,7 +321,7 @@ class Fire {
       'allow join': true,
       'max days inactive': 7,
       'expire date': DateTime.now().add(
-        Duration(days: 335),
+        Duration(days: 395),
       ),
       // 'type':'trial',
     });
@@ -338,7 +338,7 @@ class Fire {
       'allow join': true,
       'max days inactive': 7,
       'expire date': DateTime.now().add(
-        Duration(days: 335),
+        Duration(days: 395),
       ),
       // 'type':'trial',
     });

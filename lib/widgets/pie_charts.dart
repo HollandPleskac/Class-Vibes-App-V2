@@ -121,7 +121,7 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
 
   double determineTouchedFontSize(int percentage) {
     if (0 < percentage && percentage <= 10) {
-      return 14.5;
+      return 22.0;
     } else {
       return 25.0;
     }
