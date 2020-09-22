@@ -102,7 +102,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 Padding(
                   padding: EdgeInsets.only(left: 15),
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.51,
+                    width: MediaQuery.of(context).size.width * 0.65,
                     child: StreamBuilder(
                         stream: _firestore
                             .collection('UserData')
