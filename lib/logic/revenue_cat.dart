@@ -3,21 +3,17 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-
-
 class RevenueCat {
 
-  Future<void> setupPurchases() async {
-    await Purchases.setup("icBZdQAfwvIZlcBZcMCTKxplUedWSFtM");
-  }
-
   Future<void> signInRevenueCat(String uid) async {
-    PurchaserInfo purchaseInfo = await Purchases.identify(uid);
+    // sets up the purchases with the public api key and the firebase app user id
+    await Purchases.setup("icBZdQAfwvIZlcBZcMCTKxplUedWSFtM", appUserId: uid);
     print(uid);
 
-    print('Purchase Info : '+purchaseInfo.toString());
-  }
+    PurchaserInfo purchaserInfo = await Purchases.identify(uid);
 
+    print('Purchase Info : '+purchaserInfo.toString());
+  }
 
   Future<void> signOutRevenueCat() async {
     await Purchases.reset();
@@ -61,6 +57,4 @@ class RevenueCat {
       print('exception ' + e.toString());
     }
   }
-
-
 }

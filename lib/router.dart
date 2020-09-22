@@ -71,7 +71,7 @@ class _RouterState extends State<Router> {
     Timer(
       Duration(milliseconds: 500),
       () async {
-        _revenueCat.setupPurchases();
+        // _revenueCat.setupPurchases();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
