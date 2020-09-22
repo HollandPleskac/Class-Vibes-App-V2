@@ -9,7 +9,6 @@ import '../constant.dart';
 import '../logic/class_vibes_server.dart';
 import '../logic/revenue_cat.dart';
 
-
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _classVibesServer = ClassVibesServer();
 final _revenueCat = RevenueCat();
@@ -39,7 +38,8 @@ class _BillingTabState extends State<BillingTab> {
   Future getPurchases() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     String uid = user.uid;
-    String serverResponse =  await _classVibesServer.getRevenueCatBillingInfo(uid);
+    String serverResponse =
+        await _classVibesServer.getRevenueCatBillingInfo(uid);
 
     revenueCatUserInfo = json.decode(serverResponse);
   }
@@ -57,15 +57,23 @@ class _BillingTabState extends State<BillingTab> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar dummyAppBar = AppBar(
+      bottom: TabBar(
+        tabs: [Text('not in use')],
+      ),
+    );
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            'Payments are done though in app purchase.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: kPrimaryColor,fontSize: 15,fontWeight: FontWeight.w500),
-          ),
+          // Text(
+          //   'Payments are done though in app purchase.',
+          //   textAlign: TextAlign.center,
+          //   style: TextStyle(
+          //       color: kPrimaryColor,
+          //       fontSize: 15,
+          //       fontWeight: FontWeight.w500),
+          // ),
           // SizedBox(height: 20,),
           // Text(
           //   'Contact support@classvibes.net with any questions!',
@@ -76,12 +84,34 @@ class _BillingTabState extends State<BillingTab> {
           //   child: Text('get past purchases'),
           //   onPressed: () {
           //     _makeGetRequest();
-          //     print(pastPurchases);
+          //     // print(pastPurchases);
+          //     print(Scaffold.of(context).appBarMaxHeight);
+          //         print(dummyAppBar.preferredSize.height);
+          //         print(kToolbarHeight);
           //   },
           // ),
-          revenueCatUserInfo == null
-              ? Container()
-              : Text(revenueCatUserInfo["subscriber"].toString()),
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Colors.blue,
+            ),
+          ),
+          Expanded(
+            flex: 7,
+            child: Container(
+              color: Colors.red,
+              child: ListView(
+                children: ['testing', 'test'].map(
+                  (e) {
+                    return Text(e);
+                  },
+                ).toList(),
+              ),
+            ),
+          ),
+          // revenueCatUserInfo == null
+          //     ? Container()
+          //     : Text(revenueCatUserInfo["subscriber"].toString()),
           // revenueCatUserInfo == null
           //     ? Container()
           //     : Text(revenueCatUserInfo["subscriber"]['non_subscriptions'].toString()),

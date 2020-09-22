@@ -34,6 +34,7 @@ class _RouterState extends State<Router> {
     try {
       final FirebaseUser theUser = await _firebaseAuth.currentUser();
       user = theUser;
+      _revenueCat.signInRevenueCat(user.uid);
     } catch (_) {
       user = null;
     }
@@ -71,7 +72,7 @@ class _RouterState extends State<Router> {
     Timer(
       Duration(milliseconds: 500),
       () async {
-        // _revenueCat.setupPurchases();
+        
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
