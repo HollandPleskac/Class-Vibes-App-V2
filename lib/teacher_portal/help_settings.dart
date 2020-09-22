@@ -29,27 +29,10 @@ class HelpScreen extends StatelessWidget {
           Text(
             'Contact support@classvibes.net with any questions!',
             textAlign: TextAlign.center,
-            style: TextStyle(color: kPrimaryColor,fontSize: 15,fontWeight: FontWeight.w500),
-          ),
-          FlatButton(
-            child: Text('Delete Account'),
-            onPressed: () async {
-              FirebaseUser user = await _firebaseAuth.currentUser();
-
-              print('deleteing + ' + accountType);
-
-              await _classVibesServer.deleteAccount(
-                  email: email, accountType: accountType);
-
-              // only signs out google auth because otherwise there is no "user" to delete
-              // await _auth.signOutGoogle();
-              await _revenueCat.signOutRevenueCat();
-              await user.delete();
-
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => Welcome()),
-                  (Route<dynamic> route) => false);
-            },
+            style: TextStyle(
+                color: kPrimaryColor,
+                fontSize: 15,
+                fontWeight: FontWeight.w500),
           ),
         ],
       ),
