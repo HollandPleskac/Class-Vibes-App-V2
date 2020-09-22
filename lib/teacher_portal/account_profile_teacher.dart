@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:class_vibes_v2/auth/welcome.dart';
+import 'package:class_vibes_v2/logic/class_vibes_server.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _fire = Fire();
 final _auth = Auth();
+final _classVibesServer = ClassVibesServer();
 
 class ProfileTab extends StatefulWidget {
   String teacherEmail;
@@ -76,9 +78,8 @@ class _ProfileTabState extends State<ProfileTab> {
                     fit: BoxFit.cover)),
           ),
         ),
-
         SizedBox(
-          height: MediaQuery.of(context).size.width * 0.15,
+          height: MediaQuery.of(context).size.width * 0.10,
         ),
 
         Padding(
@@ -267,7 +268,46 @@ class _ProfileTabState extends State<ProfileTab> {
                     });
                   },
                 ),
-              )
+              ),
+              SizedBox(
+          height: MediaQuery.of(context).size.width * 0.08,
+        ),
+        Center(
+            child: GestureDetector(
+                onTap: () async {
+                  /*
+              FirebaseUser user = await _firebaseAuth.currentUser();
+
+              print('deleteing + ' + accountType);
+
+              await _classVibesServer.deleteAccount(
+                  email: teacherEmail, accountType: accountType);
+
+              // only signs out google auth because otherwise there is no "user" to delete
+              await _auth.signOutGoogle();
+              await user.delete();
+
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => Welcome()),
+                  (Route<dynamic> route) => false);
+                  */
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.width * 0.10,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Center(
+                    child: Text('Delete Account',
+            style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.w700),),
+                  ),
+                ))),
+
         // Center(
         //   child: Row(
         //     mainAxisAlignment: MainAxisAlignment.center,

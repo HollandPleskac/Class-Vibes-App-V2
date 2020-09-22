@@ -103,7 +103,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: EdgeInsets.only(
-                            right: 20,
+                            right: 5,
                           ),
                           child: FlatButton(
                             color: kPrimaryColor,
