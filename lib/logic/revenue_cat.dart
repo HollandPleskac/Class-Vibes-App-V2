@@ -60,4 +60,6 @@ class RevenueCat {
       print('exception ' + e.toString());
     }
   }
+
+  
 }
