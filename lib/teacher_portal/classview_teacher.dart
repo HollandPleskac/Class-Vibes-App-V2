@@ -402,7 +402,7 @@ class Class extends StatelessWidget {
               // compare to is negative if class date + 1 year is before DateTime.now()
               // then class is expired
               if (DateTime.parse(document['date'].toDate().toString())
-                      .add(Duration(days: 360))
+                      .subtract(Duration(days: 360))
                       .compareTo(DateTime.now()) <=
                   0) {
                 // class is expired
