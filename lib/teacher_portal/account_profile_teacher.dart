@@ -282,13 +282,16 @@ class _ProfileTabState extends State<ProfileTab> {
                       email: widget.teacherEmail,
                       accountType: widget.accountType);
 
-                  // only signs out google auth because otherwise there is no "user" to delete
-                  await _auth.signOutGoogle();
-                  await user.delete();
+                  print('server delete');
+                  print(user);
 
+                  // await user.delete();
+
+                  print('successfully deleted');
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => Welcome()),
                       (Route<dynamic> route) => false);
+                  print('navigated to welcome screen');
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.width * 0.10,
