@@ -70,20 +70,18 @@ class _BillingTabState extends State<BillingTab> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      'Payment History',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+                //SizedBox(height: 30,),
+                //Row(
+                //  children: [
+                //    SizedBox(width: 15,),
+                //    Text('Payment History',style: TextStyle(color: Colors.black,fontSize: 24,fontWeight: FontWeight.w700),),
+                //  ],
+                //),
+                SizedBox(height: 30,),
                 Expanded(
                   flex: 7,
                   child: Container(
-                    color: Colors.red[100],
+                    color: Colors.white,
                     child: pastPurchases.isEmpty == true
                         ? Text('No Past Purchase History')
                         : ListView(
@@ -114,6 +112,51 @@ class PastPurchaseItem extends StatelessWidget {
     // TODO : didplay wha the purchase is : 3 classes
     //TODO : display amount
     // TODO : display the date
-    return Text(purchase.productId);
+    // return Text(purchase.productId);
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Container(
+          child: Row(
+            children: [
+              SizedBox(width: 10,),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.height * 0.06,
+                child: Center(child: Text('3',style: TextStyle(color: Colors.white,fontSize: 19,fontWeight: FontWeight.w700),),),
+                decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(10)
+                ),    
+              ),
+              SizedBox(width: 10,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Three Classes',style: TextStyle(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w700),),
+                  SizedBox(height: 5,),
+                  Text('9/22/2020 4:24pm',style: TextStyle(color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w500),),
+                ],
+              ),
+              Spacer(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('- \$7.99',style: TextStyle(color: Colors.black,fontSize: 19,fontWeight: FontWeight.w500),),
+                ],
+              ),
+              SizedBox(width: 15,),
+            ],
+          ),
+          height: MediaQuery.of(context).size.height * 0.08,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(15)
+          ),
+        ),
+      ),
+    );
   }
 }
