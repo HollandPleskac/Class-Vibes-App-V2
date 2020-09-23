@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -106,7 +107,6 @@ class _ClassSettingsState extends State<ClassSettings> {
             height: 50,
           ),
           ClassCode(widget.classId),
-         
           InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
               (int value) {
             setState(() {
@@ -144,11 +144,11 @@ class _ClassSettingsState extends State<ClassSettings> {
                       });
                     }
                     // Timer(Duration(milliseconds: 250), () {
-                      setState(() {
-                        isUpdated = false;
-                        isClassNameUpdated = false;
-                        // feedback = "";
-                      });
+                    setState(() {
+                      isUpdated = false;
+                      isClassNameUpdated = false;
+                      // feedback = "";
+                    });
                     // });
                   },
                 ),
@@ -166,6 +166,29 @@ class _ClassSettingsState extends State<ClassSettings> {
               DeleteClass(
                 classId: widget.classId,
                 teacherEmail: widget.email,
+              ),
+              StreamBuilder(
+                stream: _firestore
+                    .collection("Classes")
+                    .document(widget.classId)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text('no data');
+                  } else {
+                    return Text(
+                      'Class Expires on : ' +
+                          DateFormat.yMMMd('en_US')
+                              
+                              .format(DateTime.parse(snapshot
+                                  .data['expire date']
+                                  .toDate()
+                                  .toString()))
+                              .toString(),
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    );
+                  }
+                },
               ),
             ],
           ),
