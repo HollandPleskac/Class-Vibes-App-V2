@@ -264,7 +264,7 @@ class NoDocsAnnouncementsClassTeacher extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
             child: Text(
-              'Push an announcement to the entire class with the button below!',
+              'Send an announcement to the entire class with the button below!',
               textAlign: TextAlign.center,
               style: TextStyle(
                   height: 2,

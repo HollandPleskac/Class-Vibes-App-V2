@@ -129,7 +129,7 @@ class PushAnnouncementBtn extends StatelessWidget {
         icon: FaIcon(FontAwesomeIcons.bullhorn),
         backgroundColor: kPrimaryColor,
         label: Text(
-          'Push Announcement',
+          'Send Announcement',
           style: TextStyle(fontSize: 15),
         ),
         onPressed: () {
@@ -160,7 +160,7 @@ class PushAnnouncementBtn extends StatelessWidget {
                                 height: 20,
                               ),
                               Text(
-                                'Push Announcment',
+                                'Send Announcment',
                                 style: TextStyle(
                                     color: Colors.grey[900],
                                     fontSize: 30,
