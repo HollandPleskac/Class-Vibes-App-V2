@@ -94,71 +94,72 @@ class _ChatStudentState extends State<ChatStudent> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      reverse: true,
+    return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: StreamBuilder(
-                stream: _firestore
-                    .collection("Class-Chats")
-                    .document(widget.classId)
-                    .collection('Students')
-                    .document(widget.email)
-                    .collection('Messages')
-                    .orderBy("timestamp", descending: true)
-                    .limit(40)
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error: ${snapshot.error}'),
-                    );
-                  }
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: StreamBuilder(
+                  stream: _firestore
+                      .collection("Class-Chats")
+                      .document(widget.classId)
+                      .collection('Students')
+                      .document(widget.email)
+                      .collection('Messages')
+                      .orderBy("timestamp", descending: true)
+                      .limit(40)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: Text('Error: ${snapshot.error}'),
                       );
-                    default:
-                      if (!snapshot.hasData ||
-                          snapshot.data.documents.length != 0) {
+                    }
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
                         return Center(
-                          //lazy loading
-                          child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            reverse: true,
-                            itemCount: snapshot.data.documents.length,
-                            itemBuilder: (context, index) {
-                              return snapshot.data.documents[index]
-                                          ['sent type'] ==
-                                      'teacher'
-                                  ? RecievedChat(
-                                      title: snapshot.data.documents[index]
-                                          ['user'],
-                                      content: snapshot.data.documents[index]
-                                          ['message'],
-                                    )
-                                  : SentChat(
-                                      title: snapshot.data.documents[index]
-                                          ['user'],
-                                      content: snapshot.data.documents[index]
-                                          ['message'],
-                                    );
-                            },
-                          ),
+                          child: CircularProgressIndicator(),
                         );
-                      } else {
-                        return Center(
-                          child: NoDocsChat(),
-                        );
-                      }
-                  }
-                },
+                      default:
+                        if (!snapshot.hasData ||
+                            snapshot.data.documents.length != 0) {
+                          return Center(
+                           
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              reverse: true,
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (context, index) {
+                                return snapshot.data.documents[index]
+                                            ['sent type'] ==
+                                        'teacher'
+                                    ? RecievedChat(
+                                        title: snapshot.data.documents[index]
+                                            ['user'],
+                                        content: snapshot.data.documents[index]
+                                            ['message'],
+                                      )
+                                    : SentChat(
+                                        title: snapshot.data.documents[index]
+                                            ['user'],
+                                        content: snapshot.data.documents[index]
+                                            ['message'],
+                                      );
+                              },
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: NoDocsChat(),
+                          );
+                        }
+                    }
+                  },
+                ),
               ),
             ),
             Center(
@@ -172,10 +173,9 @@ class _ChatStudentState extends State<ChatStudent> {
                         filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          height: MediaQuery.of(context).size.height * 0.0625,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              
                               Padding(
                                 padding: EdgeInsets.only(
                                   left:
@@ -189,6 +189,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                         MediaQuery.of(context).size.width * 0.7,
                                     child: TextField(
                                       controller: _controller,
+                                      maxLines: 5,
+                                      minLines: 1,
                                       decoration: InputDecoration(
                                         hintText: 'Type a message...',
                                         border: InputBorder.none,

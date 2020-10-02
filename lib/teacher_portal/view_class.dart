@@ -195,38 +195,35 @@ class StudentsTab extends StatefulWidget {
 class _StudentsTabState extends State<StudentsTab> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          // pie chart
-          StreamBuilder(
-              stream: _firestore
-                  .collection('Classes')
-                  .document(widget.classId)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text('');
-                } else {
-                  return Column(
-                    children: <Widget>[
-                      DynamicPieChart(
-                        widget.classId,
-                        snapshot.data['max days inactive'],
-                      ),
-                      //filter view
-                      FilterView(
-                        classId: widget.classId,
-                        teacherEmail: widget.teacherEmail,
-                        maxDaysInactive: snapshot.data['max days inactive'],
-                      ),
-                    ],
-                  );
-                }
-              }),
-        ],
-      ),
-    );
+    return StreamBuilder(
+        stream: _firestore
+            .collection('Classes')
+            .document(widget.classId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('');
+          } else {
+            return Column(
+              children: <Widget>[
+                DynamicPieChart(
+                  widget.classId,
+                  snapshot.data['max days inactive'],
+                ),
+                Expanded(
+                  // this expanded makes filter view take all remaining height
+                  child: Container(
+                    child: FilterView(
+                      classId: widget.classId,
+                      teacherEmail: widget.teacherEmail,
+                      maxDaysInactive: snapshot.data['max days inactive'],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+        });
   }
 }
 
@@ -466,8 +463,8 @@ class _FilterViewState extends State<FilterView> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,
         ),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.41,
+        
+        Expanded(
           child: _isTouchedAll == true
               ? AllTab(
                   widget.classId, widget.teacherEmail, widget.maxDaysInactive)

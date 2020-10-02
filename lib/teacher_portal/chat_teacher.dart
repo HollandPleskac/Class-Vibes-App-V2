@@ -152,14 +152,12 @@ class _ChatTeacherState extends State<ChatTeacher> {
         //     )
         // ],
       ),
-      body: SingleChildScrollView(
-        reverse: true,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height * 0.8,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
                 child: StreamBuilder(
                   stream: _firestore
                       .collection("Class-Chats")
@@ -182,7 +180,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
                       case ConnectionState.waiting:
                         return Center(
                           child: CircularProgressIndicator(),
-                          // child: Container(),
                         );
                       default:
                         if (!snapshot.hasData ||
@@ -220,95 +217,96 @@ class _ChatTeacherState extends State<ChatTeacher> {
                   },
                 ),
               ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: ClipRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: MediaQuery.of(context).size.height * 0.0625,
-                            child: Row(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: MediaQuery.of(context).size.width *
-                                        0.04,
-                                    right: MediaQuery.of(context).size.width *
-                                        0.025,
-                                  ),
-                                  child: Center(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      child: TextField(
-                                        controller: _controller,
-                                        decoration: InputDecoration(
-                                          hintText: 'Type a message...',
-                                          border: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
-                                        ),
+            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  right:
+                                      MediaQuery.of(context).size.width * 0.025,
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    child: TextField(
+                                      controller: _controller,
+                                      maxLines: 5,
+                                      minLines: 1,
+                                      decoration: InputDecoration(
+                                        hintText: 'Type a message...',
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
                                       ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.1,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.send,
-                                      color: Colors.black,
-                                      size: MediaQuery.of(context).size.width *
-                                          0.06,
-                                    ),
-                                    onPressed: () async {
-                                      if (_controller.text != '') {
-                                        _fire.incrementStudentUnreadCount(
-                                          classId: widget.classId,
-                                          studentEmail: widget.studentEmail,
-                                        );
-                                        await _firestore
-                                            .collection('Class-Chats')
-                                            .document(widget.classId)
-                                            .collection('Students')
-                                            .document(widget.studentEmail)
-                                            .collection('Messages')
-                                            .document()
-                                            .setData({
-                                          'timestamp': DateTime.now(),
-                                          'message': _controller.text,
-                                          'user': _teacherName,
-                                          'sent type': 'teacher',
-                                        });
-
-                                        _controller.clear();
-                                      }
-                                    },
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.1,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.send,
+                                    color: Colors.black,
+                                    size: MediaQuery.of(context).size.width *
+                                        0.06,
                                   ),
+                                  onPressed: () async {
+                                    if (_controller.text != '') {
+                                      _fire.incrementStudentUnreadCount(
+                                        classId: widget.classId,
+                                        studentEmail: widget.studentEmail,
+                                      );
+                                      await _firestore
+                                          .collection('Class-Chats')
+                                          .document(widget.classId)
+                                          .collection('Students')
+                                          .document(widget.studentEmail)
+                                          .collection('Messages')
+                                          .document()
+                                          .setData({
+                                        'timestamp': DateTime.now(),
+                                        'message': _controller.text,
+                                        'user': _teacherName,
+                                        'sent type': 'teacher',
+                                      });
+
+                                      _controller.clear();
+                                    }
+                                  },
                                 ),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.withOpacity(0.1),
-                            ),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey.withOpacity(0.1),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
