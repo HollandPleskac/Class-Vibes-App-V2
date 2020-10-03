@@ -271,7 +271,6 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                             username: _usernameController.text,
                             email: _emailController.text,
                             password: _passwordController.text,
-                            
                           );
                           if (result[0] == 'success') {
                             //set up account
@@ -357,12 +356,10 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                     if (checkValue == true) {
                       List result = await _auth.signUpWithGoogleTeacher();
                       if (result[0] == 'success') {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ClassViewTeacher(),
-                          ),
-                        );
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) => ClassViewTeacher()),
+                            (Route<dynamic> route) => false);
                       } else {
                         setState(() {
                           _feedback = result[1];

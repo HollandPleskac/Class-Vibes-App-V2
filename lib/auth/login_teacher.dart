@@ -1,4 +1,5 @@
 import 'package:class_vibes_v2/logic/fire.dart';
+import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -156,13 +157,11 @@ class _TeacherLoginState extends State<TeacherLogin> {
 
                                     if (result[0] == 'success') {
                                       //push to next screen
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ClassViewTeacher(),
-                                        ),
-                                      );
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ClassViewTeacher()),
+                                          (Route<dynamic> route) => false);
                                     } else {
                                       setState(() {
                                         _feedback = result[1];
@@ -214,20 +213,17 @@ class _TeacherLoginState extends State<TeacherLogin> {
                                   print('google sign in');
                                   List result =
                                       await _auth.signInWithGoogleTeacher();
-                                  
-                                   
+
                                   if (result[0] == 'failure') {
                                     setState(() {
                                       _feedback = result[1];
                                     });
                                   } else {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ClassViewTeacher(),
-                                      ),
-                                    );
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClassViewTeacher()),
+                                        (Route<dynamic> route) => false);
                                   }
                                 },
                                 child: new Container(

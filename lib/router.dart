@@ -1,10 +1,9 @@
 //IMPORTANT NOTE:
 // this is not the actual first "splash screen" that gets showed
 // the first one needs to be configured separately for ios and android
-// the default is a white screen which is what we have kept
-// this screen is just a gif - it looks good after the actual splash screen
+// this screen here goes to either the welcome screen or into the app.
 
-//TODO : PUT THE ROUTER CODE IN THE MAIN>DART FILE ?
+//TODO : PUT THE ROUTER CODE IN THE MAIN>DART FILE OR MERGE W/ Welcome Screen
 import 'dart:async';
 
 import 'package:flutter/material.dart';

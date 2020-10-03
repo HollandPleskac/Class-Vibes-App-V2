@@ -409,13 +409,11 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                         _feedback = result[1];
                                       });
                                     } else {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ClassViewStudent(),
-                                        ),
-                                      );
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ClassViewStudent()),
+                                          (Route<dynamic> route) => false);
                                     }
                                     print(result[0]);
                                   } else {

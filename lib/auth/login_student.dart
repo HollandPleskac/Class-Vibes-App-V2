@@ -148,13 +148,11 @@ class _StudentLoginState extends State<StudentLogin> {
                                         password: _passwordController.text);
                                     if (result[0] == 'success') {
                                       //push next screen
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ClassViewStudent(),
-                                        ),
-                                      );
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ClassViewStudent()),
+                                          (Route<dynamic> route) => false);
                                     } else {
                                       setState(() {
                                         _feedback = result[1];
@@ -163,13 +161,15 @@ class _StudentLoginState extends State<StudentLogin> {
                                   }
                                 },
                                 child: new Container(
-                                  
                                   child: Center(
                                     child: Text(
                                       'Login',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.03,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
@@ -178,7 +178,6 @@ class _StudentLoginState extends State<StudentLogin> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.85,
                                   decoration: BoxDecoration(
-                                   
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
@@ -210,13 +209,11 @@ class _StudentLoginState extends State<StudentLogin> {
                                       _feedback = result[1];
                                     });
                                   } else {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ClassViewStudent(),
-                                      ),
-                                    );
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClassViewStudent()),
+                                        (Route<dynamic> route) => false);
                                   }
                                   print(result[0]);
                                 },
@@ -226,7 +223,10 @@ class _StudentLoginState extends State<StudentLogin> {
                                       'Sign in with Google',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: MediaQuery.of(context).size.height * 0.03,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
                                           fontWeight: FontWeight.w400),
                                     ),
                                   ),
