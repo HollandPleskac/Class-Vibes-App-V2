@@ -8,7 +8,7 @@ import '../constant.dart';
 import '../widgets/forgot_password_popup.dart';
 
 final _auth = Auth();
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class StudentLogin extends StatefulWidget {
   @override
@@ -42,7 +42,7 @@ class _StudentLoginState extends State<StudentLogin> {
       body: StreamBuilder(
           stream: _firestore
               .collection('Application Management')
-              .document('ServerManagement')
+              .doc('ServerManagement')
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

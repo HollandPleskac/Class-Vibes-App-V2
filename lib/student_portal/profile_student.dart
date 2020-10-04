@@ -8,14 +8,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
-import '../logic/fire.dart';
 import '../logic/auth.dart';
 import '../auth/welcome.dart';
 import './account_settings_student.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-final _fire = Fire();
 final _auth = Auth();
 
 class ProfileStudent extends StatefulWidget {
@@ -258,7 +256,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 child: StreamBuilder(
                                     stream: _firestore
                                         .collection('UserData')
-                                        .document(_email)
+                                        .doc(_email)
                                         .snapshots(),
                                     builder: (context, snapshot) {
                                       if (!snapshot.hasData) {
@@ -314,7 +312,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                   child: StreamBuilder(
                                       stream: _firestore
                                           .collection('UserData')
-                                          .document(_email)
+                                          .doc(_email)
                                           .snapshots(),
                                       builder: (context, snapshot) {
                                         if (!snapshot.hasData) {

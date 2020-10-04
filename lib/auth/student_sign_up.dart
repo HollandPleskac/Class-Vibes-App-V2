@@ -8,7 +8,7 @@ import '../constant.dart';
 import '../logic/auth.dart';
 
 final _auth = Auth();
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class SignUpStudent extends StatefulWidget {
   @override
@@ -49,7 +49,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
       body: StreamBuilder(
           stream: _firestore
               .collection('Application Management')
-              .document('ServerManagement')
+              .doc('ServerManagement')
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

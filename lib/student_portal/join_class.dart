@@ -9,11 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../constant.dart';
 import '../nav_student.dart';
 import '../logic/fire.dart';
-import './classview_student.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class JoinClass extends StatefulWidget {
   @override
@@ -60,7 +59,7 @@ class _JoinClassState extends State<JoinClass> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {

@@ -1,9 +1,6 @@
-import 'package:class_vibes_v2/logic/fire.dart';
-import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../logic/auth.dart';
 import '../teacher_portal/classview_teacher.dart';
@@ -11,7 +8,7 @@ import '../constant.dart';
 import '../widgets/forgot_password_popup.dart';
 
 final _auth = Auth();
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class TeacherLogin extends StatefulWidget {
   @override
@@ -46,7 +43,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
       body: StreamBuilder(
           stream: _firestore
               .collection('Application Management')
-              .document('ServerManagement')
+              .doc('ServerManagement')
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

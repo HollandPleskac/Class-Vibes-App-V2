@@ -1,15 +1,15 @@
 import 'dart:ui';
 
+import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
-import '../widgets/no_documents_message.dart';
 import '../logic/fire.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _fire = Fire();
@@ -29,51 +29,6 @@ class ChatStudent extends StatefulWidget {
 class _ChatStudentState extends State<ChatStudent> {
   bool isLoading = false;
   final TextEditingController _controller = TextEditingController();
-  void _showModalSheet() {
-    showModalBottomSheet(
-        barrierColor: Colors.white.withOpacity(0),
-        elevation: 0,
-        context: context,
-        builder: (builder) {
-          return ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade300.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30))),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Options',
-                      style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800),
-                    ),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(
-                        Icons.do_not_disturb,
-                        color: Colors.black87,
-                      ),
-                      title: Text(
-                        'Mute Messages',
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-  }
 
   String _studentName;
 
@@ -105,9 +60,9 @@ class _ChatStudentState extends State<ChatStudent> {
                 child: StreamBuilder(
                   stream: _firestore
                       .collection("Class-Chats")
-                      .document(widget.classId)
+                      .doc(widget.classId)
                       .collection('Students')
-                      .document(widget.email)
+                      .doc(widget.email)
                       .collection('Messages')
                       .orderBy("timestamp", descending: true)
                       .limit(40)
@@ -126,27 +81,27 @@ class _ChatStudentState extends State<ChatStudent> {
                         );
                       default:
                         if (!snapshot.hasData ||
-                            snapshot.data.documents.length != 0) {
+                            snapshot.data.docs.length != 0) {
                           return Center(
                            
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               reverse: true,
-                              itemCount: snapshot.data.documents.length,
+                              itemCount: snapshot.data.docs.length,
                               itemBuilder: (context, index) {
-                                return snapshot.data.documents[index]
+                                return snapshot.data.docs[index]
                                             ['sent type'] ==
                                         'teacher'
                                     ? RecievedChat(
-                                        title: snapshot.data.documents[index]
+                                        title: snapshot.data.docs[index]
                                             ['user'],
-                                        content: snapshot.data.documents[index]
+                                        content: snapshot.data.docs[index]
                                             ['message'],
                                       )
                                     : SentChat(
-                                        title: snapshot.data.documents[index]
+                                        title: snapshot.data.docs[index]
                                             ['user'],
-                                        content: snapshot.data.documents[index]
+                                        content: snapshot.data.docs[index]
                                             ['message'],
                                       );
                               },
@@ -218,12 +173,12 @@ class _ChatStudentState extends State<ChatStudent> {
                                     );
                                     await _firestore
                                         .collection('Class-Chats')
-                                        .document(widget.classId)
+                                        .doc(widget.classId)
                                         .collection('Students')
-                                        .document(widget.email)
+                                        .doc(widget.email)
                                         .collection('Messages')
-                                        .document()
-                                        .setData({
+                                        .doc()
+                                        .set({
                                       'timestamp': DateTime.now(),
                                       'message': _controller.text,
                                       'user': _studentName,

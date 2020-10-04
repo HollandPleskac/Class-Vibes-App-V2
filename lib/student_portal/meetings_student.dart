@@ -8,7 +8,7 @@ import '../widgets/no_documents_message.dart';
 import '../nav_student.dart';
 import '../widgets/meetings.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class MeetingsStudent extends StatefulWidget {
@@ -40,7 +40,7 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -58,7 +58,7 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
                   body: StreamBuilder(
                     stream: _firestore
                         .collection('UserData')
-                        .document(_email)
+                        .doc(_email)
                         .collection('Meetings')
                         .orderBy("timestamp", descending: false)
                         .snapshots(),
@@ -74,10 +74,10 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
                           );
                         default:
                           if (snapshot.data != null &&
-                              snapshot.data.documents.isEmpty == false) {
+                              snapshot.data.docs.isEmpty == false) {
                             return ListView(
                               physics: BouncingScrollPhysics(),
-                              children: snapshot.data.documents
+                              children: snapshot.data.docs
                                   .map((DocumentSnapshot document) {
                                 return Padding(
                                   padding: EdgeInsets.only(

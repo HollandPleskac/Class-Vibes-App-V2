@@ -5,15 +5,15 @@ import '../constant.dart';
 
 class PieChartSampleBig extends StatefulWidget {
   // chart values
-  double doingGreatStudents;
-  double needHelpStudents;
-  double frustratedStudents;
-  double inactiveStudents;
+  final double doingGreatStudents;
+  final double needHelpStudents;
+  final double frustratedStudents;
+  final double inactiveStudents;
   // chart titles
-  int doingGreatPercentage;
-  int needHelpPercentage;
-  int frustratedPercentage;
-  int inactivePercentage;
+  final int doingGreatPercentage;
+  final int needHelpPercentage;
+  final int frustratedPercentage;
+  final int inactivePercentage;
 
   PieChartSampleBig({
     // values
@@ -358,10 +358,10 @@ class _PieChartSampleBigState extends State<PieChartSampleBig> {
 
 class PieChartSampleSmall extends StatefulWidget {
   // chart values
-  double doingGreatStudents;
-  double needHelpStudents;
-  double frustratedStudents;
-  double inactiveStudents;
+  final double doingGreatStudents;
+  final double needHelpStudents;
+  final double frustratedStudents;
+  final double inactiveStudents;
 
   PieChartSampleSmall({
     // values

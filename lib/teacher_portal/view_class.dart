@@ -1,4 +1,3 @@
-import 'package:class_vibes_v2/widgets/badges.dart';
 import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +10,14 @@ import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
 import '../widgets/filter_btns.dart';
 import '../constant.dart';
-import '../logic/fire.dart';
 import './class_settings.dart';
 import './class_announcements.dart';
 import './class_meetings.dart';
 import './class_queue.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-final _fire = Fire();
 
 class ViewClass extends StatefulWidget {
   static const routeName = 'individual-class-teacher';
@@ -86,7 +83,7 @@ class _ViewClassState extends State<ViewClass> {
       child: StreamBuilder(
         stream: _firestore
             .collection('Application Management')
-            .document('ServerManagement')
+            .doc('ServerManagement')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -101,7 +98,7 @@ class _ViewClassState extends State<ViewClass> {
                       title: StreamBuilder(
                         stream: _firestore
                             .collection('Classes')
-                            .document(classId)
+                            .doc(classId)
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
@@ -216,7 +213,7 @@ class _StudentsTabState extends State<StudentsTab> {
     return StreamBuilder(
         stream: _firestore
             .collection('Classes')
-            .document(widget.classId)
+            .doc(widget.classId)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

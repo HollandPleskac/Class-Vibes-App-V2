@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
-
-final Firestore _firestore = Firestore.instance;
 
 class FilterAll extends StatelessWidget {
   final Function onClick;

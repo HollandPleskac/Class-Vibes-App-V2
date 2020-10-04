@@ -9,7 +9,7 @@ import '../constant.dart';
 import '../widgets/no_documents_message.dart';
 import '../logic/fire.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 
@@ -28,52 +28,6 @@ class _ChatTeacherState extends State<ChatTeacher> {
   final TextEditingController _controller = TextEditingController();
 
   bool isLoading = false;
-
-  void _showModalSheet() {
-    showModalBottomSheet(
-        barrierColor: Colors.white.withOpacity(0),
-        elevation: 0,
-        context: context,
-        builder: (builder) {
-          return ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade300.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30))),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Options',
-                      style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800),
-                    ),
-                    ListTile(
-                      onTap: () {},
-                      leading: Icon(
-                        Icons.do_not_disturb,
-                        color: Colors.black87,
-                      ),
-                      title: Text(
-                        'Mute Messages',
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-  }
 
   String _teacherName;
 
@@ -94,7 +48,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
 
   @override
   Widget build(BuildContext context) {
-    final routeArguments = ModalRoute.of(context).settings.arguments as Map;
+    // final routeArguments = ModalRoute.of(context).settings.arguments as Map;
 
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -119,7 +73,7 @@ class _ChatTeacherState extends State<ChatTeacher> {
         title: StreamBuilder(
             stream: _firestore
                 .collection('UserData')
-                .document(widget.studentEmail)
+                .doc(widget.studentEmail)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -161,9 +115,9 @@ class _ChatTeacherState extends State<ChatTeacher> {
                 child: StreamBuilder(
                   stream: _firestore
                       .collection("Class-Chats")
-                      .document(widget.classId)
+                      .doc(widget.classId)
                       .collection('Students')
-                      .document(widget.studentEmail)
+                      .doc(widget.studentEmail)
                       .collection('Messages')
                       .orderBy("timestamp", descending: true)
                       .limit(40)
@@ -183,26 +137,26 @@ class _ChatTeacherState extends State<ChatTeacher> {
                         );
                       default:
                         if (!snapshot.hasData ||
-                            snapshot.data.documents.length != 0) {
+                            snapshot.data.docs.length != 0) {
                           return Center(
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               reverse: true,
-                              itemCount: snapshot.data.documents.length,
+                              itemCount: snapshot.data.docs.length,
                               itemBuilder: (context, index) {
-                                return snapshot.data.documents[index]
+                                return snapshot.data.docs[index]
                                             ['sent type'] ==
                                         'student'
                                     ? RecievedChat(
-                                        title: snapshot.data.documents[index]
+                                        title: snapshot.data.docs[index]
                                             ['user'],
-                                        content: snapshot.data.documents[index]
+                                        content: snapshot.data.docs[index]
                                             ['message'],
                                       )
                                     : SentChat(
-                                        title: snapshot.data.documents[index]
+                                        title: snapshot.data.docs[index]
                                             ['user'],
-                                        content: snapshot.data.documents[index]
+                                        content: snapshot.data.docs[index]
                                             ['message'],
                                       );
                               },
@@ -276,12 +230,12 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       );
                                       await _firestore
                                           .collection('Class-Chats')
-                                          .document(widget.classId)
+                                          .doc(widget.classId)
                                           .collection('Students')
-                                          .document(widget.studentEmail)
+                                          .doc(widget.studentEmail)
                                           .collection('Messages')
-                                          .document()
-                                          .setData({
+                                          .doc()
+                                          .set({
                                         'timestamp': DateTime.now(),
                                         'message': _controller.text,
                                         'user': _teacherName,

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import './auth/welcome.dart';
 import './student_portal/chat_student.dart';
 import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
 import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
 import './router.dart';
-import './testing.dart';
 
 // void main() => runApp((MyApp()));
 

@@ -1,16 +1,10 @@
-import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 
-import '../constant.dart';
-import '../logic/fire.dart';
 import '../widgets/announcements.dart';
 
-final Firestore _firestore = Firestore.instance;
-final _fire = Fire();
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class ClassAnnouncementsStudent extends StatelessWidget {
   final String classId;
@@ -20,7 +14,7 @@ class ClassAnnouncementsStudent extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection("Classes")
-          .document(classId)
+          .doc(classId)
           .collection('Announcements')
           .orderBy("date", descending: true).limit(50)
           .snapshots(),
@@ -35,19 +29,19 @@ class ClassAnnouncementsStudent extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.docs.isEmpty == false) {
               return ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: snapshot.data.documents.length,
+                itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(
                         top: 20, left: 20, right: 20, bottom: 20),
                     child: StudentAnnouncement(
-                      message: snapshot.data.documents[index]['message'],
-                      title: snapshot.data.documents[index]['title'],
+                      message: snapshot.data.docs[index]['message'],
+                      title: snapshot.data.docs[index]['title'],
                       timestamp: DateTime.parse(snapshot
-                          .data.documents[index]['date']
+                          .data.docs[index]['date']
                           .toDate()
                           .toString()),
                     ),

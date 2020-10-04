@@ -153,7 +153,7 @@ class Auth {
   }
 
   void setUpAccountStudent({String email, String username}) {
-    _firestore.collection('UserData').document(email).setData({
+    _firestore.collection('UserData').doc(email).set({
       'email': email,
       'display name': username,
       'account type': 'Student',
@@ -165,7 +165,7 @@ class Auth {
     String email,
     String username,
   }) async {
-    _firestore.collection('UserData').document(email).setData({
+    _firestore.collection('UserData').doc(email).set({
       'email': email,
       'display name': username,
       'account type': 'Teacher',
@@ -207,8 +207,8 @@ class Auth {
     bool isUserInDB = await _firestore
         .collection('UserData')
         .where('email', isEqualTo: googleUser.email)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
     if (isUserInDB == true) {
       return ['failure', 'User is already registered'];
     }
@@ -216,12 +216,12 @@ class Auth {
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    final FirebaseUser user =
+    final User user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
 
     print("signed in " + user.displayName);
@@ -243,8 +243,8 @@ class Auth {
     bool isUserInDB = await _firestore
         .collection('UserData')
         .where('email', isEqualTo: googleUser.email)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
     if (isUserInDB == false) {
       return ['failure', 'User is not registered'];
     }
@@ -261,12 +261,12 @@ class Auth {
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
       try {
-        final FirebaseUser user =
+        final User user =
             (await _firebaseAuth.signInWithCredential(credential)).user;
         print("signed in " + user.displayName);
 
@@ -298,8 +298,8 @@ class Auth {
     bool isUserInDB = await _firestore
         .collection('UserData')
         .where('email', isEqualTo: googleUser.email)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
     if (isUserInDB == true) {
       return ['failure', 'User is already registered'];
     }
@@ -307,12 +307,12 @@ class Auth {
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    final FirebaseUser user =
+    final User user =
         (await _firebaseAuth.signInWithCredential(credential)).user;
 
     print("signed in " + user.displayName);
@@ -339,7 +339,7 @@ class Auth {
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );

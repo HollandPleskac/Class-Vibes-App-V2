@@ -5,7 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../constant.dart';
 import '../logic/auth.dart';
 import '../teacher_portal/classview_teacher.dart';
-import '../archived/google_signup_popup.dart';
 
 final _auth = Auth();
 

@@ -1,53 +1,52 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:random_string/random_string.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
 class Fire {
   // class setttings
   void updateClassName(String uid, String classId, String newClassName) async {
-    _firestore.collection("Classes").document(classId).updateData({
+    _firestore.collection("Classes").doc(classId).update({
       "class name": newClassName,
     });
 
     _firestore
         .collection("UserData")
-        .document(uid)
+        .doc(uid)
         .collection("Classes")
-        .document(classId)
-        .updateData({
+        .doc(classId)
+        .update({
       "class name": newClassName,
     });
   }
 
   void updateAllowJoin(String uid, String classId, bool newStatusOnJoin) {
-    _firestore.collection("Classes").document(classId).updateData({
+    _firestore.collection("Classes").doc(classId).update({
       "allow join": newStatusOnJoin,
     });
     _firestore
         .collection("UserData")
-        .document(uid)
+        .doc(uid)
         .collection("Classes")
-        .document(classId)
-        .updateData({
+        .doc(classId)
+        .update({
       "allow join": newStatusOnJoin,
     });
   }
 
   void updateMaxDaysInactive(
       String uid, String classId, int newMaxDaysInactive) {
-    _firestore.collection("Classes").document(classId).updateData({
+    _firestore.collection("Classes").doc(classId).update({
       "max days inactive": newMaxDaysInactive,
     });
     _firestore
         .collection("UserData")
-        .document(uid)
+        .doc(uid)
         .collection("Classes")
-        .document(classId)
-        .updateData({
+        .doc(classId)
+        .update({
       "max days inactive": newMaxDaysInactive,
     });
   }
@@ -56,30 +55,30 @@ class Fire {
   void updateStudentMood({String uid, String classId, String newMood}) {
     _firestore
         .collection('UserData')
-        .document(uid)
+        .doc(uid)
         .collection('Classes')
-        .document(classId)
-        .updateData({
+        .doc(classId)
+        .update({
       'status': newMood,
       'date': DateTime.now(),
     });
 
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .document(uid)
-        .updateData({
+        .doc(uid)
+        .update({
       'status': newMood,
       'date': DateTime.now(),
     });
 
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Reactions')
-        .document()
-        .setData({
+        .doc()
+        .set({
       'date': DateTime.now(),
       'reaction': newMood,
       'student email': uid,
@@ -99,10 +98,10 @@ class Fire {
   }) {
     _firestore
         .collection('UserData')
-        .document(studentUid)
+        .doc(studentUid)
         .collection('Meetings')
-        .document(timestampId.toString())
-        .setData({
+        .doc(timestampId.toString())
+        .set({
       'length': length,
       'title': title,
       'message': content,
@@ -115,10 +114,10 @@ class Fire {
     });
     _firestore
         .collection('UserData')
-        .document(teacherUid)
+        .doc(teacherUid)
         .collection('Meetings')
-        .document(timestampId.toString())
-        .setData({
+        .doc(timestampId.toString())
+        .set({
       'length': length,
       'title': title,
       'message': content,
@@ -139,15 +138,15 @@ class Fire {
   }) {
     _firestore
         .collection("UserData")
-        .document(studentUid)
+        .doc(studentUid)
         .collection('Meetings')
-        .document(meetingId)
+        .doc(meetingId)
         .delete();
     _firestore
         .collection("UserData")
-        .document(teacherUid)
+        .doc(teacherUid)
         .collection('Meetings')
-        .document(meetingId)
+        .doc(meetingId)
         .delete();
   }
 
@@ -159,10 +158,10 @@ class Fire {
   }) {
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Announcements')
-        .document()
-        .setData(
+        .doc()
+        .set(
       {
         'title': title,
         'message': content,
@@ -175,9 +174,9 @@ class Fire {
   void deleteAnnouncement({String classId, String announcementId}) {
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Announcements')
-        .document(announcementId)
+        .doc(announcementId)
         .delete();
   }
 
@@ -185,7 +184,7 @@ class Fire {
     String uid,
     String newUserName,
   }) {
-    _firestore.collection('UserData').document(uid).updateData({
+    _firestore.collection('UserData').doc(uid).update({
       'display name': newUserName,
     });
   }
@@ -198,16 +197,16 @@ class Fire {
     bool isClassCode = await _firestore
         .collection('Classes')
         .where('class code', isEqualTo: classCode)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
 
     bool isAlreadyInClass = await _firestore
         .collection('UserData')
-        .document(studentEmail)
+        .doc(studentEmail)
         .collection('Classes')
         .where(FieldPath.documentId, isEqualTo: classCode)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
 
     if (isAlreadyInClass == true) {
       return 'You are already in that class.';
@@ -216,17 +215,17 @@ class Fire {
     if (isClassCode == true) {
       bool isAcceptingJoin = await _firestore
           .collection('Classes')
-          .document(classCode)
+          .doc(classCode)
           .get()
           .then((docSnap) => docSnap['allow join']);
       //put the student in that class
       if (isAcceptingJoin) {
         _firestore
             .collection('Classes')
-            .document(classCode)
+            .doc(classCode)
             .collection('Students')
-            .document(studentEmail)
-            .setData({
+            .doc(studentEmail)
+            .set({
           'date': DateTime.now(),
           'email': studentEmail,
           'name': studentName,
@@ -237,10 +236,10 @@ class Fire {
 
         _firestore
             .collection('UserData')
-            .document(studentEmail)
+            .doc(studentEmail)
             .collection('Classes')
-            .document(classCode)
-            .setData({
+            .doc(classCode)
+            .set({
           'code': classCode,
           'student unread': 0,
           'teacher unread': 0,
@@ -262,8 +261,8 @@ class Fire {
     int isCodeUnique = await _firestore
         .collection("Classes")
         .where("class code", isEqualTo: classCode)
-        .getDocuments()
-        .then((querySnapshot) => querySnapshot.documents.length);
+        .get()
+        .then((querySnapshot) => querySnapshot.docs.length);
 
     if (isCodeUnique != 0) {
       // return ['failure', 'An error occurred try again'];
@@ -271,7 +270,7 @@ class Fire {
       addClass(uid: uid, className: className);
     }
 
-    _firestore.collection('Classes').document(classCode).setData({
+    _firestore.collection('Classes').doc(classCode).set({
       'teacher email': uid,
       'class code': classCode,
       'class name': className,
@@ -283,10 +282,10 @@ class Fire {
 
     _firestore
         .collection('UserData')
-        .document(uid)
+        .doc(uid)
         .collection('Classes')
-        .document(classCode)
-        .setData({
+        .doc(classCode)
+        .set({
       'teacher email': uid,
       'class code': classCode,
       'class name': className,
@@ -305,8 +304,8 @@ class Fire {
     int isCodeUnique = await _firestore
         .collection("Classes")
         .where("class code", isEqualTo: classCode)
-        .getDocuments()
-        .then((querySnapshot) => querySnapshot.documents.length);
+        .get()
+        .then((querySnapshot) => querySnapshot.docs.length);
 
     if (isCodeUnique != 0) {
       print('readding trial class');
@@ -314,7 +313,7 @@ class Fire {
       // return ['failure', 'An error occurred try again'];
     }
 
-    _firestore.collection('Classes').document(classCode).setData({
+    _firestore.collection('Classes').doc(classCode).set({
       'teacher email': uid,
       'class code': classCode,
       'class name': 'Trial Class',
@@ -328,10 +327,10 @@ class Fire {
 
     _firestore
         .collection('UserData')
-        .document(uid)
+        .doc(uid)
         .collection('Classes')
-        .document(classCode)
-        .setData({
+        .doc(classCode)
+        .set({
       'teacher email': uid,
       'class code': classCode,
       'class name': 'Trial Class',
@@ -349,35 +348,35 @@ class Fire {
   Future<void> deleteClass({String classId, String teacherEmail}) async {
     //delete class from Classes
 
-    _firestore.collection('Classes').document(classId).delete();
+    _firestore.collection('Classes').doc(classId).delete();
 
     // delete class from Teachers
 
     _firestore
         .collection('UserData')
-        .document(teacherEmail)
+        .doc(teacherEmail)
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .delete();
 
     //delete class from Students
 
-    List<DocumentSnapshot> studentDocuments = await _firestore
+    List<DocumentSnapshot> studentdocs = await _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .getDocuments()
-        .then((querySnap) => querySnap.documents);
-    print(studentDocuments);
+        .get()
+        .then((querySnap) => querySnap.docs);
+    print(studentdocs);
 
-    for (var i = 0; i < studentDocuments.length; i++) {
-      studentDocuments.forEach((DocumentSnapshot document) {
-        //document.documentID is a student email
+    for (var i = 0; i < studentdocs.length; i++) {
+      studentdocs.forEach((DocumentSnapshot doc) {
+        //doc.docID is a student email
         _firestore
             .collection('UserData')
-            .document(document.documentID)
+            .doc(doc.id)
             .collection('Classes')
-            .document(classId)
+            .doc(classId)
             .delete();
       });
     }
@@ -386,16 +385,16 @@ class Fire {
   void leaveClass({String studentEmail, String classId}) {
     _firestore
         .collection('UserData')
-        .document(studentEmail)
+        .doc(studentEmail)
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .delete();
 
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .document(studentEmail)
+        .doc(studentEmail)
         .delete();
   }
 
@@ -403,10 +402,10 @@ class Fire {
       {String classId, String studentEmail}) async {
     _firestore
         .collection('UserData')
-        .document(studentEmail)
+        .doc(studentEmail)
         .collection('Classes')
-        .document(classId)
-        .updateData({
+        .doc(classId)
+        .update({
       'student unread': FieldValue.increment(1),
     });
   }
@@ -415,10 +414,10 @@ class Fire {
       {String classId, String studentEmail}) async {
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .document(studentEmail)
-        .updateData({
+        .doc(studentEmail)
+        .update({
       'teacher unread': FieldValue.increment(1),
     });
   }
@@ -426,10 +425,10 @@ class Fire {
   void resetStudentUnreadCount({String classId, String studentEmail}) {
     _firestore
         .collection('UserData')
-        .document(studentEmail)
+        .doc(studentEmail)
         .collection('Classes')
-        .document(classId)
-        .updateData({
+        .doc(classId)
+        .update({
       'student unread': 0,
     });
   }
@@ -437,10 +436,10 @@ class Fire {
   void resetTeacherUnreadCount({String classId, String studentEmail}) {
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .document(studentEmail)
-        .updateData({
+        .doc(studentEmail)
+        .update({
       'teacher unread': 0,
     });
   }
@@ -450,23 +449,23 @@ class Fire {
     return await _firestore
         .collection('Districts')
         .where('district id', isEqualTo: districtCode)
-        .getDocuments()
-        .then((querySnap) => querySnap.documents.isNotEmpty);
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
   }
 
   void rejectFromQueue(String studentEmail, String classId) {
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .document(studentEmail)
+        .doc(studentEmail)
         .delete();
 
     _firestore
         .collection('UserData')
-        .document(studentEmail)
+        .doc(studentEmail)
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .delete();
   }
 
@@ -475,10 +474,10 @@ class Fire {
     print(classId);
     _firestore
         .collection('UserData')
-        .document(studentEmail)
+        .doc(studentEmail)
         .collection('Classes')
-        .document(classId)
-        .updateData(
+        .doc(classId)
+        .update(
       {
         'accepted': true,
       },
@@ -486,10 +485,10 @@ class Fire {
 
     _firestore
         .collection('Classes')
-        .document(classId)
+        .doc(classId)
         .collection('Students')
-        .document(studentEmail)
-        .updateData(
+        .doc(studentEmail)
+        .update(
       {
         'accepted': true,
       },

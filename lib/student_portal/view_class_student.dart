@@ -1,4 +1,3 @@
-import 'package:class_vibes_v2/teacher_portal/class_announcements.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,13 +7,12 @@ import '../constant.dart';
 import './chat_student.dart';
 import './class_meetings_student.dart';
 import './class_announcements_student.dart';
-import '../archived/class_overview.dart';
 import '../logic/fire.dart';
 import '../student_portal/classview_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 final _fire = Fire();
 
@@ -106,7 +104,7 @@ class _ViewClassStudentState extends State<ViewClassStudent> {
       child: StreamBuilder(
         stream: _firestore
             .collection('Application Management')
-            .document('ServerManagement')
+            .doc('ServerManagement')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

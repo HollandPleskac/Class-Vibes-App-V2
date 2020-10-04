@@ -1,12 +1,6 @@
-import 'package:class_vibes_v2/auth/welcome.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../logic/auth.dart';
 import '../constant.dart';
 import '../widgets/delete_account_screen.dart';
-
-final _auth = Auth();
-final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class AccountSettingsStudentPage extends StatelessWidget {
   @override

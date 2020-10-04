@@ -1,15 +1,10 @@
 import 'package:class_vibes_v2/widgets/no_documents_message.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../constant.dart';
-import '../logic/fire.dart';
 import '../widgets/meetings.dart';
 
-final _fire = Fire();
-
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class ClassMeetingsStudent extends StatelessWidget {
   final String classId;
@@ -23,7 +18,7 @@ class ClassMeetingsStudent extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore
             .collection("UserData")
-            .document(email)
+            .doc(email)
             .collection('Meetings')
             .where('class id', isEqualTo: classId)
             .orderBy("timestamp")
@@ -39,11 +34,11 @@ class ClassMeetingsStudent extends StatelessWidget {
               );
             default:
               if (snapshot.data != null &&
-                  snapshot.data.documents.isEmpty == false) {
+                  snapshot.data.docs.isEmpty == false) {
                 return ListView(
                   physics: BouncingScrollPhysics(),
                   children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
+                      snapshot.data.docs.map((DocumentSnapshot document) {
                     return Padding(
                       padding: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.05,

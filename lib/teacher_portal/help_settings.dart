@@ -1,8 +1,6 @@
-import 'package:class_vibes_v2/auth/welcome.dart';
 import 'package:class_vibes_v2/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../logic/revenue_cat.dart';
 
 import '../logic/class_vibes_server.dart';

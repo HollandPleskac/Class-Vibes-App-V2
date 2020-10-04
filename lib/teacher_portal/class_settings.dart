@@ -28,7 +28,7 @@ class ClassSettings extends StatefulWidget {
 }
 
 class _ClassSettingsState extends State<ClassSettings> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _classNameController = TextEditingController();
   bool isSwitched;
   int maxDaysInactive;
@@ -170,7 +170,7 @@ class _ClassSettingsState extends State<ClassSettings> {
               StreamBuilder(
                 stream: _firestore
                     .collection("Classes")
-                    .document(widget.classId)
+                    .doc(widget.classId)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -179,7 +179,6 @@ class _ClassSettingsState extends State<ClassSettings> {
                     return Text(
                       'Class Expires on : ' +
                           DateFormat.yMMMd('en_US')
-                              
                               .format(DateTime.parse(snapshot
                                   .data['expire date']
                                   .toDate()
@@ -399,7 +398,7 @@ class _DeleteClassState extends State<DeleteClass> {
 }
 
 class InactiveDaysPicker extends StatefulWidget {
-  int maxDaysInactive;
+  final int maxDaysInactive;
   final String email;
   final String classId;
   final Function updateMaxDaysInactive;

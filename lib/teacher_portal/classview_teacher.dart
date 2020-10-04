@@ -416,7 +416,7 @@ class Class extends StatelessWidget {
                         .isNotEmpty) {
                   // class has students
                   // increment teacher unread count
-                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+                  for (int i = 0; i < snapshot.data.docs.length; i++) {
                     if (snapshot.data.docs[i]['accepted'] == true) {
                       unReadCount = unReadCount +
                           snapshot.data.docs[i]['teacher unread'];

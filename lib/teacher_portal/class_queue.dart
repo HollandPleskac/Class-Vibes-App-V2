@@ -1,5 +1,4 @@
 import 'package:class_vibes_v2/constant.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,7 +6,7 @@ import '../widgets/no_documents_message.dart';
 
 import '../logic/fire.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final _fire = Fire();
 
 class ClassQueue extends StatelessWidget {
@@ -20,7 +19,7 @@ class ClassQueue extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore
             .collection('Classes')
-            .document(classId)
+            .doc(classId)
             .collection('Students')
             .where('accepted', isEqualTo: false)
             .snapshots(),
@@ -35,13 +34,13 @@ class ClassQueue extends StatelessWidget {
               );
             default:
               if (snapshot.data != null &&
-                  snapshot.data.documents.isEmpty == false) {
+                  snapshot.data.docs.isEmpty == false) {
                 return ListView.builder(
                   physics: BouncingScrollPhysics(),
-                  itemCount: snapshot.data.documents.length,
+                  itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     return UnapprovedStudent(
-                      document: snapshot.data.documents[index],
+                      document: snapshot.data.docs[index],
                       classId: classId,
                     );
                   },
@@ -179,7 +178,7 @@ class UnapprovedStudent extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     
-                    _fire.rejectFromQueue(document.documentID, classId);
+                    _fire.rejectFromQueue(document.id, classId);
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.trash,
@@ -192,7 +191,7 @@ class UnapprovedStudent extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    _fire.acceptFromQueue(document.documentID, classId);
+                    _fire.acceptFromQueue(document.id, classId);
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.check,

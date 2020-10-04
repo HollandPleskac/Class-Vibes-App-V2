@@ -1,11 +1,7 @@
-import 'dart:ui';
-
-import 'package:class_vibes_v2/teacher_portal/account_settings_teacher.dart';
 import 'package:class_vibes_v2/teacher_portal/help_settings.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav_teacher.dart';
@@ -59,7 +55,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
       child: StreamBuilder(
           stream: _firestore
               .collection('Application Management')
-              .document('ServerManagement')
+              .doc('ServerManagement')
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

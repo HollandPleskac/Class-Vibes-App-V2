@@ -5,11 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login_student.dart';
 import 'login_teacher.dart';
-import '../archived/sign_up.dart';
 import '../constant.dart';
 import './register_choice.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class Welcome extends StatefulWidget {
   @override
@@ -25,7 +24,7 @@ class _WelcomeState extends State<Welcome> {
       body: StreamBuilder(
           stream: _firestore
               .collection('Application Management')
-              .document('ServerManagement')
+              .doc('ServerManagement')
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

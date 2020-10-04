@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import './logic/revenue_cat.dart';
 
 final _revenueCat = RevenueCat();

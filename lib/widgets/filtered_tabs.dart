@@ -326,7 +326,7 @@ class InactiveTab extends StatelessWidget {
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
-                    studentEmail: document.documentID,
+                    studentEmail: document.id,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
                     maxDaysInactive: maxDaysInactive,

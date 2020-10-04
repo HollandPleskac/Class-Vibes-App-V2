@@ -9,11 +9,10 @@ import '../constant.dart';
 import '../logic/fire.dart';
 import '../nav_student.dart';
 import './view_class_student.dart';
-import './chat_student.dart';
 import '../widgets/no_documents_message.dart';
 import '../widgets/badges.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 
@@ -47,7 +46,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -83,7 +82,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                     child: StreamBuilder(
                       stream: _firestore
                           .collection('UserData')
-                          .document(_email)
+                          .doc(_email)
                           .collection('Classes')
                           .snapshots(),
                       builder: (BuildContext context,
@@ -98,13 +97,13 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                             );
                           default:
                             if (snapshot.data != null &&
-                                snapshot.data.documents.isEmpty == false) {
+                                snapshot.data.docs.isEmpty == false) {
                               return ListView(
                                 physics: BouncingScrollPhysics(),
-                                children: snapshot.data.documents
+                                children: snapshot.data.docs
                                     .map((DocumentSnapshot document) {
                                   return StudentClass(
-                                    classId: document.documentID,
+                                    classId: document.id,
                                     email: _email,
                                     unreadCount: document['student unread'],
                                     accepted: document['accepted'],
@@ -179,7 +178,7 @@ class StudentClass extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       // color: Colors.red,
       child: StreamBuilder(
-        stream: _firestore.collection('Classes').document(classId).snapshots(),
+        stream: _firestore.collection('Classes').doc(classId).snapshots(),
         builder: (BuildContext context, classSnapshot) {
           if (classSnapshot.data == null) {
             return Center(
@@ -237,9 +236,9 @@ class StudentClass extends StatelessWidget {
                   ? StreamBuilder(
                       stream: _firestore
                           .collection('Classes')
-                          .document(classId)
+                          .doc(classId)
                           .collection('Students')
-                          .document(email)
+                          .doc(email)
                           .snapshots(),
                       builder: (BuildContext context, snapshot) {
                         if (classSnapshot.data == null) {

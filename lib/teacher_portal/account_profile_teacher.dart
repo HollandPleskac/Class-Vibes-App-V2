@@ -4,20 +4,14 @@ import 'dart:ui';
 import 'package:class_vibes_v2/auth/welcome.dart';
 import 'package:class_vibes_v2/logic/class_vibes_server.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../logic/fire.dart';
-import '../logic/auth.dart';
 import '../constant.dart';
-import 'account_settings_teacher.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-final _fire = Fire();
-final _auth = Auth();
 final _classVibesServer = ClassVibesServer();
 
 class ProfileTab extends StatefulWidget {
@@ -106,7 +100,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     child: StreamBuilder(
                         stream: _firestore
                             .collection('UserData')
-                            .document(widget.teacherEmail)
+                            .doc(widget.teacherEmail)
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {

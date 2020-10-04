@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../constant.dart';
 import '../student_portal/join_class.dart';
 
 class NoDocsClassViewStudent extends StatelessWidget {

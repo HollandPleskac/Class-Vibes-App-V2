@@ -1,5 +1,4 @@
 import 'package:class_vibes_v2/widgets/server_down.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +8,7 @@ import '../constant.dart';
 import '../widgets/no_documents_message.dart';
 import '../widgets/announcements.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class AnnouncementsStudent extends StatefulWidget {
@@ -34,22 +33,22 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
     //change this setup to be double streambuilder ??
     List<DocumentSnapshot> classDocuments = await _firestore
         .collection('UserData')
-        .document(email)
+        .doc(email)
         .collection('Classes')
-        .getDocuments()
-        .then((querySnap) => querySnap.documents);
+        .get()
+        .then((querySnap) => querySnap.docs);
 
     classDocuments.forEach((DocumentSnapshot document) {
-      classIds.add(document.documentID);
+      classIds.add(document.id);
     });
 
     for (var i = 0; i < classIds.length; i++) {
       List announcementDocuments = await _firestore
           .collection('Classes')
-          .document(classIds[i])
+          .doc(classIds[i])
           .collection('Announcements')
-          .getDocuments()
-          .then((querySnap) => querySnap.documents);
+          .get()
+          .then((querySnap) => querySnap.docs);
 
       announcementDocuments.forEach((document) {
         announcements.add(document.data);
@@ -79,7 +78,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
