@@ -15,7 +15,7 @@ import '../widgets/server_down.dart';
 import '../widgets/badges.dart';
 import '../logic/revenue_cat.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 final _revenueCat = RevenueCat();
@@ -261,7 +261,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   String _email;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;
@@ -281,7 +281,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -328,7 +328,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                             );
                           default:
                             if (snapshot.data != null &&
-                                snapshot.data.documents.isEmpty == false) {
+                                snapshot.data.docs.isEmpty == false) {
                               return Center(
                                 child: GridView.count(
                                   physics: BouncingScrollPhysics(),
@@ -337,7 +337,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                   crossAxisSpacing: 15,
                                   mainAxisSpacing: 10,
                                   crossAxisCount: 2,
-                                  children: snapshot.data.documents
+                                  children: snapshot.data.docs
                                       .map((DocumentSnapshot document) {
                                     return Class(document);
                                   }).toList(),
@@ -376,7 +376,7 @@ class Class extends StatelessWidget {
                 ViewClass.routeName,
                 arguments: {
                   'class name': document['class name'],
-                  'class id': document.documentID,
+                  'class id': document.id,
                   'max days inactive': document['max days inactive'],
                 },
               );
@@ -384,7 +384,7 @@ class Class extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore
             .collection('Classes')
-            .document(document.documentID)
+            .doc(document.id)
             .collection('Students')
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -410,16 +410,16 @@ class Class extends StatelessWidget {
                 return ExpiredClass(document['class name']);
               } else {
                 if (snapshot.data != null &&
-                    snapshot.data.documents.isEmpty == false &&
-                    snapshot.data.documents
+                    snapshot.data.docs.isEmpty == false &&
+                    snapshot.data.docs
                         .where((document) => document['accepted'] == true)
                         .isNotEmpty) {
                   // class has students
                   // increment teacher unread count
                   for (int i = 0; i < snapshot.data.documents.length; i++) {
-                    if (snapshot.data.documents[i]['accepted'] == true) {
+                    if (snapshot.data.docs[i]['accepted'] == true) {
                       unReadCount = unReadCount +
-                          snapshot.data.documents[i]['teacher unread'];
+                          snapshot.data.docs[i]['teacher unread'];
                     }
                   }
                   return Stack(
@@ -439,7 +439,7 @@ class Class extends StatelessWidget {
                               child: DynamicPieChart(
                                 // the document is class document
                                 // student documents is all the student email documents in class
-                                studentDocuments: snapshot.data.documents,
+                                studentDocuments: snapshot.data.docs,
                                 classDocument: document,
                               ),
                             ),
@@ -486,7 +486,7 @@ class DynamicPieChart extends StatelessWidget {
             DateTime.now()
                 .difference(
                   DateTime.parse(
-                      documentSnapshot.data['date'].toDate().toString()),
+                      documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays <
             classDocument['max days inactive'])
@@ -495,13 +495,13 @@ class DynamicPieChart extends StatelessWidget {
 
     double needHelpStudents = studentDocuments
         .where((documentSnapshot) =>
-            documentSnapshot.data['status'] == 'need help')
+            documentSnapshot['status'] == 'need help')
         .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
                   DateTime.parse(
-                      documentSnapshot.data['date'].toDate().toString()),
+                      documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays <
             classDocument['max days inactive'])
@@ -509,13 +509,13 @@ class DynamicPieChart extends StatelessWidget {
         .toDouble();
     double frustratedStudents = studentDocuments
         .where((documentSnapshot) =>
-            documentSnapshot.data['status'] == 'frustrated')
+            documentSnapshot['status'] == 'frustrated')
         .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
                   DateTime.parse(
-                      documentSnapshot.data['date'].toDate().toString()),
+                      documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays <
             classDocument['max days inactive'])
@@ -526,7 +526,7 @@ class DynamicPieChart extends StatelessWidget {
             DateTime.now()
                 .difference(
                   DateTime.parse(
-                      documentSnapshot.data['date'].toDate().toString()),
+                      documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays >=
             classDocument['max days inactive'])

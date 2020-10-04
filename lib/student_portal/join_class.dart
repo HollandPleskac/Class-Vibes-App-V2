@@ -28,7 +28,7 @@ class _JoinClassState extends State<JoinClass> {
   String _studentName;
 
   Future getStudentEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;
@@ -37,9 +37,9 @@ class _JoinClassState extends State<JoinClass> {
   Future getStudentName(String email) async {
     String nameOfStudent = await _firestore
         .collection('UserData')
-        .document(email)
+        .doc(email)
         .get()
-        .then((docSnap) => docSnap.data['display name']);
+        .then((docSnap) => docSnap['display name']);
 
     _studentName = nameOfStudent;
   }

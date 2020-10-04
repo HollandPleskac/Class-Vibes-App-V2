@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
@@ -14,11 +13,10 @@ import '../logic/auth.dart';
 import '../auth/welcome.dart';
 import './account_settings_student.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _fire = Fire();
 final _auth = Auth();
-final _googleSignIn = GoogleSignIn();
 
 class ProfileStudent extends StatefulWidget {
   @override
@@ -109,19 +107,19 @@ class _ProfileStudentState extends State<ProfileStudent> {
                             color: kPrimaryColor,
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
-                                FirebaseUser user =
-                                    await _firebaseAuth.currentUser();
-                                UserUpdateInfo userUpdateInfo =
-                                    new UserUpdateInfo();
-                                userUpdateInfo.displayName =
-                                    _userNameEditController.text;
+                                // User user =
+                                //     _firebaseAuth.currentUser;
+                                // UserUpdateInfo userUpdateInfo =
+                                //     new UserUpdateInfo();
+                                // userUpdateInfo.displayName =
+                                //     _userNameEditController.text;
 
-                                await user.updateProfile(userUpdateInfo);
+                                // await user.updateProfile(userUpdateInfo);
 
-                                _fire.editUserName(
-                                  newUserName: _userNameEditController.text,
-                                  uid: email,
-                                );
+                                // _fire.editUserName(
+                                //   newUserName: _userNameEditController.text,
+                                //   uid: email,
+                                // );
                                 _userNameEditController.text = '';
                                 Navigator.pop(context);
                               }
@@ -149,7 +147,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
   String _email;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;
@@ -169,7 +167,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {

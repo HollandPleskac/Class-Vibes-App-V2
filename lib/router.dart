@@ -19,19 +19,19 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _auth = Auth();
 final _revenueCat = RevenueCat();
 
-class Router extends StatefulWidget {
+class RouterScreen extends StatefulWidget {
   @override
-  _RouterState createState() => _RouterState();
+  _RouterScreenState createState() => _RouterScreenState();
 }
 
-class _RouterState extends State<Router> {
-  FirebaseUser user;
+class _RouterScreenState extends State<RouterScreen> {
+  User user;
   String accountType;
 
   bool isCheckedAccount = false;
   Future getUser() async {
     try {
-      final FirebaseUser theUser = await _firebaseAuth.currentUser();
+      final User theUser = _firebaseAuth.currentUser;
       user = theUser;
       _revenueCat.signInRevenueCat(user.uid);
     } catch (_) {
@@ -39,7 +39,7 @@ class _RouterState extends State<Router> {
     }
   }
 
-  Future getAccountTypeAndStatus(FirebaseUser user) async {
+  Future getAccountTypeAndStatus(User user) async {
     if (user != null) {
       try {
         String type = await _auth.checkAccountType(user.email);

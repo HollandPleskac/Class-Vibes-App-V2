@@ -8,7 +8,7 @@ import './badges.dart';
 import '../constant.dart';
 import '../logic/class_vibes_server.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final _fire = Fire();
 final _classVibesServer = ClassVibesServer();
 
@@ -22,7 +22,7 @@ class AllTab extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .collection('Students')
           .orderBy('date', descending: true)
           .where('accepted', isEqualTo: true)
@@ -35,18 +35,18 @@ class AllTab extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.docs.isEmpty == false) {
               return ListView(
                 physics: BouncingScrollPhysics(),
                 children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                    snapshot.data.docs.map((DocumentSnapshot document) {
                   return Student(
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
-                    studentEmail: document.documentID,
+                    studentEmail: document.id,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
                     maxDaysInactive: maxDaysInactive,
@@ -81,7 +81,7 @@ class DoingGreatTab extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .collection('Students')
           .orderBy('date', descending: true)
           .where("status", isEqualTo: 'doing great')
@@ -104,18 +104,18 @@ class DoingGreatTab extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.docs.isEmpty == false) {
               return ListView(
                 physics: BouncingScrollPhysics(),
                 children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                    snapshot.data.docs.map((DocumentSnapshot document) {
                   return Student(
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
-                    studentEmail: document.documentID,
+                    studentEmail: document.id,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
                     maxDaysInactive: maxDaysInactive,
@@ -150,7 +150,7 @@ class NeedHelpTab extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .collection('Students')
           .orderBy('date', descending: true)
           .where("status", isEqualTo: 'need help')
@@ -173,18 +173,18 @@ class NeedHelpTab extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.docs.isEmpty == false) {
               return ListView(
                 physics: BouncingScrollPhysics(),
                 children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                    snapshot.data.docs.map((DocumentSnapshot document) {
                   return Student(
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
-                    studentEmail: document.documentID,
+                    studentEmail: document.id,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
                     maxDaysInactive: maxDaysInactive,
@@ -219,7 +219,7 @@ class FrustratedTab extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .collection('Students')
           .orderBy('date', descending: true)
           .where("status", isEqualTo: 'frustrated')
@@ -242,18 +242,18 @@ class FrustratedTab extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.docs.isEmpty == false) {
               return ListView(
                 physics: BouncingScrollPhysics(),
                 children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                    snapshot.data.docs.map((DocumentSnapshot document) {
                   return Student(
                     status: document['status'],
                     profilePictureLink: null,
                     context: context,
                     classId: classId,
                     teacherEmail: teacherEmail,
-                    studentEmail: document.documentID,
+                    studentEmail: document.id,
                     lastChangedStatus: document['date'],
                     teacherUnread: document['teacher unread'],
                     maxDaysInactive: maxDaysInactive,
@@ -293,7 +293,7 @@ class InactiveTab extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .collection('Students')
           .orderBy('date')
           .where(
@@ -315,11 +315,11 @@ class InactiveTab extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false) {
+                snapshot.data.docs.isEmpty == false) {
               return ListView(
                 physics: BouncingScrollPhysics(),
                 children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                    snapshot.data.docs.map((DocumentSnapshot document) {
                   return Student(
                     status: document['status'],
                     profilePictureLink: null,
@@ -547,10 +547,10 @@ class Student extends StatelessWidget {
                                 onPressed: () async {
                                   String courseName = await _firestore
                                       .collection('Classes')
-                                      .document(classId)
+                                      .doc(classId)
                                       .get()
                                       .then((docSnap) =>
-                                          docSnap.data['class name']);
+                                          docSnap['class name']);
                                   if (_formKey.currentState.validate()) {
                                     _fire.setupMeeting(
                                       studentUid: studentEmail,
@@ -762,7 +762,7 @@ class Student extends StatelessWidget {
                       StreamBuilder(
                           stream: _firestore
                               .collection('UserData')
-                              .document(studentEmail)
+                              .doc(studentEmail)
                               .snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
@@ -779,9 +779,9 @@ class Student extends StatelessWidget {
                       StreamBuilder(
                           stream: _firestore
                               .collection('Classes')
-                              .document(classId)
+                              .doc(classId)
                               .collection('Students')
-                              .document(studentEmail)
+                              .doc(studentEmail)
                               .snapshots(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {

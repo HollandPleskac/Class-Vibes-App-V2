@@ -7,7 +7,7 @@ import './revenue_cat.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
-final _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final _classVibesServer = ClassVibesServer();
 final _revenueCat = RevenueCat();
 
@@ -16,12 +16,12 @@ final _fire = Fire();
 class Auth {
   Future<List> loginAsStudent({String email, String password}) async {
     try {
-      AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
+      UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      FirebaseUser user = authResult.user;
+      User user = userCredential.user;
 
-      if (!user.isEmailVerified) {
+      if (!user.emailVerified) {
         return ['failure', 'Verify your email to continue'];
       }
 
@@ -56,12 +56,12 @@ class Auth {
 
   Future<List> loginAsTeacher({String email, String password}) async {
     try {
-      AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
+      UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
 
-      FirebaseUser user = authResult.user;
+      User user = userCredential.user;
 
-      if (!user.isEmailVerified) {
+      if (!user.emailVerified) {
         return ['failure', 'Verify your email to continue'];
       }
 
@@ -102,9 +102,9 @@ class Auth {
     String username,
   }) async {
     try {
-      AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      User user = userCredential.user;
 
       await user.sendEmailVerification();
 
@@ -128,9 +128,9 @@ class Auth {
     String username,
   }) async {
     try {
-      AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      User user = userCredential.user;
 
       await user.sendEmailVerification();
 
@@ -178,9 +178,9 @@ class Auth {
   Future<String> checkAccountType(String email) async {
     return await _firestore
         .collection('UserData')
-        .document(email)
+        .doc(email)
         .get()
-        .then((docSnap) => docSnap.data['account type']);
+        .then((docSnap) => docSnap['account type']);
   }
 
   Future signOut() async {
@@ -251,9 +251,9 @@ class Auth {
 
     String accountType = await _firestore
         .collection('UserData')
-        .document(googleUser.email)
+        .doc(googleUser.email)
         .get()
-        .then((docSnap) => docSnap.data['account type']);
+        .then((docSnap) => docSnap['account type']);
 
     if (accountType != 'Student') {
       return ['failure', 'Account is not registered as a student'];
@@ -344,14 +344,14 @@ class Auth {
         idToken: googleAuth.idToken,
       );
 
-      final FirebaseUser user =
+      final User user =
           (await _firebaseAuth.signInWithCredential(credential)).user;
 
       bool isUserInDB = await _firestore
           .collection('UserData')
           .where('email', isEqualTo: googleUser.email)
-          .getDocuments()
-          .then((querySnap) => querySnap.documents.isNotEmpty);
+          .get()
+          .then((querySnap) => querySnap.docs.isNotEmpty);
       if (isUserInDB == false) {
         signOut();
         return ['failure', 'User is not registered'];
@@ -359,9 +359,9 @@ class Auth {
 
       String accountType = await _firestore
           .collection('UserData')
-          .document(googleUser.email)
+          .doc(googleUser.email)
           .get()
-          .then((docSnap) => docSnap.data['account type']);
+          .then((docSnap) => docSnap['account type']);
 
       if (accountType != 'Teacher') {
         signOut();

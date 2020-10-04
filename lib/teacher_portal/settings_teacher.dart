@@ -4,23 +4,17 @@ import 'package:class_vibes_v2/teacher_portal/account_settings_teacher.dart';
 import 'package:class_vibes_v2/teacher_portal/help_settings.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav_teacher.dart';
 import '../constant.dart';
-import '../logic/fire.dart';
-import '../logic/auth.dart';
-import '../auth/welcome.dart';
 import './billing_settings.dart';
 import './account_profile_teacher.dart';
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-final _fire = Fire();
-final _auth = Auth();
 
 class ProfileTeacher extends StatefulWidget {
   @override
@@ -32,7 +26,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
   String _accountType;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;
@@ -41,9 +35,9 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
   Future getAccountType(String email) async {
     String type = await _firestore
         .collection('UserData')
-        .document(email)
+        .doc(email)
         .get()
-        .then((docSnap) => docSnap.data['account type']);
+        .then((docSnap) => docSnap['account type']);
     _accountType = type;
   }
 

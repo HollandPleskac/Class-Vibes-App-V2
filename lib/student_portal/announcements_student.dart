@@ -24,7 +24,7 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
   bool waiting = true;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;

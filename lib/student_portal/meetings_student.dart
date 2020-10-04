@@ -20,7 +20,7 @@ class _MeetingsStudentState extends State<MeetingsStudent> {
   String _email;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;

@@ -37,7 +37,7 @@ class _ProfileTabState extends State<ProfileTab> {
   var isUpdated = false;
   var feedback = "";
   Future getTeacherName() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final userName = user.displayName;
 
     _userNameEditController.text = userName;
@@ -274,7 +274,7 @@ class _ProfileTabState extends State<ProfileTab> {
         Center(
             child: GestureDetector(
                 onTap: () async {
-                  FirebaseUser user = await _firebaseAuth.currentUser();
+                  User user = _firebaseAuth.currentUser;
 
                   print('deleteing + ' + widget.accountType);
 

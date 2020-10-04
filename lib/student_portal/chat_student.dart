@@ -78,7 +78,7 @@ class _ChatStudentState extends State<ChatStudent> {
   String _studentName;
 
   Future getStudentData() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final name = user.displayName;
 
     _studentName = name;

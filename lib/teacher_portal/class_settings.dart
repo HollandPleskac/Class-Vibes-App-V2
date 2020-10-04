@@ -13,12 +13,12 @@ import '../logic/fire.dart';
 import './classview_teacher.dart';
 
 final _fire = Fire();
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class ClassSettings extends StatefulWidget {
   static const routeName = 'individual-class-settings-teacher';
-  String classId;
-  String email;
+  final String classId;
+  final String email;
   ClassSettings({
     this.classId,
     this.email,
@@ -41,9 +41,9 @@ class _ClassSettingsState extends State<ClassSettings> {
   Future getInitialSwitchValue() async {
     bool initialSwitchVal = await _firestore
         .collection("Classes")
-        .document(widget.classId)
+        .doc(widget.classId)
         .get()
-        .then((docSnap) => docSnap.data['allow join']);
+        .then((docSnap) => docSnap['allow join']);
     print('initial val of switch ' + initialSwitchVal.toString());
     isSwitched = initialSwitchVal;
   }
@@ -51,9 +51,9 @@ class _ClassSettingsState extends State<ClassSettings> {
   Future getDaysInactive() async {
     int daysInactive = await _firestore
         .collection("Classes")
-        .document(widget.classId)
+        .doc(widget.classId)
         .get()
-        .then((docSnap) => docSnap.data['max days inactive']);
+        .then((docSnap) => docSnap['max days inactive']);
     maxDaysInactive = daysInactive;
   }
 

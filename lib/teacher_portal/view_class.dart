@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
@@ -18,6 +19,7 @@ import './class_queue.dart';
 
 final Firestore _firestore = Firestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 final _fire = Fire();
 
 class ViewClass extends StatefulWidget {
@@ -30,7 +32,7 @@ class _ViewClassState extends State<ViewClass> {
   String _email;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;
@@ -41,6 +43,22 @@ class _ViewClassState extends State<ViewClass> {
     getTeacherEmail().then((_) {
       setState(() {});
     });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        // _showItemDialog(message);
+      },
+      // onBackgroundMessage: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // _navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // _navigateToItemDetail(message);
+      },
+    );
 
     super.initState();
   }
@@ -240,7 +258,7 @@ class DynamicPieChart extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .collection('Students')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -254,17 +272,17 @@ class DynamicPieChart extends StatelessWidget {
             );
           default:
             if (snapshot.data != null &&
-                snapshot.data.documents.isEmpty == false &&
-                snapshot.data.documents
+                snapshot.data.docs.isEmpty == false &&
+                snapshot.data.docs
                     .where((document) => document['accepted'] == true)
                     .isNotEmpty) {
-              double doingGreatStudents = snapshot.data.documents
+              double doingGreatStudents = snapshot.data.docs
                   .where((document) => document["status"] == "doing great")
                   .where((document) => document['accepted'] == true)
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot.data['date']
+                            DateTime.parse(documentSnapshot['date']
                                 .toDate()
                                 .toString()),
                           )
@@ -273,14 +291,14 @@ class DynamicPieChart extends StatelessWidget {
                   .length
                   .toDouble();
 
-              double needHelpStudents = snapshot.data.documents
+              double needHelpStudents = snapshot.data.docs
                   .where((documentSnapshot) =>
-                      documentSnapshot.data['status'] == 'need help')
+                      documentSnapshot['status'] == 'need help')
                   .where((document) => document['accepted'] == true)
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot.data['date']
+                            DateTime.parse(documentSnapshot['date']
                                 .toDate()
                                 .toString()),
                           )
@@ -288,14 +306,14 @@ class DynamicPieChart extends StatelessWidget {
                       maxDaysInactive)
                   .length
                   .toDouble();
-              double frustratedStudents = snapshot.data.documents
+              double frustratedStudents = snapshot.data.docs
                   .where((documentSnapshot) =>
-                      documentSnapshot.data['status'] == 'frustrated')
+                      documentSnapshot['status'] == 'frustrated')
                   .where((document) => document['accepted'] == true)
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot.data['date']
+                            DateTime.parse(documentSnapshot['date']
                                 .toDate()
                                 .toString()),
                           )
@@ -303,11 +321,11 @@ class DynamicPieChart extends StatelessWidget {
                       maxDaysInactive)
                   .length
                   .toDouble();
-              double inactiveStudents = snapshot.data.documents
+              double inactiveStudents = snapshot.data.docs
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot.data['date']
+                            DateTime.parse(documentSnapshot['date']
                                 .toDate()
                                 .toString()),
                           )

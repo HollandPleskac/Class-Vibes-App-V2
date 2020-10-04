@@ -7,10 +7,12 @@ import '../logic/revenue_cat.dart';
 
 import '../logic/class_vibes_server.dart';
 import '../logic/auth.dart';
+import '../logic/fcm.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _auth = Auth();
+final _fcm = FCM();
 
 final _classVibesServer = ClassVibesServer();
 final _revenueCat = RevenueCat();
@@ -33,6 +35,14 @@ class HelpScreen extends StatelessWidget {
                 color: kPrimaryColor,
                 fontSize: 15,
                 fontWeight: FontWeight.w500),
+          ),
+          FlatButton(
+            child: Text('send notification'),
+            onPressed: () async {
+              await _fcm.sendNotification();
+              // String token = await _fcm.getToken();
+              // print(token);
+            },
           ),
         ],
       ),

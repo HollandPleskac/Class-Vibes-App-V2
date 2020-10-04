@@ -20,7 +20,7 @@ class _BillingTabState extends State<BillingTab> {
   bool isChecked = false;
 
   Future getRevenueCatData() async {
-    FirebaseUser user = await _firebaseAuth.currentUser();
+    User user = _firebaseAuth.currentUser;
     String uid = user.uid;
     // String uid = "\$RCAnonymousID:75b278d90514447390804954abb8fc8f";
     print(uid);

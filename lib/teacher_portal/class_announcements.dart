@@ -105,7 +105,7 @@ class ClassAnnouncements extends StatelessWidget {
                     .collection('Classes')
                     .document(classId)
                     .get()
-                    .then((docSnap) => docSnap.data['class name']),
+                    .then((docSnap) => docSnap['class name']),
               ),
             ),
           ),

@@ -26,7 +26,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
   String _email;
 
   Future getStudentEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _email = email;
@@ -157,10 +157,10 @@ class StudentClass extends StatelessWidget {
     Future getClassName() async {
       return await _firestore
           .collection('Classes')
-          .document(classId)
+          .doc(classId)
           .get()
           .then(
-            (docSnap) => docSnap.data['class name'],
+            (docSnap) => docSnap['class name'],
           );
     }
 

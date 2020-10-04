@@ -2,18 +2,14 @@ import 'package:class_vibes_v2/constant.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../logic/fire.dart';
 import '../nav_teacher.dart';
 import '../widgets/no_documents_message.dart';
 import '../widgets/meetings.dart';
-import '../archived/updates.dart';
 
-final _fire = Fire();
 
-final Firestore _firestore = Firestore.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 
@@ -26,7 +22,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
   String _teacherEmail;
 
   Future getTeacherEmail() async {
-    final FirebaseUser user = await _firebaseAuth.currentUser();
+    final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
     _teacherEmail = email;
@@ -48,7 +44,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
     return StreamBuilder(
       stream: _firestore
           .collection('Application Management')
-          .document('ServerManagement')
+          .doc('ServerManagement')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -66,7 +62,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                   body: StreamBuilder(
                     stream: _firestore
                         .collection('UserData')
-                        .document(_teacherEmail)
+                        .doc(_teacherEmail)
                         .collection('Meetings')
                         .orderBy("timestamp", descending: false)
                         .snapshots(),
@@ -82,10 +78,10 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                           );
                         default:
                           if (snapshot.data != null &&
-                              snapshot.data.documents.isEmpty == false) {
+                              snapshot.data.docs.isEmpty == false) {
                             return ListView(
                               physics: BouncingScrollPhysics(),
-                              children: snapshot.data.documents
+                              children: snapshot.data.docs
                                   .map((DocumentSnapshot document) {
                                 return Padding(
                                   padding: EdgeInsets.only(
@@ -105,7 +101,7 @@ class _MeetingsTeacherState extends State<MeetingsTeacher> {
                                     title: document['title'],
                                     teacherEmail: _teacherEmail,
                                     classId: document['class id'],
-                                    meetingId: document.documentID,
+                                    meetingId: document.id,
                                     studentEmail: document['recipient'],
                                     courseName: document['course'],
                                     isAllDisplay: true,

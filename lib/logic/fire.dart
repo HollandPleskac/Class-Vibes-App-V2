@@ -218,7 +218,7 @@ class Fire {
           .collection('Classes')
           .document(classCode)
           .get()
-          .then((docSnap) => docSnap.data['allow join']);
+          .then((docSnap) => docSnap['allow join']);
       //put the student in that class
       if (isAcceptingJoin) {
         _firestore
