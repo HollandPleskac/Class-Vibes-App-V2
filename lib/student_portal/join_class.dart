@@ -94,6 +94,7 @@ class _JoinClassState extends State<JoinClass> {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.5,
                           child: PinCodeTextField(
+                            appContext: context,
                             backgroundColor: Colors.transparent,
                             pinTheme: PinTheme.defaults(
                               activeColor: Colors.blue[600],
