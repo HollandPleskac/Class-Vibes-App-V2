@@ -53,13 +53,14 @@ class ClassVibesServer {
   }
 
   Future<String> getRevenueCatBillingInfo(String uid) async {
-    var getResponse = await http
-        .get('https://api-v1.classvibes.net/api/getTransactionsRevenueCat?id=$uid');
+    var getResponse = await http.get(
+        'https://api-v1.classvibes.net/api/getTransactionsRevenueCat?id=$uid');
     print(getResponse.body);
 
     return getResponse.body;
-    
   }
 
-  // 
+ 
+
+  //
 }

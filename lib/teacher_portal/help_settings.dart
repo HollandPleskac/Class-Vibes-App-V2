@@ -37,9 +37,8 @@ class HelpScreen extends StatelessWidget {
           FlatButton(
             child: Text('send notification'),
             onPressed: () async {
-              await _fcm.sendNotification();
-              // String token = await _fcm.getToken();
-              // print(token);
+              await _fcm.sendDG();
+              
             },
           ),
         ],

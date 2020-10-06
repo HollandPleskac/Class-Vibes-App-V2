@@ -560,9 +560,9 @@ class Fire {
     String token = await _fcm.getToken();
     await _firestore
         .collection("Classes")
-        .doc(email)
-        .collection("Students")
         .doc(classId)
+        .collection("Students")
+        .doc(email)
         .update({
       "token": token,
     });

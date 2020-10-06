@@ -5,15 +5,20 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import './student_portal/chat_student.dart';
+import 'auth/welcome.dart';
 import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
 import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './logic/auth.dart';
+import './logic/revenue_cat.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+final _revenueCat = RevenueCat();
 final _auth = Auth();
+
+//TODO : fix the little delary while initializing
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,45 +40,43 @@ class _MyAppState extends State<MyApp> {
   String type;
 
   // Define an async function to initialize FlutterFire
-  void initializeFlutterFire() async {
+  Future<void> initializeFlutterFire() async {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
       await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
+
+      _initialized = true;
     } catch (e) {
       // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
+
+      _error = true;
     }
   }
 
   // check if the user is a teacher or student
-  void getAccountType() async {
+  Future<void> getAccountType() async {
     User user = _firebaseAuth.currentUser;
-    try {
+    if (user != null) {
       String accountType = await _auth.checkAccountType(user.email);
+      // sign in with revenue cat to get correct past purchases
+      await _revenueCat.signInRevenueCat(user.uid);
 
-      setState(() {
-        if (accountType == 'Student') {
-          type = 'student';
-        } else {
-          type = 'teacher';
-        }
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
+      if (accountType == 'Student') {
+        type = 'student';
+      } else {
+        type = 'teacher';
+      }
     }
   }
 
   @override
   void initState() {
-    initializeFlutterFire();
-    getAccountType();
+    initializeFlutterFire().then((_) {
+      getAccountType().then((_) {
+        setState(() {});
+      });
+    });
+
     super.initState();
   }
 
@@ -101,7 +104,11 @@ class MyAwesomeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: type == 'student' ? ClassViewStudent() : ClassViewTeacher(),
+      home: type == 'student'
+          ? ClassViewStudent()
+          : type == 'teacher'
+              ? ClassViewTeacher()
+              : Welcome(),
       routes: {
         ViewClass.routeName: (context) => ViewClass(),
         ClassSettings.routeName: (context) => ClassSettings(),
@@ -116,9 +123,13 @@ class MyAwesomeApp extends StatelessWidget {
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
@@ -127,9 +138,16 @@ class Loading extends StatelessWidget {
 class SomethingWentWrong extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Something went wrong, please restart the app'),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Text(
+            'Something went wrong, please restart the app',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
