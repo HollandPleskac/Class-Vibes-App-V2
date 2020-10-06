@@ -16,8 +16,8 @@ final _fire = Fire();
 class Auth {
   Future<List> loginAsStudent({String email, String password}) async {
     try {
-      UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
 
       User user = userCredential.user;
 
@@ -30,6 +30,8 @@ class Auth {
       }
 
       await _revenueCat.signInRevenueCat(user.uid);
+      await _fire.storeToken(email);
+      await _fire.storeTokenStudent(email);
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -56,8 +58,8 @@ class Auth {
 
   Future<List> loginAsTeacher({String email, String password}) async {
     try {
-      UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
 
       User user = userCredential.user;
 
@@ -70,6 +72,7 @@ class Auth {
       }
 
       await _revenueCat.signInRevenueCat(user.uid);
+      await _fire.storeToken(email);
       return ['success', email];
     } catch (error) {
       switch (error.code) {
@@ -102,8 +105,8 @@ class Auth {
     String username,
   }) async {
     try {
-      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
 
       await user.sendEmailVerification();
@@ -128,8 +131,8 @@ class Auth {
     String username,
   }) async {
     try {
-      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user;
 
       await user.sendEmailVerification();
@@ -152,26 +155,29 @@ class Auth {
     }
   }
 
-  void setUpAccountStudent({String email, String username}) {
-    _firestore.collection('UserData').doc(email).set({
+  Future<void> setUpAccountStudent({String email, String username}) async {
+    await _firestore.collection('UserData').doc(email).set({
       'email': email,
       'display name': username,
       'account type': 'Student',
       'account status': 'Activated',
     });
+
+    await _fire.storeToken(email);
+    await _fire.storeTokenStudent(email);
   }
 
-  void setUpAccountTeacher({
+  Future<void> setUpAccountTeacher({
     String email,
     String username,
   }) async {
-    _firestore.collection('UserData').doc(email).set({
+    await _firestore.collection('UserData').doc(email).set({
       'email': email,
       'display name': username,
       'account type': 'Teacher',
       'account status': 'Activated',
     });
-
+    await _fire.storeToken(email);
     await _fire.addTrialClass(email);
   }
 
@@ -226,7 +232,7 @@ class Auth {
 
     print("signed in " + user.displayName);
 
-    setUpAccountStudent(email: user.email, username: user.displayName);
+    await setUpAccountStudent(email: user.email, username: user.displayName);
 
     await _revenueCat.signInRevenueCat(user.uid);
     return ['success', ''];
@@ -271,6 +277,8 @@ class Auth {
         print("signed in " + user.displayName);
 
         await _revenueCat.signInRevenueCat(user.uid);
+        await _fire.storeToken(user.email);
+        await _fire.storeTokenStudent(user.email);
         return ['success', ''];
       } catch (error) {
         switch (error.code) {
@@ -319,7 +327,7 @@ class Auth {
 
     await _classVibesServer.createStripeCustomer(user.email);
 
-    setUpAccountTeacher(
+    await setUpAccountTeacher(
       email: user.email,
       username: user.displayName,
     );
@@ -371,6 +379,7 @@ class Auth {
       print("signed in " + user.displayName);
 
       await _revenueCat.signInRevenueCat(user.uid);
+      await _fire.storeToken(user.email);
       return ['success', ''];
     } catch (e) {
       print(e);

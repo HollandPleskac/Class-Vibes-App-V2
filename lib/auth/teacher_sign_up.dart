@@ -273,7 +273,7 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
                           );
                           if (result[0] == 'success') {
                             //set up account
-                            _auth.setUpAccountTeacher(
+                            await _auth.setUpAccountTeacher(
                               username: _usernameController.text,
                               email: _emailController.text,
                             );

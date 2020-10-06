@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import './fcm.dart';
+
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+final _fcm = FCM();
 
 class Fire {
   // class setttings
@@ -246,6 +251,8 @@ class Fire {
           'accepted': false,
         });
         await _firebaseMessaging.subscribeToTopic(classCode);
+        await storeTokenOnClass(studentEmail, classCode);
+        await storeToken(studentEmail);
         return 'You have joined the class!';
       } else {
         return 'Teacher is not accepting students right now';
@@ -493,5 +500,71 @@ class Fire {
         'accepted': true,
       },
     );
+  }
+
+  Future<void> storeToken(String email) async {
+    String token = await _fcm.getToken();
+
+    bool isNoToken = await _firestore
+        .collection("UserData")
+        .doc(email)
+        .collection("tokens")
+        .where(token, isEqualTo: token)
+        .get()
+        .then((querySnapshot) => querySnapshot.docs.isEmpty);
+
+    // store in classes
+    if (isNoToken) {
+      // store in user data
+      await _firestore
+          .collection("UserData")
+          .doc(email)
+          .collection("Tokens")
+          .doc()
+          .set({
+        "token": token,
+        "created at": DateTime.now(),
+        "platform": Platform.operatingSystem,
+      });
+    }
+  }
+
+  // TODO : take this out
+  Future<void> storeTokenStudent(String email) async {
+    String token = await _fcm.getToken();
+
+    bool isNoToken = await _firestore
+        .collection("UserData")
+        .doc(email)
+        .collection("tokens")
+        .where(token, isEqualTo: token)
+        .get()
+        .then((querySnapshot) => querySnapshot.docs.isEmpty);
+
+    if (isNoToken) {
+      await _firestore
+          .collection("Classes")
+          .doc(email)
+          .collection("Tokens")
+          .doc()
+          .set({
+        "token": token,
+        "created at": DateTime.now(),
+        "platform": Platform.operatingSystem,
+      });
+    }
+  }
+
+  // TODO : take this out
+  Future<void> storeTokenOnClass(String email, String classId) async {
+    String token = await _fcm.getToken();
+    await _firestore
+        .collection("Classes")
+        .doc(email)
+        .collection("Students")
+        .doc(classId)
+        .update({
+      "token": token,
+    });
   }
 }
