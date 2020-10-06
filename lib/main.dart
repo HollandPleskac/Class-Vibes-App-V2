@@ -175,7 +175,7 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              context.read<AuthenticationService>().authStateChanges,
+              Provider.of<AuthenticationService>(context).authStateChanges,
         )
       ],
       child: MaterialApp(
@@ -191,7 +191,7 @@ class AuthenticationWrapper extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<User>();
+    final user = Provider.of<User>(context);
 
     if (user != null) {
       return Scaffold(
