@@ -277,6 +277,8 @@ class Auth {
         final User user =
             (await _firebaseAuth.signInWithCredential(credential)).user;
 
+            print('EMAIL VERIFICATION : ' + user.emailVerified.toString());
+
         bool isUserInDB = await _firestore
             .collection('UserData')
             .where('email', isEqualTo: googleUser.email)

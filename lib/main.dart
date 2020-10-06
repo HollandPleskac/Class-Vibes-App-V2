@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/logic/auth_service.dart';
 import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:class_vibes_v2/teacher_portal/classview_teacher.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +14,150 @@ import './student_portal/view_class_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './logic/auth.dart';
 import './logic/revenue_cat.dart';
+import 'package:provider/provider.dart';
 
-final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-final _revenueCat = RevenueCat();
-final _auth = Auth();
+// final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+// final _revenueCat = RevenueCat();
+// final _auth = Auth();
 
-//TODO : fix the little delary while initializing
+// //TODO : fix the little delary while initializing
 
-void main() {
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SystemChrome.setPreferredOrientations([
+//     DeviceOrientation.portraitUp,
+//     DeviceOrientation.portraitDown,
+//   ]);
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatefulWidget {
+//   _MyAppState createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+//   // Set default `_initialized` and `_error` state to false
+//   bool _initialized = false;
+//   bool _error = false;
+//   String type;
+
+//   // Define an async function to initialize FlutterFire
+//   Future<void> initializeFlutterFire() async {
+//     try {
+//       // Wait for Firebase to initialize and set `_initialized` state to true
+//       await Firebase.initializeApp();
+
+//       _initialized = true;
+//     } catch (e) {
+//       // Set `_error` state to true if Firebase initialization fails
+
+//       _error = true;
+//     }
+//   }
+
+//   // check if the user is a teacher or student
+//   Future<void> getAccountType() async {
+//     User user = _firebaseAuth.currentUser;
+//     if (user != null) {
+//       String accountType = await _auth.checkAccountType(user.email);
+//       // sign in with revenue cat to get correct past purchases
+//       await _revenueCat.signInRevenueCat(user.uid);
+
+//       if (accountType == 'Student') {
+//         type = 'student';
+//       } else {
+//         type = 'teacher';
+//       }
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     initializeFlutterFire().then((_) {
+//       getAccountType().then((_) {
+//         setState(() {});
+//       });
+//     });
+
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // Show error message if initialization failed
+//     if (_error) {
+//       return SomethingWentWrong();
+//     }
+
+//     // Show a loader until FlutterFire is initialized
+//     if (!_initialized) {
+//       return Loading();
+//     }
+
+//     return MyAwesomeApp(type);
+//   }
+// }
+
+// class MyAwesomeApp extends StatelessWidget {
+//   final String type;
+
+//   MyAwesomeApp(this.type);
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: type == 'student'
+//           ? ClassViewStudent()
+//           : type == 'teacher'
+//               ? ClassViewTeacher()
+//               : Welcome(),
+//       routes: {
+//         ViewClass.routeName: (context) => ViewClass(),
+//         ClassSettings.routeName: (context) => ClassSettings(),
+//         ChatStudent.routeName: (context) => ChatStudent(),
+//         ChatTeacher.routeName: (context) => ChatTeacher(),
+//         ViewClassStudent.routename: (context) => ViewClassStudent(),
+//       },
+//     );
+//   }
+// }
+
+// class Loading extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Scaffold(
+//         backgroundColor: Colors.black,
+//         body: Center(
+//           child: CircularProgressIndicator(),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class SomethingWentWrong extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Scaffold(
+//         backgroundColor: Colors.black,
+//         body: Center(
+//           child: Text(
+//             'Something went wrong, please restart the app',
+//             style: TextStyle(color: Colors.white),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -29,124 +165,68 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  // Set default `_initialized` and `_error` state to false
-  bool _initialized = false;
-  bool _error = false;
-  String type;
-
-  // Define an async function to initialize FlutterFire
-  Future<void> initializeFlutterFire() async {
-    try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
-
-      _initialized = true;
-    } catch (e) {
-      // Set `_error` state to true if Firebase initialization fails
-
-      _error = true;
-    }
-  }
-
-  // check if the user is a teacher or student
-  Future<void> getAccountType() async {
-    User user = _firebaseAuth.currentUser;
-    if (user != null) {
-      String accountType = await _auth.checkAccountType(user.email);
-      // sign in with revenue cat to get correct past purchases
-      await _revenueCat.signInRevenueCat(user.uid);
-
-      if (accountType == 'Student') {
-        type = 'student';
-      } else {
-        type = 'teacher';
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    initializeFlutterFire().then((_) {
-      getAccountType().then((_) {
-        setState(() {});
-      });
-    });
-
-    super.initState();
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Show error message if initialization failed
-    if (_error) {
-      return SomethingWentWrong();
-    }
-
-    // Show a loader until FlutterFire is initialized
-    if (!_initialized) {
-      return Loading();
-    }
-
-    return MyAwesomeApp(type);
-  }
-}
-
-class MyAwesomeApp extends StatelessWidget {
-  final String type;
-
-  MyAwesomeApp(this.type);
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: type == 'student'
-          ? ClassViewStudent()
-          : type == 'teacher'
-              ? ClassViewTeacher()
-              : Welcome(),
-      routes: {
-        ViewClass.routeName: (context) => ViewClass(),
-        ClassSettings.routeName: (context) => ClassSettings(),
-        ChatStudent.routeName: (context) => ChatStudent(),
-        ChatTeacher.routeName: (context) => ChatTeacher(),
-        ViewClassStudent.routename: (context) => ViewClassStudent(),
-      },
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: CircularProgressIndicator(),
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
+        StreamProvider(
+          create: (context) =>
+              context.read<AuthenticationService>().authStateChanges,
+        )
+      ],
+      child: MaterialApp(
+        home: AuthenticationWrapper(),
       ),
     );
   }
 }
 
-class SomethingWentWrong extends StatelessWidget {
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({
+    Key key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black,
+    final user = context.watch<User>();
+
+    if (user != null) {
+      return Scaffold(
         body: Center(
-          child: Text(
-            'Something went wrong, please restart the app',
-            style: TextStyle(color: Colors.white),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Signed out'),
+              RaisedButton(
+                child: Text('sign out'),
+                onPressed: () {
+                  context.read<AuthenticationService>().signout();
+                },
+              ),
+            ],
           ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Signed in'),
+            RaisedButton(
+              child: Text('sign in'),
+              onPressed: () {
+                context
+                    .read<AuthenticationService>()
+                    .signin('pleskac510@gmail.com', 'password123');
+              },
+            ),
+          ],
         ),
       ),
     );
