@@ -176,6 +176,7 @@ class MyApp extends StatelessWidget {
         StreamProvider(
           create: (context) =>
           // context.read() gets the current state but doesn't ask flutter for future rebuilds
+          // for use outside of build method
               context.read<AuthenticationService>().authStateChanges,
           // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
         )
