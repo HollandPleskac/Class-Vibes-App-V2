@@ -175,7 +175,9 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider(
           create: (context) =>
-              Provider.of<AuthenticationService>(context).authStateChanges,
+          // context.read() gets the current state but doesn't ask flutter for future rebuilds
+              context.read<AuthenticationService>().authStateChanges,
+          // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
         )
       ],
       child: MaterialApp(
@@ -191,7 +193,11 @@ class AuthenticationWrapper extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    // call context.watch<User>() in a build method to access the current state of User,
+    // and to ask flutter to rebuild to widget anyting User changes.
+    final user = context.watch<User>();
+    // final user = Provider.of<User>(context);
+    
 
     if (user != null) {
       return Scaffold(
@@ -224,6 +230,14 @@ class AuthenticationWrapper extends StatelessWidget {
                 context
                     .read<AuthenticationService>()
                     .signin('pleskac510@gmail.com', 'password123');
+              },
+            ),
+            RaisedButton(
+              child: Text('sign up'),
+              onPressed: () {
+                context
+                    .read<AuthenticationService>()
+                    .signUp('new2@gmail.com', 'password123');
               },
             ),
           ],
