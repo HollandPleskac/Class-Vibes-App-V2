@@ -200,7 +200,7 @@ class AuthenticationWrapper extends StatelessWidget {
     // final user = Provider.of<User>(context);
     
 
-    if (user != null) {
+    if (user != null && user.emailVerified == true) {
       return Scaffold(
         body: Center(
           child: Column(
