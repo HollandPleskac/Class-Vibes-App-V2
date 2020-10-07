@@ -1,6 +1,7 @@
 import 'package:class_vibes_v2/logic/auth_service.dart';
 import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:class_vibes_v2/teacher_portal/classview_teacher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +16,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import './logic/auth.dart';
 import './logic/revenue_cat.dart';
 import 'package:provider/provider.dart';
+import './logic/db_service.dart';
 
 // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 // final _revenueCat = RevenueCat();
@@ -173,13 +175,16 @@ class MyApp extends StatelessWidget {
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
+        Provider<DatabaseService>(
+            create: (_) => DatabaseService(FirebaseFirestore.instance)),
         StreamProvider(
           create: (context) =>
-          // context.read() gets the current state but doesn't ask flutter for future rebuilds
-          // for use outside of build method
+              // context.read() gets the current state but doesn't ask flutter for future rebuilds
+              // for use outside of build method
               context.read<AuthenticationService>().authStateChanges,
           // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
-        )
+        ),
+        
       ],
       child: MaterialApp(
         home: AuthenticationWrapper(),
@@ -192,21 +197,23 @@ class AuthenticationWrapper extends StatelessWidget {
   const AuthenticationWrapper({
     Key key,
   }) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     // call context.watch<User>() in a build method to access the current state of User,
     // and to ask flutter to rebuild to widget anyting User changes.
     final user = context.watch<User>();
     // final user = Provider.of<User>(context);
-    
 
     if (user != null && user.emailVerified == true) {
+      
       return Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Signed out'),
+              Text('Signed in'),
+              Text('Account Type : ' + 'accountType'.toString()),
               RaisedButton(
                 child: Text('sign out'),
                 onPressed: () {
@@ -224,7 +231,7 @@ class AuthenticationWrapper extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Signed in'),
+            Text('Signed out'),
             RaisedButton(
               child: Text('sign in'),
               onPressed: () {
@@ -238,7 +245,7 @@ class AuthenticationWrapper extends StatelessWidget {
               onPressed: () {
                 context
                     .read<AuthenticationService>()
-                    .signUp('new2@gmail.com', 'password123');
+                    .signUp('new3@gmail.com', 'password123');
               },
             ),
           ],
