@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/models.dart';
 
 class DatabaseService {
-  final FirebaseFirestore _db;
-
-  DatabaseService(this._db);
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // get a single document
   Future<Class> getClass(String id) async {
@@ -25,12 +23,19 @@ class DatabaseService {
   // returns a list of snapshots => take the list then map each item in the list to a Class
 
   Stream<List<Class>> streamClasses(User user) {
-    var ref =
-        _db.collection('Classes').where('teacher email', isEqualTo: user.email);
+    var ref = _db.collection('Classes');
+
+    print(
+      ref.snapshots().map(
+            (list) => list.docs.map(
+              (DocumentSnapshot doc) => Class.fromFirestore(doc),
+            ),
+          ),
+    );
 
     return ref.snapshots().map(
           (list) => list.docs.map(
-            (doc) => Class.fromFirestore(doc),
+            (DocumentSnapshot doc) => Class.fromFirestore(doc),
           ),
         );
   }

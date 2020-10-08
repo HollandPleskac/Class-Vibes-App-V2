@@ -18,6 +18,8 @@ import './logic/revenue_cat.dart';
 import 'package:provider/provider.dart';
 import './logic/db_service.dart';
 
+final _db = DatabaseService();
+
 // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 // final _revenueCat = RevenueCat();
 // final _auth = Auth();
@@ -175,8 +177,6 @@ class MyApp extends StatelessWidget {
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
-        Provider<DatabaseService>(
-            create: (_) => DatabaseService(FirebaseFirestore.instance)),
         StreamProvider(
           create: (context) =>
               // context.read() gets the current state but doesn't ask flutter for future rebuilds
@@ -184,7 +184,6 @@ class MyApp extends StatelessWidget {
               context.read<AuthenticationService>().authStateChanges,
           // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
         ),
-        
       ],
       child: MaterialApp(
         home: AuthenticationWrapper(),
@@ -197,7 +196,7 @@ class AuthenticationWrapper extends StatelessWidget {
   const AuthenticationWrapper({
     Key key,
   }) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     // call context.watch<User>() in a build method to access the current state of User,
@@ -206,26 +205,17 @@ class AuthenticationWrapper extends StatelessWidget {
     // final user = Provider.of<User>(context);
 
     if (user != null && user.emailVerified == true) {
-      
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Signed in'),
-              Text('Account Type : ' + 'accountType'.toString()),
-              RaisedButton(
-                child: Text('sign out'),
-                onPressed: () {
-                  context.read<AuthenticationService>().signout();
-                },
-              ),
-            ],
-          ),
-        ),
-      );
+      print('The class : ' + _db.streamClasses(user).toString());
+      return Home();
     }
 
+    return Login();
+  }
+}
+
+class Login extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -246,6 +236,31 @@ class AuthenticationWrapper extends StatelessWidget {
                 context
                     .read<AuthenticationService>()
                     .signUp('new3@gmail.com', 'password123');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  Home();
+  @override
+  Widget build(BuildContext context) {
+    // List<Class> classes = Provider.of<List<Class>>(context);
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Signed in'),
+            Text('Account Type : ' + 'accountType'.toString()),
+            RaisedButton(
+              child: Text('sign out'),
+              onPressed: () {
+                context.read<AuthenticationService>().signout();
               },
             ),
           ],
