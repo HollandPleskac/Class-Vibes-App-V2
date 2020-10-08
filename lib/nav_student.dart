@@ -18,19 +18,8 @@ final _auth = Auth();
 class NavStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(FirebaseAuth.instance),
-        ),
-        StreamProvider(
-          create: (context) =>
-              // context.read() gets the current state but doesn't ask flutter for future rebuilds
-              // for use outside of build method
-              context.read<AuthenticationService>().authStateChanges,
-          // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
-        ),
-      ],
+    return Provider<AuthenticationService>(
+      create: (_) => AuthenticationService(),
       child: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
