@@ -205,7 +205,6 @@ class AuthenticationWrapper extends StatelessWidget {
     // final user = Provider.of<User>(context);
 
     if (user != null && user.emailVerified == true) {
-      print('The class : ' + _db.streamClasses(user).toString());
       return Home();
     }
 
