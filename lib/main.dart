@@ -17,8 +17,10 @@ import './logic/auth.dart';
 import './logic/revenue_cat.dart';
 import 'package:provider/provider.dart';
 import './logic/db_service.dart';
+import './logic/fire.dart';
 
 final _db = DatabaseService();
+final _fire = Fire();
 
 // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 // final _revenueCat = RevenueCat();
@@ -205,7 +207,7 @@ class AuthenticationWrapper extends StatelessWidget {
     // final user = Provider.of<User>(context);
 
     if (user != null && user.emailVerified == true) {
-      return Home();
+      return Home(user);
     }
 
     return Login();
@@ -244,17 +246,48 @@ class Login extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
-  Home();
+class Home extends StatefulWidget {
+  final User user;
+
+  Home(this.user);
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  String accountType;
+
+  Future<void> getAccountType() async {
+    String accType = await _fire.getAccountType(widget.user.email);
+    accountType = accType;
+  }
+
+  @override
+  void initState() {
+    getAccountType().then(
+      (_) => setState(() {}),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // List<Class> classes = Provider.of<List<Class>>(context);
+    if (accountType == null) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+    if (accountType == 'Student') {
+      return ClassViewStudent();
+    }
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Signed in'),
+            Text('Signed in teacher'),
             Text('Account Type : ' + 'accountType'.toString()),
             RaisedButton(
               child: Text('sign out'),

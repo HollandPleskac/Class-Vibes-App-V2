@@ -105,7 +105,8 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                   return StudentClass(
                                     classId: document.id,
                                     email: _email,
-                                    unreadCount: document['student unread'],
+                                    unreadCount:
+                                        document['student unread'] ?? 0,
                                     accepted: document['accepted'],
                                   );
                                 }).toList(),
@@ -154,11 +155,7 @@ class StudentClass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future getClassName() async {
-      return await _firestore
-          .collection('Classes')
-          .doc(classId)
-          .get()
-          .then(
+      return await _firestore.collection('Classes').doc(classId).get().then(
             (docSnap) => docSnap['class name'],
           );
     }
@@ -180,11 +177,12 @@ class StudentClass extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore.collection('Classes').doc(classId).snapshots(),
         builder: (BuildContext context, classSnapshot) {
-          if (classSnapshot.data == null) {
+          if (classSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: Container(),
             );
           }
+
           return Row(
             children: <Widget>[
               Stack(
@@ -241,7 +239,8 @@ class StudentClass extends StatelessWidget {
                           .doc(email)
                           .snapshots(),
                       builder: (BuildContext context, snapshot) {
-                        if (classSnapshot.data == null) {
+                        if (classSnapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(
                             child: Container(),
                           );

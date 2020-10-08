@@ -1,7 +1,10 @@
 import 'package:class_vibes_v2/constant.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
+import 'logic/auth_service.dart';
 import 'teacher_portal/classview_teacher.dart';
 import './teacher_portal/meetings_teacher.dart';
 import 'teacher_portal/settings_teacher.dart';
@@ -13,111 +16,125 @@ final _auth = Auth();
 class NavTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
+    return MultiProvider(
+      providers: [
+        Provider<AuthenticationService>(
+          create: (_) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) =>
+              // context.read() gets the current state but doesn't ask flutter for future rebuilds
+              // for use outside of build method
+              context.read<AuthenticationService>().authStateChanges,
+          // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
+        ),
+      ],
+      child: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
 
-      child: Container(
-        color: kPrimaryColor,
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Center(
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/transparent-logo.png',
-                      width: MediaQuery.of(context).size.width * 0.275,
-                    ),
-                    Text(
-                      'CLASS VIBES',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
+        child: Container(
+          color: kPrimaryColor,
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/transparent-logo.png',
+                        width: MediaQuery.of(context).size.width * 0.275,
+                      ),
+                      Text(
+                        'CLASS VIBES',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Divider(
-                color: Colors.white54,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Divider(
+                  color: Colors.white54,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
-              child: Text(
-                'INTERFACE',
-                style: TextStyle(
-                    color: Colors.white54, fontWeight: FontWeight.w500),
+              Padding(
+                padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+                child: Text(
+                  'INTERFACE',
+                  style: TextStyle(
+                      color: Colors.white54, fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-            DrawerTile(
-              'Classes',
-              FontAwesomeIcons.stream,
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ClassViewTeacher(),
-                  ),
-                );
-              },
-            ),
-            DrawerTile(
-              'Meetings',
-              FontAwesomeIcons.phoneSquareAlt,
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MeetingsTeacher(),
-                  ),
-                );
-              },
-            ),
-            DrawerTile(
-              'Settings',
-              FontAwesomeIcons.cog,
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileTeacher(),
-                  ),
-                );
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Divider(
-                color: Colors.white54,
+              DrawerTile(
+                'Classes',
+                FontAwesomeIcons.stream,
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ClassViewTeacher(),
+                    ),
+                  );
+                },
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
-              child: Text(
-                'SIGN OUT',
-                style: TextStyle(
-                    color: Colors.white54, fontWeight: FontWeight.w500),
+              DrawerTile(
+                'Meetings',
+                FontAwesomeIcons.phoneSquareAlt,
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MeetingsTeacher(),
+                    ),
+                  );
+                },
               ),
-            ),
-            DrawerTile(
-              'Log Out',
-              FontAwesomeIcons.signOutAlt,
-              () async {
-                await _auth.signOut();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => Welcome()),
-                    (Route<dynamic> route) => false);
-              },
-            ),
-          ],
+              DrawerTile(
+                'Settings',
+                FontAwesomeIcons.cog,
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileTeacher(),
+                    ),
+                  );
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Divider(
+                  color: Colors.white54,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+                child: Text(
+                  'SIGN OUT',
+                  style: TextStyle(
+                      color: Colors.white54, fontWeight: FontWeight.w500),
+                ),
+              ),
+              DrawerTile(
+                'Log Out',
+                FontAwesomeIcons.signOutAlt,
+                () async {
+                  await _auth.signOut();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => Welcome()),
+                      (Route<dynamic> route) => false);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
