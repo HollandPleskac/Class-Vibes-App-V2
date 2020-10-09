@@ -296,72 +296,51 @@ class _SignUpStudentState extends State<SignUpStudent> {
                             child: new Material(
                               child: new InkWell(
                                 onTap: () async {
-                                  if (checkValue == false) {
-                                    setState(() {
-                                      _feedback =
-                                          'Accept the Privacy Policy to Continue';
-                                    });
-                                  } else {
-                                    if (_passwordController.text !=
-                                        _confirmPasswordController.text) {
+                                  if (_formKey.currentState.validate()) {
+                                    String res =
+                                        await _authService.signUpEmailStudent(
+                                      _emailController.text,
+                                      _passwordController.text,
+                                      _confirmPasswordController.text,
+                                      _usernameController.text,
+                                      checkValue,
+                                    );
+
+                                    if (res != 'Signed up') {
                                       setState(() {
-                                        _feedback =
-                                            'Confirm Password is not equal to password';
+                                        _feedback = res;
                                       });
                                     } else {
-                                      if (_formKey.currentState.validate()) {
-                                        String res = await _authService
-                                            .signUpEmailStudent(
-                                          _emailController.text,
-                                          _passwordController.text,
-                                          _confirmPasswordController.text,
-                                          _usernameController.text,
-                                          checkValue,
-                                        );
-
-                                        // if (result[0] == 'success') {
-                                        //   //ste up account
-                                        //   _auth.setUpAccountStudent(
-                                        //     username: _usernameController.text,
-                                        //     email: _emailController.text,
-                                        //   );
-                                        //   //show success dialog
-                                        //   showDialog(
-                                        //     context: context,
-                                        //     child: AlertDialog(
-                                        //       shape: RoundedRectangleBorder(
-                                        //           borderRadius:
-                                        //               BorderRadius.circular(
-                                        //                   10)),
-                                        //       content: Column(
-                                        //         mainAxisSize: MainAxisSize.min,
-                                        //         children: <Widget>[
-                                        //           FaIcon(
-                                        //             FontAwesomeIcons.check,
-                                        //             color: Colors.green,
-                                        //             size: 30,
-                                        //           ),
-                                        //           SizedBox(
-                                        //             height: 15,
-                                        //           ),
-                                        //           Center(
-                                        //             child: Text('Success!'),
-                                        //           ),
-                                        //           SizedBox(height: 5),
-                                        //           Center(
-                                        //             child: Text(
-                                        //                 'Verify you email to continue'),
-                                        //           ),
-                                        //         ],
-                                        //       ),
-                                        //     ),
-                                        //   );
-                                        // } else {
-                                        //   setState(() {
-                                        //     _feedback = result[1];
-                                        //   });
-                                        // }
-                                      }
+                                      // show success dialog
+                                      showDialog(
+                                        context: context,
+                                        child: AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              FaIcon(
+                                                FontAwesomeIcons.check,
+                                                color: Colors.green,
+                                                size: 30,
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
+                                              Center(
+                                                child: Text('Success!'),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Center(
+                                                child: Text(
+                                                    'Verify you email to continue'),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
                                     }
                                   }
                                 },

@@ -72,12 +72,15 @@ class AuthenticationService {
     bool checkedBox,
   ) async {
     try {
-      UserCredential cred = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      if (checkedBox == false) {
+        return 'Accept the Terms of Service and the Privacy Policy to continue';
+      }
 
       if (password != confirmPassword) {
         return 'Please make sure the password field matches the confirm password field';
       }
+      UserCredential cred = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
 
       await cred.user.sendEmailVerification();
 
