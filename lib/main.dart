@@ -1,4 +1,6 @@
+import 'package:class_vibes_v2/auth/login_student.dart';
 import 'package:class_vibes_v2/logic/auth_service.dart';
+import 'package:class_vibes_v2/models/models.dart';
 import 'package:class_vibes_v2/student_portal/classview_student.dart';
 import 'package:class_vibes_v2/teacher_portal/classview_teacher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,6 +21,8 @@ import 'package:provider/provider.dart';
 import './logic/db_service.dart';
 import './logic/fire.dart';
 
+final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
 final _db = DatabaseService();
 final _fire = Fire();
 
@@ -29,115 +33,78 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(MyApp());
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<AuthenticationService>(
-          create: (_) => AuthenticationService(),
-        ),
-        StreamProvider(
-          create: (context) =>
-              // context.read() gets the current state but doesn't ask flutter for future rebuilds
-              // for use outside of build method
-              context.read<AuthenticationService>().authStateChanges,
-          // Provider.of<AuthenticationService>(context, listen: false).authStateChanges,
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: AuthenticationWrapper(),
-        routes: {
-          ViewClass.routeName: (context) => ViewClass(),
-          ClassSettings.routeName: (context) => ClassSettings(),
-          ChatStudent.routeName: (context) => ChatStudent(),
-          ChatTeacher.routeName: (context) => ChatTeacher(),
-          ViewClassStudent.routename: (context) => ViewClassStudent(),
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Router(),
+      routes: {
+        ViewClass.routeName: (context) => ViewClass(),
+        ClassSettings.routeName: (context) => ClassSettings(),
+        ChatStudent.routeName: (context) => ChatStudent(),
+        ChatTeacher.routeName: (context) => ChatTeacher(),
+        ViewClassStudent.routename: (context) => ViewClassStudent(),
+      },
     );
   }
 }
 
-class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({
-    Key key,
-  }) : super(key: key);
-
+class Router extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    // call context.watch<User>() in a build method to access the current state of User,
-    // and to ask flutter to rebuild to widget anyting User changes.
-    final user = context.watch<User>();
-    // final user = Provider.of<User>(context);
-
-    if (user != null && user.emailVerified == true) {
-      return Home(user);
-    }
-
-    return Welcome();
-  }
+  _RouterState createState() => _RouterState();
 }
 
-class Home extends StatefulWidget {
-  final User user;
-
-  Home(this.user);
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  String accountType;
+class _RouterState extends State<Router> {
+  String accountType = 'nothing yet';
+  bool loading = true;
 
   Future<void> getAccountType() async {
-    String accType = await _fire.getAccountType(widget.user.email);
-    accountType = accType;
+    try {
+      String accType =
+          await _fire.getAccountType(_firebaseAuth.currentUser.email);
+      print('THE account type is ' + accType);
+      accountType = accType;
+    } catch (e) {
+      print('no user');
+    }
   }
 
   @override
   void initState() {
     getAccountType().then(
-      (_) => setState(() {}),
+      (_) => setState(() {
+        loading = false;
+        print(accountType);
+      }),
     );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (accountType == null) {
+    if (loading == true) {
+      print('loading...');
       return Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          child: Container(),
         ),
       );
     }
+
     if (accountType == 'Student') {
       return ClassViewStudent();
-    } else if (accountType == 'Teacher') {
-      return ClassViewTeacher();
-    } else {
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Signed in teacher'),
-              Text('Account Type : ' + 'accountType'.toString()),
-              RaisedButton(
-                child: Text('sign out'),
-                onPressed: () {
-                  context.read<AuthenticationService>().signout();
-                },
-              ),
-            ],
-          ),
-        ),
-      );
     }
+
+    if (accountType == 'Teacher') {
+      return ClassViewTeacher();
+    }
+
+    return Welcome();
   }
 }

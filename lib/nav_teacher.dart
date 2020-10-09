@@ -16,114 +16,111 @@ final _auth = Auth();
 class NavTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider<AuthenticationService>(
-      create: (_) => AuthenticationService(),
-      child: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
+    return Drawer(
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the drawer if there isn't enough vertical
+      // space to fit everything.
 
-        child: Container(
-          color: kPrimaryColor,
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Center(
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/transparent-logo.png',
-                        width: MediaQuery.of(context).size.width * 0.275,
-                      ),
-                      Text(
-                        'CLASS VIBES',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+      child: Container(
+        color: kPrimaryColor,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Center(
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/transparent-logo.png',
+                      width: MediaQuery.of(context).size.width * 0.275,
+                    ),
+                    Text(
+                      'CLASS VIBES',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                color: Colors.white54,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'INTERFACE',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
+              ),
+            ),
+            DrawerTile(
+              'Classes',
+              FontAwesomeIcons.stream,
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClassViewTeacher(),
                   ),
-                ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Meetings',
+              FontAwesomeIcons.phoneSquareAlt,
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MeetingsTeacher(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Settings',
+              FontAwesomeIcons.cog,
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileTeacher(),
+                  ),
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                color: Colors.white54,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Divider(
-                  color: Colors.white54,
-                ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'SIGN OUT',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
-                child: Text(
-                  'INTERFACE',
-                  style: TextStyle(
-                      color: Colors.white54, fontWeight: FontWeight.w500),
-                ),
-              ),
-              DrawerTile(
-                'Classes',
-                FontAwesomeIcons.stream,
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClassViewTeacher(),
-                    ),
-                  );
-                },
-              ),
-              DrawerTile(
-                'Meetings',
-                FontAwesomeIcons.phoneSquareAlt,
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MeetingsTeacher(),
-                    ),
-                  );
-                },
-              ),
-              DrawerTile(
-                'Settings',
-                FontAwesomeIcons.cog,
-                () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileTeacher(),
-                    ),
-                  );
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Divider(
-                  color: Colors.white54,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
-                child: Text(
-                  'SIGN OUT',
-                  style: TextStyle(
-                      color: Colors.white54, fontWeight: FontWeight.w500),
-                ),
-              ),
-              DrawerTile(
-                'Log Out',
-                FontAwesomeIcons.signOutAlt,
-                () async {
-                  await _auth.signOut();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => Welcome()),
-                      (Route<dynamic> route) => false);
-                },
-              ),
-            ],
-          ),
+            ),
+            DrawerTile(
+              'Log Out',
+              FontAwesomeIcons.signOutAlt,
+              () async {
+                await _auth.signOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Welcome()),
+                    (Route<dynamic> route) => false);
+              },
+            ),
+          ],
         ),
       ),
     );

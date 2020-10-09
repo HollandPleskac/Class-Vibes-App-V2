@@ -177,7 +177,7 @@ class StudentClass extends StatelessWidget {
       child: StreamBuilder(
         stream: _firestore.collection('Classes').doc(classId).snapshots(),
         builder: (BuildContext context, classSnapshot) {
-          if (classSnapshot.connectionState == ConnectionState.waiting) {
+          if (classSnapshot.data == null) {
             return Center(
               child: Container(),
             );
@@ -239,8 +239,7 @@ class StudentClass extends StatelessWidget {
                           .doc(email)
                           .snapshots(),
                       builder: (BuildContext context, snapshot) {
-                        if (classSnapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.data == null) {
                           return Center(
                             child: Container(),
                           );

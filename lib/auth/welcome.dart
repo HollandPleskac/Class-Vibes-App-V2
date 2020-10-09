@@ -10,14 +10,9 @@ import './register_choice.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class Welcome extends StatefulWidget {
+class Welcome extends StatelessWidget {
   @override
-  _WelcomeState createState() => _WelcomeState();
-}
 
-class _WelcomeState extends State<Welcome> {
-  
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,7 +30,10 @@ class _WelcomeState extends State<Welcome> {
                   : Column(
                       children: [
                         Container(
-                          child: Image.network('https://i.imgur.com/UNzfHQm.png',fit: BoxFit.cover,),
+                          child: Image.network(
+                            'https://i.imgur.com/UNzfHQm.png',
+                            fit: BoxFit.cover,
+                          ),
                           height: MediaQuery.of(context).size.height * 0.25,
                           width: MediaQuery.of(context).size.width,
                         ),
@@ -54,135 +52,144 @@ class _WelcomeState extends State<Welcome> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.15,
                         ),
-                         Center(
-                            child: Container(
-                              child: new Material(
-                                child: new InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => StudentLogin()),
-                                    );
-                                  },
-                                  child: new Container(
-                                    child: Center(
-                                      child: Text(
-                                        'Student',
-                                        style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontSize: MediaQuery.of(context).size.height*0.03,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                        Center(
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => StudentLogin()),
+                                  );
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Student',
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                                color: Colors.transparent,
-                              ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
                                 borderRadius: BorderRadius.circular(10),
                               ),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
                         ),
-                         Center(
-                            child: Container(
-                              child: new Material(
-                                child: new InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => TeacherLogin()),
-                                    );
-                                  },
-                                  child: new Container(
-                                    child: Center(
-                                      child: Text(
-                                        'Teacher',
-                                        style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontSize: MediaQuery.of(context).size.height*0.03,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                color: Colors.transparent,
-                              ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         Center(
-                            child: Container(
-                              child: new Material(
-                                child: new InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => RegisterChoice()),
-                                    );
-                                  },
-                                  child: new Container(
-                                    child: Center(
-                                      child: Text(
-                                        'Register',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: MediaQuery.of(context).size.height*0.03,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.85,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TeacherLogin()),
+                                  );
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Teacher',
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                                color: Colors.transparent,
-                              ),
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                color: kPrimaryColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        Center(
+                          child: Container(
+                            child: new Material(
+                              child: new InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegisterChoice()),
+                                  );
+                                },
+                                child: new Container(
+                                  child: Center(
+                                    child: Text(
+                                      'Register',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              color: Colors.transparent,
+                            ),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: kPrimaryColor,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
                       ],
                     );
             }

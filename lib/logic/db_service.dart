@@ -6,6 +6,8 @@ import '../models/models.dart';
 class DatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  Stream<DocumentSnapshot> accountType(String email) => _db.collection('UserData').doc(email).snapshots();
+
   // get a single document
   Future<Class> getClass(String id) async {
     var snap = await _db.collection('Classes').doc(id).get();
