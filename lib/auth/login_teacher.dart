@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/logic/auth_service.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +8,7 @@ import '../teacher_portal/classview_teacher.dart';
 import '../constant.dart';
 import '../widgets/forgot_password_popup.dart';
 
-final _auth = Auth();
+final _authService = AuthenticationService();
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class TeacherLogin extends StatefulWidget {
@@ -147,22 +148,25 @@ class _TeacherLoginState extends State<TeacherLogin> {
                               child: new InkWell(
                                 onTap: () async {
                                   if (_formKey.currentState.validate()) {
-                                    List result = await _auth.loginAsTeacher(
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                    );
-
-                                    if (result[0] == 'success') {
-                                      //push to next screen
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ClassViewTeacher()),
-                                          (Route<dynamic> route) => false);
-                                    } else {
+                                    String res =
+                                        await _authService.signInEmailTeacher(
+                                            _emailController.text,
+                                            _passwordController.text);
+                                    print('RESULT : ' + res.toString());
+                                    // notify feedback model listeners
+                                    if (res != 'Signed in') {
                                       setState(() {
-                                        _feedback = result[1];
+                                        _feedback = res;
                                       });
+                                    } else {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ClassViewTeacher(),
+                                        ),
+                                      );
+                                      print('else');
                                     }
                                   }
                                 },
@@ -207,20 +211,23 @@ class _TeacherLoginState extends State<TeacherLogin> {
                             child: new Material(
                               child: new InkWell(
                                 onTap: () async {
-                                  print('google sign in');
-                                  List result =
-                                      await _auth.signInWithGoogleTeacher();
-
-                                  if (result[0] == 'failure') {
+                                  String res =
+                                      await _authService.signInGoogleTeacher();
+                                  print('RESULT : ' + res.toString());
+                                  // notify feedback model listeners
+                                  if (res != 'Signed in') {
                                     setState(() {
-                                      _feedback = result[1];
+                                      _feedback = res;
                                     });
                                   } else {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ClassViewTeacher()),
-                                        (Route<dynamic> route) => false);
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ClassViewTeacher(),
+                                      ),
+                                    );
+                                    print('else');
                                   }
                                 },
                                 child: new Container(
