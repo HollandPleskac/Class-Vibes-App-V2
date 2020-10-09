@@ -64,23 +64,47 @@ class AuthenticationService {
     }
   }
 
-  Future<String> signUpEmailStudent(String email, String password) async {
+  Future<String> signUpEmailStudent(
+    String email,
+    String password,
+    String confirmPassword,
+    String username,
+    bool checkedBox,
+  ) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      UserCredential cred = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      return 'signed up';
+      if (password != confirmPassword) {
+        return 'Please make sure the password field matches the confirm password field';
+      }
+
+      await cred.user.sendEmailVerification();
+
+      await _fire.setUpAccountStudent(email, username);
+
+      return 'Signed up';
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      switch (e.code) {
+        case 'email-already-in-use':
+          return 'That email is already in use';
+        case 'email-already-in-use':
+          return 'That email is not valid';
+        case 'operation-not-allowed':
+          return 'Email/Password sign in has been disabled';
+        case 'weak-password':
+          return 'Password is not strong enough';
+        default:
+          return 'An unknown error occurred';
+      }
     } catch (e) {
-      return e.message;
+      return 'An unknown error occurred';
     }
   }
 
   // Student Google
 
   Future<String> signInGoogleStudent() async {
-   
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
@@ -186,7 +210,6 @@ class AuthenticationService {
   // Teacher Google
 
   Future<String> signInGoogleTeacher() async {
-   
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
@@ -248,5 +271,4 @@ class AuthenticationService {
       return 'An unknown error occurred';
     }
   }
-
 }

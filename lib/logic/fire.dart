@@ -568,7 +568,23 @@ class Fire {
     });
   }
 
-  Future<void> setUpAccountStudent({String email, String username}) async {
+  Future<String> getAccountType(String email) async {
+    return await _firestore
+        .collection('UserData')
+        .doc(email)
+        .get()
+        .then((docSnap) => docSnap['account type']);
+  }
+
+  Future<bool> isUserInDb(String email) async {
+    return await _firestore
+        .collection('UserData')
+        .where('email', isEqualTo: email)
+        .get()
+        .then((querySnap) => querySnap.docs.isNotEmpty);
+  }
+
+  Future<void> setUpAccountStudent(String email, String username) async {
     await _firestore.collection('UserData').doc(email).set({
       'email': email,
       'display name': username,
@@ -585,21 +601,5 @@ class Fire {
       'display name': username,
       'account type': 'Teacher',
     });
-  }
-
-  Future<String> getAccountType(String email) async {
-    return await _firestore
-        .collection('UserData')
-        .doc(email)
-        .get()
-        .then((docSnap) => docSnap['account type']);
-  }
-
-  Future<bool> isUserInDb(String email) async {
-    return await _firestore
-            .collection('UserData')
-            .where('email', isEqualTo: email)
-            .get()
-            .then((querySnap) => querySnap.docs.isNotEmpty);
   }
 }

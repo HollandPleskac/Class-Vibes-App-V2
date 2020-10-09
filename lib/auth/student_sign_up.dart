@@ -1,3 +1,4 @@
+import 'package:class_vibes_v2/logic/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,7 +8,7 @@ import '../student_portal/classview_student.dart';
 import '../constant.dart';
 import '../logic/auth.dart';
 
-final _auth = Auth();
+final _authService = AuthenticationService();
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class SignUpStudent extends StatefulWidget {
@@ -309,53 +310,57 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                       });
                                     } else {
                                       if (_formKey.currentState.validate()) {
-                                        List result = await _auth.signUpStudent(
-                                          username: _usernameController.text,
-                                          email: _emailController.text,
-                                          password: _passwordController.text,
+                                        String res = await _authService
+                                            .signUpEmailStudent(
+                                          _emailController.text,
+                                          _passwordController.text,
+                                          _confirmPasswordController.text,
+                                          _usernameController.text,
+                                          checkValue,
                                         );
-                                        if (result[0] == 'success') {
-                                          //ste up account
-                                          _auth.setUpAccountStudent(
-                                            username: _usernameController.text,
-                                            email: _emailController.text,
-                                          );
-                                          //show success dialog
-                                          showDialog(
-                                            context: context,
-                                            child: AlertDialog(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              content: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  FaIcon(
-                                                    FontAwesomeIcons.check,
-                                                    color: Colors.green,
-                                                    size: 30,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 15,
-                                                  ),
-                                                  Center(
-                                                    child: Text('Success!'),
-                                                  ),
-                                                  SizedBox(height: 5),
-                                                  Center(
-                                                    child: Text(
-                                                        'Verify you email to continue'),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          setState(() {
-                                            _feedback = result[1];
-                                          });
-                                        }
+
+                                        // if (result[0] == 'success') {
+                                        //   //ste up account
+                                        //   _auth.setUpAccountStudent(
+                                        //     username: _usernameController.text,
+                                        //     email: _emailController.text,
+                                        //   );
+                                        //   //show success dialog
+                                        //   showDialog(
+                                        //     context: context,
+                                        //     child: AlertDialog(
+                                        //       shape: RoundedRectangleBorder(
+                                        //           borderRadius:
+                                        //               BorderRadius.circular(
+                                        //                   10)),
+                                        //       content: Column(
+                                        //         mainAxisSize: MainAxisSize.min,
+                                        //         children: <Widget>[
+                                        //           FaIcon(
+                                        //             FontAwesomeIcons.check,
+                                        //             color: Colors.green,
+                                        //             size: 30,
+                                        //           ),
+                                        //           SizedBox(
+                                        //             height: 15,
+                                        //           ),
+                                        //           Center(
+                                        //             child: Text('Success!'),
+                                        //           ),
+                                        //           SizedBox(height: 5),
+                                        //           Center(
+                                        //             child: Text(
+                                        //                 'Verify you email to continue'),
+                                        //           ),
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   );
+                                        // } else {
+                                        //   setState(() {
+                                        //     _feedback = result[1];
+                                        //   });
+                                        // }
                                       }
                                     }
                                   }
@@ -401,27 +406,27 @@ class _SignUpStudentState extends State<SignUpStudent> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                  if (checkValue == true) {
-                                    List result =
-                                        await _auth.signUpWithGoogleStudent();
-                                    if (result[0] == 'failure') {
-                                      setState(() {
-                                        _feedback = result[1];
-                                      });
-                                    } else {
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ClassViewStudent()),
-                                          (Route<dynamic> route) => false);
-                                    }
-                                    print(result[0]);
-                                  } else {
-                                    setState(() {
-                                      _feedback =
-                                          'Accept the privacy policy to continue';
-                                    });
-                                  }
+                                  // if (checkValue == true) {
+                                  //   List result =
+                                  //       await _auth.signUpWithGoogleStudent();
+                                  //   if (result[0] == 'failure') {
+                                  //     setState(() {
+                                  //       _feedback = result[1];
+                                  //     });
+                                  //   } else {
+                                  //     Navigator.of(context).pushAndRemoveUntil(
+                                  //         MaterialPageRoute(
+                                  //             builder: (context) =>
+                                  //                 ClassViewStudent()),
+                                  //         (Route<dynamic> route) => false);
+                                  //   }
+                                  //   print(result[0]);
+                                  // } else {
+                                  //   setState(() {
+                                  //     _feedback =
+                                  //         'Accept the privacy policy to continue';
+                                  //   });
+                                  // }
                                 },
                                 child: new Container(
                                   child: Center(
