@@ -13,7 +13,7 @@ import '../widgets/forgot_password_popup.dart';
 
 final _auth = Auth();
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final _newAuth = AuthenticationService();
+final _authService = AuthenticationService();
 
 class StudentLogin extends StatelessWidget {
   final _formKey = new GlobalKey<FormState>();
@@ -142,7 +142,9 @@ class StudentLogin extends StatelessWidget {
                                 child: new InkWell(
                                   onTap: () async {
                                     if (_formKey.currentState.validate()) {
-                                      String res = await _newAuth.signInEmailStudent(_emailController.text,
+                                      String res =
+                                          await _authService.signInEmailStudent(
+                                              _emailController.text,
                                               _passwordController.text);
 
                                       // notify feedback model listeners
@@ -151,7 +153,6 @@ class StudentLogin extends StatelessWidget {
                                             .read<StudentSignInFeedbackModel>()
                                             .updateFeedback(res);
                                       } else {
-                                    
                                         Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
@@ -203,19 +204,24 @@ class StudentLogin extends StatelessWidget {
                               child: new Material(
                                 child: new InkWell(
                                   onTap: () async {
-                                    print('google sign in');
-                                    List result =
-                                        await _auth.signInWithGoogleStudent();
-                                    if (result[0] == 'failure') {
-                                      print('failure');
+                                    String res = await _authService
+                                        .signInGoogleStudent();
+                                        print('RESULT : : '+res.toString());
+                                    // notify feedback model listeners
+                                    if (res != 'Signed in') {
+                                      context
+                                          .read<StudentSignInFeedbackModel>()
+                                          .updateFeedback(res);
                                     } else {
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ClassViewStudent()),
-                                          (Route<dynamic> route) => false);
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ClassViewStudent(),
+                                        ),
+                                      );
+                                      print('else');
                                     }
-                                    print(result[0]);
                                   },
                                   child: new Container(
                                     child: Center(

@@ -10,7 +10,7 @@ class RevenueCat {
 
     PurchaserInfo purchaserInfo = await Purchases.identify(uid);
 
-    print('Purchase Info : '+purchaserInfo.toString());
+    // print('Purchase Info : '+purchaserInfo.toString());
   }
 
   Future<void> signOutRevenueCat() async {

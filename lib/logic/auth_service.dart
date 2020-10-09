@@ -4,18 +4,24 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'fire.dart';
 import 'revenue_cat.dart';
 
+final _firebaseAuth = FirebaseAuth.instance;
+final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+
 final _revenueCat = RevenueCat();
 final _fire = Fire();
 
 class AuthenticationService {
-  final _firebaseAuth = FirebaseAuth.instance;
-  final _googleSignIn = GoogleSignIn();
-
   Stream<User> get authStateChanges => _firebaseAuth.authStateChanges();
 
   Future<void> signout() async {
+    await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
     await _revenueCat.signOutRevenueCat();
+  }
+
+  Future<void> signoutFirebase() async {
+    await _googleSignIn.signOut();
+    await _firebaseAuth.signOut();
   }
 
   // Student Email
@@ -74,6 +80,11 @@ class AuthenticationService {
   // Student Google
 
   Future<String> signInGoogleStudent() async {
+    if (await _googleSignIn.isSignedIn()) {
+      print('FEEDB : google sign in is signed in');
+      await signoutFirebase();
+    }
+
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
@@ -90,12 +101,12 @@ class AuthenticationService {
           (await _firebaseAuth.signInWithCredential(credential)).user;
 
       if (await _fire.isUserInDb(user.email) == false) {
-        await _firebaseAuth.signOut();
+        await signoutFirebase();
         return 'No user exists with this email address. Please sign up first.';
       }
 
       if (await _fire.getAccountType(user.email) != 'Student') {
-        await _firebaseAuth.signOut();
+        await signoutFirebase();
         return 'Account exists as a teacher. Please use the teacher sign in';
       }
 
