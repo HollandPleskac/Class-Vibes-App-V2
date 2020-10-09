@@ -385,27 +385,24 @@ class _SignUpStudentState extends State<SignUpStudent> {
                               child: new InkWell(
                                 onTap: () async {
                                   print('google sign in');
-                                  // if (checkValue == true) {
-                                  //   List result =
-                                  //       await _auth.signUpWithGoogleStudent();
-                                  //   if (result[0] == 'failure') {
-                                  //     setState(() {
-                                  //       _feedback = result[1];
-                                  //     });
-                                  //   } else {
-                                  //     Navigator.of(context).pushAndRemoveUntil(
-                                  //         MaterialPageRoute(
-                                  //             builder: (context) =>
-                                  //                 ClassViewStudent()),
-                                  //         (Route<dynamic> route) => false);
-                                  //   }
-                                  //   print(result[0]);
-                                  // } else {
-                                  //   setState(() {
-                                  //     _feedback =
-                                  //         'Accept the privacy policy to continue';
-                                  //   });
-                                  // }
+                                  String res =
+                                      await _authService.signUpGoogleStudent();
+
+                                  if (res != 'Signed up') {
+                                    setState(() {
+                                      _feedback = res;
+                                    });
+                                  } else {
+                                    // show success dialog
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ClassViewStudent(),
+                                      ),
+                                    );
+                                    print('else');
+                                  }
                                 },
                                 child: new Container(
                                   child: Center(

@@ -170,6 +170,64 @@ class AuthenticationService {
     }
   }
 
+  Future<String> signUpGoogleStudent() async {
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    try {
+      final User user =
+          (await _firebaseAuth.signInWithCredential(credential)).user;
+
+      if (await _fire.isUserInDb(user.email) == true) {
+        await signoutFirebase();
+        return 'An account already exists with this email address. Use the sign in portals to access your account.';
+      }
+
+      await _fire.setUpAccountStudent(user.email, user.displayName);
+
+      await _revenueCat.signInRevenueCat(user.uid);
+
+      return 'Signed up';
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'account-exists-with-different-credential':
+          return 'Account exists with a different credential';
+
+        case 'invalid-credential':
+          return 'The credential is invalid';
+
+        case 'operation-not-allowed':
+          return 'Operation not allowed. Your account is not enabled';
+
+        case 'user-disabled':
+          return 'The user cooresponding to this email address has been disabled';
+
+        case 'user-not-found':
+          return 'No user exists with this email address. Please sign up first.';
+
+        case 'wrong-password':
+          return 'The password is incorrect';
+
+        case 'invalid-verification-code':
+          return 'The verification code is incorrect';
+
+        case 'invalid-verification-id':
+          return 'The verification id is incorrect';
+
+        default:
+          return 'An unknown error occurred';
+      }
+    } catch (e) {
+      return 'An unknown error occurred';
+    }
+  }
+
   // Teacher Email
 
   Future<String> signInEmailTeacher(String email, String password) async {

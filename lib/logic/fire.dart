@@ -592,10 +592,10 @@ class Fire {
     });
   }
 
-  Future<void> setUpAccountTeacher({
+  Future<void> setUpAccountTeacher(
     String email,
     String username,
-  }) async {
+  ) async {
     await _firestore.collection('UserData').doc(email).set({
       'email': email,
       'display name': username,
