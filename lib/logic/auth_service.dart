@@ -52,6 +52,7 @@ class AuthenticationService {
           return 'An unknown error occurred';
       }
     } catch (e) {
+      print(e);
       return 'An unknown error occurred';
     }
   }
