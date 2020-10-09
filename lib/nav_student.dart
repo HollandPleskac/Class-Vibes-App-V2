@@ -13,7 +13,7 @@ import 'auth/welcome.dart';
 import './logic/auth.dart';
 import 'logic/auth_service.dart';
 
-final _auth = Auth();
+final _authService = AuthenticationService();
 
 class NavStudent extends StatelessWidget {
   @override
@@ -143,7 +143,7 @@ class NavStudent extends StatelessWidget {
               'Log Out',
               FontAwesomeIcons.signOutAlt,
               () async {
-                await _auth.signOut();
+                await _authService.signOut();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => Welcome()),
                     (Route<dynamic> route) => false);

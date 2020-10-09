@@ -13,7 +13,7 @@ final _fire = Fire();
 class AuthenticationService {
   Stream<User> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  Future<void> signout() async {
+  Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
     await _revenueCat.signOutRevenueCat();
@@ -80,11 +80,7 @@ class AuthenticationService {
   // Student Google
 
   Future<String> signInGoogleStudent() async {
-    if (await _googleSignIn.isSignedIn()) {
-      print('FEEDB : google sign in is signed in');
-      await signoutFirebase();
-    }
-
+   
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     print(googleUser.email);
 
