@@ -12,14 +12,6 @@ class AccountSettingsTeacherPage extends StatefulWidget {
 
 class _AccountSettingsTeacherPageState
     extends State<AccountSettingsTeacherPage> {
-  Future<void> _deleteAccount() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return DeleteAccountPopUpT();
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +29,6 @@ class _AccountSettingsTeacherPageState
           ),
           GestureDetector(
             onTap: () {
-              _deleteAccount();
             },
             child: InkWell(
               child: Container(
@@ -131,66 +122,3 @@ class _AccountSettingsTeacherPageState
   }
 }
 
-class DeleteAccountPopUpT extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-        elevation: 0,
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          'Delete Account',
-          style: TextStyle(
-              color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'We hate to see you go, but if you are sure press the button below. Remeber this action can not be undone.',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: new Container(
-                child: new Material(
-                  child: new InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DeleteAccountScreen('Teacher'),
-                        ),
-                      );
-                    },
-                    child: new Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.redAccent,
-                      ),
-                      width: 180.0,
-                      height: 40.0,
-                      child: Center(
-                        child: Text(
-                          'Delete Account',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                    ),
-                  ),
-                  color: Colors.transparent,
-                ),
-                color: Colors.transparent,
-              ),
-            ),
-          ],
-        ));
-  }
-}

@@ -9,15 +9,15 @@ class AccountSettingsStudentPage extends StatefulWidget {
 }
 
 class _AccountSettingsStudentPageState
-    extends State<AccountSettingsStudentPage> {
-  Future<void> _deleteAccount() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return DeleteAccountPopUp();
-      },
-    );
-  }
+  extends State<AccountSettingsStudentPage> {
+    Future<void> _deleteAccount() async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return DeleteAccountPopUp();
+        },
+      );
+    }
 
   @override
   Widget build(BuildContext context) {

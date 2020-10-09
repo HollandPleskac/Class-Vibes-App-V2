@@ -37,6 +37,15 @@ class _ProfileTabState extends State<ProfileTab> {
     _userNameEditController.text = userName;
   }
 
+  Future<void> _deleteAccount() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return DeleteAccountPopUpT();
+      },
+    );
+  }
+
   @override
   void initState() {
     getTeacherName().then((_) {
@@ -268,24 +277,8 @@ class _ProfileTabState extends State<ProfileTab> {
         Center(
             child: GestureDetector(
                 onTap: () async {
-                  User user = _firebaseAuth.currentUser;
-
-                  print('deleteing + ' + widget.accountType);
-
-                  await _classVibesServer.deleteAccount(
-                      email: widget.teacherEmail,
-                      accountType: widget.accountType);
-
-                  print('server delete');
-                  print(user);
-
-                  // await user.delete();
-
-                  print('successfully deleted');
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => Welcome()),
-                      (Route<dynamic> route) => false);
-                  print('navigated to welcome screen');
+                  _deleteAccount();
+                  
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.width * 0.10,
@@ -356,5 +349,81 @@ class _ProfileTabState extends State<ProfileTab> {
         // )
       ],
     );
+  }
+}
+
+class DeleteAccountPopUpT extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        elevation: 0,
+        backgroundColor: kPrimaryColor,
+        title: Text(
+          'Delete Account',
+          style: TextStyle(
+              color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'We hate to see you go, but if you are sure press the button below. Remeber this action can not be undone.',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: new Container(
+                child: new Material(
+                  child: new InkWell(
+                    onTap: () {
+                      User user = _firebaseAuth.currentUser;
+
+                      print('deleteing + ' + widget.accountType);
+
+                      await _classVibesServer.deleteAccount(
+                          email: widget.teacherEmail,
+                          accountType: widget.accountType);
+
+                      print('server delete');
+                      print(user);
+
+                      // await user.delete();
+
+                      print('successfully deleted');
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => Welcome()),
+                          (Route<dynamic> route) => false);
+                      print('navigated to welcome screen');
+                    },
+                    child: new Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.redAccent,
+                      ),
+                      width: 180.0,
+                      height: 40.0,
+                      child: Center(
+                        child: Text(
+                          'Delete Account',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                    ),
+                  ),
+                  color: Colors.transparent,
+                ),
+                color: Colors.transparent,
+              ),
+            ),
+          ],
+        ));
   }
 }
