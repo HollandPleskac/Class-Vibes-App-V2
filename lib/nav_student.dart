@@ -19,137 +19,139 @@ class NavStudent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: Container(
-          color: kPrimaryColor,
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Center(
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/transparent-logo.png',
-                        width: MediaQuery.of(context).size.width * 0.275,
-                      ),
-                      Text(
-                        'CLASS VIBES',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 19,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the drawer if there isn't enough vertical
+      // space to fit everything.
+      child: Container(
+        color: kPrimaryColor,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Center(
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/transparent-logo.png',
+                      width: MediaQuery.of(context).size.width * 0.275,
+                    ),
+                    Text(
+                      'CLASS VIBES',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                color: Colors.white54,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'INTERFACE',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
+              ),
+            ),
+            DrawerTile(
+              'Classes',
+              FontAwesomeIcons.stream,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ClassViewStudent(),
                   ),
-                ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Join a Class',
+              FontAwesomeIcons.solidPlusSquare,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => JoinClass(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Meetings',
+              FontAwesomeIcons.phoneSquareAlt,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MeetingsStudent(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Announcements',
+              FontAwesomeIcons.bullhorn,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AnnouncementsStudent(),
+                  ),
+                );
+              },
+            ),
+            DrawerTile(
+              'Settings',
+              FontAwesomeIcons.cog,
+              () {
+                // Update the state of the app.
+                // ...
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileStudent(),
+                  ),
+                );
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
+              child: Text(
+                'SIGN OUT',
+                style: TextStyle(
+                    color: Colors.white54, fontWeight: FontWeight.w500),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Divider(
-                  color: Colors.white54,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
-                child: Text(
-                  'INTERFACE',
-                  style: TextStyle(
-                      color: Colors.white54, fontWeight: FontWeight.w500),
-                ),
-              ),
-              DrawerTile(
-                'Classes',
-                FontAwesomeIcons.stream,
-                () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ClassViewStudent(),
-                    ),
-                  );
-                },
-              ),
-              DrawerTile(
-                'Join a Class',
-                FontAwesomeIcons.solidPlusSquare,
-                () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JoinClass(),
-                    ),
-                  );
-                },
-              ),
-              DrawerTile(
-                'Meetings',
-                FontAwesomeIcons.phoneSquareAlt,
-                () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MeetingsStudent(),
-                    ),
-                  );
-                },
-              ),
-              DrawerTile(
-                'Announcements',
-                FontAwesomeIcons.bullhorn,
-                () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AnnouncementsStudent(),
-                    ),
-                  );
-                },
-              ),
-              DrawerTile(
-                'Settings',
-                FontAwesomeIcons.cog,
-                () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileStudent(),
-                    ),
-                  );
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 20, top: 10, bottom: 15),
-                child: Text(
-                  'SIGN OUT',
-                  style: TextStyle(
-                      color: Colors.white54, fontWeight: FontWeight.w500),
-                ),
-              ),
-              DrawerTile(
-                'Log Out',
-                FontAwesomeIcons.signOutAlt,
-                () async {
-                  context.read<AuthenticationService>().signout();
-                },
-              ),
-            ],
-          ),
+            ),
+            DrawerTile(
+              'Log Out',
+              FontAwesomeIcons.signOutAlt,
+              () async {
+                await _auth.signOut();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => Welcome()),
+                    (Route<dynamic> route) => false);
+              },
+            ),
+          ],
         ),
-      
+      ),
     );
   }
 }

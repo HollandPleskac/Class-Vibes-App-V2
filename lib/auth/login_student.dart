@@ -13,6 +13,7 @@ import '../widgets/forgot_password_popup.dart';
 
 final _auth = Auth();
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+final _newAuth = AuthenticationService();
 
 class StudentLogin extends StatelessWidget {
   final _formKey = new GlobalKey<FormState>();
@@ -141,9 +142,7 @@ class StudentLogin extends StatelessWidget {
                                 child: new InkWell(
                                   onTap: () async {
                                     if (_formKey.currentState.validate()) {
-                                      String res = await context
-                                          .read<AuthenticationService>()
-                                          .signin(_emailController.text,
+                                      String res = await _newAuth.signInEmailStudent(_emailController.text,
                                               _passwordController.text);
 
                                       // notify feedback model listeners
@@ -152,15 +151,13 @@ class StudentLogin extends StatelessWidget {
                                             .read<StudentSignInFeedbackModel>()
                                             .updateFeedback(res);
                                       } else {
-                                        // TODO : fix using navigator to change screen - provider should do that
-                                        // shouldn't have to use this navigator push here
-                                        // provider should take care of that but it doesn't
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //       builder: (context) =>
-                                        //           ClassViewStudent(),
-                                        //     ));
+                                    
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ClassViewStudent(),
+                                            ));
                                         print('else');
                                       }
                                     }

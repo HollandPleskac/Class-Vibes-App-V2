@@ -25,6 +25,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _db = DatabaseService();
 final _fire = Fire();
+final _revenueCat = RevenueCat();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,20 +65,24 @@ class _RouterState extends State<Router> {
   String accountType = 'nothing yet';
   bool loading = true;
 
-  Future<void> getAccountType() async {
-    try {
-      String accType =
-          await _fire.getAccountType(_firebaseAuth.currentUser.email);
-      print('THE account type is ' + accType);
-      accountType = accType;
-    } catch (e) {
-      print('no user');
+  Future<void> getUserData() async {
+    final User user = _firebaseAuth.currentUser;
+
+    if (user != null) {
+      try {
+        await _revenueCat.signInRevenueCat(user.uid);
+        String type = await _fire.getAccountType(user.email);
+        accountType = type;
+      } catch (e) {
+        print(e);
+        print('no user');
+      }
     }
   }
 
   @override
   void initState() {
-    getAccountType().then(
+    getUserData().then(
       (_) => setState(() {
         loading = false;
         print(accountType);

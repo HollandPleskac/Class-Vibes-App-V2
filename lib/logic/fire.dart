@@ -594,4 +594,12 @@ class Fire {
         .get()
         .then((docSnap) => docSnap['account type']);
   }
+
+  Future<bool> isUserInDb(String email) async {
+    return await _firestore
+            .collection('UserData')
+            .where('email', isEqualTo: email)
+            .get()
+            .then((querySnap) => querySnap.docs.isNotEmpty);
+  }
 }
