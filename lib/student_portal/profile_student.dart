@@ -185,7 +185,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                     physics: BouncingScrollPhysics(),
                     children: [
                       SizedBox(
-                        height: 60,
+                        height: 30,
                       ),
                       Center(
                         child: Container(

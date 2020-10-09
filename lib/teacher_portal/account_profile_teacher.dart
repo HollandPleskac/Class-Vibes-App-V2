@@ -50,7 +50,7 @@ class _ProfileTabState extends State<ProfileTab> {
       physics: BouncingScrollPhysics(),
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.width * 0.145,
+          height: MediaQuery.of(context).size.width * 0.07,
         ),
         //
         Center(
