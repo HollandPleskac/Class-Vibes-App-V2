@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../student_portal/classview_student.dart';
 import '../constant.dart';
-import '../logic/auth.dart';
 
 final _authService = AuthenticationService();
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -384,7 +383,6 @@ class _SignUpStudentState extends State<SignUpStudent> {
                             child: new Material(
                               child: new InkWell(
                                 onTap: () async {
-                                  print('google sign in');
                                   String res =
                                       await _authService.signUpGoogleStudent();
 

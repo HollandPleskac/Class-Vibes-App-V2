@@ -41,7 +41,10 @@ class _ProfileTabState extends State<ProfileTab> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return DeleteAccountPopUpT();
+        return DeleteAccountPopUpT(
+          widget.accountType,
+          widget.teacherEmail,
+        );
       },
     );
   }
@@ -278,7 +281,6 @@ class _ProfileTabState extends State<ProfileTab> {
             child: GestureDetector(
                 onTap: () async {
                   _deleteAccount();
-                  
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.width * 0.10,
@@ -353,6 +355,10 @@ class _ProfileTabState extends State<ProfileTab> {
 }
 
 class DeleteAccountPopUpT extends StatelessWidget {
+  final String accountType;
+  final String teacherEmail;
+
+  DeleteAccountPopUpT(this.accountType, this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -367,7 +373,7 @@ class DeleteAccountPopUpT extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'We hate to see you go, but if you are sure press the button below. Remeber this action can not be undone.',
+              'We hate to see you go. All of your data will be deleted and you will not be able to retrieve your deleted account. Remember this action can not be undone.',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -380,14 +386,13 @@ class DeleteAccountPopUpT extends StatelessWidget {
               child: new Container(
                 child: new Material(
                   child: new InkWell(
-                    onTap: () {
+                    onTap: () async {
                       User user = _firebaseAuth.currentUser;
 
-                      print('deleteing + ' + widget.accountType);
+                      print('deleteing + ' + accountType);
 
                       await _classVibesServer.deleteAccount(
-                          email: widget.teacherEmail,
-                          accountType: widget.accountType);
+                          email: teacherEmail, accountType: accountType);
 
                       print('server delete');
                       print(user);

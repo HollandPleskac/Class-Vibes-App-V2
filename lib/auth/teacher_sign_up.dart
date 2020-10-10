@@ -4,9 +4,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../constant.dart';
 import '../logic/auth.dart';
+import '../logic/auth_service.dart';
 import '../teacher_portal/classview_teacher.dart';
 
-final _auth = Auth();
+final _authService = AuthenticationService();
 
 class SignUpTeacher extends StatefulWidget {
   @override
@@ -252,67 +253,48 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
               child: new Material(
                 child: new InkWell(
                   onTap: () async {
-                    if (checkValue == false) {
-                      setState(() {
-                        _feedback = 'Accept the privacy policy to continue';
-                      });
-                    } else {
-                      //sign up as a teacher
-                      if (_passwordController.text !=
-                          _confirmPasswordController.text) {
+                    if (_formKey.currentState.validate()) {
+                      String res = await _authService.signUpEmailTeacher(
+                        _emailController.text,
+                        _passwordController.text,
+                        _confirmPasswordController.text,
+                        _usernameController.text,
+                        checkValue,
+                      );
+
+                      if (res != 'Signed up') {
                         setState(() {
-                          _feedback =
-                              'Confirm Password is not equal to password';
+                          _feedback = res;
                         });
                       } else {
-                        if (_formKey.currentState.validate()) {
-                          List result = await _auth.signUpTeacher(
-                            username: _usernameController.text,
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                          if (result[0] == 'success') {
-                            //set up account
-                            await _auth.setUpAccountTeacher(
-                              username: _usernameController.text,
-                              email: _emailController.text,
-                            );
-
-                            //show success dialog
-                            showDialog(
-                              context: context,
-                              child: AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    FaIcon(
-                                      FontAwesomeIcons.check,
-                                      color: Colors.green,
-                                      size: 30,
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Center(
-                                      child: Text('Success!'),
-                                    ),
-                                    SizedBox(height: 5),
-                                    Center(
-                                      child:
-                                          Text('Verify you email to continue'),
-                                    ),
-                                  ],
+                        // show success dialog
+                        showDialog(
+                          context: context,
+                          child: AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                FaIcon(
+                                  FontAwesomeIcons.check,
+                                  color: Colors.green,
+                                  size: 30,
                                 ),
-                              ),
-                            );
-                          } else {
-                            setState(() {
-                              _feedback = result[1];
-                            });
-                          }
-                        }
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Center(
+                                  child: Text('Success!'),
+                                ),
+                                SizedBox(height: 5),
+                                Center(
+                                  child: Text('Verify you email to continue'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                       }
                     }
                   },
@@ -351,24 +333,24 @@ class _SignUpTeacherState extends State<SignUpTeacher> {
               child: new Material(
                 child: new InkWell(
                   onTap: () async {
-                    print('google sign in');
-                    if (checkValue == true) {
-                      List result = await _auth.signUpWithGoogleTeacher();
-                      if (result[0] == 'success') {
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => ClassViewTeacher()),
-                            (Route<dynamic> route) => false);
-                      } else {
-                        setState(() {
-                          _feedback = result[1];
-                        });
-                      }
-                    } else {
-                      setState(() {
-                        _feedback = 'Accept the privacy policy to continue';
-                      });
-                    }
+                    String res =
+                                      await _authService.signUpGoogleTeacher();
+
+                                  if (res != 'Signed up') {
+                                    setState(() {
+                                      _feedback = res;
+                                    });
+                                  } else {
+                                    // show success dialog
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ClassViewTeacher(),
+                                      ),
+                                    );
+                                    print('else');
+                                  }
                   },
                   child: new Container(
                     child: Center(
