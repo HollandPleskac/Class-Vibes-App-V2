@@ -160,6 +160,15 @@ class _ProfileStudentState extends State<ProfileStudent> {
     super.initState();
   }
 
+  Future<void> _deleteAccount() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return DeleteAccountPopUp();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -199,11 +208,10 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                       200] //                   <--- border width here
                                   ),
                               image: DecorationImage(
-                                    image: NetworkImage(
-                                        // 'https://www.kindpng.com/picc/m/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png'
-                                        'https://i.pinimg.com/736x/9e/e8/9f/9ee89f7623acc78fc33fc0cbaf3a014b.jpg'
-                                        ),
-                                    fit: BoxFit.cover)),
+                                  image: NetworkImage(
+                                      // 'https://www.kindpng.com/picc/m/404-4042814_facebook-no-profile-png-download-default-headshot-transparent.png'
+                                      'https://i.pinimg.com/736x/9e/e8/9f/9ee89f7623acc78fc33fc0cbaf3a014b.jpg'),
+                                  fit: BoxFit.cover)),
                         ),
                       ),
                       SizedBox(
@@ -376,12 +384,10 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 color: Colors.grey[200],
                                 onPressed: () async {
                                   print('logging out');
-                                    // await _googleSignIn.disconnect();
-                                          // await _googleSignIn.signOut();
-                                        
-                                      
-                                    
-                                    await _auth.signOut();
+                                  // await _googleSignIn.disconnect();
+                                  // await _googleSignIn.signOut();
+
+                                  await _auth.signOut();
 
                                   Navigator.push(
                                       context,
@@ -403,15 +409,10 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 color: Colors.grey[200],
                                 onPressed: () {
                                   print('deleteing account');
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AccountSettingsStudentPage()));
-                                },
+                                  _deleteAccount();
+                                  },
                                 child: Text(
-                                  'Acount Settings',
+                                  'Delete Account',
                                 ),
                               ),
                             )
