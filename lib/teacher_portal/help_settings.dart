@@ -34,13 +34,13 @@ class HelpScreen extends StatelessWidget {
                 fontSize: 15,
                 fontWeight: FontWeight.w500),
           ),
-          FlatButton(
-            child: Text('send notification'),
-            onPressed: () async {
-              await _fcm.sendDG();
+          // FlatButton(
+          //   child: Text('send notification'),
+          //   onPressed: () async {
+          //     await _fcm.sendDG();
               
-            },
-          ),
+          //   },
+          // ),
         ],
       ),
     );
