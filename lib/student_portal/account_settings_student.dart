@@ -10,7 +10,7 @@ class AccountSettingsStudentPage extends StatefulWidget {
 
 class _AccountSettingsStudentPageState
   extends State<AccountSettingsStudentPage> {
-    Future<void> _deleteAccount() async {
+    Future<void> _deleteAccountPopUpMessage() async {
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
@@ -33,7 +33,7 @@ class _AccountSettingsStudentPageState
           RaisedButton(
             child: Text('Delete Account'),
             onPressed: () {
-              _deleteAccount();
+              _deleteAccountPopUpMessage();
               //Navigator.push(
               //  context,
               // MaterialPageRoute(
