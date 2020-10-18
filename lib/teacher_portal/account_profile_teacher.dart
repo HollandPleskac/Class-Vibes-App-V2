@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:class_vibes_v2/auth/welcome.dart';
+import 'package:class_vibes_v2/logic/auth_service.dart';
 import 'package:class_vibes_v2/logic/class_vibes_server.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,12 +14,12 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _classVibesServer = ClassVibesServer();
+final _authService = AuthenticationService();
 
 class ProfileTab extends StatefulWidget {
   final String teacherEmail;
-  final String accountType;
 
-  ProfileTab({this.teacherEmail, this.accountType});
+  ProfileTab({this.teacherEmail});
   @override
   _ProfileTabState createState() => _ProfileTabState();
 }
@@ -42,7 +43,7 @@ class _ProfileTabState extends State<ProfileTab> {
       context: context,
       builder: (BuildContext context) {
         return DeleteAccountPopUpT(
-          widget.accountType,
+          
           widget.teacherEmail,
         );
       },
@@ -355,10 +356,9 @@ class _ProfileTabState extends State<ProfileTab> {
 }
 
 class DeleteAccountPopUpT extends StatelessWidget {
-  final String accountType;
   final String teacherEmail;
 
-  DeleteAccountPopUpT(this.accountType, this.teacherEmail);
+  DeleteAccountPopUpT(this.teacherEmail);
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -373,7 +373,7 @@ class DeleteAccountPopUpT extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'We hate to see you go. All of your data will be deleted and you will not be able to retrieve your deleted account. Remember this action can not be undone.',
+              'We hate to see you go. All of your data will be deleted and you will not be able to retrieve your deleted account. Purchased classes cannot be recovered. Remember this action can not be undone.',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 15,
@@ -389,15 +389,16 @@ class DeleteAccountPopUpT extends StatelessWidget {
                     onTap: () async {
                       User user = _firebaseAuth.currentUser;
 
-                      print('deleteing + ' + accountType);
+                      print('deleteing + ' + 'Teacher');
 
                       await _classVibesServer.deleteAccount(
-                          email: teacherEmail, accountType: accountType);
+                          email: teacherEmail, accountType: 'Teacher');
 
                       print('server delete');
                       print(user);
 
-                      // await user.delete();
+                      await _authService.signOutGoogle();
+                      await user.delete();
 
                       print('successfully deleted');
                       Navigator.of(context).pushAndRemoveUntil(

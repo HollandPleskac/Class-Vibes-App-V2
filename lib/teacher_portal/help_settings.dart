@@ -9,7 +9,6 @@ import '../logic/fcm.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-final _auth = Auth();
 final _fcm = FCM();
 
 final _classVibesServer = ClassVibesServer();

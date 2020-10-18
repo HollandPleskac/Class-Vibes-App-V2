@@ -108,7 +108,7 @@ class _ProfileTeacherState extends State<ProfileTeacher> {
                             Container(
                               child: ProfileTab(
                                 teacherEmail: _email,
-                                accountType: _accountType,
+                                
                               ),
                             ),
                             Container(

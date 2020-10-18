@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:class_vibes_v2/logic/auth_service.dart';
+import 'package:class_vibes_v2/logic/class_vibes_server.dart';
 import 'package:class_vibes_v2/widgets/server_down.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,11 +12,11 @@ import '../nav_student.dart';
 import '../constant.dart';
 import '../logic/auth.dart';
 import '../auth/welcome.dart';
-import './account_settings_student.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-final _auth = Auth();
+final _authService = AuthenticationService();
+final _classVibesServer = ClassVibesServer();
 
 class ProfileStudent extends StatefulWidget {
   @override
@@ -144,7 +146,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
 
   String _email;
 
-  Future getTeacherEmail() async {
+  Future getStudentEmail() async {
     final User user = _firebaseAuth.currentUser;
     final email = user.email;
 
@@ -153,7 +155,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
 
   @override
   void initState() {
-    getTeacherEmail().then((_) {
+    getStudentEmail().then((_) {
       setState(() {});
     });
 
@@ -164,7 +166,9 @@ class _ProfileStudentState extends State<ProfileStudent> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return DeleteAccountPopUp();
+        return DeleteAccountPopUp(
+          _email,
+        );
       },
     );
   }
@@ -387,7 +391,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                   // await _googleSignIn.disconnect();
                                   // await _googleSignIn.signOut();
 
-                                  await _auth.signOut();
+                                  await _authService.signOut();
 
                                   Navigator.push(
                                       context,
@@ -410,7 +414,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                 onPressed: () {
                                   print('deleteing account');
                                   _deleteAccount();
-                                  },
+                                },
                                 child: Text(
                                   'Delete Account',
                                 ),
@@ -425,5 +429,82 @@ class _ProfileStudentState extends State<ProfileStudent> {
         }
       },
     );
+  }
+}
+
+class DeleteAccountPopUp extends StatelessWidget {
+  String studentEmail;
+
+  DeleteAccountPopUp(this.studentEmail);
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        elevation: 0,
+        backgroundColor: kPrimaryColor,
+        title: Text(
+          'Delete Account',
+          style: TextStyle(
+              color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'We hate to see you go. You will be removed from all of your classes. All data will be deleted. Remeber this action can not be undone.',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: new Container(
+                child: new Material(
+                  child: new InkWell(
+                    onTap: () async {
+                      User user = _firebaseAuth.currentUser;
+
+
+                      await _classVibesServer.deleteAccount(
+                          email: studentEmail, accountType: 'Student');
+
+                      print('server delete');
+                      print(user);
+                      await _authService.signOutGoogle();
+                      await user.delete();
+
+                      print('successfully deleted');
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => Welcome()),
+                          (Route<dynamic> route) => false);
+                      print('navigated to welcome screen');
+                    },
+                    child: new Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.redAccent,
+                      ),
+                      width: 180.0,
+                      height: 40.0,
+                      child: Center(
+                        child: Text(
+                          'Delete Account',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                    ),
+                  ),
+                  color: Colors.transparent,
+                ),
+                color: Colors.transparent,
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -1,4 +1,4 @@
-//TODO : sign up as a teacher 
+//TODO : sign up as a teacher
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -24,6 +24,16 @@ class AuthenticationService {
   Future<void> signoutFirebase() async {
     await _googleSignIn.signOut();
     await _firebaseAuth.signOut();
+  }
+
+  Future signOutGoogle() async {
+    // for deleting accounts - leaves firebase user to be deleted
+    await _googleSignIn.signOut();
+    await _revenueCat.signOutRevenueCat();
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
   // Student Email

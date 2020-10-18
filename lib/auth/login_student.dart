@@ -11,7 +11,6 @@ import '../logic/auth.dart';
 import '../constant.dart';
 import '../widgets/forgot_password_popup.dart';
 
-final _auth = Auth();
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final _authService = AuthenticationService();
 
