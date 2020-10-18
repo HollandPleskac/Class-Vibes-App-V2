@@ -78,6 +78,8 @@ class _ClassSettingsState extends State<ClassSettings> {
           SizedBox(
             height: 25,
           ),
+          ClassCode(widget.classId),
+          SizedBox(height: 25),
           EditClassName(
             controller: _classNameController,
             classId: widget.classId,
@@ -90,7 +92,17 @@ class _ClassSettingsState extends State<ClassSettings> {
             },
           ),
           SizedBox(
-            height: 50,
+            height: 20,
+          ),
+          InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
+              (int value) {
+            setState(() {
+              isUpdated = true;
+              maxDaysInactive = value;
+            });
+          }),
+          SizedBox(
+            height: 20,
           ),
           IsAcceptingJoin(
             isSwitched: isSwitched,
@@ -103,17 +115,6 @@ class _ClassSettingsState extends State<ClassSettings> {
             classId: widget.classId,
             email: widget.email,
           ),
-          SizedBox(
-            height: 50,
-          ),
-          ClassCode(widget.classId),
-          InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
-              (int value) {
-            setState(() {
-              isUpdated = true;
-              maxDaysInactive = value;
-            });
-          }),
           Spacer(),
           isUpdated == false
               ? Container()
@@ -217,9 +218,7 @@ class EditClassName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: 20,
-        ),
+        SizedBox(width: 20),
         Container(
           width: MediaQuery.of(context).size.width * 0.725,
           child: TextFormField(
@@ -227,6 +226,7 @@ class EditClassName extends StatelessWidget {
             decoration: InputDecoration(
               labelText: 'Edit Class Name',
               labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
+              icon: FaIcon(FontAwesomeIcons.globe),
             ),
             onChanged: (String value) {
               updateIsUpdated();
@@ -280,7 +280,7 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
                 activeColor: kPrimaryColor,
               ),
         SizedBox(
-          width: 20,
+          width: 60,
         ),
       ],
     );
@@ -458,7 +458,6 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
             ? CircularProgressIndicator()
             : NumberPicker.integer(
                 initialValue: widget.maxDaysInactive,
-                scrollDirection: Axis.horizontal,
                 minValue: 7,
                 maxValue: 14,
                 onChanged: (value) {
@@ -482,11 +481,8 @@ class ClassCode extends StatefulWidget {
 class _ClassCodeState extends State<ClassCode> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        SizedBox(
-          width: 20,
-        ),
         Text(
           'Class Code',
           style: TextStyle(
@@ -494,13 +490,15 @@ class _ClassCodeState extends State<ClassCode> {
             fontSize: 18,
           ),
         ),
-        Spacer(),
-        Padding(
-          padding: EdgeInsets.only(right: 15),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: widget.classId.split("").map((letter) {
               return Padding(
-                padding: const EdgeInsets.only(right: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 7.5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
