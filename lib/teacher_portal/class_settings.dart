@@ -458,7 +458,6 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                   widget.updateMaxDaysInactive(value);
                 },
               ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.01),
       ],
     );
   }
