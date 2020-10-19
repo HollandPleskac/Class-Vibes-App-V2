@@ -76,10 +76,10 @@ class _ClassSettingsState extends State<ClassSettings> {
       child: Column(
         children: [
           SizedBox(
-            height: 25,
+            height: 30,
           ),
           ClassCode(widget.classId),
-          SizedBox(height: 25),
+          SizedBox(height: 35),
           EditClassName(
             controller: _classNameController,
             classId: widget.classId,
@@ -92,7 +92,7 @@ class _ClassSettingsState extends State<ClassSettings> {
             },
           ),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           InactiveDaysPicker(maxDaysInactive, widget.email, widget.classId,
               (int value) {
@@ -102,7 +102,7 @@ class _ClassSettingsState extends State<ClassSettings> {
             });
           }),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           IsAcceptingJoin(
             isSwitched: isSwitched,
@@ -161,36 +161,29 @@ class _ClassSettingsState extends State<ClassSettings> {
             style: TextStyle(color: Colors.red, fontSize: 16),
           ),
           Spacer(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DeleteClass(
-                classId: widget.classId,
-                teacherEmail: widget.email,
-              ),
-              StreamBuilder(
-                stream: _firestore
-                    .collection("Classes")
-                    .doc(widget.classId)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Text('no data');
-                  } else {
-                    return Text(
-                      'Class Expires on : ' +
-                          DateFormat.yMMMd('en_US')
-                              .format(DateTime.parse(snapshot
-                                  .data['expire date']
-                                  .toDate()
-                                  .toString()))
-                              .toString(),
-                      style: TextStyle(color: Colors.red, fontSize: 16),
-                    );
-                  }
-                },
-              ),
-            ],
+          DeleteClass(
+            classId: widget.classId,
+            teacherEmail: widget.email,
+          ),
+          StreamBuilder(
+            stream: _firestore
+                .collection("Classes")
+                .doc(widget.classId)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Text('no data');
+              } else {
+                return Text(
+                  'Class Expires on : ' +
+                      DateFormat.yMMMd('en_US')
+                          .format(DateTime.parse(
+                              snapshot.data['expire date'].toDate().toString()))
+                          .toString(),
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                );
+              }
+            },
           ),
           SizedBox(
             height: 20,
@@ -220,12 +213,13 @@ class EditClassName extends StatelessWidget {
       children: [
         SizedBox(width: 20),
         Container(
-          width: MediaQuery.of(context).size.width * 0.725,
+          width: MediaQuery.of(context).size.width - 40,
           child: TextFormField(
             controller: controller,
             decoration: InputDecoration(
               labelText: 'Edit Class Name',
               labelStyle: TextStyle(fontSize: 16, color: kWetAsphaltColor),
+              border: OutlineInputBorder(borderSide: BorderSide()),
               icon: FaIcon(FontAwesomeIcons.globe),
             ),
             onChanged: (String value) {
@@ -280,7 +274,7 @@ class _IsAcceptingJoinState extends State<IsAcceptingJoin> {
                 activeColor: kPrimaryColor,
               ),
         SizedBox(
-          width: 60,
+          width: 20,
         ),
       ],
     );
@@ -464,7 +458,7 @@ class _InactiveDaysPickerState extends State<InactiveDaysPicker> {
                   widget.updateMaxDaysInactive(value);
                 },
               ),
-        Spacer(),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.01),
       ],
     );
   }
