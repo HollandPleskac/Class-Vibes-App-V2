@@ -557,7 +557,8 @@ class DynamicPieChart extends StatelessWidget {
           child: Text(
             classDocument['class name'],
             overflow: TextOverflow.fade,
-            softWrap: false,
+            textAlign: TextAlign.center,
+            softWrap: true,
             style: kSubTextStyle.copyWith(
                 fontSize: MediaQuery.of(context).size.width * 0.037),
           ),
