@@ -367,8 +367,8 @@ class Class extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (DateTime.parse(document['expire date'].toDate().toString())
-                      .compareTo(DateTime.now()) <=
-                  0)
+                  .compareTo(DateTime.now()) <=
+              0)
           ? () {}
           : () {
               Navigator.pushNamed(
@@ -398,14 +398,14 @@ class Class extends StatelessWidget {
                 child: AspectRatio(aspectRatio: 1.6),
               );
             default:
-            // if the compareTo() result is negative or 0 class is expired
-            // if compareTo() is negative then date on document is less than current date
+              // if the compareTo() result is negative or 0 class is expired
+              // if compareTo() is negative then date on document is less than current date
               if (DateTime.parse(document['expire date'].toDate().toString())
                       .compareTo(DateTime.now()) <=
                   0) {
-                    // print(document['expire date'].toDate().toString());
-                    // print(DateTime.parse(document['expire date'].toDate().toString())
-                    //   .compareTo(DateTime.now()));
+                // print(document['expire date'].toDate().toString());
+                // print(DateTime.parse(document['expire date'].toDate().toString())
+                //   .compareTo(DateTime.now()));
                 // class is expired
                 return ExpiredClass(document['class name']);
               } else {
@@ -418,8 +418,8 @@ class Class extends StatelessWidget {
                   // increment teacher unread count
                   for (int i = 0; i < snapshot.data.docs.length; i++) {
                     if (snapshot.data.docs[i]['accepted'] == true) {
-                      unReadCount = unReadCount +
-                          snapshot.data.docs[i]['teacher unread'];
+                      unReadCount =
+                          unReadCount + snapshot.data.docs[i]['teacher unread'];
                     }
                   }
                   return Stack(
@@ -485,8 +485,7 @@ class DynamicPieChart extends StatelessWidget {
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
-                  DateTime.parse(
-                      documentSnapshot['date'].toDate().toString()),
+                  DateTime.parse(documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays <
             classDocument['max days inactive'])
@@ -494,28 +493,24 @@ class DynamicPieChart extends StatelessWidget {
         .toDouble();
 
     double needHelpStudents = studentDocuments
-        .where((documentSnapshot) =>
-            documentSnapshot['status'] == 'need help')
+        .where((documentSnapshot) => documentSnapshot['status'] == 'need help')
         .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
-                  DateTime.parse(
-                      documentSnapshot['date'].toDate().toString()),
+                  DateTime.parse(documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays <
             classDocument['max days inactive'])
         .length
         .toDouble();
     double frustratedStudents = studentDocuments
-        .where((documentSnapshot) =>
-            documentSnapshot['status'] == 'frustrated')
+        .where((documentSnapshot) => documentSnapshot['status'] == 'frustrated')
         .where((document) => document['accepted'] == true)
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
-                  DateTime.parse(
-                      documentSnapshot['date'].toDate().toString()),
+                  DateTime.parse(documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays <
             classDocument['max days inactive'])
@@ -525,8 +520,7 @@ class DynamicPieChart extends StatelessWidget {
         .where((documentSnapshot) =>
             DateTime.now()
                 .difference(
-                  DateTime.parse(
-                      documentSnapshot['date'].toDate().toString()),
+                  DateTime.parse(documentSnapshot['date'].toDate().toString()),
                 )
                 .inDays >=
             classDocument['max days inactive'])
