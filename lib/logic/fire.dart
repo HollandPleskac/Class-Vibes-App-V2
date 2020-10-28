@@ -302,7 +302,7 @@ class Fire {
       // 'type':'paid',
     });
 
-    await subscribeToClasses(uid);
+    await subscribeToClasses(uid, 'Teacher');
     return ['success', classCode];
   }
 
@@ -605,7 +605,7 @@ class Fire {
     });
   }
 
-  Future<void> subscribeToClasses(String email) async {
+  Future<void> subscribeToClasses(String email, String accountType) async {
     List classes = await _firestore
         .collection('UserData')
         .doc(email)
@@ -617,7 +617,12 @@ class Fire {
       for (int i = 0; i < classes.length; i++) {
         String classCode = classes[i]['class code'];
         print('Subscribed to : '+classCode);
-        _fcm.fcmSubscribe('classes-teacher-$classCode');
+        if (accountType == "Teacher") {
+          _fcm.fcmSubscribe('classes-teacher-$classCode');
+        } else {
+          _fcm.fcmSubscribe('classes-student-$classCode');
+        }
+        
       }
     }
   }

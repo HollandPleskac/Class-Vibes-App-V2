@@ -56,6 +56,7 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(cred.user.uid);
+      await _fire.subscribeToClasses(email,'Student');
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
@@ -147,6 +148,7 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(user.uid);
+      await _fire.subscribeToClasses(user.email,'Student');
 
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
@@ -261,7 +263,7 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(cred.user.uid);
-      await _fire.subscribeToClasses(email);
+      await _fire.subscribeToClasses(email,'Teacher');
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
@@ -353,8 +355,8 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(user.uid);
-      await _fire.subscribeToClasses(user.email);
-      
+      await _fire.subscribeToClasses(user.email,'Teacher');
+
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
