@@ -51,10 +51,11 @@ Future<String> getUserData() async {
       return accountType;
     } catch (e) {
       print(e);
-      print('no user');
-      return 'no user';
+      print('fetching account data error');
+      return 'fetching account data error';
     }
   }
+  return 'no user';
 }
 
 class MyApp extends StatelessWidget {
