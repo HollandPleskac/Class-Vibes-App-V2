@@ -4,12 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../logic/revenue_cat.dart';
 
 import '../logic/class_vibes_server.dart';
-import '../logic/auth.dart';
+import '../logic/fire.dart';
 import '../logic/fcm.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _fcm = FCM();
+final _fire = Fire();
 
 final _classVibesServer = ClassVibesServer();
 final _revenueCat = RevenueCat();
@@ -34,9 +35,9 @@ class HelpScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500),
           ),
           // FlatButton(
-          //   child: Text('send notification'),
+          //   child: Text('subscribe to classes'),
           //   onPressed: () async {
-          //     await _fcm.sendDG();
+          //     _fire.subscribeToClasses(email);
               
           //   },
           // ),

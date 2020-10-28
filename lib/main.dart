@@ -71,6 +71,7 @@ class _RouterState extends State<Router> {
     if (user != null) {
       try {
         await _revenueCat.signInRevenueCat(user.uid);
+        await _fire.subscribeToClasses(user.email);
         String type = await _fire.getAccountType(user.email);
         accountType = type;
       } catch (e) {

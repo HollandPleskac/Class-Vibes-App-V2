@@ -14,4 +14,12 @@ class FCM {
     return token;
   }
 
+  void fcmSubscribe(String topic) {
+    _firebaseMessaging.subscribeToTopic(topic);
+  }
+
+  void fcmUnSubscribe(String topic) {
+    _firebaseMessaging.unsubscribeFromTopic(topic);
+  }
+
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:random_string/random_string.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -261,9 +262,9 @@ class Fire {
     return 'That code does not exist.';
   }
 
-  Future<List> addClass({String uid, String className}) async {
+  Future<List> addClass(
+      { String uid, String className}) async {
     String classCode = randomNumeric(4);
-    // String classCode = '7614';
 
     int isCodeUnique = await _firestore
         .collection("Classes")
@@ -272,7 +273,6 @@ class Fire {
         .then((querySnapshot) => querySnapshot.docs.length);
 
     if (isCodeUnique != 0) {
-      // return ['failure', 'An error occurred try again'];
       print('adding a new class');
       addClass(uid: uid, className: className);
     }
@@ -301,6 +301,8 @@ class Fire {
       'expire date': DateTime.now().add(Duration(days: 365)),
       // 'type':'paid',
     });
+
+    await subscribeToClasses(uid);
     return ['success', classCode];
   }
 
@@ -601,5 +603,21 @@ class Fire {
       'display name': username,
       'account type': 'Teacher',
     });
+  }
+
+  Future<void> subscribeToClasses(String email) async {
+    List classes = await _firestore
+        .collection('UserData')
+        .doc(email)
+        .collection('Classes')
+        .get()
+        .then((querySnap) => querySnap.docs);
+
+    if (classes.length != 0) {
+      for (int i = 0; i < classes.length; i++) {
+        String classCode = classes[i]['class code'];
+        _fcm.fcmSubscribe(classCode);
+      }
+    }
   }
 }

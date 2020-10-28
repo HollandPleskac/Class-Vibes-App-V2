@@ -12,6 +12,7 @@ final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 final _revenueCat = RevenueCat();
 final _fire = Fire();
 
+
 class AuthenticationService {
   Stream<User> get authStateChanges => _firebaseAuth.authStateChanges();
 
@@ -146,6 +147,7 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(user.uid);
+
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -259,6 +261,7 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(cred.user.uid);
+      await _fire.subscribeToClasses(email);
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
@@ -350,6 +353,8 @@ class AuthenticationService {
       }
 
       await _revenueCat.signInRevenueCat(user.uid);
+      await _fire.subscribeToClasses(user.email);
+      
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
