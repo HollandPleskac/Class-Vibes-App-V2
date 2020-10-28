@@ -461,7 +461,7 @@ class StudentActionBtns extends StatelessWidget {
           IconButton(
             icon: FaIcon(
               FontAwesomeIcons.phone,
-              size: 21,
+              size: 20,
               color: kWetAsphaltColor,
             ),
             onPressed: () {
@@ -474,7 +474,7 @@ class StudentActionBtns extends StatelessWidget {
             },
           ),
           Padding(
-            padding: EdgeInsets.only(right: 10, left: 5),
+            padding: EdgeInsets.only(right: 9, left: 4),
             child: IconButton(
               icon: FaIcon(
                 FontAwesomeIcons.solidComments,
