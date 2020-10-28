@@ -616,6 +616,7 @@ class Fire {
     if (classes.length != 0) {
       for (int i = 0; i < classes.length; i++) {
         String classCode = classes[i]['class code'];
+        print('Subscribed to : '+classCode);
         _fcm.fcmSubscribe(classCode);
       }
     }
