@@ -381,6 +381,7 @@ class Student extends StatelessWidget {
                 name: name,
                 lastUpdated: getLastUpdatedStatus(lastChangedStatus),
                 status: status,
+                maxDaysInactive: maxDaysInactive,
               ),
               StudentActionBtns(
                 classId: classId,
@@ -399,11 +400,13 @@ class StudentProfileInfo extends StatelessWidget {
   final String name;
   final String lastUpdated;
   final String status;
+  final int maxDaysInactive;
 
   StudentProfileInfo({
     this.name,
     this.lastUpdated,
     this.status,
+    this.maxDaysInactive,
   });
   @override
   Widget build(BuildContext context) {
@@ -420,7 +423,7 @@ class StudentProfileInfo extends StatelessWidget {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                  color: statusColor(status).withOpacity(0.4),
+                  color: statusColor(status, maxDaysInactive).withOpacity(0.4),
                   width: 4,
                 ),
                 image: DecorationImage(
@@ -458,12 +461,17 @@ class StudentProfileInfo extends StatelessWidget {
   }
 }
 
-Color statusColor(String status) {
-  if (status == 'doing great') {
+Color statusColor(String status, int maxDaysInactive) {
+  int compareDate = DateTime.now().compareTo(
+    DateTime.now().subtract(
+      Duration(days: maxDaysInactive),
+    ),
+  );
+  if (status == 'doing great' && compareDate >= 0) {
     return kPieChartDoingGreatColor;
-  } else if (status == 'need help') {
+  } else if (status == 'need help' && compareDate >= 0) {
     return kPieChartNeedHelpColor;
-  }else if (status == 'frustrated') {
+  } else if (status == 'frustrated' && compareDate >= 0) {
     return kPieChartFrustratedColor;
   } else {
     return kPieChartInactiveColor;
