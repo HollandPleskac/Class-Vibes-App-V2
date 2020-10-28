@@ -8,7 +8,6 @@ import './student_portal/meetings_student.dart';
 import './student_portal/classview_student.dart';
 import './student_portal/announcements_student.dart';
 import './student_portal/join_class.dart';
-import 'package:provider/provider.dart';
 import 'auth/welcome.dart';
 import './logic/auth.dart';
 import 'logic/auth_service.dart';

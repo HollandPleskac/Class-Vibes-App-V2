@@ -30,6 +30,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   final TextEditingController _classNameController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final String email = _firebaseAuth.currentUser.email;
+
   void _showModalSheetEditUserName(String email) {
     showModalBottomSheet(
         barrierColor: Colors.white.withOpacity(0),
@@ -258,24 +260,6 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
         });
   }
 
-  String _email;
-
-  Future getTeacherEmail() async {
-    final User user = _firebaseAuth.currentUser;
-    final email = user.email;
-
-    _email = email;
-  }
-
-  @override
-  void initState() {
-    getTeacherEmail().then((_) {
-      setState(() {});
-    });
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -303,7 +287,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     actions: [
                       IconButton(
                         onPressed: () {
-                          _showModalSheetEditUserName(_email);
+                          _showModalSheetEditUserName(email);
                         },
                         icon: Icon(Icons.add),
                       ),
@@ -314,7 +298,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                     child: StreamBuilder(
                       stream: _firestore
                           .collection('Classes')
-                          .where('teacher email', isEqualTo: _email)
+                          .where('teacher email', isEqualTo: email)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {

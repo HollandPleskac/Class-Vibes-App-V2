@@ -2,7 +2,6 @@ import 'package:class_vibes_v2/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'logic/auth_service.dart';
 import 'teacher_portal/classview_teacher.dart';
