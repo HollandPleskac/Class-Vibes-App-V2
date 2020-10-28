@@ -60,6 +60,7 @@ class AuthenticationService {
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       switch (e.code) {
         case 'invalid-email':
           return 'The email address is not valid';
