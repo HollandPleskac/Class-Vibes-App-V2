@@ -461,6 +461,7 @@ class StudentActionBtns extends StatelessWidget {
           IconButton(
             icon: FaIcon(
               FontAwesomeIcons.phone,
+              size: 21,
               color: kWetAsphaltColor,
             ),
             onPressed: () {
@@ -475,6 +476,7 @@ class StudentActionBtns extends StatelessWidget {
           IconButton(
             icon: FaIcon(
               FontAwesomeIcons.solidComments,
+              size: 25,
               color: kPrimaryColor,
             ),
             onPressed: () {
