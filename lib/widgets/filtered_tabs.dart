@@ -473,27 +473,30 @@ class StudentActionBtns extends StatelessWidget {
               );
             },
           ),
-          IconButton(
-            icon: FaIcon(
-              FontAwesomeIcons.solidComments,
-              size: 25,
-              color: kPrimaryColor,
-            ),
-            onPressed: () {
-              _fire.resetTeacherUnreadCount(
-                classId: classId,
-                studentEmail: studentEmail,
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatTeacher(
-                    classId: classId,
-                    studentEmail: studentEmail,
+          Padding(
+            padding: EdgeInsets.only(right: 10, left: 5),
+            child: IconButton(
+              icon: FaIcon(
+                FontAwesomeIcons.solidComments,
+                size: 25,
+                color: kPrimaryColor,
+              ),
+              onPressed: () {
+                _fire.resetTeacherUnreadCount(
+                  classId: classId,
+                  studentEmail: studentEmail,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatTeacher(
+                      classId: classId,
+                      studentEmail: studentEmail,
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
