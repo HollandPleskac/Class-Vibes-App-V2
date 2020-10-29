@@ -424,8 +424,8 @@ class StudentProfileInfo extends StatelessWidget {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                  color: statusColor(status, maxDaysInactive, lastChangedStatus)
-                      .withOpacity(0.9),
+                  color:
+                      statusColor(status, maxDaysInactive, lastChangedStatus),
                   width: 4,
                 ),
                 image: DecorationImage(
@@ -473,13 +473,13 @@ Color statusColor(
       .inDays;
 
   if (status == 'doing great' && daysSinceUpdate < maxDaysInactive) {
-    return kPieChartDoingGreatColor;
+    return kPieChartDoingGreatColor.withOpacity(0.75);
   } else if (status == 'need help' && daysSinceUpdate < maxDaysInactive) {
-    return kPieChartNeedHelpColor;
+    return kPieChartNeedHelpColor.withOpacity(0.75);
   } else if (status == 'frustrated' && daysSinceUpdate < maxDaysInactive) {
-    return kPieChartFrustratedColor;
+    return kPieChartFrustratedColor.withOpacity(0.75);
   } else {
-    return kPieChartInactiveColor;
+    return kPieChartInactiveColor.withOpacity(0.75);
   }
 }
 
