@@ -379,9 +379,9 @@ class Student extends StatelessWidget {
             children: [
               StudentProfileInfo(
                 name: name,
-                lastUpdated: getLastUpdatedStatus(lastChangedStatus),
                 status: status,
                 maxDaysInactive: maxDaysInactive,
+                lastChangedStatus: lastChangedStatus,
               ),
               StudentActionBtns(
                 classId: classId,
@@ -398,16 +398,17 @@ class Student extends StatelessWidget {
 
 class StudentProfileInfo extends StatelessWidget {
   final String name;
-  final String lastUpdated;
   final String status;
   final int maxDaysInactive;
+  final Timestamp lastChangedStatus;
 
   StudentProfileInfo({
     this.name,
-    this.lastUpdated,
     this.status,
     this.maxDaysInactive,
+    this.lastChangedStatus,
   });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -423,7 +424,8 @@ class StudentProfileInfo extends StatelessWidget {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(100),
                 border: Border.all(
-                  color: statusColor(status, maxDaysInactive).withOpacity(0.4),
+                  color: statusColor(status, maxDaysInactive, lastChangedStatus)
+                      .withOpacity(0.9),
                   width: 4,
                 ),
                 image: DecorationImage(
@@ -445,7 +447,7 @@ class StudentProfileInfo extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                lastUpdated,
+                getLastUpdatedStatus(lastChangedStatus),
                 overflow: TextOverflow.fade,
                 softWrap: false,
                 style: TextStyle(
@@ -461,17 +463,20 @@ class StudentProfileInfo extends StatelessWidget {
   }
 }
 
-Color statusColor(String status, int maxDaysInactive) {
-  int compareDate = DateTime.now().compareTo(
-    DateTime.now().subtract(
-      Duration(days: maxDaysInactive),
-    ),
-  );
-  if (status == 'doing great' && compareDate >= 0) {
+Color statusColor(
+  String status,
+  int maxDaysInactive,
+  Timestamp lastUpdatedStatus,
+) {
+  int daysSinceUpdate = DateTime.now()
+      .difference(DateTime.parse(lastUpdatedStatus.toDate().toString()))
+      .inDays;
+
+  if (status == 'doing great' && daysSinceUpdate < maxDaysInactive) {
     return kPieChartDoingGreatColor;
-  } else if (status == 'need help' && compareDate >= 0) {
+  } else if (status == 'need help' && daysSinceUpdate < maxDaysInactive) {
     return kPieChartNeedHelpColor;
-  } else if (status == 'frustrated' && compareDate >= 0) {
+  } else if (status == 'frustrated' && daysSinceUpdate < maxDaysInactive) {
     return kPieChartFrustratedColor;
   } else {
     return kPieChartInactiveColor;
