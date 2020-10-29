@@ -41,9 +41,9 @@ class _ProfileTabState extends State<ProfileTab> {
   Future<void> _deleteAccount() async {
     return showDialog<void>(
       context: context,
+      // barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return DeleteAccountPopUpT(
-          
           widget.teacherEmail,
         );
       },
@@ -363,21 +363,15 @@ class DeleteAccountPopUpT extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
         elevation: 0,
-        backgroundColor: kPrimaryColor,
         title: Text(
           'Delete Account',
-          style: TextStyle(
-              color: Colors.white, fontSize: 27, fontWeight: FontWeight.w700),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'We hate to see you go. All of your data will be deleted and you will not be able to retrieve your deleted account. Purchased classes cannot be recovered. Remember this action can not be undone.',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500),
+              'All of your data will be deleted and you will not be able to retrieve your deleted account. Purchased classes cannot be recovered.',
+              style: TextStyle(height: 2),
             ),
             SizedBox(
               height: 20,
@@ -409,7 +403,6 @@ class DeleteAccountPopUpT extends StatelessWidget {
                     child: new Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.redAccent,
                       ),
                       width: 180.0,
                       height: 40.0,
@@ -423,10 +416,10 @@ class DeleteAccountPopUpT extends StatelessWidget {
                         ),
                       ),
                     ),
+                    splashColor: kPrimaryColor,
                   ),
-                  color: Colors.transparent,
                 ),
-                color: Colors.transparent,
+                color: Colors.redAccent,
               ),
             ),
           ],
