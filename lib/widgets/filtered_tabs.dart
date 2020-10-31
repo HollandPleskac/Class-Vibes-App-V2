@@ -378,7 +378,7 @@ class Student extends StatelessWidget {
           child: Row(
             children: [
               StudentProfileInfo(
-                name: name,
+                studentEmail: studentEmail,
                 status: status,
                 maxDaysInactive: maxDaysInactive,
                 lastChangedStatus: lastChangedStatus,
@@ -397,13 +397,13 @@ class Student extends StatelessWidget {
 }
 
 class StudentProfileInfo extends StatelessWidget {
-  final String name;
+  final String studentEmail;
   final String status;
   final int maxDaysInactive;
   final Timestamp lastChangedStatus;
 
   StudentProfileInfo({
-    this.name,
+    this.studentEmail,
     this.status,
     this.maxDaysInactive,
     this.lastChangedStatus,
@@ -439,11 +439,19 @@ class StudentProfileInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                name,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                style: TextStyle(fontSize: 16.5),
+              StreamBuilder(
+                stream: _firestore
+                    .collection('UserData')
+                    .doc(studentEmail)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return Text(
+                    snapshot.data['display name'],
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    style: TextStyle(fontSize: 16.5),
+                  );
+                },
               ),
               SizedBox(height: 5),
               Text(
