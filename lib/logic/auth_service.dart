@@ -60,7 +60,7 @@ class AuthenticationService {
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      print('firebase code : '+ e.code);
       switch (e.code) {
         case 'invalid-email':
           return 'The email address is not valid';
@@ -70,11 +70,13 @@ class AuthenticationService {
           return 'No user exists with this email address. Please sign up first.';
         case 'wrong-password':
           return 'The password is incorrect';
+        case 'too-many-requests':
+          return 'Too many requests.  Try again in 5 minutes.';
         default:
           return 'An unknown error occurred';
       }
     } catch (e) {
-      print(e);
+      print('other code '+e);
       return 'An unknown error occurred';
     }
   }
@@ -277,6 +279,8 @@ class AuthenticationService {
           return 'No user exists with this email address. Please sign up first.';
         case 'wrong-password':
           return 'The password is incorrect';
+        case 'too-many-requests':
+          return 'Too many requests.  Try again in 5 minutes.';
         default:
           return 'An unknown error occurred';
       }
