@@ -445,6 +445,12 @@ class StudentProfileInfo extends StatelessWidget {
                     .doc(studentEmail)
                     .snapshots(),
                 builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text(
+                      "",
+                      style: TextStyle(fontSize: 16.5),
+                    );
+                  }
                   return Text(
                     snapshot.data['display name'],
                     overflow: TextOverflow.fade,
