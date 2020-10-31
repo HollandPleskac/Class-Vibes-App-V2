@@ -24,8 +24,9 @@ class AllTab extends StatelessWidget {
           .collection('Classes')
           .doc(classId)
           .collection('Students')
-          .orderBy('date', descending: true)
           .where('accepted', isEqualTo: true)
+          .orderBy('teacher unread', descending: true)
+          .orderBy('date', descending: true)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -90,6 +91,8 @@ class DoingGreatTab extends StatelessWidget {
             ),
           )
           .where('accepted', isEqualTo: true)
+          .orderBy('teacher unread', descending: true)
+          
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -369,8 +372,8 @@ class Student extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          top: 2,
-          right: 3,
+          top: 5,
+          right: 5,
           child: UnreadMessageBadge(teacherUnread),
         ),
         Container(
