@@ -9,6 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constant.dart';
+import '../logic/fire.dart';
+
+final _fire = Fire();
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -265,8 +268,8 @@ class _ProfileTabState extends State<ProfileTab> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    // update
-                    Timer(Duration(milliseconds: 1500), () {
+                    _fire.editUserName(uid: _firebaseAuth.currentUser.email,newUserName: _userNameEditController.text);
+                    Timer(Duration(milliseconds: 500), () {
                       setState(() {
                         isUpdated = false;
                         feedback = "";
