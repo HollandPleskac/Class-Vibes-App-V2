@@ -624,7 +624,7 @@ class Fire {
         if (accountType == "Teacher") {
           _fcm.fcmSubscribe('classes-teacher-$classCode');
         } else {
-          _fcm.fcmSubscribe('classes-student-$classCode');
+          _fcm.fcmSubscribe('classes-student-$classCode-$email');
         }
       }
     }
