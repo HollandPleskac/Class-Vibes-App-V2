@@ -262,7 +262,11 @@ class Fire {
     return 'That code does not exist.';
   }
 
-  Future<List> addClass({String uid, String className}) async {
+  Future<List> addClass({
+    @required String email,
+    @required String className,
+    @required String uid,
+  }) async {
     String classCode = randomNumeric(4);
 
     int isCodeUnique = await _firestore
@@ -273,11 +277,11 @@ class Fire {
 
     if (isCodeUnique != 0) {
       print('adding a new class');
-      addClass(uid: uid, className: className);
+      addClass(email: email, className: className, uid: uid);
     }
 
     _firestore.collection('Classes').doc(classCode).set({
-      'teacher email': uid,
+      'teacher email': email,
       'class code': classCode,
       'class name': className,
       'allow join': true,
@@ -288,11 +292,11 @@ class Fire {
 
     _firestore
         .collection('UserData')
-        .doc(uid)
+        .doc(email)
         .collection('Classes')
         .doc(classCode)
         .set({
-      'teacher email': uid,
+      'teacher email': email,
       'class code': classCode,
       'class name': className,
       'allow join': true,
@@ -301,7 +305,7 @@ class Fire {
       // 'type':'paid',
     });
 
-    await subscribeToClasses(uid, 'Teacher');
+    await subscribeToClasses(email, 'Teacher', uid);
     return ['success', classCode];
   }
 
@@ -604,14 +608,15 @@ class Fire {
     });
   }
 
-  Future<void> subscribeToClasses(String email, String accountType) async {
+  Future<void> subscribeToClasses(
+      String email, String accountType, String uid) async {
     List<QueryDocumentSnapshot> classes = await _firestore
         .collection('UserData')
         .doc(email)
         .collection('Classes')
         .get()
         .then((querySnap) {
-          print(querySnap.docs);
+      print(querySnap.docs);
       return querySnap.docs;
     });
 
@@ -624,7 +629,9 @@ class Fire {
         if (accountType == "Teacher") {
           _fcm.fcmSubscribe('classes-teacher-$classCode');
         } else {
-          _fcm.fcmSubscribe('classes-student-$classCode-$email');
+          String acceptedString = email.replaceAll("@", "-");
+          acceptedString = acceptedString.replaceAll(".", "-");
+          _fcm.fcmSubscribe('classes-student-$classCode-$acceptedString');
         }
       }
     }

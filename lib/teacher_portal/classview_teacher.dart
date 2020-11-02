@@ -31,6 +31,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final String email = _firebaseAuth.currentUser.email;
+  final String uid = _firebaseAuth.currentUser.uid;
 
   void _showModalSheetEditUserName(String email) {
     showModalBottomSheet(
@@ -192,7 +193,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
                                       // successfully made the purchase - now add a class
                                       List result = await _fire.addClass(
                                           className: _classNameController.text,
-                                          uid: email);
+                                          email: email,
+                                          uid: uid);
 
                                       print('RESULT : ' + result.toString());
                                       if (result[0] != 'success') {

@@ -47,7 +47,7 @@ Future<String> getUserData() async {
       await _revenueCat.signInRevenueCat(user.uid);
 
       String accountType = await _fire.getAccountType(user.email);
-      await _fire.subscribeToClasses(user.email, accountType);
+      await _fire.subscribeToClasses(user.email, accountType, user.uid);
       return accountType;
     } catch (e) {
       print(e);

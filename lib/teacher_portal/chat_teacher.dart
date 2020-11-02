@@ -246,7 +246,9 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         'sent type': 'teacher',
                                       });
                                       // send a notification to the students device
-                                      await _classVibesServer.sentChatNotification('classes-student-${widget.classId}-${widget.studentEmail}', _teacherName, _controller.text);
+                                      String acceptedString = widget.studentEmail.replaceAll("@", "-");
+                                      acceptedString = acceptedString.replaceAll(".", "-");
+                                      await _classVibesServer.sentChatNotification('classes-student-${widget.classId}-$acceptedString', _teacherName, _controller.text);
 
                                       _controller.clear();
                                     }
