@@ -60,7 +60,19 @@ class ClassVibesServer {
     return getResponse.body;
   }
 
- 
+  Future<String> sentChatNotification(
+    String notificationGroup,
+    String title,
+    String message,
+  ) async {
+    final User user = _firebaseAuth.currentUser;
+    final String token = await user.getIdToken();
+    var getResponse = await http.get(
+        "https://api-v1.classvibes.net/api/sendNotificationtoGroup?group=$notificationGroup=$token&title=$title&msg=$message");
+    print(getResponse.body);
+
+    return getResponse.body;
+  }
 
   //
 }

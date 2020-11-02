@@ -8,11 +8,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../constant.dart';
 import '../logic/fire.dart';
+import '../logic/class_vibes_server.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _fire = Fire();
+final _classVibesServer = ClassVibesServer();
 
 class ChatStudent extends StatefulWidget {
   static const routeName = 'student-chat';
@@ -184,6 +186,9 @@ class _ChatStudentState extends State<ChatStudent> {
                                       'user': _studentName,
                                       'sent type': 'student',
                                     });
+
+                                    // send a notification to the teachers device
+                                      await _classVibesServer.sentChatNotification('classes-student-${widget.classId}', _studentName, _controller.text);
 
                                     _controller.clear();
                                   }
