@@ -188,7 +188,7 @@ class _ChatStudentState extends State<ChatStudent> {
                                     });
 
                                     // send a notification to the teachers device
-                                      await _classVibesServer.sentChatNotification('classes-student-${widget.classId}', _studentName, _controller.text);
+                                      await _classVibesServer.sentChatNotification('classes-teacher-${widget.classId}', _studentName, _controller.text);
 
                                     _controller.clear();
                                   }
