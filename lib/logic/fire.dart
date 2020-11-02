@@ -262,8 +262,7 @@ class Fire {
     return 'That code does not exist.';
   }
 
-  Future<List> addClass(
-      { String uid, String className}) async {
+  Future<List> addClass({String uid, String className}) async {
     String classCode = randomNumeric(4);
 
     int isCodeUnique = await _firestore
@@ -606,23 +605,27 @@ class Fire {
   }
 
   Future<void> subscribeToClasses(String email, String accountType) async {
-    List classes = await _firestore
+    List<QueryDocumentSnapshot> classes = await _firestore
         .collection('UserData')
         .doc(email)
         .collection('Classes')
         .get()
-        .then((querySnap) => querySnap.docs);
+        .then((querySnap) {
+          print(querySnap.docs);
+      return querySnap.docs;
+    });
 
     if (classes.length != 0) {
+      print('not equal to 0');
       for (int i = 0; i < classes.length; i++) {
-        String classCode = classes[i]['class code'];
-        print('Subscribed to : '+classCode);
+        print(i);
+        String classCode = classes[i].id;
+        print('Subscribed to : ' + classCode);
         if (accountType == "Teacher") {
           _fcm.fcmSubscribe('classes-teacher-$classCode');
         } else {
           _fcm.fcmSubscribe('classes-student-$classCode');
         }
-        
       }
     }
   }

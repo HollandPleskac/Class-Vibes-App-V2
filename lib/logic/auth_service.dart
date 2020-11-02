@@ -76,8 +76,8 @@ class AuthenticationService {
           return 'An unknown error occurred';
       }
     } catch (e) {
-      print('other code '+e);
-      return 'An unknown error occurred';
+      print('error '+e.toString());
+      return e.toString();
     }
   }
 
@@ -118,7 +118,7 @@ class AuthenticationService {
           return 'An unknown error occurred';
       }
     } catch (e) {
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 
@@ -185,7 +185,7 @@ class AuthenticationService {
       }
     } catch (e) {
       print(e);
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 
@@ -243,7 +243,7 @@ class AuthenticationService {
           return 'An unknown error occurred';
       }
     } catch (e) {
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 
@@ -286,7 +286,7 @@ class AuthenticationService {
       }
     } catch (e) {
       print(e);
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 
@@ -327,7 +327,7 @@ class AuthenticationService {
           return 'An unknown error occurred';
       }
     } catch (e) {
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 
@@ -394,7 +394,7 @@ class AuthenticationService {
       }
     } catch (e) {
       print(e);
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 
@@ -452,7 +452,7 @@ class AuthenticationService {
           return 'An unknown error occurred';
       }
     } catch (e) {
-      return 'An unknown error occurred';
+      return e.toString();
     }
   }
 }
