@@ -254,6 +254,11 @@ class Fire {
         await _firebaseMessaging.subscribeToTopic(classCode);
         await storeTokenOnClass(studentEmail, classCode);
         await storeToken(studentEmail);
+        // fcm subscribe to topic
+        String acceptedString = studentEmail.replaceAll("@", "-");
+        acceptedString = acceptedString.replaceAll(".", "-");
+        _fcm.fcmSubscribe('classes-student-$classCode-$acceptedString');
+
         return 'You have joined the class!';
       } else {
         return 'Teacher is not accepting students right now';
