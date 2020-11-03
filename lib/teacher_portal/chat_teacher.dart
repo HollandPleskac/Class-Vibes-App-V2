@@ -232,7 +232,8 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                         classId: widget.classId,
                                         studentEmail: widget.studentEmail,
                                       );
-                                      await _firestore
+                                      // should await _firestore.set()
+                                      _firestore
                                           .collection('Class-Chats')
                                           .doc(widget.classId)
                                           .collection('Students')
@@ -248,7 +249,8 @@ class _ChatTeacherState extends State<ChatTeacher> {
                                       // send a notification to the students device
                                       String acceptedString = widget.studentEmail.replaceAll("@", "-");
                                       acceptedString = acceptedString.replaceAll(".", "-");
-                                      await _classVibesServer.sentChatNotification('classes-student-${widget.classId}-$acceptedString', _teacherName, _controller.text);
+                                      // should await _classVibesServer.sentChatNotification()
+                                      _classVibesServer.sentChatNotification('classes-student-${widget.classId}-$acceptedString', _teacherName, _controller.text);
 
                                       _controller.clear();
                                     }

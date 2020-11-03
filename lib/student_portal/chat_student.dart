@@ -174,7 +174,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                       classId: widget.classId,
                                       studentEmail: widget.email,
                                     );
-                                    await _firestore
+                                    // should await _firestore.set()
+                                     _firestore
                                         .collection('Class-Chats')
                                         .doc(widget.classId)
                                         .collection('Students')
@@ -189,7 +190,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                     });
 
                                     // send a notification to the teachers device
-                                      await _classVibesServer.sentChatNotification('classes-teacher-${widget.classId}', _studentName, _controller.text);
+                                    // should await _classVibesServer.sentChatNotification()
+                                      _classVibesServer.sentChatNotification('classes-teacher-${widget.classId}', _studentName, _controller.text);
 
                                     _controller.clear();
                                   }
