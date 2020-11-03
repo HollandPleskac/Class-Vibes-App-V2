@@ -36,8 +36,8 @@ class _ChatTeacherState extends State<ChatTeacher> {
   String _teacherName;
 
   Future getTeacherName() async {
-    final User user = _firebaseAuth.currentUser;
-    final name = user.displayName;
+    final String email = _firebaseAuth.currentUser.email;
+    final String name = await _firestore.collection('UserData').doc(email).get().then((docSnap) => docSnap.data()['display name']);
 
     _teacherName = name;
   }

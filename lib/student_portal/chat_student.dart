@@ -35,8 +35,8 @@ class _ChatStudentState extends State<ChatStudent> {
   String _studentName;
 
   Future getStudentData() async {
-    final User user = _firebaseAuth.currentUser;
-    final name = user.displayName;
+    final String email = _firebaseAuth.currentUser.email;
+    final String name = await _firestore.collection('UserData').doc(email).get().then((docSnap) => docSnap.data()['display name']);
 
     _studentName = name;
   }
@@ -168,7 +168,8 @@ class _ChatStudentState extends State<ChatStudent> {
                                       MediaQuery.of(context).size.width * 0.06,
                                 ),
                                 onPressed: () async {
-                                  if (_controller.text != '') {
+                                  print(_controller.text + ' controlelr taxt');
+                                  if (_controller.text != '' || _controller.text != null) {
                                     _fire.incrementTeacherUnreadCount(
                                       classId: widget.classId,
                                       studentEmail: widget.email,
