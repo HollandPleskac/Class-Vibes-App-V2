@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:class_vibes_v2/logic/auth_service.dart';
@@ -10,13 +11,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav_student.dart';
 import '../constant.dart';
-import '../logic/auth.dart';
+import '../logic/fire.dart';
 import '../auth/welcome.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final _authService = AuthenticationService();
 final _classVibesServer = ClassVibesServer();
+final _fire = Fire();
 
 class ProfileStudent extends StatefulWidget {
   @override
@@ -24,138 +26,25 @@ class ProfileStudent extends StatefulWidget {
 }
 
 class _ProfileStudentState extends State<ProfileStudent> {
+  var isUpdated = false;
+  var feedback = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _userNameEditController = TextEditingController();
 
-  void _showModalSheetEditUserName(String email) {
-    showModalBottomSheet(
-        barrierColor: Colors.white.withOpacity(0),
-        isScrollControlled: true,
-        elevation: 0,
-        context: context,
-        builder: (builder) {
-          return SingleChildScrollView(
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                child: Container(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade300.withOpacity(0.5),
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30))),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Edit Username',
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 20,
-                              right: 20,
-                            ),
-                            child: TextFormField(
-                              controller: _userNameEditController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(
-                                  color: Color.fromRGBO(126, 126, 126, 1),
-                                ),
-                                labelStyle: TextStyle(
-                                  color: Colors.grey[700],
-                                ),
-                                hintText: 'new username',
-                                icon: FaIcon(
-                                  FontAwesomeIcons.userAlt,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null || value == '') {
-                                  return 'Username cannot be blank';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: 5,
-                          ),
-                          child: FlatButton(
-                            color: kPrimaryColor,
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                // User user =
-                                //     _firebaseAuth.currentUser;
-                                // UserUpdateInfo userUpdateInfo =
-                                //     new UserUpdateInfo();
-                                // userUpdateInfo.displayName =
-                                //     _userNameEditController.text;
+  String _email = _firebaseAuth.currentUser.email;
 
-                                // await user.updateProfile(userUpdateInfo);
-
-                                // _fire.editUserName(
-                                //   newUserName: _userNameEditController.text,
-                                //   uid: email,
-                                // );
-                                _userNameEditController.text = '';
-                                Navigator.pop(context);
-                              }
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Text(
-                              'Save',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
-  }
-
-  String _email;
-
-  Future getStudentEmail() async {
-    final User user = _firebaseAuth.currentUser;
-    final email = user.email;
-
-    _email = email;
+  Future getStudentName() async {
+    final userName = await _firestore
+        .collection('UserData')
+        .doc(_email)
+        .get()
+        .then((docSnap) => docSnap.data()['display name']);
+        _userNameEditController.text = userName;
   }
 
   @override
   void initState() {
-    getStudentEmail().then((_) {
+    getStudentName().then((_) {
       setState(() {});
     });
 
@@ -219,108 +108,30 @@ class _ProfileStudentState extends State<ProfileStudent> {
                         ),
                       ),
                       SizedBox(
-                        height: 80,
+                        height: MediaQuery.of(context).size.width * 0.10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 35, bottom: 10),
+                        child: Text(
+                          "Email Address",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[900],
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
                       Center(
                         child: Container(
-                          height: 42,
+                          height: MediaQuery.of(context).size.height * 0.06,
                           width: MediaQuery.of(context).size.width - 50,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Text(
-                                "Student",
-                                style: TextStyle(
-                                    color: Colors.grey[800], fontSize: 18),
-                              ),
-                              Spacer(),
-                              // Text(
-                              //   "Enrolled in 16 Classes",
-                              //   style: TextStyle(
-                              //       color: Colors.grey[400], fontSize: 14),
-                              // ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Center(
-                        child: Container(
-                          height: 42,
-                          width: MediaQuery.of(context).size.width - 50,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.51,
-                                child: StreamBuilder(
-                                    stream: _firestore
-                                        .collection('UserData')
-                                        .doc(_email)
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData) {
-                                        return Text('');
-                                      } else {
-                                        return Text(
-                                          snapshot.data['email'],
-                                          softWrap: false,
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                              color: Colors.grey[800],
-                                              fontSize: 18),
-                                        );
-                                      }
-                                    }),
-                              ),
-                              Spacer(),
-                              Text(
-                                "Email Address",
-                                style: TextStyle(
-                                    color: Colors.grey[400], fontSize: 14),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                            ],
-                          ),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _showModalSheetEditUserName(_email);
-                          print('user name');
-                        },
-                        child: Center(
-                          child: Container(
-                            height: 42,
-                            width: MediaQuery.of(context).size.width - 50,
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Container(
+                              Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.51,
+                                      MediaQuery.of(context).size.width * 0.65,
                                   child: StreamBuilder(
                                       stream: _firestore
                                           .collection('UserData')
@@ -331,7 +142,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                           return Text('');
                                         } else {
                                           return Text(
-                                            snapshot.data['display name'],
+                                            snapshot.data['email'],
                                             softWrap: false,
                                             overflow: TextOverflow.fade,
                                             style: TextStyle(
@@ -341,88 +152,172 @@ class _ProfileStudentState extends State<ProfileStudent> {
                                         }
                                       }),
                                 ),
-                                // FutureBuilder(
-                                //   future: _firebaseAuth.currentUser(),
-                                //   builder: (context, snapshot) {
-                                //     return Text(
-                                //       snapshot.data.displayName,
-                                //       style: TextStyle(
-                                //           color: Colors.grey[800],
-                                //           fontSize: 18),
-                                //     );
-                                //   },
-                                // ),
-
-                                Spacer(),
-                                Text(
-                                  "UserName",
-                                  style: TextStyle(
-                                      color: Colors.grey[400], fontSize: 14),
-                                ),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.blueGrey[100].withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(7)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 35, bottom: 10),
+                        child: Text(
+                          "User Name",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[900],
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width - 50,
+                          child: Form(
+                            key: _formKey,
+                            child: Row(
+                              children: [
                                 SizedBox(
-                                  width: 5,
+                                  width: 15,
                                 ),
-                                Icon(
-                                  Icons.edit,
-                                  color: Colors.grey[400],
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.51,
+                                  child: TextFormField(
+                                    controller: _userNameEditController,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey[800],
+                                          fontSize: 18),
+                                      labelStyle: TextStyle(
+                                        color: Colors.grey[700],
+                                      ),
+                                      hintText: 'Full Name',
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value == '') {
+                                        return 'Username cannot be blank';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    onChanged: (value) {
+                                      print(value);
+                                      setState(() {
+                                        isUpdated = true;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 15,
                                 ),
                               ],
                             ),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(10)),
                           ),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.blueGrey[50], width: 3),
+                              borderRadius: BorderRadius.circular(7)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 35, bottom: 10),
+                        child: Text(
+                          "Account Type",
+                          style: TextStyle(
+                              color: Colors.grey[900],
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                       Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              padding: EdgeInsets.only(top: 20),
-                              child: FlatButton(
-                                color: Colors.grey[200],
-                                onPressed: () async {
-                                  print('logging out');
-                                  // await _googleSignIn.disconnect();
-                                  // await _googleSignIn.signOut();
-
-                                  await _authService.signOut();
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Welcome()));
-                                },
-                                child: Text(
-                                  'Log Out',
-                                ),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width - 50,
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 15,
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              padding: EdgeInsets.only(top: 20),
-                              child: FlatButton(
-                                color: Colors.grey[200],
-                                onPressed: () {
-                                  print('deleteing account');
-                                  _deleteAccount();
-                                },
-                                child: Text(
-                                  'Delete Account',
-                                ),
+                              Text(
+                                "Teacher",
+                                style: TextStyle(
+                                    color: Colors.grey[800], fontSize: 18),
                               ),
-                            )
-                          ],
+                              Spacer(),
+                              // Text(
+                              //   "Created 16 Classes",
+                              //   style: TextStyle(
+                              //       color: Colors.grey[400], fontSize: 14),
+                              // ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.blueGrey[100].withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(7)),
                         ),
-                      )
+                      ),
+                      isUpdated == false
+                          ? Container()
+                          : Center(
+                              child: FlatButton(
+                                color: kPrimaryColor,
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {
+                                  _fire.editUserName(
+                                      uid: _firebaseAuth.currentUser.email,
+                                      newUserName:
+                                          _userNameEditController.text);
+                                  Timer(Duration(milliseconds: 500), () {
+                                    setState(() {
+                                      isUpdated = false;
+                                      feedback = "";
+                                    });
+                                  });
+                                },
+                              ),
+                            ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.08,
+                      ),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () async {
+                            _deleteAccount();
+                          },
+                          child: Container(
+                            height: MediaQuery.of(context).size.width * 0.10,
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: Text(
+                                'Delete Account',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );
@@ -433,7 +328,7 @@ class _ProfileStudentState extends State<ProfileStudent> {
 }
 
 class DeleteAccountPopUp extends StatelessWidget {
-  String studentEmail;
+  final String studentEmail;
 
   DeleteAccountPopUp(this.studentEmail);
   @override
@@ -465,7 +360,6 @@ class DeleteAccountPopUp extends StatelessWidget {
                   child: new InkWell(
                     onTap: () async {
                       User user = _firebaseAuth.currentUser;
-
 
                       await _classVibesServer.deleteAccount(
                           email: studentEmail, accountType: 'Student');

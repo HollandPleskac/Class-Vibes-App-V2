@@ -35,10 +35,12 @@ class _ProfileTabState extends State<ProfileTab> {
   var isUpdated = false;
   var feedback = "";
   Future getTeacherName() async {
-    final User user = _firebaseAuth.currentUser;
-    final userName = user.displayName;
-
-    _userNameEditController.text = userName;
+    final userName = await _firestore
+        .collection('UserData')
+        .doc(_firebaseAuth.currentUser.email)
+        .get()
+        .then((docSnap) => docSnap.data()['display name']);
+        _userNameEditController.text = userName;
   }
 
   Future<void> _deleteAccount() async {
@@ -268,7 +270,9 @@ class _ProfileTabState extends State<ProfileTab> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    _fire.editUserName(uid: _firebaseAuth.currentUser.email,newUserName: _userNameEditController.text);
+                    _fire.editUserName(
+                        uid: _firebaseAuth.currentUser.email,
+                        newUserName: _userNameEditController.text);
                     Timer(Duration(milliseconds: 500), () {
                       setState(() {
                         isUpdated = false;
@@ -282,26 +286,27 @@ class _ProfileTabState extends State<ProfileTab> {
           height: MediaQuery.of(context).size.width * 0.08,
         ),
         Center(
-            child: GestureDetector(
-                onTap: () async {
-                  _deleteAccount();
-                },
-                child: Container(
-                  height: MediaQuery.of(context).size.width * 0.10,
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      'Delete Account',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ))),
+          child: GestureDetector(
+            onTap: () async {
+              _deleteAccount();
+            },
+            child: Container(
+              height: MediaQuery.of(context).size.width * 0.10,
+              width: MediaQuery.of(context).size.width * 0.7,
+              decoration: BoxDecoration(
+                  color: Colors.red, borderRadius: BorderRadius.circular(10)),
+              child: Center(
+                child: Text(
+                  'Delete Account',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
+            ),
+          ),
+        ),
 
         // Center(
         //   child: Row(
