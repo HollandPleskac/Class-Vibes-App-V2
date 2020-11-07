@@ -92,7 +92,6 @@ class DoingGreatTab extends StatelessWidget {
           )
           .where('accepted', isEqualTo: true)
           .orderBy('teacher unread', descending: true)
-          
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -380,11 +379,21 @@ class Student extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.1,
           child: Row(
             children: [
-              StudentProfileInfo(
-                studentEmail: studentEmail,
-                status: status,
-                maxDaysInactive: maxDaysInactive,
-                lastChangedStatus: lastChangedStatus,
+              GestureDetector(
+                onTap: () {
+                  showMoreStudentInfo(
+                    context: context,
+                    classId: classId,
+                    studentEmail: studentEmail,
+                    teacherEmail: teacherEmail,
+                  );
+                },
+                child: StudentProfileInfo(
+                  studentEmail: studentEmail,
+                  status: status,
+                  maxDaysInactive: maxDaysInactive,
+                  lastChangedStatus: lastChangedStatus,
+                ),
               ),
               StudentActionBtns(
                 classId: classId,
@@ -611,6 +620,81 @@ String getLastUpdatedStatus(Timestamp lastUpdate) {
   }
 }
 
+void showMoreStudentInfo({
+  BuildContext context,
+  String classId,
+  String studentEmail,
+  String teacherEmail,
+}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        content: StudentMoreInfo(
+          classId: classId,
+          studentEmail: studentEmail,
+          teacherEmail: teacherEmail,
+        ),
+      );
+    },
+  );
+}
+
+class StudentMoreInfo extends StatelessWidget {
+  final String classId;
+  final String studentEmail;
+  final String teacherEmail;
+
+  StudentMoreInfo({
+    this.classId,
+    this.studentEmail,
+    this.teacherEmail,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Email Address',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(studentEmail),
+          SizedBox(height: 10),
+          Divider(),
+          SizedBox(height: 10),
+          Text(
+            'Please Note: Removing the student will cause previous chat history, meetings, announcements to be lost.',
+            textAlign: TextAlign.center,
+            style: TextStyle(height: 1.5),
+          ),
+          FlatButton(
+            child: Text(
+              "Remove Student",
+              style: TextStyle(color: Colors.red, fontSize: 15.5),
+            ),
+            onPressed: () async {
+              await _classVibesServer.removeFromClass(
+                classId: classId,
+                studentEmail: studentEmail,
+                teacherEmail: teacherEmail,
+              );
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 void showMeetingPopUp({
   BuildContext context,
   String classId,
@@ -618,7 +702,6 @@ void showMeetingPopUp({
   String teacherEmail,
 }) {
   showModalBottomSheet(
-    barrierColor: Colors.grey[300].withOpacity(0.3),
     elevation: 0,
     isScrollControlled: true,
     context: context,
