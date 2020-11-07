@@ -66,59 +66,6 @@ class UnapprovedStudent extends StatelessWidget {
     this.classId,
   });
 
-  String lastUpdatedStatus(Timestamp lastUpdate) {
-    if (DateTime.now()
-            .difference(
-              DateTime.parse(lastUpdate.toDate().toString()),
-            )
-            .inMinutes <=
-        0) {
-      // date in seconds
-      return 'Queued a few seconds ago';
-    } else if (DateTime.now()
-            .difference(
-              DateTime.parse(lastUpdate.toDate().toString()),
-            )
-            .inHours <=
-        0) {
-      // date in minutes
-      return 'Queued ' +
-          DateTime.now()
-              .difference(
-                DateTime.parse(lastUpdate.toDate().toString()),
-              )
-              .inMinutes
-              .toString() +
-          ' minutes ago';
-    } else if (DateTime.now()
-            .difference(
-              DateTime.parse(lastUpdate.toDate().toString()),
-            )
-            .inDays ==
-        0) {
-      // date in hours
-      return 'Queued ' +
-          DateTime.now()
-              .difference(
-                DateTime.parse(lastUpdate.toDate().toString()),
-              )
-              .inHours
-              .toString() +
-          ' hours ago';
-    } else {
-      // date in days
-
-      return 'Queued ' +
-          DateTime.now()
-              .difference(
-                DateTime.parse(lastUpdate.toDate().toString()),
-              )
-              .inDays
-              .toString() +
-          ' days ago';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -128,7 +75,7 @@ class UnapprovedStudent extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.09,
+              left: MediaQuery.of(context).size.width * 0.08,
             ),
             child: Row(
               children: <Widget>[
@@ -137,16 +84,16 @@ class UnapprovedStudent extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.09,
+                  width: MediaQuery.of(context).size.width * 0.08,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.42,
+                  width: MediaQuery.of(context).size.width * 0.47,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        document['name'],
+                        document['name'].toString(),
                         style: TextStyle(fontSize: 16.5),
                         softWrap: false,
                         overflow: TextOverflow.fade,
@@ -155,9 +102,7 @@ class UnapprovedStudent extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        lastUpdatedStatus(
-                          document['date'],
-                        ),
+                        document.id,
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontSize: 14,
