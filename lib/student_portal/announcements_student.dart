@@ -17,8 +17,8 @@ class AnnouncementsStudent extends StatefulWidget {
 }
 
 class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
-  List classIds = [];
-  List announcements = [];
+  List<String> classIds = [];
+  List<Map> announcements = [];
   String _email;
   bool waiting = true;
 
@@ -43,15 +43,15 @@ class _AnnouncementsStudentState extends State<AnnouncementsStudent> {
     });
 
     for (var i = 0; i < classIds.length; i++) {
-      List announcementDocuments = await _firestore
+      List<DocumentSnapshot> announcementDocuments = await _firestore
           .collection('Classes')
           .doc(classIds[i])
           .collection('Announcements')
           .get()
           .then((querySnap) => querySnap.docs);
 
-      announcementDocuments.forEach((document) {
-        announcements.add(document.data);
+      announcementDocuments.forEach((DocumentSnapshot document) {
+        announcements.add(document.data());
       });
 
       announcements.sort((a, b) {
