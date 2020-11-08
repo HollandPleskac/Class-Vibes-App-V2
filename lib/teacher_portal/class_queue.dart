@@ -75,7 +75,7 @@ class UnapprovedStudent extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.08,
+              left: MediaQuery.of(context).size.width * 0.075,
             ),
             child: Row(
               children: <Widget>[
@@ -84,10 +84,10 @@ class UnapprovedStudent extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.08,
+                  width: MediaQuery.of(context).size.width * 0.075,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.47,
+                  width: MediaQuery.of(context).size.width * 0.46,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +117,7 @@ class UnapprovedStudent extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: EdgeInsets.only(right: 10),
             child: Row(
               children: <Widget>[
                 IconButton(
