@@ -9,6 +9,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import '../widgets/pie_charts.dart';
 import '../widgets/filtered_tabs.dart';
 import '../widgets/filter_btns.dart';
+import '../widgets/badges.dart';
 import '../constant.dart';
 import './class_settings.dart';
 import './class_announcements.dart';
@@ -132,14 +133,29 @@ class _ViewClassState extends State<ViewClass> {
                         isScrollable: true,
                         tabs: [
                           Tab(text: 'Students'),
-                          Tab(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('Join Requests'),
-                              ],
-                            ),
-                          ),
+                          StreamBuilder(
+                              stream: _firestore
+                                  .collection('Classes')
+                                  .doc(classId)
+                                  .collection('Students')
+                                  .where("accepted", isEqualTo: false)
+                                  .snapshots(),
+                              builder: (context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                return Tab(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('Join Requests'),
+                                      snapshot.data.docs.length == 0
+                                          ? Container()
+                                          : SizedBox(width: 7.5),
+                                      UnreadMessageBadge(
+                                          snapshot.data.docs.length),
+                                    ],
+                                  ),
+                                );
+                              }),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
                           Tab(text: 'Settings'),
@@ -211,10 +227,8 @@ class _StudentsTabState extends State<StudentsTab> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _firestore
-            .collection('Classes')
-            .doc(widget.classId)
-            .snapshots(),
+        stream:
+            _firestore.collection('Classes').doc(widget.classId).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Text('');
@@ -279,9 +293,8 @@ class DynamicPieChart extends StatelessWidget {
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot['date']
-                                .toDate()
-                                .toString()),
+                            DateTime.parse(
+                                documentSnapshot['date'].toDate().toString()),
                           )
                           .inDays <
                       maxDaysInactive)
@@ -295,9 +308,8 @@ class DynamicPieChart extends StatelessWidget {
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot['date']
-                                .toDate()
-                                .toString()),
+                            DateTime.parse(
+                                documentSnapshot['date'].toDate().toString()),
                           )
                           .inDays <
                       maxDaysInactive)
@@ -310,9 +322,8 @@ class DynamicPieChart extends StatelessWidget {
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot['date']
-                                .toDate()
-                                .toString()),
+                            DateTime.parse(
+                                documentSnapshot['date'].toDate().toString()),
                           )
                           .inDays <
                       maxDaysInactive)
@@ -322,9 +333,8 @@ class DynamicPieChart extends StatelessWidget {
                   .where((documentSnapshot) =>
                       DateTime.now()
                           .difference(
-                            DateTime.parse(documentSnapshot['date']
-                                .toDate()
-                                .toString()),
+                            DateTime.parse(
+                                documentSnapshot['date'].toDate().toString()),
                           )
                           .inDays >=
                       maxDaysInactive)
@@ -478,7 +488,6 @@ class _FilterViewState extends State<FilterView> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.02,
         ),
-        
         Expanded(
           child: _isTouchedAll == true
               ? AllTab(
