@@ -22,4 +22,8 @@ class FCM {
     _firebaseMessaging.unsubscribeFromTopic(topic);
   }
 
+  void requestNotificationPermissions() {
+    _firebaseMessaging.requestNotificationPermissions();
+  }
+
 }

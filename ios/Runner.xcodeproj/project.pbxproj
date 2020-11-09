@@ -34,6 +34,7 @@
 /* Begin PBXFileReference section */
 		0F06B10D24F9A5550069B895 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0F6FB2C224EB550B00DB7C71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0FBD7A652558B6FE000D19F1 /* Class Vibes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Class Vibes.entitlements"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		212CED47258D28CF521C713C /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +119,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				0FBD7A652558B6FE000D19F1 /* Class Vibes.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				0F6FB2C224EB550B00DB7C71 /* GoogleService-Info.plist */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -381,6 +383,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Runner/Class Vibes.entitlements";
 				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 2KU4R37B4S;
 				ENABLE_BITCODE = NO;
@@ -522,6 +525,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Runner/Class Vibes.entitlements";
 				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 2KU4R37B4S;
 				ENABLE_BITCODE = NO;
@@ -555,6 +559,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Runner/Class Vibes.entitlements";
 				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 2KU4R37B4S;
 				ENABLE_BITCODE = NO;

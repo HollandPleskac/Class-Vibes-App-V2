@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import './student_portal/chat_student.dart';
 import 'auth/welcome.dart';
@@ -19,17 +20,20 @@ import './logic/auth.dart';
 import './logic/revenue_cat.dart';
 import './logic/db_service.dart';
 import './logic/fire.dart';
+import './logic/fcm.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 final _db = DatabaseService();
 final _fire = Fire();
 final _revenueCat = RevenueCat();
+final _fcm = FCM();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   String accountType = await getUserData();
+  _fcm.requestNotificationPermissions();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
