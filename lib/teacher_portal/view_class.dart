@@ -134,28 +134,35 @@ class _ViewClassState extends State<ViewClass> {
                         tabs: [
                           Tab(text: 'Students'),
                           StreamBuilder(
-                              stream: _firestore
-                                  .collection('Classes')
-                                  .doc(classId)
-                                  .collection('Students')
-                                  .where("accepted", isEqualTo: false)
-                                  .snapshots(),
-                              builder: (context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                            stream: _firestore
+                                .collection('Classes')
+                                .doc(classId)
+                                .collection('Students')
+                                .where("accepted", isEqualTo: false)
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 return Tab(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text('Join Requests'),
-                                      snapshot.data.docs.length == 0
-                                          ? Container()
-                                          : SizedBox(width: 7.5),
-                                      UnreadMessageBadge(
-                                          snapshot.data.docs.length),
-                                    ],
-                                  ),
+                                  child: Text('Join Requests'),
                                 );
-                              }),
+                              }
+                              return Tab(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text('Join Requests'),
+                                    snapshot.data.docs.length == 0
+                                        ? Container()
+                                        : SizedBox(width: 7.5),
+                                    UnreadMessageBadge(
+                                        snapshot.data.docs.length),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                           Tab(text: 'Meetings'),
                           Tab(text: 'Announcements'),
                           Tab(text: 'Settings'),
