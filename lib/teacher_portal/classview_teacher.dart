@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -534,45 +535,40 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 20),
                                 child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.indigo[300],
-                                      borderRadius: BorderRadius.circular(6)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: TextFormField(
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      controller: _classNameController,
-                                      cursorColor: Colors.white,
-                                      decoration: InputDecoration(
-                                        errorStyle:
-                                            TextStyle(color: Colors.white),
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                        labelStyle: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        hintText: 'Class Name',
-                                      ),
-                                      onChanged: (text) {
-                                        setState(() {});
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'Class name cannot be blank';
-                                        } else if (value.length > 25) {
-                                          return 'Class name cannot be greater than 25 characters';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
                                     ),
+                                    controller: _classNameController,
+                                    cursorColor: Colors.white,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.indigo[300],
+                                      filled: true,
+                                      errorStyle:
+                                          TextStyle(color: Colors.white),
+                                      border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                        color: Colors.white,
+                                        // fontSize: 18,
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      hintText: 'Class Name',
+                                    ),
+                                    onChanged: (text) {
+                                      setState(() {});
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value == '') {
+                                        return 'Class name cannot be blank';
+                                      } else if (value.length > 25) {
+                                        return 'Class name cannot be greater than 25 characters';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
                                   ),
                                 ),
                               ),
@@ -591,12 +587,12 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                       'Create Class',
                                       style: TextStyle(
                                           color: Colors.blueGrey[600],
-                                          fontSize: 17,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                   color: _classNameController.text == ""
-                                      ? Colors.grey
+                                      ? Colors.grey[400]
                                       : Colors.green,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
@@ -673,7 +669,8 @@ class CompletedPurchase extends StatelessWidget {
           ),
           Text(
             'Error Message : ' + error,
-            style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
           ),
           SizedBox(height: 20),
         ],
