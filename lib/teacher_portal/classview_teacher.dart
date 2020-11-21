@@ -587,18 +587,19 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                       'Create Class',
                                       style: TextStyle(
                                           color: _classNameController.text == ""
-                                              ? Colors.grey[700]
+                                              ? Colors.white.withOpacity(0.5)
                                               : Colors.white,
                                           fontSize: 16,
                                           letterSpacing: 0.1,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  color: Color.fromRGBO(16, 191, 234, 1),
+                                  color: Colors.lightBlueAccent,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
                                   ),
-                                  disabledColor: Colors.grey,
+                                  disabledColor:
+                                      Colors.grey[400].withOpacity(0.4),
                                   onPressed: _classNameController.text == ""
                                       ? null
                                       : () async {
@@ -698,7 +699,6 @@ class CompletedPurchase extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-         
         ],
       ),
     );
