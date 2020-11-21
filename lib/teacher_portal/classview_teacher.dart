@@ -34,7 +34,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
 
   void _showModalSheetEditUserName(String email) {
     showModalBottomSheet(
-        barrierColor: Colors.white.withOpacity(0),
+
         isScrollControlled: true,
         enableDrag: true,
         elevation: 0,
@@ -460,7 +460,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                 padding: EdgeInsets.all(20),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: kPrimaryColor.withOpacity(1),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(8)),
                   child: isCompletedPurchase == true
                       ? CompletedPurchase(completedPurchaseMessage)
@@ -479,7 +479,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                   Text(
                                     'Create a Class',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                         fontSize: 27,
                                         fontWeight: FontWeight.w800),
                                   ),
@@ -489,7 +489,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                   Text(
                                     '1. Purchasing this class will cost \$1.99',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -499,7 +499,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                   Text(
                                     '2. You will have access to this class for 1 year',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -509,7 +509,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                   Text(
                                     '3. After 1 year, your class will expire',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -519,7 +519,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                   Text(
                                     '4. Classes can\'t be used after they expire',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -537,23 +537,25 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                 child: Container(
                                   child: TextFormField(
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: kPrimaryColor,
                                       fontWeight: FontWeight.w600,
                                     ),
                                     controller: _classNameController,
-                                    cursorColor: Colors.white,
+                                    cursorColor: kPrimaryColor,
                                     decoration: InputDecoration(
-                                      fillColor: Colors.indigo[300],
-                                      filled: true,
+                                      
                                       errorStyle:
-                                          TextStyle(color: Colors.white),
-                                      border: InputBorder.none,
+                                          TextStyle(color: kPrimaryColor),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[600]),),
                                       hintStyle: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                         // fontSize: 18,
                                       ),
                                       labelStyle: TextStyle(
-                                        color: Colors.white,
+                                        color: kPrimaryColor,
                                       ),
                                       hintText: 'Class Name',
                                     ),
@@ -587,19 +589,18 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                       'Create Class',
                                       style: TextStyle(
                                           color: _classNameController.text == ""
-                                              ? Colors.white.withOpacity(0.5)
+                                              ? Colors.white
                                               : Colors.white,
                                           fontSize: 16,
                                           letterSpacing: 0.1,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  color: Colors.lightBlueAccent,
+                                  color: kPrimaryColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
                                   ),
-                                  disabledColor:
-                                      Colors.grey[400].withOpacity(0.4),
+                                  disabledColor: Colors.grey[600],
                                   onPressed: _classNameController.text == ""
                                       ? null
                                       : () async {
@@ -674,14 +675,14 @@ class CompletedPurchase extends StatelessWidget {
               children: [
                 Icon(
                   Icons.error,
-                  color: Colors.white,
+                  color: kPrimaryColor,
                   size: 24,
                 ),
                 SizedBox(width: 10),
                 Text(
                   'An Error Occurred',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: kPrimaryColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w500),
                 ),
@@ -693,7 +694,7 @@ class CompletedPurchase extends StatelessWidget {
             child: Text(
               error,
               style: TextStyle(
-                  color: Colors.white,
+                  color: kPrimaryColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w400),
             ),
