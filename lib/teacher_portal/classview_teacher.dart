@@ -34,6 +34,7 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
   final String uid = _firebaseAuth.currentUser.uid;
 
   void _showModalSheetEditUserName(String email) {
+    _classNameController.clear();
     showModalBottomSheet(
         barrierColor: Colors.white.withOpacity(0),
         isScrollControlled: true,
