@@ -314,7 +314,7 @@ class Fire {
     return ['success', classCode];
   }
 
-  Future<List> addTrialClass(String uid) async {
+  Future<List> addTrialClass(String email) async {
     String classCode = randomNumeric(4);
     // String classCode = '5gUxwD';
 
@@ -325,13 +325,13 @@ class Fire {
         .then((querySnapshot) => querySnapshot.docs.length);
 
     if (isCodeUnique != 0) {
-      print('readding trial class');
-      addTrialClass(uid);
+      print('redoing trial class');
+      addTrialClass(email);
       // return ['failure', 'An error occurred try again'];
     }
 
     _firestore.collection('Classes').doc(classCode).set({
-      'teacher email': uid,
+      'teacher email': email,
       'class code': classCode,
       'class name': 'Trial Class',
       'allow join': true,
@@ -344,11 +344,11 @@ class Fire {
 
     _firestore
         .collection('UserData')
-        .doc(uid)
+        .doc(email)
         .collection('Classes')
         .doc(classCode)
         .set({
-      'teacher email': uid,
+      'teacher email': email,
       'class code': classCode,
       'class name': 'Trial Class',
       'allow join': true,

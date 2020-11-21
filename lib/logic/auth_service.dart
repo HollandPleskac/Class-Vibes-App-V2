@@ -310,7 +310,9 @@ class AuthenticationService {
 
       await cred.user.sendEmailVerification();
 
-      await _fire.setUpAccountStudent(email, username);
+      await _fire.addTrialClass(cred.user.email);
+
+      await _fire.setUpAccountTeacher(email, username);
 
       return 'Signed up';
     } on FirebaseAuthException catch (e) {
@@ -418,8 +420,13 @@ class AuthenticationService {
       }
 
       await _fire.setUpAccountTeacher(user.email, user.displayName);
+      print('set up teacher account');
+
+      await _fire.addTrialClass(user.email);
+      print('added trial class');
 
       await _revenueCat.signInRevenueCat(user.uid);
+      print('signed in with revenue cat');
 
       return 'Signed up';
     } on FirebaseAuthException catch (e) {
