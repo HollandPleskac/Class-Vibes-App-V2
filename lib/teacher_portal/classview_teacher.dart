@@ -586,51 +586,60 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                     child: Text(
                                       'Create Class',
                                       style: TextStyle(
-                                          color: Colors.blueGrey[600],
+                                          color: _classNameController.text == ""
+                                              ? Colors.grey[700]
+                                              : Colors.white,
                                           fontSize: 16,
+                                          letterSpacing: 0.1,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ),
-                                  color: _classNameController.text == ""
-                                      ? Colors.grey[400]
-                                      : Colors.green,
+                                  color: Color.fromRGBO(16, 191, 234, 1),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(6),
                                   ),
-                                  onPressed: () async {
-                                    if (_formKey.currentState.validate()) {
-                                      List purchaseInfo =
-                                          await _revenueCat.makePurchase();
-                                      // List purchaseInfo = ['success','success'];
+                                  disabledColor: Colors.grey,
+                                  onPressed: _classNameController.text == ""
+                                      ? null
+                                      : () async {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            List purchaseInfo =
+                                                await _revenueCat
+                                                    .makePurchase();
+                                            // List purchaseInfo = ['success','success'];
 
-                                      if (purchaseInfo[0] != 'success') {
-                                        setState(() {
-                                          isCompletedPurchase = true;
-                                          completedPurchaseMessage =
-                                              purchaseInfo[1];
-                                        });
-                                      } else {
-                                        // successfully made the purchase - now add a class
-                                        List result = await _fire.addClass(
-                                            className:
-                                                _classNameController.text,
-                                            email: widget.email,
-                                            uid: widget.uid);
+                                            if (purchaseInfo[0] != 'success') {
+                                              setState(() {
+                                                isCompletedPurchase = true;
+                                                completedPurchaseMessage =
+                                                    purchaseInfo[1];
+                                              });
+                                            } else {
+                                              // successfully made the purchase - now add a class
+                                              List result =
+                                                  await _fire.addClass(
+                                                      className:
+                                                          _classNameController
+                                                              .text,
+                                                      email: widget.email,
+                                                      uid: widget.uid);
 
-                                        print('RESULT : ' + result.toString());
-                                        if (result[0] != 'success') {
-                                          setState(() {
-                                            isCompletedPurchase = true;
-                                            completedPurchaseMessage =
-                                                'An error occurred creating the class - Contact Class Vibes for a refund';
-                                          });
-                                        } else {
-                                          _classNameController.clear();
-                                          Navigator.pop(context);
-                                        }
-                                      }
-                                    }
-                                  },
+                                              print('RESULT : ' +
+                                                  result.toString());
+                                              if (result[0] != 'success') {
+                                                setState(() {
+                                                  isCompletedPurchase = true;
+                                                  completedPurchaseMessage =
+                                                      'An error occurred creating the class - Contact Class Vibes for a refund';
+                                                });
+                                              } else {
+                                                _classNameController.clear();
+                                                Navigator.pop(context);
+                                              }
+                                            }
+                                          }
+                                        },
                                 ),
                               ),
                             ),
@@ -656,23 +665,40 @@ class CompletedPurchase extends StatelessWidget {
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.all(20),
-            child: Text(
-              'An Error Occurred',
-              style: TextStyle(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.error,
                   color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500),
+                  size: 24,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'An Error Occurred',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
             ),
           ),
-          Text(
-            'Error Message : ' + error,
-            style: TextStyle(
-                color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              error,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400),
+            ),
           ),
           SizedBox(height: 20),
+         
         ],
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class RevenueCat {
-
   Future<void> signInRevenueCat(String uid) async {
     // sets up the purchases with the public api key and the firebase app user id
     await Purchases.setup("icBZdQAfwvIZlcBZcMCTKxplUedWSFtM", appUserId: uid);
@@ -36,8 +35,9 @@ class RevenueCat {
         case PurchasesErrorCode.purchaseNotAllowedError:
           print("User not allowed to purchase");
           return ['failure', 'User is not allowed to make the purchase'];
+     
         default:
-          return ['failure', 'An error occurred'];
+          return ['failure', errorCode.toString()];
       }
     }
   }
