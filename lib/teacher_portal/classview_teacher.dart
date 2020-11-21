@@ -26,15 +26,12 @@ class ClassViewTeacher extends StatefulWidget {
 }
 
 class _ClassViewTeacherState extends State<ClassViewTeacher> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _classNameController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final String email = _firebaseAuth.currentUser.email;
   final String uid = _firebaseAuth.currentUser.uid;
 
   void _showModalSheetEditUserName(String email) {
-    _classNameController.clear();
     showModalBottomSheet(
         barrierColor: Colors.white.withOpacity(0),
         isScrollControlled: true,
@@ -42,224 +39,8 @@ class _ClassViewTeacherState extends State<ClassViewTeacher> {
         elevation: 0,
         context: context,
         builder: (builder) {
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Create a Class',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w800),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    '1. Purchasing this class will cost \$1.99',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    '2. You will have access to this class for 1 year',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    '3. After 1 year, your class will expire',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    '4. Classes can\'t be used after they expire',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Form(
-                              key: _formKey,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.indigo[300],
-                                      borderRadius: BorderRadius.circular(6)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: TextFormField(
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      controller: _classNameController,
-                                      cursorColor: Colors.white,
-                                      decoration: InputDecoration(
-                                        errorStyle:
-                                            TextStyle(color: Colors.white),
-                                        border: InputBorder.none,
-                                        hintStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                        labelStyle: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        hintText: 'Class Name',
-                                      ),
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'Class name cannot be blank';
-                                        } else if (value.length > 25) {
-                                          return 'Class name cannot be greater than 25 characters';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    // make a purchase with revenue cat
-                                    List purchaseInfo =
-                                        await _revenueCat.makePurchase();
-                                    // List purchaseInfo = ['success','success'];
-
-                                    if (purchaseInfo[0] != 'success') {
-                                      // TODO : Issue a refund
-                                      Navigator.pop(context);
-                                      final pSnackbar = SnackBar(
-                                        content: Text(purchaseInfo[1]),
-                                        action: SnackBarAction(
-                                          label: 'Hide',
-                                          onPressed: () {
-                                            _scaffoldKey.currentState
-                                                .hideCurrentSnackBar();
-                                          },
-                                        ),
-                                      );
-                                      _scaffoldKey.currentState
-                                          .showSnackBar(pSnackbar);
-                                    } else {
-                                      // successfully made the purchase - now add a class
-                                      List result = await _fire.addClass(
-                                          className: _classNameController.text,
-                                          email: email,
-                                          uid: uid);
-
-                                      print('RESULT : ' + result.toString());
-                                      if (result[0] != 'success') {
-                                        Navigator.pop(context);
-                                        final snackBar = SnackBar(
-                                          content: Text(
-                                              'An error occurred creating the class - Contact Class Vibes for a refund'),
-                                          action: SnackBarAction(
-                                            label: 'Hide',
-                                            onPressed: () {
-                                              _scaffoldKey.currentState
-                                                  .hideCurrentSnackBar();
-                                            },
-                                          ),
-                                        );
-
-                                        _scaffoldKey.currentState
-                                            .showSnackBar(snackBar);
-                                      } else {
-                                        _classNameController.text = '';
-                                        Navigator.pop(context);
-                                      }
-                                    }
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Container(
-                                    height: 43,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10),
-                                        child: Text(
-                                          'Create Class',
-                                          style: TextStyle(
-                                              color: Colors.blueGrey[600],
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(6)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                            color: kPrimaryColor.withOpacity(1),
-                            borderRadius: BorderRadius.circular(8)),
-                      )),
-                ),
-              ],
-            ),
-          );
+          return BuyClassPopUp(email, uid);
+          // located at the bottom of the file
         });
   }
 
@@ -647,6 +428,255 @@ class ExpiredClass extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class BuyClassPopUp extends StatefulWidget {
+  final String email;
+  final String uid;
+  BuyClassPopUp(this.email, this.uid);
+  @override
+  _BuyClassPopUpState createState() => _BuyClassPopUpState();
+}
+
+class _BuyClassPopUpState extends State<BuyClassPopUp> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _classNameController = TextEditingController();
+  bool isCompletedPurchase = false;
+  String completedPurchaseMessage = "";
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: kPrimaryColor.withOpacity(1),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: isCompletedPurchase == true
+                      ? CompletedPurchase(completedPurchaseMessage)
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Create a Class',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    '1. Purchasing this class will cost \$1.99',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    '2. You will have access to this class for 1 year',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    '3. After 1 year, your class will expire',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    '4. Classes can\'t be used after they expire',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.indigo[300],
+                                      borderRadius: BorderRadius.circular(6)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      controller: _classNameController,
+                                      cursorColor: Colors.white,
+                                      decoration: InputDecoration(
+                                        errorStyle:
+                                            TextStyle(color: Colors.white),
+                                        border: InputBorder.none,
+                                        hintStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                        labelStyle: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        hintText: 'Class Name',
+                                      ),
+                                      onChanged: (text) {
+                                        setState(() {});
+                                      },
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'Class name cannot be blank';
+                                        } else if (value.length > 25) {
+                                          return 'Class name cannot be greater than 25 characters';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: FlatButton(
+                                  height: 43,
+                                  child: Center(
+                                    child: Text(
+                                      'Create Class',
+                                      style: TextStyle(
+                                          color: Colors.blueGrey[600],
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  color: _classNameController.text == ""
+                                      ? Colors.grey
+                                      : Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      List purchaseInfo =
+                                          await _revenueCat.makePurchase();
+                                      // List purchaseInfo = ['success','success'];
+
+                                      if (purchaseInfo[0] != 'success') {
+                                        setState(() {
+                                          isCompletedPurchase = true;
+                                          completedPurchaseMessage =
+                                              purchaseInfo[1];
+                                        });
+                                      } else {
+                                        // successfully made the purchase - now add a class
+                                        List result = await _fire.addClass(
+                                            className:
+                                                _classNameController.text,
+                                            email: widget.email,
+                                            uid: widget.uid);
+
+                                        print('RESULT : ' + result.toString());
+                                        if (result[0] != 'success') {
+                                          setState(() {
+                                            isCompletedPurchase = true;
+                                            completedPurchaseMessage =
+                                                'An error occurred creating the class - Contact Class Vibes for a refund';
+                                          });
+                                        } else {
+                                          _classNameController.clear();
+                                          Navigator.pop(context);
+                                        }
+                                      }
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CompletedPurchase extends StatelessWidget {
+  final String error;
+  CompletedPurchase(this.error);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              'An Error Occurred',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
+          Text(
+            'Error Message : ' + error,
+            style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
+          ),
+          SizedBox(height: 20),
+        ],
       ),
     );
   }
