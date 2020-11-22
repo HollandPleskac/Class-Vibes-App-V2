@@ -557,7 +557,7 @@ class _BuyClassPopUpState extends State<BuyClassPopUp> {
                                       labelStyle: TextStyle(
                                         color: kPrimaryColor,
                                       ),
-                                      hintText: 'Class Name',
+                                      hintText: 'Enter a class name',
                                     ),
                                     onChanged: (text) {
                                       setState(() {});
