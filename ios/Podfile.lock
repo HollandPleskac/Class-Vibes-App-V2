@@ -139,7 +139,7 @@ PODS:
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
   - PromisesObjC (1.2.11)
-  - Protobuf (3.13.0)
+  - Protobuf (3.14.0)
   - Purchases (3.7.2):
     - PurchasesCoreSwift (= 3.7.2)
   - purchases_flutter (1.3.1):
@@ -247,13 +247,13 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
-  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
+  Protobuf: 0cde852566359049847168e51bd1c690e0f70056
   Purchases: f4b90cb0493bc32b4c9a1037cf0953df7dd89834
   purchases_flutter: 624b944ef6c8052f23ec727b13205d60bdb2bd45
   PurchasesCoreSwift: 8b5b6ae27eba12fcd123165e486f8ac128e35d45
   PurchasesHybridCommon: f2cc9ca0a6bb74be2b30438719800faca9a3a86e
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
-PODFILE CHECKSUM: c092072a7c1a5cfb8ba5e73cee7a053d46f13fea
+PODFILE CHECKSUM: cfa256b8182ba332447bd44f9b42a0de2d9f5a4d
 
 COCOAPODS: 1.10.0
