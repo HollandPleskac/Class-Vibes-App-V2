@@ -18,7 +18,15 @@ class RevenueCat {
 
   Future<List> makePurchase() async {
     Offerings offerings = await Purchases.getOfferings();
+    print('Offerings : ' + offerings.toString());
+    print('Current : ' + offerings.current.toString());
+
     try {
+      print('Offerings : ' + offerings.toString());
+      print('Current : ' + offerings.current.toString());
+      print('Class Package : ' +
+          offerings.current.getPackage('class').toString());
+
       Package package = offerings.current.getPackage("class");
 
       print(offerings.current.getPackage("class"));
@@ -35,10 +43,13 @@ class RevenueCat {
         case PurchasesErrorCode.purchaseNotAllowedError:
           print("User not allowed to purchase");
           return ['failure', 'User is not allowed to make the purchase'];
-     
+
         default:
           return ['failure', errorCode.toString()];
       }
+    } catch (error) {
+      print(error);
+      return ['failure', error.toString()];
     }
   }
 

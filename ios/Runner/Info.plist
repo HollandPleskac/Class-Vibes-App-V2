@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.938057332518-oubbajgk83ih3chh6s076s3in6i86khf</string>
+				<string>com.googleusercontent.apps.938057332518-4bnva3ihgi8ael43p8h3psn0oct6uegu</string>
 			</array>
 		</dict>
 	</array>
@@ -55,19 +55,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<!-- Google Sign-in Section -->
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<!-- TODO Replace this value: -->
-				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-				<string>com.googleusercontent.apps.938057332518-4bnva3ihgi8ael43p8h3psn0oct6uegu</string>
-			</array>
-		</dict>
-	</array>
 </dict>
 </plist>
