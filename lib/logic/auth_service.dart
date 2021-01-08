@@ -1,5 +1,6 @@
 //TODO : sign up as a teacher
 
+import 'package:class_vibes_v2/logic/class_vibes_server.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -11,6 +12,7 @@ final _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 
 final _revenueCat = RevenueCat();
 final _fire = Fire();
+final _classVibesServer = ClassVibesServer();
 
 
 class AuthenticationService {
@@ -57,6 +59,7 @@ class AuthenticationService {
 
       await _revenueCat.signInRevenueCat(cred.user.uid);
       await _fire.subscribeToClasses(email,'Student',cred.user.uid);
+      await _classVibesServer.logPlatformSignIn(email);
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
@@ -102,6 +105,8 @@ class AuthenticationService {
       await cred.user.sendEmailVerification();
 
       await _fire.setUpAccountStudent(email, username);
+      await _classVibesServer.logPlatformSignIn(email);
+
 
       return 'Signed up';
     } on FirebaseAuthException catch (e) {
@@ -152,6 +157,8 @@ class AuthenticationService {
 
       await _revenueCat.signInRevenueCat(user.uid);
       await _fire.subscribeToClasses(user.email,'Student',user.uid);
+      await _classVibesServer.logPlatformSignIn(user.email);
+
 
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
@@ -211,6 +218,8 @@ class AuthenticationService {
       await _fire.setUpAccountStudent(user.email, user.displayName);
 
       await _revenueCat.signInRevenueCat(user.uid);
+      await _classVibesServer.logPlatformSignIn(user.email);
+
 
       return 'Signed up';
     } on FirebaseAuthException catch (e) {
@@ -267,6 +276,8 @@ class AuthenticationService {
 
       await _revenueCat.signInRevenueCat(cred.user.uid);
       await _fire.subscribeToClasses(email,'Teacher',cred.user.uid);
+      await _classVibesServer.logPlatformSignIn(email);
+
 
       return "Signed in";
     } on FirebaseAuthException catch (e) {
@@ -313,6 +324,8 @@ class AuthenticationService {
       await _fire.addTrialClass(cred.user.email);
 
       await _fire.setUpAccountTeacher(email, username);
+      await _classVibesServer.logPlatformSignIn(email);
+
 
       return 'Signed up';
     } on FirebaseAuthException catch (e) {
@@ -363,6 +376,8 @@ class AuthenticationService {
 
       await _revenueCat.signInRevenueCat(user.uid);
       await _fire.subscribeToClasses(user.email,'Teacher',user.uid);
+      await _classVibesServer.logPlatformSignIn(user.email);
+
 
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
@@ -427,6 +442,9 @@ class AuthenticationService {
 
       await _revenueCat.signInRevenueCat(user.uid);
       print('signed in with revenue cat');
+
+      await _classVibesServer.logPlatformSignIn(user.email);
+
 
       return 'Signed up';
     } on FirebaseAuthException catch (e) {

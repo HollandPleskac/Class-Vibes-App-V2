@@ -74,5 +74,13 @@ class ClassVibesServer {
     return getResponse.body;
   }
 
+  Future<String> logPlatformSignIn(
+    String email,
+  ) async {
+    var getResponse = await http.get(
+        "https://api-v1.classvibes.net/api/authLogger?email=${email}&platform=mobile");
+    return getResponse.body;
+  }
+
   //
 }
