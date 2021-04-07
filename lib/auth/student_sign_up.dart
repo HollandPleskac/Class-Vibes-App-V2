@@ -312,8 +312,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                     } else {
                                       // show success dialog
                                       showDialog(
-                                        context: context,
-                                        child: AlertDialog(
+                                        builder: (context) => AlertDialog(
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10)),
@@ -338,7 +337,7 @@ class _SignUpStudentState extends State<SignUpStudent> {
                                               ),
                                             ],
                                           ),
-                                        ),
+                                        ), context: context,
                                       );
                                     }
                                   }

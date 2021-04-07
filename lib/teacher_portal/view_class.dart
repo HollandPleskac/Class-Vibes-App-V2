@@ -93,7 +93,7 @@ class _ViewClassState extends State<ViewClass> {
             return snapshot.data['serversAreUp'] == false
                 ? ServersDown()
                 : Scaffold(
-                    resizeToAvoidBottomPadding: false,
+                    resizeToAvoidBottomInset: false,
                     appBar: AppBar(
                       backgroundColor: kPrimaryColor,
                       title: StreamBuilder(

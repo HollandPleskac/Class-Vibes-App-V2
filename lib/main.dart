@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './student_portal/chat_student.dart';
 import 'auth/welcome.dart';
@@ -15,7 +16,7 @@ import 'teacher_portal/view_class.dart';
 import 'teacher_portal/class_settings.dart';
 import './teacher_portal/chat_teacher.dart';
 import './student_portal/view_class_student.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import './logic/auth.dart';
 import './logic/revenue_cat.dart';
 import './logic/db_service.dart';
