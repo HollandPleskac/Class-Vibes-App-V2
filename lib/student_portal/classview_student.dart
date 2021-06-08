@@ -106,7 +106,7 @@ class _ClassViewStudentState extends State<ClassViewStudent> {
                                     classId: document.id,
                                     email: _email,
                                     unreadCount:
-                                        document['student unread'] ?? 0,
+                                        document['student unread'] != null ? document['student unread'] : 0 ,
                                     accepted: document['accepted'],
                                   );
                                 }).toList(),
